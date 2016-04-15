@@ -1,4 +1,4 @@
-# Pur&#233;e
+# Puree
 
 A client for the Pure Research Information System API.
 
