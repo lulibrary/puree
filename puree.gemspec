@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Puree::VERSION
   spec.authors       = ["Adrian Albin-Clark"]
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
-  spec.summary       = %q{Makes Pure API a breeze!}
-  # spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{A client for the Pure Research Information System API.}
+  spec.description   = %q{Consumes the Pure Research Information System API and facilitates post-processing of metadata into simple data structures.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "httparty"
+  spec.add_runtime_dependency 'httparty', '~> 0'
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency 'rake', '~> 0'
 end
