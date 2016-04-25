@@ -4,7 +4,7 @@ module Puree
     def initialize (endpoint, username, password, resource_type)
       @resource_type = resource_type
       # strip any trailing slash
-      @endpoint = endpoint.sub(/(\/)+$/,'')
+      @endpoint = endpoint.sub(/(\/)+$/, '')
       @auth = Base64::strict_encode64(username + ':' + password)
       @api_map = {
           resource_type: {

@@ -50,6 +50,9 @@ p.dateMadeAvailable
 p.openAccessPermission
 p.doi
 
+# Combine metadata into one simple data structure
+p.all
+
 # Raw Pure content (hash) from HTTParty object
 p.content
 
