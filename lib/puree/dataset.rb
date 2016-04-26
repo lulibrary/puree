@@ -1,13 +1,22 @@
 module Puree
+
+  # Dataset resource.
+  #
   class Dataset < Resource
 
+    # @param [String] endpoint
+    # @param [String] username
+    # @param [String] password
     def initialize(endpoint, username, password)
       super(endpoint, username, password, :dataset)
     end
 
-    def title
+    # Titles
+    #
+    # @return [Array<String>]
+    def titles
       data = node 'title'
-      if data
+      if !data.nil? && !data.empty?
         data = data['localizedString']["__content__"]
         data.is_a?(Array) ? data : data.split(',')
       else
@@ -15,9 +24,12 @@ module Puree
       end
     end
 
+    # Keywords
+    #
+    # @return [Array<String>]
     def keywords
       data = node 'keywordGroups'
-      if data
+      if !data.nil? && !data.empty?
         data = data['keywordGroup']['keyword']['userDefinedKeyword']['freeKeyword']
         data.is_a?(Array) ? data : data.split(',')
       else
@@ -25,9 +37,12 @@ module Puree
       end
     end
 
-    def description
+    # Descriptions
+    #
+    # @return [Array<String>]
+    def descriptions
       data = node 'descriptions'
-      if data
+      if !data.nil? && !data.empty?
         data = data['classificationDefinedField']['value']['localizedString']['__content__'].tr("\n", '')
         data.is_a?(Array) ? data : data.split(',')
       else
@@ -35,13 +50,16 @@ module Puree
       end
     end
 
-    def persons
+    # People, internal and external
+    #
+    # @return [Hash<Array, Array>]
+    def people
       data = node('persons')
-      people = {}
-      if data
+      persons = {}
+      if !data.nil? && !data.empty?
         data = data['dataSetPersonAssociation']
       else
-        return people
+        return persons
       end
       internalPersons = []
       externalPersons = []
@@ -69,15 +87,18 @@ module Puree
             externalPersons << person
           end
       end
-      people['internal'] = internalPersons
-      people['external'] = externalPersons
-      people
+      persons['internal'] = internalPersons
+      persons['external'] = externalPersons
+      persons
     end
 
-    def relatedPublications
+    # Related publications
+    #
+    # @return [Array<Hash>]
+    def publications
       data = node('relatedPublications')
       publications = []
-      if data
+      if !data.nil? && !data.empty?
         o = {}
         d = data['relatedContent']
         o['type'] = d['typeClassification']
@@ -88,14 +109,20 @@ module Puree
       publications
     end
 
-    def dateMadeAvailable
+    # Date made available
+    #
+    # @return [Hash]
+    def available
       data = node('dateMadeAvailable')
-      data ? data : {}
+      !data.nil? && !data.empty? ? data : {}
     end
 
-    def geographicalCoverage
+    # Geographical coverage
+    #
+    # @return [Array<String>]
+    def geographical
       data = node 'geographicalCoverage'
-      if data
+      if !data.nil? && !data.empty?
         data = data['localizedString']["__content__"]
         data.is_a?(Array) ? data : data.split(',')
       else
@@ -103,25 +130,39 @@ module Puree
       end
     end
 
-    def temporalCoverageStartDate
-      data = node('temporalCoverageStartDate')
-      data ? data : {}
+    # Temporal coverage
+    #
+    # @return [Hash]
+    def temporal
+      data = {}
+      data['start'] = {}
+      data['end'] = {}
+      startDate = temporalCoverageStartDate
+      if !startDate.nil? && !startDate.empty?
+        data['start'] = startDate
+      end
+      endDate = temporalCoverageEndDate
+      if !endDate.nil? && !endDate.empty?
+        data['end'] = endDate
+      end
+      data
     end
 
-    def temporalCoverageEndDate
-      data = node('temporalCoverageEndDate')
-      data ? data : {}
-    end
-
-    def openAccessPermission
+    # Open access permission
+    #
+    # @return [String]
+    def access
       data = node 'openAccessPermission'
-      data ? data['term']['localizedString']["__content__"] : ''
+      !data.nil? && !data.empty? ? data['term']['localizedString']["__content__"] : ''
     end
 
-    def documents
+    # Supporting files
+    #
+    # @return [Array<Hash>]
+    def files
       data = node 'documents'
       docs = []
-      if data
+      if !data.nil? && !data.empty?
         data['document'].each do |d|
           doc = {}
           # doc['id'] = d['id']
@@ -143,30 +184,35 @@ module Puree
       docs
     end
 
+    # Digital Object Identifier
+    #
+    # @return [String]
     def doi
       data = node 'doi'
-      data ? data['doi'] : ''
+      !data.nil? && !data.empty? ? data['doi'] : ''
     end
 
     # def state
     #   # useful?
     #   data = node 'startedWorkflows'
-    #   data ? data['startedWorkflow']['state'] : nil
+    #    !data.empty? ? data['startedWorkflow']['state'] : ''
     # end
 
+    # All metadata
+    #
+    # @return [Hash]
     def all
       o = {}
-      o['title'] = title
-      o['description'] = description
+      o['titles'] = titles
+      o['descriptions'] = descriptions
       o['keywords'] = keywords
-      o['persons'] = persons
-      o['temporalCoverageStartDate'] = temporalCoverageStartDate
-      o['temporalCoverageEndDate'] = temporalCoverageEndDate
-      o['geographicalCoverage'] = geographicalCoverage
-      o['documents'] = documents
-      o['relatedPublications'] = relatedPublications
-      o['dateMadeAvailable'] = dateMadeAvailable
-      o['openAccessPermission'] = openAccessPermission
+      o['people'] = people
+      o['temporal'] = temporal
+      o['geographical'] = geographical
+      o['files'] = files
+      o['publications'] = publications
+      o['available'] = available
+      o['access'] = access
       o['doi'] = doi
       o
     end
@@ -175,9 +221,28 @@ module Puree
 
     def genericPerson(genericData)
       person = {}
-      person['name'] = genericData['name']
+      name = {}
+      name['first'] = genericData['name']['firstName']
+      name['last'] = genericData['name']['lastName']
+      person['name'] = name
       person['role'] = genericData['personRole']['term']['localizedString']["__content__"]
       person
+    end
+
+    # Temporal coverage start date
+    #
+    # @return [Hash]
+    def temporalCoverageStartDate
+      data = node('temporalCoverageStartDate')
+      !data.nil? && !data.empty? ? data : {}
+    end
+
+    # Temporal coverage end date
+    #
+    # @return [Hash]
+    def temporalCoverageEndDate
+      data = node('temporalCoverageEndDate')
+      !data.nil? && !data.empty? ? data : {}
     end
   end
 end

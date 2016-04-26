@@ -1,7 +1,10 @@
 module Puree
+
+  # Abstract base class for resources.
+  #
   class Resource
 
-    def initialize (endpoint, username, password, resource_type)
+    def initialize(endpoint, username, password, resource_type)
       @resource_type = resource_type
       # strip any trailing slash
       @endpoint = endpoint.sub(/(\/)+$/, '')
@@ -20,6 +23,9 @@ module Puree
       }
     end
 
+    # Get
+    #
+    # @return [HTTParty::Response]
     def get(uuid: nil, id: nil)
       @options = {
           latest_api: true,
@@ -44,42 +50,57 @@ module Puree
       @response = HTTParty.get(url, query: query, headers: headers)
     end
 
+    # Response, if get method has been called
+    #
+    # @return [HTTParty::Response]l
+    # @return [Nil]
     def response
       @response ? @response : nil
     end
 
+
+
+    private
+
+    # Content
+    #
+    # @return [Hash]
     def content
       if @response
         response_name = service_response_name
         if data?
           @response.parsed_response[response_name]['result']['content']
         else
-          nil
+          {}
         end
       else
-        nil
+        {}
       end
     end
 
+    # Node
+    #
+    # @return [Hash]
     def node(name)
       if @response
         response_name = service_response_name
         if data?
           @response.parsed_response[response_name]['result']['content'][name]
         else
-          nil
+          {}
         end
       else
-        nil
+        {}
       end
     end
 
+    # Is there any data?
+    #
+    # @return [Boolean]
     def data?
       response_name = service_response_name
       @response.parsed_response[response_name]['count'] === '1' ? true : false
     end
-
-    private
 
     def service_name
       resource_type = @options[:resource_type]

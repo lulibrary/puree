@@ -2,11 +2,9 @@
 
 A Ruby client for the Pure Research Information System API.
 
-## Supported Pure version
-5.5.1
-
-## Supported resource types
-dataset
+## API coverage
+- Version: 5.5.1.
+- Resources: Dataset.
 
 ## Installation
 
@@ -27,8 +25,8 @@ Or install it yourself as:
 ```ruby
 endpoint = 'http://example.com/ws/rest'
 
-# Prepare to get metadata
-p = Puree::Dataset.new(endpoint, username, password)
+# Create connection
+p = Puree::Dataset.new endpoint, username, password
 
 # Get metadata using ID
 p.get id: '12345678'
@@ -37,24 +35,20 @@ p.get id: '12345678'
 p.get uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 
 # Filter metadata into simple data structures
-p.title
-p.description
+p.titles
+p.descriptions
 p.keywords
-p.persons
-p.temporalCoverageStartDate
-p.temporalCoverageEndDate
-p.geographicalCoverage
-p.documents
-p.relatedPublications
-p.dateMadeAvailable
-p.openAccessPermission
+p.people
+p.temporal
+p.geographical
+p.files
+p.publications
+p.available
+p.access
 p.doi
 
 # Combine metadata into one simple data structure
 p.all
-
-# Raw Pure content (hash) from HTTParty object
-p.content
 
 # Access HTTParty functionality
 p.response # HTTParty object
