@@ -1,6 +1,6 @@
 module Puree
 
-  # Dataset resource.
+  # Dataset resource
   #
   class Dataset < Resource
 
@@ -11,10 +11,10 @@ module Puree
       super(endpoint, username, password, :dataset)
     end
 
-    # Titles
+    # Title
     #
     # @return [Array<String>]
-    def titles
+    def title
       data = node 'title'
       if !data.nil? && !data.empty?
         data = data['localizedString']["__content__"]
@@ -24,10 +24,10 @@ module Puree
       end
     end
 
-    # Keywords
+    # Keyword
     #
     # @return [Array<String>]
-    def keywords
+    def keyword
       data = node 'keywordGroups'
       if !data.nil? && !data.empty?
         data = data['keywordGroup']['keyword']['userDefinedKeyword']['freeKeyword']
@@ -37,10 +37,10 @@ module Puree
       end
     end
 
-    # Descriptions
+    # Description
     #
     # @return [Array<String>]
-    def descriptions
+    def description
       data = node 'descriptions'
       if !data.nil? && !data.empty?
         data = data['classificationDefinedField']['value']['localizedString']['__content__'].tr("\n", '')
@@ -50,10 +50,10 @@ module Puree
       end
     end
 
-    # People, internal and external
+    # Person, internal and external
     #
     # @return [Hash<Array, Array>]
-    def people
+    def person
       data = node('persons')
       persons = {}
       if !data.nil? && !data.empty?
@@ -92,10 +92,10 @@ module Puree
       persons
     end
 
-    # Related publications
+    # Publication
     #
     # @return [Array<Hash>]
-    def publications
+    def publication
       data = node('relatedPublications')
       publications = []
       if !data.nil? && !data.empty?
@@ -114,7 +114,7 @@ module Puree
     # @return [Hash]
     def available
       data = node('dateMadeAvailable')
-      !data.nil? && !data.empty? ? data : {}
+      Puree::Date.normalise(data)
     end
 
     # Geographical coverage
@@ -156,18 +156,19 @@ module Puree
       !data.nil? && !data.empty? ? data['term']['localizedString']["__content__"] : ''
     end
 
-    # Supporting files
+
+    # Supporting file
     #
     # @return [Array<Hash>]
-    def files
+    def file
       data = node 'documents'
       docs = []
       if !data.nil? && !data.empty?
         data['document'].each do |d|
           doc = {}
           # doc['id'] = d['id']
-          doc['filename'] = d['fileName']
-          doc['mimeType'] = d['mimeType']
+          doc['name'] = d['fileName']
+          doc['mime'] = d['mimeType']
           doc['size'] = d['size']
           doc['url'] = d['url']
           doc['title'] = d['title']
@@ -203,14 +204,14 @@ module Puree
     # @return [Hash]
     def all
       o = {}
-      o['titles'] = titles
-      o['descriptions'] = descriptions
-      o['keywords'] = keywords
-      o['people'] = people
+      o['title'] = title
+      o['description'] = description
+      o['keyword'] = keyword
+      o['person'] = person
       o['temporal'] = temporal
       o['geographical'] = geographical
-      o['files'] = files
-      o['publications'] = publications
+      o['file'] = file
+      o['publication'] = publication
       o['available'] = available
       o['access'] = access
       o['doi'] = doi
@@ -219,6 +220,10 @@ module Puree
 
     private
 
+    # Assembles basic information about a person
+    #
+    # @param [Hash]
+    # @return [Hash]
     def genericPerson(genericData)
       person = {}
       name = {}
@@ -234,7 +239,7 @@ module Puree
     # @return [Hash]
     def temporalCoverageStartDate
       data = node('temporalCoverageStartDate')
-      !data.nil? && !data.empty? ? data : {}
+      !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end
 
     # Temporal coverage end date
@@ -242,7 +247,7 @@ module Puree
     # @return [Hash]
     def temporalCoverageEndDate
       data = node('temporalCoverageEndDate')
-      !data.nil? && !data.empty? ? data : {}
+      !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end
   end
 end

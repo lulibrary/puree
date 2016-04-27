@@ -17,24 +17,24 @@ describe 'Dataset' do
       @p.get uuid: uuid
     end
 
-    it '#titles' do
-      expect(@p.titles).to be_an_instance_of(Array)
+    it '#title' do
+      expect(@p.title).to be_an_instance_of(Array)
     end
 
-    it '#keywords' do
-      expect(@p.keywords).to be_an_instance_of(Array)
+    it '#keyword' do
+      expect(@p.keyword).to be_an_instance_of(Array)
     end
 
-    it '#descriptions' do
-      expect(@p.descriptions).to be_an_instance_of(Array)
+    it '#description' do
+      expect(@p.description).to be_an_instance_of(Array)
     end
 
-    it '#people' do
-      expect(@p.people).to be_an_instance_of(Hash)
+    it '#person' do
+      expect(@p.person).to be_an_instance_of(Hash)
     end
 
-    it '#publications' do
-      expect(@p.publications).to be_an_instance_of(Array)
+    it '#publication' do
+      expect(@p.publication).to be_an_instance_of(Array)
     end
 
     it '#available' do
@@ -53,8 +53,8 @@ describe 'Dataset' do
       expect(@p.access).to be_an_instance_of(String)
     end
 
-    it '#files' do
-      expect(@p.files).to be_an_instance_of(Array)
+    it '#file' do
+      expect(@p.file).to be_an_instance_of(Array)
     end
 
     it '#doi' do
