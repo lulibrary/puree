@@ -4,11 +4,8 @@ module Puree
   #
   class Resource
 
-    def initialize(endpoint, username, password, resource_type)
+    def initialize(resource_type)
       @resource_type = resource_type
-      # strip any trailing slash
-      @endpoint = endpoint.sub(/(\/)+$/, '')
-      @auth = Base64::strict_encode64(username + ':' + password)
       @api_map = {
           resource_type: {
               dataset: {
@@ -25,14 +22,23 @@ module Puree
 
     # Get
     #
+    # @param endpoint [String]
+    # @param username [String]
+    # @param password [String]
+    # @param uuid [String]
+    # @param id [String]
     # @return [HTTParty::Response]
-    def get(uuid: nil, id: nil)
+    def get(endpoint:nil, username:nil, password:nil, uuid:nil, id:nil)
+      # strip any trailing slash
+      @endpoint = endpoint.sub(/(\/)+$/, '')
+      @auth = Base64::strict_encode64(username + ':' + password)
+
       @options = {
           latest_api: true,
           resource_type: @resource_type.to_sym,
           rendering: :xml_long,
           uuid: uuid,
-          id: id
+          id: id,
       }
       headers = {
           'Accept' => 'application/xml',
@@ -47,59 +53,62 @@ module Puree
           query['pureInternalIds.id'] = @options[:id]
         end
       end
+
       @response = HTTParty.get(url, query: query, headers: headers)
+
+      if getData?
+        response_name = service_response_name
+        content = @response.parsed_response[response_name]['result']['content']
+        setContent(content)
+      end
+      @response
     end
 
     # Response, if get method has been called
     #
-    # @return [HTTParty::Response]l
+    # @return [HTTParty::Response]
     # @return [Nil]
     def response
       @response ? @response : nil
+    end
+
+    # Set content
+    #
+    # @param content [Hash]
+    def setContent(content)
+      if !content.nil? && !content.empty?
+        @content = content
+      else
+        @content = {}
+      end
+    end
+
+    # Content
+    #
+    # @return [Hash]
+    def content
+      @content ? @content : {}
     end
 
 
 
     private
 
-    # Content
-    #
-    # @return [Hash]
-    def content
-      if @response
-        response_name = service_response_name
-        if data?
-          @response.parsed_response[response_name]['result']['content']
-        else
-          {}
-        end
-      else
-        {}
-      end
-    end
+
 
     # Node
     #
     # @return [Hash]
     def node(name)
-      if @response
-        response_name = service_response_name
-        if data?
-          @response.parsed_response[response_name]['result']['content'][name]
-        else
-          {}
-        end
-      else
-        {}
-      end
+      @content ? @content[name] : {}
     end
 
-    # Is there any data?
+    # Is there any data after get?
     #
     # @return [Boolean]
-    def data?
+    def getData?
       response_name = service_response_name
-      @response.parsed_response[response_name]['count'] === '1' ? true : false
+      @response.parsed_response[response_name]['count'] != '0' ? true : false
     end
 
     def service_name

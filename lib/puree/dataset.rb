@@ -4,11 +4,8 @@ module Puree
   #
   class Dataset < Resource
 
-    # @param [String] endpoint
-    # @param [String] username
-    # @param [String] password
-    def initialize(endpoint, username, password)
-      super(endpoint, username, password, :dataset)
+    def initialize
+      super(:dataset)
     end
 
     # Title
@@ -99,12 +96,20 @@ module Puree
       data = node('relatedPublications')
       publications = []
       if !data.nil? && !data.empty?
-        o = {}
-        d = data['relatedContent']
-        o['type'] = d['typeClassification']
-        o['title'] = d['title']
-        o['uuid'] = d['uuid']
-        publications << o
+        # convert to array
+        dataArr = []
+        if data['relatedContent'].is_a?(Array)
+          dataArr = data['relatedContent']
+        else
+          dataArr[0] = data['relatedContent']
+        end
+        dataArr.each do |d|
+          o = {}
+          o['type'] = d['typeClassification']
+          o['title'] = d['title']
+          o['uuid'] = d['uuid']
+          publications << o
+        end
       end
       publications
     end
@@ -162,9 +167,18 @@ module Puree
     # @return [Array<Hash>]
     def file
       data = node 'documents'
+
       docs = []
       if !data.nil? && !data.empty?
-        data['document'].each do |d|
+        # convert to array
+        dataArr = []
+        if data['document'].is_a?(Array)
+          dataArr = data['document']
+        else
+          dataArr << data['document']
+        end
+
+        dataArr.each do |d|
           doc = {}
           # doc['id'] = d['id']
           doc['name'] = d['fileName']
@@ -175,11 +189,17 @@ module Puree
           # doc['createdDate'] = doc['createdDate']
           # doc['visibleOnPortalDate'] = doc['visibleOnPortalDate']
           # doc['limitedVisibility'] = doc['limitedVisibility']
+
           license = {}
-          license['name'] = d['documentLicense']['term']['localizedString']['__content__']
-          license['url'] = d['documentLicense']['description']['localizedString']['__content__']
-          doc['license'] = license
+          if d['documentLicense']
+            licenseName = d['documentLicense']['term']['localizedString']['__content__']
+            license['name'] = licenseName
+            licenseURL = d['documentLicense']['description']['localizedString']['__content__']
+            license['url'] = licenseURL
+            doc['license'] = license
+          end
           docs << doc
+
         end
       end
       docs
@@ -202,7 +222,7 @@ module Puree
     # All metadata
     #
     # @return [Hash]
-    def all
+    def metadata
       o = {}
       o['title'] = title
       o['description'] = description
@@ -222,7 +242,7 @@ module Puree
 
     # Assembles basic information about a person
     #
-    # @param [Hash]
+    # @param genericData [Hash]
     # @return [Hash]
     def genericPerson(genericData)
       person = {}

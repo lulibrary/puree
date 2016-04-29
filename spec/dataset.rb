@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Dataset' do
 
   it '#new' do
-    p = Puree::Dataset.new 'endpoint', 'username', 'password'
+    p = Puree::Dataset.new
     expect(p).to be_an_instance_of Puree::Dataset
   end
 
@@ -13,8 +13,11 @@ describe 'Dataset' do
       username = ENV['PURE_USERNAME']
       password = ENV['PURE_PASSWORD']
       uuid = ENV['PURE_DATASET_UUID']
-      @p = Puree::Dataset.new endpoint, username, password
-      @p.get uuid: uuid
+      @p = Puree::Dataset.new
+      @p.get endpoint: endpoint,
+             username: username,
+             password: password,
+             uuid: uuid
     end
 
     it '#title' do
@@ -61,8 +64,8 @@ describe 'Dataset' do
       expect(@p.doi).to be_an_instance_of(String)
     end
 
-    it '#all' do
-      expect(@p.all).to be_an_instance_of(Hash)
+    it '#metadata' do
+      expect(@p.metadata).to be_an_instance_of(Hash)
     end
 
   end

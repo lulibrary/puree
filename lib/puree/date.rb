@@ -4,7 +4,7 @@ module Puree
 
     # Converts a date with three components (year, month, day) to ISO8601 format
     #
-    # @param [Hash]
+    # @param data [Hash]
     # @return [String]
     def self.iso(data)
       isoDate = ''
@@ -39,7 +39,7 @@ module Puree
 
     # Forces a date to have three components (year, month, day)
     #
-    # @param [Hash]
+    # @param data [Hash]
     # @return [Hash]
     def self.normalise(data)
       if !data.nil? && !data.empty?

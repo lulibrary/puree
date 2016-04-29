@@ -21,42 +21,75 @@ Or install it yourself as:
     $ gem install puree
 
 ## Usage
-Dataset example.
-
 ```ruby
 endpoint = 'http://example.com/ws/rest'
+```
 
-# Create connection
-p = Puree::Dataset.new endpoint, username, password
+Dataset.
+
+```ruby
+d = Puree::Dataset.new
 
 # Get metadata using ID
-p.get id: '12345678'
+d.get id: '12345678',
+      endpoint: endpoint,
+      username: username,
+      password: password
 
 # Get metadata using UUID
-p.get uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+d.get uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+      endpoint: endpoint,
+      username: username,
+      password: password
 
 # Filter metadata into simple data structures
-p.title
-p.description
-p.keyword
-p.person
-p.temporal
-p.geographical
-p.file
-p.publication
-p.available
-p.access
-p.doi
+d.title
+d.description
+d.keyword
+d.person
+d.temporal
+d.geographical
+d.file
+d.publication
+d.available
+d.access
+d.doi
 
 # Combine metadata into one simple data structure
-p.all
+d.metadata
 
 # Access HTTParty functionality
-p.response # HTTParty object
-p.response.body # XML
-p.response.code
-p.response.message
-p.response.headers # hash
+d.response # HTTParty object
+d.response.body # XML
+d.response.code
+d.response.message
+d.response.headers # hash
+```
+
+Dataset collection.
+
+```ruby
+dc = Puree::DatasetCollection.new
+
+# Get minimal datasets, optionally specifying a quantity (default is 20)
+dc.get endpoint: endpoint,
+       username: username,
+       password: password,
+       qty:      1000
+
+# Get UUIDs for datasets
+uuids = dc.UUID
+
+# Get metadata using UUID
+datasets = []
+uuids.each do |uuid|
+    d = Puree::Dataset.new
+    d.get endpoint: endpoint,
+          username: username,
+          password: password,
+          uuid:     uuid
+    datasets << d.metadata
+end
 ```
 
 ## Utilities
@@ -64,7 +97,7 @@ p.response.headers # hash
 ### Convert date to ISO 8601 format.
 
 ```ruby
-Puree::Date.iso p.available
+Puree::Date.iso d.available
 ```
 ```ruby
 {
@@ -162,5 +195,3 @@ Date range. If year is present, month and day will have data or an empty string.
   }
 }
 ```
-
-
