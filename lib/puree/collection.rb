@@ -1,11 +1,11 @@
 module Puree
 
-  # Dataset collection resource
+  # Collection resource
   #
-  class DatasetCollection < Resource
+  class Collection < Resource
 
-    def initialize
-      super(:dataset)
+    def initialize(resource_type: nil)
+      super(resource_type)
       @uuids = []
     end
 
@@ -64,8 +64,13 @@ module Puree
         arr << resp
       end
       arr.each do |a|
-        uuid = a['div']['table']['tbody']['tr'][0]['td']
-        @uuids << uuid
+        tableRows = a['div']['table']['tbody']['tr']
+        tableRows.each do |row|
+          if row['th'] === 'UUID'
+            uuid = row['td']
+            @uuids << uuid
+          end
+        end
       end
     end
 

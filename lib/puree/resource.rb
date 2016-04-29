@@ -12,6 +12,18 @@ module Puree
                   service: 'datasets',
                   response: 'GetDataSetsResponse'
               },
+              organisation: {
+                  service: 'organisation',
+                  response: 'GetOrganisationResponse'
+              },
+              person: {
+                service: 'person',
+                response: 'GetPersonResponse',
+              },
+              project: {
+                  service: 'project',
+                  response: 'GetProjectResponse',
+              },
               publication: {
                   service: 'publication',
                   response: 'GetPublicationResponse'

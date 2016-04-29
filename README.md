@@ -5,6 +5,7 @@ A Ruby client for the Pure Research Information System API.
 ## API coverage
 - Version: 5.5.1.
 - Resources: Dataset.
+- Collections: Dataset, Organisation, Person, Project, Publication
 
 ## Installation
 
@@ -31,13 +32,13 @@ Dataset.
 d = Puree::Dataset.new
 
 # Get metadata using ID
-d.get id: '12345678',
+d.get id:       12345678,
       endpoint: endpoint,
       username: username,
       password: password
 
 # Get metadata using UUID
-d.get uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+d.get uuid:     'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
       endpoint: endpoint,
       username: username,
       password: password
@@ -66,10 +67,10 @@ d.response.message
 d.response.headers # hash
 ```
 
-Dataset collection.
+Collection.
 
 ```ruby
-dc = Puree::DatasetCollection.new
+dc = Puree::Collection.new(:dataset)
 
 # Get minimal datasets, optionally specifying a quantity (default is 20)
 dc.get endpoint: endpoint,
