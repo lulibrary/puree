@@ -6,30 +6,7 @@ module Puree
 
     def initialize(resource_type)
       @resource_type = resource_type
-      @api_map = {
-          resource_type: {
-              dataset: {
-                  service: 'datasets',
-                  response: 'GetDataSetsResponse'
-              },
-              organisation: {
-                  service: 'organisation',
-                  response: 'GetOrganisationResponse'
-              },
-              person: {
-                service: 'person',
-                response: 'GetPersonResponse',
-              },
-              project: {
-                  service: 'project',
-                  response: 'GetProjectResponse',
-              },
-              publication: {
-                  service: 'publication',
-                  response: 'GetPublicationResponse'
-              }
-          }
-      }
+      @api_map = Puree::Map.new.get
     end
 
     # Get
@@ -68,10 +45,10 @@ module Puree
 
       @response = HTTParty.get(url, query: query, headers: headers)
 
-      if getData?
+      if get_data?
         response_name = service_response_name
         content = @response.parsed_response[response_name]['result']['content']
-        setContent(content)
+        set_content(content)
       end
       @response
     end
@@ -87,7 +64,7 @@ module Puree
     # Set content
     #
     # @param content [Hash]
-    def setContent(content)
+    def set_content(content)
       if !content.nil? && !content.empty?
         @content = content
       else
@@ -118,7 +95,7 @@ module Puree
     # Is there any data after get?
     #
     # @return [Boolean]
-    def getData?
+    def get_data?
       response_name = service_response_name
       @response.parsed_response[response_name]['count'] != '0' ? true : false
     end

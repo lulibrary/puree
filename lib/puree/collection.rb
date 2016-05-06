@@ -41,11 +41,11 @@ module Puree
     end
 
 
-    # UUID
+    # Array of UUIDs
     #
     # @return [Array<String>]
-    def UUID
-      collectUUID
+    def uuid
+      collect_uuid
       @uuids
     end
 
@@ -54,7 +54,7 @@ module Puree
     private
 
 
-    def collectUUID
+    def collect_uuid
       response_name = service_response_name
       resp = @response[response_name]['result']['renderedItem']
       arr = []

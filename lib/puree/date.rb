@@ -7,32 +7,32 @@ module Puree
     # @param data [Hash]
     # @return [String]
     def self.iso(data)
-      isoDate = ''
+      iso_date = ''
       year =  data['year']
       month = data['month']
       day = data['day']
       if !year.empty?
-        isoDate << year
+        iso_date << year
       else
-        isoDate
+        iso_date
       end
       if !month.empty?
         # Add leading zero to convert to ISO 8601
         if month.length < 2
           month.insert(0, '0')
         end
-        isoDate << '-' + month
+        iso_date << '-' + month
       else
-        isoDate
+        iso_date
       end
       if !day.empty?
         # Add leading zero to convert to ISO 8601
         if day.length < 2
           day.insert(0, '0')
         end
-        isoDate << '-' + day
+        iso_date << '-' + day
       end
-      isoDate
+      iso_date
     end
 
     private

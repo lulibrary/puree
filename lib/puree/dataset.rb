@@ -58,34 +58,34 @@ module Puree
       else
         return persons
       end
-      internalPersons = []
-      externalPersons = []
+      internal_persons = []
+      external_persons = []
       case data
         when Array
           data.each do |d|
-            person = genericPerson d
+            person = generic_person d
             if d.key? 'person'
               person['uuid'] = d['person']['uuid']
-              internalPersons << person
+              internal_persons << person
             end
             if d.key? 'externalPerson'
               person['uuid'] = d['externalPerson']['uuid']
-              externalPersons << person
+              external_persons << person
             end
           end
         when Hash
-          person = genericPerson data
+          person = generic_person data
           if data.key? 'person'
             person['uuid'] = data['person']['uuid']
-            internalPersons << person
+            internal_persons << person
           end
           if data.key? 'externalPerson'
             person['uuid'] = data['externalPerson']['uuid']
-            externalPersons << person
+            external_persons << person
           end
       end
-      persons['internal'] = internalPersons
-      persons['external'] = externalPersons
+      persons['internal'] = internal_persons
+      persons['external'] = external_persons
       persons
     end
 
@@ -97,13 +97,13 @@ module Puree
       publications = []
       if !data.nil? && !data.empty?
         # convert to array
-        dataArr = []
+        data_arr = []
         if data['relatedContent'].is_a?(Array)
-          dataArr = data['relatedContent']
+          data_arr = data['relatedContent']
         else
-          dataArr[0] = data['relatedContent']
+          data_arr[0] = data['relatedContent']
         end
-        dataArr.each do |d|
+        data_arr.each do |d|
           o = {}
           o['type'] = d['typeClassification']
           o['title'] = d['title']
@@ -142,13 +142,13 @@ module Puree
       data = {}
       data['start'] = {}
       data['end'] = {}
-      startDate = temporalCoverageStartDate
-      if !startDate.nil? && !startDate.empty?
-        data['start'] = startDate
+      start_date = temporal_coverage_start_date
+      if !start_date.nil? && !start_date.empty?
+        data['start'] = start_date
       end
-      endDate = temporalCoverageEndDate
-      if !endDate.nil? && !endDate.empty?
-        data['end'] = endDate
+      end_date = temporal_coverage_end_date
+      if !end_date.nil? && !end_date.empty?
+        data['end'] = end_date
       end
       data
     end
@@ -171,14 +171,14 @@ module Puree
       docs = []
       if !data.nil? && !data.empty?
         # convert to array
-        dataArr = []
+        data_arr = []
         if data['document'].is_a?(Array)
-          dataArr = data['document']
+          data_arr = data['document']
         else
-          dataArr << data['document']
+          data_arr << data['document']
         end
 
-        dataArr.each do |d|
+        data_arr.each do |d|
           doc = {}
           # doc['id'] = d['id']
           doc['name'] = d['fileName']
@@ -192,10 +192,10 @@ module Puree
 
           license = {}
           if d['documentLicense']
-            licenseName = d['documentLicense']['term']['localizedString']['__content__']
-            license['name'] = licenseName
-            licenseURL = d['documentLicense']['description']['localizedString']['__content__']
-            license['url'] = licenseURL
+            license_name = d['documentLicense']['term']['localizedString']['__content__']
+            license['name'] = license_name
+            license_url = d['documentLicense']['description']['localizedString']['__content__']
+            license['url'] = license_url
             doc['license'] = license
           end
           docs << doc
@@ -242,22 +242,22 @@ module Puree
 
     # Assembles basic information about a person
     #
-    # @param genericData [Hash]
+    # @param generic_data [Hash]
     # @return [Hash]
-    def genericPerson(genericData)
+    def generic_person(generic_data)
       person = {}
       name = {}
-      name['first'] = genericData['name']['firstName']
-      name['last'] = genericData['name']['lastName']
+      name['first'] = generic_data['name']['firstName']
+      name['last'] = generic_data['name']['lastName']
       person['name'] = name
-      person['role'] = genericData['personRole']['term']['localizedString']["__content__"]
+      person['role'] = generic_data['personRole']['term']['localizedString']["__content__"]
       person
     end
 
     # Temporal coverage start date
     #
     # @return [Hash]
-    def temporalCoverageStartDate
+    def temporal_coverage_start_date
       data = node('temporalCoverageStartDate')
       !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end
@@ -265,7 +265,7 @@ module Puree
     # Temporal coverage end date
     #
     # @return [Hash]
-    def temporalCoverageEndDate
+    def temporal_coverage_end_date
       data = node('temporalCoverageEndDate')
       !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end

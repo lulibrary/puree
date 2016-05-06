@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
   spec.summary       = %q{A client for the Pure Research Information System API.}
   spec.description   = %q{Consumes the Pure Research Information System API and facilitates post-processing of metadata into simple data structures.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/lulibrary/puree.git"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

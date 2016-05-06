@@ -2,10 +2,6 @@
 
 A Ruby client for the Pure Research Information System API.
 
-## API coverage
-- Version: 5.5.1.
-- Resources: Dataset.
-- Collections: Dataset, Organisation, Person, Project, Publication
 
 ## Installation
 
@@ -70,16 +66,16 @@ d.response.headers # hash
 Collection.
 
 ```ruby
-dc = Puree::Collection.new(:dataset)
+c = Puree::Collection.new(resource_type: :dataset)
 
 # Get minimal datasets, optionally specifying a quantity (default is 20)
-dc.get endpoint: endpoint,
-       username: username,
-       password: password,
-       qty:      1000
+c.get endpoint: endpoint,
+      username: username,
+      password: password,
+      qty:      100000
 
 # Get UUIDs for datasets
-uuids = dc.UUID
+uuids = c.uuid
 
 # Get metadata using UUID
 datasets = []
@@ -91,26 +87,6 @@ uuids.each do |uuid|
           uuid:     uuid
     datasets << d.metadata
 end
-```
-
-## Utilities
-
-### Convert date to ISO 8601 format.
-
-```ruby
-Puree::Date.iso d.available
-```
-```ruby
-{
-  "year"=>"2016",
-  "month"=>"4",
-  "day"=>"18"
-}
-```
-becomes
-
-```ruby
-"2016-04-18"
 ```
 
 
@@ -195,4 +171,62 @@ Date range. If year is present, month and day will have data or an empty string.
     "day"=>"18"
   }
 }
+```
+
+
+## Utilities
+
+### Convert date to ISO 8601 format.
+
+```ruby
+Puree::Date.iso d.available
+```
+```ruby
+{
+  "year"=>"2016",
+  "month"=>"4",
+  "day"=>"18"
+}
+```
+becomes
+
+```ruby
+"2016-04-18"
+```
+
+
+## API coverage
+Version
+
+```ruby
+5.5.1
+```
+
+Resource metadata
+
+```ruby
+:dataset
+```
+
+Resource metadata (single hash only)
+
+```ruby
+:journal
+:organisation
+:person
+:project
+:publication
+:publisher
+```
+
+Collections (for obtaining identifiers)
+
+```ruby
+:dataset
+:journal
+:organisation
+:person
+:project
+:publication
+:publisher
 ```
