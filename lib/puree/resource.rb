@@ -88,9 +88,10 @@ module Puree
     # Node
     #
     # @return [Hash]
-    def node(name)
-      @content ? @content[name] : {}
+    def node(*path)
+      @content ? @content.dig(*path) : {}
     end
+
 
     # Is there any data after get?
     #
@@ -118,6 +119,12 @@ module Puree
         service_api_mode = service + '.current'
       end
       @endpoint + '/' + service_api_mode
+    end
+
+    def xpath_doc
+      xml = @response.body
+      doc = Nokogiri::XML xml
+      doc.remove_namespaces!
     end
 
   end

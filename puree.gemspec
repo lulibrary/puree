@@ -18,5 +18,6 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'httparty', '~> 0'
+  spec.add_runtime_dependency 'httparty', '~> 0.13', '>= 0.13.7'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6', '>= 1.6.7.2'
 end
