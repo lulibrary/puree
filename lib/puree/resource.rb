@@ -88,8 +88,8 @@ module Puree
     # Node
     #
     # @return [Hash]
-    def node(*path)
-      @content ? @content.dig(*path) : {}
+    def node(path)
+      @content ? @content[path] : {}
     end
 
 
@@ -121,10 +121,11 @@ module Puree
       @endpoint + '/' + service_api_mode
     end
 
-    def xpath_doc
+    def xpath_query(path)
       xml = @response.body
       doc = Nokogiri::XML xml
       doc.remove_namespaces!
+      doc.xpath path
     end
 
   end

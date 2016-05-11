@@ -13,7 +13,7 @@ module Puree
     # @return [Array<String>]
     def affiliation
       path = '//organisation/name/localizedString'
-      xpath_result =  xpath_doc.xpath path
+      xpath_result =  xpath_query path
       affiliations = []
       xpath_result.each { |i| affiliations << i.text }
       return affiliations.uniq

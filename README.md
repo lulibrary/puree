@@ -173,6 +173,21 @@ Date range. If year is present, month and day will have data or an empty string.
 }
 ```
 
+## Publication data structures
+
+### file
+An array of files.
+
+```ruby
+[
+  {
+    "name"=>"foo.csv",
+    "mime"=>"application/octet-stream",
+    "size"=>"1616665158",
+    "url"=>"http://example.com/ws/rest/files/12345678/foo.csv",
+  },
+]
+```
 
 ## Utilities
 
@@ -206,6 +221,8 @@ Resource metadata
 
 ```ruby
 :dataset
+:person
+:publication
 ```
 
 Resource metadata (single hash only)
