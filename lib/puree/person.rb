@@ -19,16 +19,47 @@ module Puree
       return affiliations.uniq
     end
 
+    # Image
+    #
+    # @return [Array<String>]
+    def image
+      path = '//photos/file/url'
+      xpath_result =  xpath_query path
+      data = []
+      xpath_result.each { |i| data << i.text }
+      data.uniq
+    end
+
+    # Keyword
+    #
+    # @return [Array<String>]
+    def keyword
+      path = '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+      xpath_result =  xpath_query path
+      data = []
+      xpath_result.each { |i| data << i.text }
+      return data.uniq
+    end
+
+    # Name
+    #
+    # @return [Hash]
+    def name
+      data = node 'name'
+      o = {}
+      if !data.nil? && !data.empty?
+        o['first'] = data['firstName']
+        o['last'] = data['lastName']
+      end
+      o
+    end
+
     # ORCID
     #
     # @return [String]
     def orcid
       data = node 'orcid'
-      if !data.nil? && !data.empty?
-        !data.nil? && !data.empty? ? data : ''
-      else
-        ''
-      end
+      !data.nil? && !data.empty? ? data : ''
     end
 
     # All metadata
@@ -37,6 +68,9 @@ module Puree
     def metadata
       o = {}
       o['affiliation'] = affiliation
+      o['image'] = image
+      o['keyword'] = keyword
+      o['name'] = name
       o['orcid'] = orcid
       o
     end

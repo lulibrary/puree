@@ -135,6 +135,14 @@ module Puree
       end
     end
 
+    # Date of data production
+    #
+    # @return [Hash]
+    def production
+      data = node('dateOfDataProduction')
+      Puree::Date.normalise(data)
+    end
+
     # Temporal coverage
     #
     # @return [Hash]
@@ -224,19 +232,22 @@ module Puree
     # @return [Hash]
     def metadata
       o = {}
-      o['title'] = title
+      o['access'] = access
+      o['available'] = available
       o['description'] = description
+      o['doi'] = doi
+      o['file'] = file
+      o['geographical'] = geographical
       o['keyword'] = keyword
       o['person'] = person
-      o['temporal'] = temporal
-      o['geographical'] = geographical
-      o['file'] = file
+      o['production'] = production
       o['publication'] = publication
-      o['available'] = available
-      o['access'] = access
-      o['doi'] = doi
+      o['temporal'] = temporal
+      o['title'] = title
       o
     end
+
+
 
     private
 

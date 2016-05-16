@@ -40,17 +40,18 @@ d.get uuid:     'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
       password: password
 
 # Filter metadata into simple data structures
-d.title
+d.access
+d.available
 d.description
+d.doi
+d.file
+d.geographical
 d.keyword
 d.person
-d.temporal
-d.geographical
-d.file
+d.production
 d.publication
-d.available
-d.access
-d.doi
+d.temporal
+d.title
 
 # Combine metadata into one simple data structure
 d.metadata
@@ -221,6 +222,7 @@ Resource metadata
 
 ```ruby
 :dataset
+:organisation
 :person
 :publication
 ```
@@ -229,10 +231,7 @@ Resource metadata (single hash only)
 
 ```ruby
 :journal
-:organisation
-:person
 :project
-:publication
 :publisher
 ```
 
