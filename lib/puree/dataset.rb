@@ -8,17 +8,81 @@ module Puree
       super(:dataset)
     end
 
+    # Link
+    #
+    # @return [Array<Hash>]
+    def link
+      path = '//links/link'
+      xpath_result =  xpath_query path
+      data = []
+      xpath_result.each { |i|
+        o = {}
+        o['url'] = i.xpath('url').text
+        o['description'] = i.xpath('description').text
+        data << o
+      }
+      return data.uniq
+    end
+
+    # Publisher
+    #
+    # @return [String]
+    def publisher
+      path = '//publisher/name'
+      xpath_result =  xpath_query path
+      xpath_result ? xpath_result.text : ''
+    end
+
+    # Combines project and publication
+    #
+    # @return [Hash]
+    def associated
+      path = '//associatedContent//relatedContent'
+      xpath_result =  xpath_query path
+      data_arr = []
+      xpath_result.each { |i|
+        data = {}
+        data['type'] = i.xpath('typeClassification').text
+        data['title'] = i.xpath('title').text
+        data['uuid'] = i.attr('uuid')
+        data_arr << data
+      }
+      data_arr.uniq
+    end
+
+
+    # Project
+    #
+    # @return [Array<Hash>]
+    def project
+      associated_type('Research').uniq
+    end
+
+    # Publication
+    #
+    # @return [Array<Hash>]
+    def publication
+      data_arr = []
+      associated.each do |i|
+        if i['type'] != 'Research'
+          data_arr << i
+        end
+      end
+      data_arr.uniq
+    end
+
+
     # Title
     #
     # @return [Array<String>]
     def title
       data = node 'title'
+      data_arr = []
       if !data.nil? && !data.empty?
         data = data['localizedString']["__content__"]
-        data.is_a?(Array) ? data : data.split(',')
-      else
-        []
+        data.is_a?(Array) ? data_arr = data : data_arr << data
       end
+      data_arr.uniq
     end
 
     # Keyword
@@ -26,12 +90,12 @@ module Puree
     # @return [Array<String>]
     def keyword
       data = node 'keywordGroups'
+      data_arr = []
       if !data.nil? && !data.empty?
         data = data['keywordGroup']['keyword']['userDefinedKeyword']['freeKeyword']
-        data.is_a?(Array) ? data : data.split(',')
-      else
-        []
+        data.is_a?(Array) ? data_arr = data : data_arr << data
       end
+      data_arr.uniq
     end
 
     # Description
@@ -39,17 +103,17 @@ module Puree
     # @return [Array<String>]
     def description
       data = node 'descriptions'
+      data_arr = []
       if !data.nil? && !data.empty?
         data = data['classificationDefinedField']['value']['localizedString']['__content__'].tr("\n", '')
-        data.is_a?(Array) ? data : data.split(',')
-      else
-        []
+        data.is_a?(Array) ? data_arr = data : data_arr << data
       end
+      data_arr.uniq
     end
 
-    # Person, internal and external
+    # Person (internal, external, other)
     #
-    # @return [Hash<Array, Array>]
+    # @return [Hash]
     def person
       data = node('persons')
       persons = {}
@@ -60,6 +124,7 @@ module Puree
       end
       internal_persons = []
       external_persons = []
+      other_persons = []
       case data
         when Array
           data.each do |d|
@@ -72,6 +137,10 @@ module Puree
               person['uuid'] = d['externalPerson']['uuid']
               external_persons << person
             end
+            if !d.key?('person') && !d.key?('externalPerson')
+              person['uuid'] = ''
+              other_persons << person
+            end
           end
         when Hash
           person = generic_person data
@@ -83,36 +152,18 @@ module Puree
             person['uuid'] = data['externalPerson']['uuid']
             external_persons << person
           end
+          if !data.key?('person') && !data.key?('externalPerson')
+            person['uuid'] = ''
+            other_persons << person
+          end
       end
-      persons['internal'] = internal_persons
-      persons['external'] = external_persons
+      persons['internal'] = internal_persons.uniq
+      persons['external'] = external_persons.uniq
+      persons['other'] = other_persons.uniq
       persons
     end
 
-    # Publication
-    #
-    # @return [Array<Hash>]
-    def publication
-      data = node('relatedPublications')
-      publications = []
-      if !data.nil? && !data.empty?
-        # convert to array
-        data_arr = []
-        if data['relatedContent'].is_a?(Array)
-          data_arr = data['relatedContent']
-        else
-          data_arr[0] = data['relatedContent']
-        end
-        data_arr.each do |d|
-          o = {}
-          o['type'] = d['typeClassification']
-          o['title'] = d['title']
-          o['uuid'] = d['uuid']
-          publications << o
-        end
-      end
-      publications
-    end
+
 
     # Date made available
     #
@@ -129,7 +180,7 @@ module Puree
       data = node 'geographicalCoverage'
       if !data.nil? && !data.empty?
         data = data['localizedString']["__content__"]
-        data.is_a?(Array) ? data : data.split(',')
+        data.is_a?(Array) ? data.uniq : data.split(',').map(&:strip).uniq
       else
         []
       end
@@ -139,26 +190,15 @@ module Puree
     #
     # @return [Hash]
     def production
-      data = node('dateOfDataProduction')
-      Puree::Date.normalise(data)
+      temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
     end
+
 
     # Temporal coverage
     #
     # @return [Hash]
     def temporal
-      data = {}
-      data['start'] = {}
-      data['end'] = {}
-      start_date = temporal_coverage_start_date
-      if !start_date.nil? && !start_date.empty?
-        data['start'] = start_date
-      end
-      end_date = temporal_coverage_end_date
-      if !end_date.nil? && !end_date.empty?
-        data['end'] = end_date
-      end
-      data
+      temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
     end
 
     # Open access permission
@@ -210,7 +250,7 @@ module Puree
 
         end
       end
-      docs
+      docs.uniq
     end
 
     # Digital Object Identifier
@@ -233,15 +273,19 @@ module Puree
     def metadata
       o = {}
       o['access'] = access
+      o['associated'] = associated
       o['available'] = available
       o['description'] = description
       o['doi'] = doi
       o['file'] = file
       o['geographical'] = geographical
       o['keyword'] = keyword
+      o['link'] = link
       o['person'] = person
+      o['project'] = project
       o['production'] = production
       o['publication'] = publication
+      o['publisher'] = publisher
       o['temporal'] = temporal
       o['title'] = title
       o
@@ -250,6 +294,8 @@ module Puree
 
 
     private
+
+
 
     # Assembles basic information about a person
     #
@@ -265,20 +311,57 @@ module Puree
       person
     end
 
+    # Temporal range
+    #
+    # @return [Hash]
+    def temporal_range(start_node, end_node)
+      data = {}
+      data['start'] = {}
+      data['end'] = {}
+      start_date = temporal_start_date start_node
+      if !start_date.nil? && !start_date.empty?
+        data['start'] = start_date
+      end
+      end_date = temporal_end_date end_node
+      if !end_date.nil? && !end_date.empty?
+        data['end'] = end_date
+      end
+      data
+    end
+
     # Temporal coverage start date
     #
     # @return [Hash]
-    def temporal_coverage_start_date
-      data = node('temporalCoverageStartDate')
+    def temporal_start_date(start_node)
+      data = node start_node
       !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end
 
     # Temporal coverage end date
     #
     # @return [Hash]
-    def temporal_coverage_end_date
-      data = node('temporalCoverageEndDate')
+    def temporal_end_date(end_node)
+      data = node end_node
       !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
     end
+
+    # Associated type
+    #
+    # @return [Hash]
+    def associated_type(type)
+      associated_arr = associated
+      data_arr = []
+      associated_arr.each do |i|
+        data = {}
+        if i['type'] === type
+          data['title'] = i['title']
+          data['uuid'] = i['uuid']
+          data_arr << data
+        end
+      end
+      data_arr
+    end
+
   end
+
 end

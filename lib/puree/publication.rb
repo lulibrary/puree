@@ -16,7 +16,7 @@ module Puree
       xpath_result =  xpath_query path
       data_arr = []
       xpath_result.each { |i| data_arr << i.text }
-      data_arr
+      data_arr.uniq
     end
 
     # Digital Object Identifier
@@ -44,7 +44,7 @@ module Puree
         doc['url'] = d.xpath('url').text
         docs << doc
       end
-      docs
+      docs.uniq
     end
 
     # Title
@@ -55,7 +55,7 @@ module Puree
       xpath_result =  xpath_query path
       data_arr = []
       xpath_result.each { |i| data_arr << i.text }
-      data_arr
+      data_arr.uniq
     end
 
     # Subtitle
@@ -66,7 +66,7 @@ module Puree
       xpath_result =  xpath_query path
       data_arr = []
       xpath_result.each { |i| data_arr << i.text }
-      data_arr
+      data_arr.uniq
     end
 
     # All metadata

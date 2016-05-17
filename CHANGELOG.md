@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.10.0 - 2016-05-17
+### Added
+- Dataset metadata (associated, link, project, production as range, person for those without uuid, publication for all research outputs, publisher).
+### Fixed
+- Dataset metadata (description splitting, geographical stripping).
+
 ## 0.9.0 - 2016-05-16
 ### Added
 - Dataset metadata (production).

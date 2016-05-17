@@ -41,6 +41,7 @@ d.get uuid:     'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
 
 # Filter metadata into simple data structures
 d.access
+d.associated
 d.available
 d.description
 d.doi
@@ -48,6 +49,7 @@ d.file
 d.geographical
 d.keyword
 d.person
+d.project
 d.production
 d.publication
 d.temporal
@@ -123,8 +125,20 @@ An array of files.
 ]
 ```
 
+### link
+An array of links.
+
+```ruby
+[
+  {
+    "url": "http://www.example.com/~abc1234/xyz/",
+    "description": "An interesting description"
+  },
+]
+```
+
 ### person
-Contains an array of internal persons and an array of external persons.
+Contains an array of internal persons, an array of external persons and an array of other persons.
 
 ```ruby
 {
@@ -139,20 +153,65 @@ Contains an array of internal persons and an array of external persons.
     },
   ],
   "external"=>[
+  ],
+  "other"=>[
+      "name"=>{
+        "first"=>"Hal",
+        "last"=>"Roach"
+      },
+      "role"=>"Contributor",
+      "uuid"=>""
   ]
 }
 ```
 
-### publication
-An array of related publications.
+### project
+An array of projects associated with the dataset.
 
 ```ruby
 [
   {
-    "type"=>"Journal article",
-    "title"=>"An interesting title",
-    "uuid"=>"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+    "title": "An interesting project title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
   },
+]
+```
+
+### publication
+An array of research outputs associated with the dataset.
+
+```ruby
+[
+  {
+    "type": "Journal article",
+    "title": "An interesting journal article title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  },
+  {
+    "type": "Conference paper",
+    "title": "An interesting conference paper title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  },
+  {
+    "type": "Working paper",
+    "title": "An interesting working paper title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  },
+  {
+    "type": "Paper",
+    "title": "An interesting paper title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  },
+  {
+    "type": "Dataset",
+    "title": "An interesting dataset title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  },
+  {
+    "type": "Chapter",
+    "title": "An interesting chapter title",
+    "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+  }
 ]
 ```
 
