@@ -10,13 +10,11 @@ module Puree
 
     # Description
     #
-    # @return [Array<String>]
+    # @return [String]
     def description
       path = '//abstract/localizedString'
       xpath_result =  xpath_query path
-      data_arr = []
-      xpath_result.each { |i| data_arr << i.text }
-      data_arr.uniq
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Digital Object Identifier
@@ -25,7 +23,7 @@ module Puree
     def doi
       path = '//doi'
       xpath_result =  xpath_query path
-      xpath_result ? xpath_result.text : ''
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Supporting file
@@ -38,10 +36,10 @@ module Puree
       xpath_result.each do |d|
         doc = {}
         # doc['id'] = d.xpath('id').text
-        doc['name'] = d.xpath('fileName').text
-        doc['mime'] = d.xpath('mimeType').text
-        doc['size'] = d.xpath('size').text
-        doc['url'] = d.xpath('url').text
+        doc['name'] = d.xpath('fileName').text.strip
+        doc['mime'] = d.xpath('mimeType').text.strip
+        doc['size'] = d.xpath('size').text.strip
+        doc['url'] = d.xpath('url').text.strip
         docs << doc
       end
       docs.uniq
@@ -49,24 +47,20 @@ module Puree
 
     # Title
     #
-    # @return [Array<String>]
+    # @return [String]
     def title
       path = '//content/title'
       xpath_result =  xpath_query path
-      data_arr = []
-      xpath_result.each { |i| data_arr << i.text }
-      data_arr.uniq
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Subtitle
     #
-    # @return [Array<String>]
+    # @return [String]
     def subtitle
       path = '//content/subtitle'
       xpath_result =  xpath_query path
-      data_arr = []
-      xpath_result.each { |i| data_arr << i.text }
-      data_arr.uniq
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # All metadata

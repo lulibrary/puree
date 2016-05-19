@@ -17,8 +17,8 @@ module Puree
       data = []
       xpath_result.each { |i|
         o = {}
-        o['url'] = i.xpath('url').text
-        o['description'] = i.xpath('description').text
+        o['url'] = i.xpath('url').text.strip
+        o['description'] = i.xpath('description').text.strip
         data << o
       }
       return data.uniq
@@ -30,7 +30,7 @@ module Puree
     def publisher
       path = '//publisher/name'
       xpath_result =  xpath_query path
-      xpath_result ? xpath_result.text : ''
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Combines project and publication
@@ -42,14 +42,13 @@ module Puree
       data_arr = []
       xpath_result.each { |i|
         data = {}
-        data['type'] = i.xpath('typeClassification').text
-        data['title'] = i.xpath('title').text
-        data['uuid'] = i.attr('uuid')
+        data['type'] = i.xpath('typeClassification').text.strip
+        data['title'] = i.xpath('title').text.strip
+        data['uuid'] = i.attr('uuid').strip
         data_arr << data
       }
       data_arr.uniq
     end
-
 
     # Project
     #
@@ -74,41 +73,30 @@ module Puree
 
     # Title
     #
-    # @return [Array<String>]
+    # @return [String]
     def title
-      data = node 'title'
-      data_arr = []
-      if !data.nil? && !data.empty?
-        data = data['localizedString']["__content__"]
-        data.is_a?(Array) ? data_arr = data : data_arr << data
-      end
-      data_arr.uniq
+      path = '//title/localizedString'
+      xpath_result =  xpath_query path
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Keyword
     #
     # @return [Array<String>]
     def keyword
-      data = node 'keywordGroups'
-      data_arr = []
-      if !data.nil? && !data.empty?
-        data = data['keywordGroup']['keyword']['userDefinedKeyword']['freeKeyword']
-        data.is_a?(Array) ? data_arr = data : data_arr << data
-      end
+      path = '//keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+      xpath_result =  xpath_query path
+      data_arr = xpath_result.map { |i| i.text.strip }
       data_arr.uniq
     end
 
     # Description
     #
-    # @return [Array<String>]
+    # @return [String]
     def description
-      data = node 'descriptions'
-      data_arr = []
-      if !data.nil? && !data.empty?
-        data = data['classificationDefinedField']['value']['localizedString']['__content__'].tr("\n", '')
-        data.is_a?(Array) ? data_arr = data : data_arr << data
-      end
-      data_arr.uniq
+      path = '//descriptions/classificationDefinedField/value/localizedString'
+      xpath_result =  xpath_query path
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # Person (internal, external, other)
@@ -130,11 +118,11 @@ module Puree
           data.each do |d|
             person = generic_person d
             if d.key? 'person'
-              person['uuid'] = d['person']['uuid']
+              person['uuid'] = d['person']['uuid'].strip
               internal_persons << person
             end
             if d.key? 'externalPerson'
-              person['uuid'] = d['externalPerson']['uuid']
+              person['uuid'] = d['externalPerson']['uuid'].strip
               external_persons << person
             end
             if !d.key?('person') && !d.key?('externalPerson')
@@ -145,11 +133,11 @@ module Puree
         when Hash
           person = generic_person data
           if data.key? 'person'
-            person['uuid'] = data['person']['uuid']
+            person['uuid'] = data['person']['uuid'].strip
             internal_persons << person
           end
           if data.key? 'externalPerson'
-            person['uuid'] = data['externalPerson']['uuid']
+            person['uuid'] = data['externalPerson']['uuid'].strip
             external_persons << person
           end
           if !data.key?('person') && !data.key?('externalPerson')
@@ -206,7 +194,7 @@ module Puree
     # @return [String]
     def access
       data = node 'openAccessPermission'
-      !data.nil? && !data.empty? ? data['term']['localizedString']["__content__"] : ''
+      !data.nil? && !data.empty? ? data['term']['localizedString']["__content__"].strip : ''
     end
 
 
@@ -214,41 +202,31 @@ module Puree
     #
     # @return [Array<Hash>]
     def file
-      data = node 'documents'
+      path = '//documents/document'
+      xpath_result =  xpath_query path
 
       docs = []
-      if !data.nil? && !data.empty?
-        # convert to array
-        data_arr = []
-        if data['document'].is_a?(Array)
-          data_arr = data['document']
-        else
-          data_arr << data['document']
-        end
 
-        data_arr.each do |d|
-          doc = {}
-          # doc['id'] = d['id']
-          doc['name'] = d['fileName']
-          doc['mime'] = d['mimeType']
-          doc['size'] = d['size']
-          doc['url'] = d['url']
-          doc['title'] = d['title']
-          # doc['createdDate'] = doc['createdDate']
-          # doc['visibleOnPortalDate'] = doc['visibleOnPortalDate']
-          # doc['limitedVisibility'] = doc['limitedVisibility']
+      xpath_result.each do |d|
+        doc = {}
+        # doc['id'] = f.xpath('id').text.strip
+        doc['name'] = d.xpath('fileName').text.strip
+        doc['mime'] = d.xpath('mimeType').text.strip
+        doc['size'] = d.xpath('size').text.strip
+        doc['url'] = d.xpath('url').text.strip
+        doc['title'] = d.xpath('title').text.strip
+        # doc['createdDate'] = d.xpath('createdDate').text.strip
+        # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
+        # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
 
-          license = {}
-          if d['documentLicense']
-            license_name = d['documentLicense']['term']['localizedString']['__content__']
-            license['name'] = license_name
-            license_url = d['documentLicense']['description']['localizedString']['__content__']
-            license['url'] = license_url
-            doc['license'] = license
-          end
-          docs << doc
+        license = {}
+        license_name = d.xpath('documentLicense/term/localizedString').text.strip
+        license['name'] = license_name
+        license_url = d.xpath('documentLicense/description/localizedString').text.strip
+        license['url'] = license_url
+        doc['license'] = license
+        docs << doc
 
-        end
       end
       docs.uniq
     end
@@ -257,8 +235,9 @@ module Puree
     #
     # @return [String]
     def doi
-      data = node 'doi'
-      !data.nil? && !data.empty? ? data['doi'] : ''
+      path = '//content/doi'
+      xpath_result =  xpath_query path
+      xpath_result ? xpath_result.text.strip : ''
     end
 
     # def state

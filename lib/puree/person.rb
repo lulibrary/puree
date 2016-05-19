@@ -48,8 +48,8 @@ module Puree
       data = node 'name'
       o = {}
       if !data.nil? && !data.empty?
-        o['first'] = data['firstName']
-        o['last'] = data['lastName']
+        o['first'] = data['firstName'].strip
+        o['last'] = data['lastName'].strip
       end
       o
     end
@@ -59,7 +59,7 @@ module Puree
     # @return [String]
     def orcid
       data = node 'orcid'
-      !data.nil? && !data.empty? ? data : ''
+      !data.nil? && !data.empty? ? data.strip : ''
     end
 
     # All metadata

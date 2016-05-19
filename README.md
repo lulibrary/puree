@@ -48,10 +48,12 @@ d.doi
 d.file
 d.geographical
 d.keyword
+d.link
 d.person
-d.project
 d.production
+d.project
 d.publication
+d.publisher
 d.temporal
 d.title
 
@@ -215,7 +217,7 @@ An array of research outputs associated with the dataset.
 ]
 ```
 
-### temporal
+### production, temporal
 Date range. If year is present, month and day will have data or an empty string.
 
 ```ruby
@@ -231,6 +233,23 @@ Date range. If year is present, month and day will have data or an empty string.
     "day"=>"18"
   }
 }
+```
+
+## Organisation data structures
+
+### address
+An array of addresses.
+
+```ruby
+[
+  {
+    "street"=>"Lancaster University",
+    "building"=>"Bowland North",
+    "postcode"=>"LA1 4YN",
+    "city"=>"Lancaster",
+    "country"=>"United Kingdom"
+  }
+]
 ```
 
 ## Publication data structures
@@ -281,6 +300,7 @@ Resource metadata
 
 ```ruby
 :dataset
+:event
 :organisation
 :person
 :publication
@@ -298,6 +318,7 @@ Collections (for obtaining identifiers)
 
 ```ruby
 :dataset
+:event
 :journal
 :organisation
 :person

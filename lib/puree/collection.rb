@@ -37,7 +37,7 @@ module Puree
         query['window.size'] = @options[:qty]
       end
 
-      @response = HTTParty.get(url, query: query, headers: headers)
+      @response = HTTParty.get(build_url, query: query, headers: headers)
     end
 
 

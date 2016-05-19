@@ -4,6 +4,7 @@ module Puree
 
     def initialize
       @convention = %w(
+        event
         journal
         organisation
         person

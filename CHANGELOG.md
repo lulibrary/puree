@@ -2,9 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.0 - 2016-05-19
+### Added
+- Event metadata (city, country, date, description, location, title, type).
+- Organisation metadata (address, email, phone, type, url).
+
+### Changed
+- Dataset metadata (return string not array for description, title).
+- Publication metadata (return string not array for description, subtitle, title).
+
 ## 0.10.0 - 2016-05-17
 ### Added
 - Dataset metadata (associated, link, project, production as range, person for those without uuid, publication for all research outputs, publisher).
+
 ### Fixed
 - Dataset metadata (description splitting, geographical stripping).
 

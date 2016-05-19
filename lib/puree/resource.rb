@@ -43,7 +43,11 @@ module Puree
         end
       end
 
-      @response = HTTParty.get(url, query: query, headers: headers)
+      begin
+        @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
+      rescue HTTParty::Error => e
+        puts 'HttParty::Error '+ e.message
+      end
 
       if get_data?
         response_name = service_response_name
@@ -111,7 +115,7 @@ module Puree
       @api_map[:resource_type][resource_type][:response]
     end
 
-    def url
+    def build_url
       service = service_name
       if @options[:latest_api] === false
         service_api_mode = service
