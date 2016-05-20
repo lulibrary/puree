@@ -43,12 +43,14 @@ d.get uuid:     'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
 d.access
 d.associated
 d.available
+d.created
 d.description
 d.doi
 d.file
 d.geographical
 d.keyword
 d.link
+d.modified
 d.person
 d.production
 d.project
@@ -94,10 +96,11 @@ uuids.each do |uuid|
 end
 ```
 
+## Data structures
 
-## Dataset data structures
+### Dataset
 
-### available
+#### available
 Date made available. If year is present, month and day will have data or an empty string.
 
 ```ruby
@@ -108,7 +111,7 @@ Date made available. If year is present, month and day will have data or an empt
 }
 ```
 
-### file
+#### file
 An array of files.
 
 ```ruby
@@ -127,7 +130,7 @@ An array of files.
 ]
 ```
 
-### link
+#### link
 An array of links.
 
 ```ruby
@@ -139,7 +142,7 @@ An array of links.
 ]
 ```
 
-### person
+#### person
 Contains an array of internal persons, an array of external persons and an array of other persons.
 
 ```ruby
@@ -167,7 +170,7 @@ Contains an array of internal persons, an array of external persons and an array
 }
 ```
 
-### project
+#### project
 An array of projects associated with the dataset.
 
 ```ruby
@@ -179,7 +182,7 @@ An array of projects associated with the dataset.
 ]
 ```
 
-### publication
+#### publication
 An array of research outputs associated with the dataset.
 
 ```ruby
@@ -217,7 +220,7 @@ An array of research outputs associated with the dataset.
 ]
 ```
 
-### production, temporal
+#### production, temporal
 Date range. If year is present, month and day will have data or an empty string.
 
 ```ruby
@@ -235,9 +238,9 @@ Date range. If year is present, month and day will have data or an empty string.
 }
 ```
 
-## Organisation data structures
+### Organisation
 
-### address
+#### address
 An array of addresses.
 
 ```ruby
@@ -252,9 +255,9 @@ An array of addresses.
 ]
 ```
 
-## Publication data structures
+### Publication
 
-### file
+#### file
 An array of files.
 
 ```ruby
@@ -306,7 +309,7 @@ Resource metadata
 :publication
 ```
 
-Resource metadata (single hash only)
+Resource metadata (system data and single hash only)
 
 ```ruby
 :journal

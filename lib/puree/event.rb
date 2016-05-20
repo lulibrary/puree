@@ -72,7 +72,7 @@ module Puree
     #
     # @return [Hash]
     def metadata
-      o = {}
+      o = super
       o['city'] = city
       o['country'] = country
       o['date'] = date

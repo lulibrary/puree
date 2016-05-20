@@ -32,6 +32,10 @@ describe 'Dataset' do
       expect(@p.available).to be_an_instance_of(Hash)
     end
 
+    it '#created' do
+      expect(@p.created).to be_an_instance_of(String)
+    end
+
     it '#description' do
       expect(@p.description).to be_an_instance_of(String)
     end
@@ -58,6 +62,10 @@ describe 'Dataset' do
 
     it '#metadata' do
       expect(@p.metadata).to be_an_instance_of(Hash)
+    end
+
+    it '#modified' do
+      expect(@p.modified).to be_an_instance_of(String)
     end
 
     it '#person' do

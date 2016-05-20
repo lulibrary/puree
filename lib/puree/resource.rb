@@ -83,7 +83,40 @@ module Puree
       @content ? @content : {}
     end
 
+    # Created (UTC datetime)
+    #
+    # @return [String]
+    def created
+      data = node 'created'
+      !data.nil? && !data.empty? ? data.strip : ''
+    end
 
+    # Modified (UTC datetime)
+    #
+    # @return [String]
+    def modified
+      data = node 'modified'
+      !data.nil? && !data.empty? ? data.strip : ''
+    end
+
+    # UUID
+    #
+    # @return [String]
+    def uuid
+      data = node 'uuid'
+      !data.nil? && !data.empty? ? data.strip : ''
+    end
+
+    # All metadata
+    #
+    # @return [Hash]
+    def metadata
+      o = {}
+      o['uuid'] = uuid
+      o['created'] = created
+      o['modified'] = modified
+      o
+    end
 
     private
 
@@ -131,6 +164,7 @@ module Puree
       doc.remove_namespaces!
       doc.xpath path
     end
+
 
   end
 end

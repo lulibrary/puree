@@ -13,7 +13,7 @@ module Puree
     # @return [Array<Hash>]
     def link
       path = '//links/link'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       data = []
       xpath_result.each { |i|
         o = {}
@@ -29,7 +29,7 @@ module Puree
     # @return [String]
     def publisher
       path = '//publisher/name'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -76,7 +76,7 @@ module Puree
     # @return [String]
     def title
       path = '//title/localizedString'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -95,7 +95,7 @@ module Puree
     # @return [String]
     def description
       path = '//descriptions/classificationDefinedField/value/localizedString'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -203,7 +203,7 @@ module Puree
     # @return [Array<Hash>]
     def file
       path = '//documents/document'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
 
       docs = []
 
@@ -236,7 +236,7 @@ module Puree
     # @return [String]
     def doi
       path = '//content/doi'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -250,7 +250,7 @@ module Puree
     #
     # @return [Hash]
     def metadata
-      o = {}
+      o = super
       o['access'] = access
       o['associated'] = associated
       o['available'] = available

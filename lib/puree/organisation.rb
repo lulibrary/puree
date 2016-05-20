@@ -64,7 +64,7 @@ module Puree
     # @return [String]
     def type
       path = '//content/typeClassification/term/localizedString'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -73,7 +73,7 @@ module Puree
     # @return [Array<String>]
     def url
       path = '//content/webAddresses/classificationDefinedFieldExtension/value/localizedString'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       arr = []
       xpath_result.each { |i| arr << i.text.strip }
       arr.uniq
@@ -83,7 +83,7 @@ module Puree
     #
     # @return [Hash]
     def metadata
-      o = {}
+      o = super
       o['address'] = address
       o['email'] = email
       o['name'] = name

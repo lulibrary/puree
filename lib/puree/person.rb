@@ -16,7 +16,7 @@ module Puree
       xpath_result =  xpath_query path
       affiliations = []
       xpath_result.each { |i| affiliations << i.text }
-      return affiliations.uniq
+      affiliations.uniq
     end
 
     # Image
@@ -38,7 +38,7 @@ module Puree
       xpath_result =  xpath_query path
       data = []
       xpath_result.each { |i| data << i.text }
-      return data.uniq
+      data.uniq
     end
 
     # Name
@@ -66,7 +66,7 @@ module Puree
     #
     # @return [Hash]
     def metadata
-      o = {}
+      o = super
       o['affiliation'] = affiliation
       o['image'] = image
       o['keyword'] = keyword

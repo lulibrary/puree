@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.12.0 - 2016-05-20
+### Added
+- Resource (created, modified, uuid).
+
 ## 0.11.0 - 2016-05-19
 ### Added
 - Event metadata (city, country, date, description, location, title, type).

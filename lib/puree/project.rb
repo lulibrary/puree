@@ -8,6 +8,13 @@ module Puree
       super(:project)
     end
 
+    # All metadata
+    #
+    # @return [Hash]
+    def metadata
+      super
+    end
+
   end
 
 end

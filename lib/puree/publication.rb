@@ -50,7 +50,7 @@ module Puree
     # @return [String]
     def title
       path = '//content/title'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -59,7 +59,7 @@ module Puree
     # @return [String]
     def subtitle
       path = '//content/subtitle'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query path
       xpath_result ? xpath_result.text.strip : ''
     end
 
@@ -67,7 +67,7 @@ module Puree
     #
     # @return [Hash]
     def metadata
-      o = {}
+      o = super
       o['description'] = description
       o['doi'] = doi
       o['file'] = file

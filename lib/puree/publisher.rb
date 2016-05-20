@@ -8,6 +8,13 @@ module Puree
       super(:publisher)
     end
 
+    # All metadata
+    #
+    # @return [Hash]
+    def metadata
+      super
+    end
+
   end
 
 end

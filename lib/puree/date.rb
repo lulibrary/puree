@@ -2,7 +2,7 @@ module Puree
 
   module Date
 
-    # Converts a date with three components (year, month, day) to ISO8601 format
+    # Converts a date with three components (year, month, day) to ISO 8601 date format
     #
     # @param data [Hash]
     # @return [String]
@@ -17,7 +17,7 @@ module Puree
         iso_date
       end
       if !month.empty?
-        # Add leading zero to convert to ISO 8601
+        # Add leading zero to convert to ISO 8601 date component
         if month.length < 2
           month.insert(0, '0')
         end
@@ -26,7 +26,7 @@ module Puree
         iso_date
       end
       if !day.empty?
-        # Add leading zero to convert to ISO 8601
+        # Add leading zero to convert to ISO 8601 date component
         if day.length < 2
           day.insert(0, '0')
         end
