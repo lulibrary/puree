@@ -75,11 +75,16 @@ Collection.
 ```ruby
 c = Puree::Collection.new(resource_type: :dataset)
 
-# Get minimal datasets, optionally specifying a quantity (default is 20)
-c.get endpoint: endpoint,
-      username: username,
-      password: password,
-      qty:      100000
+# Get three minimal datasets, starting at record ten, created and modified in January 2016.
+c.get endpoint:       endpoint,
+      username:       username,
+      password:       password,
+      limit:          3,  # optional, default 20
+      offset:         10, # optional, default 0
+      created_start:  '2016-01-01', # optional
+      created_end:    '2016-01-31', # optional
+      modified_start: '2016-01-01', # optional
+      modified_end:   '2016-01-31'  # optional
 
 # Get UUIDs for datasets
 uuids = c.uuid
@@ -160,12 +165,14 @@ Contains an array of internal persons, an array of external persons and an array
   "external"=>[
   ],
   "other"=>[
+    {
       "name"=>{
         "first"=>"Hal",
         "last"=>"Roach"
       },
       "role"=>"Contributor",
       "uuid"=>""
+    },
   ]
 }
 ```
@@ -216,7 +223,7 @@ An array of research outputs associated with the dataset.
     "type": "Chapter",
     "title": "An interesting chapter title",
     "uuid": "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
-  }
+  },
 ]
 ```
 
@@ -251,7 +258,7 @@ An array of addresses.
     "postcode"=>"LA1 4YN",
     "city"=>"Lancaster",
     "country"=>"United Kingdom"
-  }
+  },
 ]
 ```
 

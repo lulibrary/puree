@@ -17,17 +17,22 @@ module Puree
     # @param uuid [String]
     # @param id [String]
     # @return [HTTParty::Response]
-    def get(endpoint:nil, username:nil, password:nil, uuid:nil, id:nil)
+    def get(endpoint:       nil,
+            username:       nil,
+            password:       nil,
+            uuid:           nil,
+            id:             nil
+    )
       # strip any trailing slash
       @endpoint = endpoint.sub(/(\/)+$/, '')
       @auth = Base64::strict_encode64(username + ':' + password)
 
       @options = {
-          latest_api: true,
+          latest_api:     true,
           resource_type: @resource_type.to_sym,
-          rendering: :xml_long,
-          uuid: uuid,
-          id: id,
+          rendering:      :xml_long,
+          uuid:           uuid,
+          id:             id
       }
       headers = {
           'Accept' => 'application/xml',
@@ -35,6 +40,7 @@ module Puree
       }
       query = {}
       query['rendering'] = @options[:rendering]
+
       if @options[:uuid]
         query['uuids.uuid'] = @options[:uuid]
       else
