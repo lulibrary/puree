@@ -1,14 +1,14 @@
 module Puree
 
-  # Project resource
+  # Download resource
   #
-  class Project < Resource
+  class Download < Resource
 
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
     def initialize(endpoint: nil, username: nil, password: nil)
-      super(api: :project,
+      super(api: :download,
             endpoint: endpoint,
             username: username,
             password: password)
@@ -17,9 +17,9 @@ module Puree
     # All metadata
     #
     # @return [Hash]
-    def metadata
-      super
-    end
+    # def metadata
+    #   super
+    # end
 
   end
 

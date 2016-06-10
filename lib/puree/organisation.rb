@@ -4,8 +4,14 @@ module Puree
   #
   class Organisation < Resource
 
-    def initialize
-      super(:organisation)
+    # @param endpoint [String]
+    # @param optional username [String]
+    # @param optional password [String]
+    def initialize(endpoint: nil, username: nil, password: nil)
+      super(api: :organisation,
+            endpoint: endpoint,
+            username: username,
+            password: password)
     end
 
     # Address
@@ -48,6 +54,18 @@ module Puree
       !data.nil? && !data.empty? ? data['localizedString']['__content__'].strip : ''
     end
 
+    # Parent
+    #
+    # @return [Hash]
+    def parent
+      data = organisation
+      o = {}
+      if !data.empty?
+        o = data.first
+      end
+      o
+    end
+
     # Phone
     #
     # @return [Array<String>]
@@ -87,11 +105,36 @@ module Puree
       o['address'] = address
       o['email'] = email
       o['name'] = name
+      o['parent'] = parent
       o['phone'] = phone
       o['type'] = type
       o['url'] = url
       o
     end
+
+
+    private
+
+
+    # Organisation
+    #
+    # @return [Array<Hash>]
+    def organisation
+      path = '//organisations/organisation'
+      xpath_result =  xpath_query path
+
+      data = []
+
+      xpath_result.each do |d|
+        o = {}
+        o['uuid'] = d.xpath('@uuid').text.strip
+        o['name'] = d.xpath('name/localizedString').text.strip
+        o['type'] = d.xpath('typeClassification/term/localizedString').text.strip
+        data << o
+      end
+      data.uniq
+    end
+
 
   end
 

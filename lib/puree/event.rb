@@ -4,8 +4,14 @@ module Puree
   #
   class Event < Resource
 
-    def initialize
-      super(:event)
+    # @param endpoint [String]
+    # @param optional username [String]
+    # @param optional password [String]
+    def initialize(endpoint: nil, username: nil, password: nil)
+      super(api: :event,
+            endpoint: endpoint,
+            username: username,
+            password: password)
     end
 
     # City

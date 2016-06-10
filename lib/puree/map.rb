@@ -17,8 +17,13 @@ module Puree
         resource_type: {
           dataset: {
             service: 'datasets',
-            response: 'GetDataSetsResponse'
-          }
+            response: 'GetDataSetsResponse',
+            family: 'dk.atira.pure.modules.datasets.external.model.dataset.DataSet'
+          },
+          download: {
+              service: 'downloadcount',
+              response: 'GetDownloadCountResponse'
+          },
         }
       }
 

@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+- Download stats.
+
+## 0.14.0 - 2016-06-10
+### Added
+- Dataset (organisation).
+- Organisation (parent).
+- Credentials set globally.
+- Global credentials override in ctor of resource.
+- Find as alias for get.
+
+### Removed
+- Credentials passed with get.
+
 ## 0.13.0 - 2016-05-20
 ### Added
 - Collection server-side search by date range (created, modified) and paging.

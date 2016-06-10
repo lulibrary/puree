@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Collection' do
 
   it '#new' do
-    p = Puree::Collection.new(resource_type: :dataset)
+    p = Puree::Collection.new(api: :dataset)
     expect(p).to be_an_instance_of Puree::Collection
   end
 
@@ -12,10 +12,11 @@ describe 'Collection' do
       endpoint = ENV['PURE_ENDPOINT']
       username = ENV['PURE_USERNAME']
       password = ENV['PURE_PASSWORD']
-      @p = Puree::Collection.new(resource_type: :dataset)
-      @p.get endpoint: endpoint,
-             username: username,
-             password: password
+      @p = Puree::Collection.new(api: :dataset,
+                                 endpoint: endpoint,
+                                 username: username,
+                                 password: password)
+      @p.find limit: 5
     end
 
     it '#UUID' do

@@ -4,8 +4,14 @@ module Puree
   #
   class Publication < Resource
 
-    def initialize
-      super(:publication)
+    # @param endpoint [String]
+    # @param optional username [String]
+    # @param optional password [String]
+    def initialize(endpoint: nil, username: nil, password: nil)
+      super(api: :publication,
+            endpoint: endpoint,
+            username: username,
+            password: password)
     end
 
     # Description

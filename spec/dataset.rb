@@ -13,11 +13,10 @@ describe 'Dataset' do
       username = ENV['PURE_USERNAME']
       password = ENV['PURE_PASSWORD']
       uuid = ENV['PURE_DATASET_UUID']
-      @p = Puree::Dataset.new
-      @p.get endpoint: endpoint,
-             username: username,
-             password: password,
-             uuid: uuid
+      @p = Puree::Dataset.new(endpoint: endpoint,
+                              username: username,
+                              password: password)
+      @p.find uuid: uuid
     end
 
     it '#access' do

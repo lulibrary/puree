@@ -4,8 +4,14 @@ module Puree
   #
   class Dataset < Resource
 
-    def initialize
-      super(:dataset)
+    # @param endpoint [String]
+    # @param optional username [String]
+    # @param optional password [String]
+    def initialize(endpoint: nil, username: nil, password: nil)
+      super(api: :dataset,
+            endpoint: endpoint,
+            username: username,
+            password: password)
     end
 
     # Link
@@ -21,7 +27,20 @@ module Puree
         o['description'] = i.xpath('description').text.strip
         data << o
       }
-      return data.uniq
+      data.uniq
+    end
+
+    # Organisation
+    #
+    # @return [Hash]
+    def organisation
+      path = '//content/managedBy'
+      xpath_result =  xpath_query path
+      o = {}
+      o['uuid'] = xpath_result.xpath('@uuid').text.strip
+      o['name'] = xpath_result.xpath('name/localizedString').text.strip
+      o['type'] = xpath_result.xpath('typeClassification/term/localizedString').text.strip
+      o
     end
 
     # Publisher
@@ -260,6 +279,7 @@ module Puree
       o['geographical'] = geographical
       o['keyword'] = keyword
       o['link'] = link
+      o['organisation'] = organisation
       o['person'] = person
       o['project'] = project
       o['production'] = production

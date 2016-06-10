@@ -1,5 +1,6 @@
 require 'httparty'
 require 'nokogiri'
+require 'puree/configuration'
 require 'puree/date'
 require 'puree/map'
 require 'puree/resource'

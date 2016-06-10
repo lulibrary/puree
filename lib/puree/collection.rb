@@ -4,30 +4,48 @@ module Puree
   #
   class Collection < Resource
 
-    def initialize(resource_type: nil)
-      super(resource_type)
+    # @param api [Symbol]
+    # @param endpoint [String]
+    # @param optional username [String]
+    # @param optional password [String]
+    def initialize(api: nil,
+                   endpoint: nil,
+                   username: nil,
+                   password: nil)
+      super(api: api,
+            endpoint: endpoint,
+            username: username,
+            password: password)
       @uuids = []
     end
 
     # Get
     #
-    # @param endpoint [String]
-    # @param username [String]
-    # @param password [String]
-    # @param qty [Integer]
+    # @param optional limit [Integer]
+    # @param optional offset [Integer]
+    # @param optional created_start [String]
+    # @param optional created_end [String]
+    # @param optional modified_start [String]
+    # @param optional modified_end [String]
     # @return [HTTParty::Response]
-    def get(endpoint:         nil,
-            username:         nil,
-            password:         nil,
+    def get(
             limit:            20,
             offset:           0,
             created_start:    nil,
             created_end:      nil,
             modified_start:   nil,
             modified_end:     nil)
+
+      missing = missing_credentials
+      if !missing.empty?
+        missing.each do |m|
+          puts "#{self.class.name}" + '#' + "#{__method__} missing #{m}"
+        end
+        exit
+      end
       # strip any trailing slash
-      @endpoint = endpoint.sub(/(\/)+$/, '')
-      @auth = Base64::strict_encode64(username + ':' + password)
+      @endpoint = @endpoint.sub(/(\/)+$/, '')
+      @auth = Base64::strict_encode64(@username + ':' + @password)
 
       @options = {
           latest_api:       true,
@@ -95,6 +113,7 @@ module Puree
       xpath_result.each { |i| @uuids << i.text.strip }
     end
 
+    alias :find :get
 
   end
 
