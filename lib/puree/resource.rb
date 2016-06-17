@@ -3,28 +3,46 @@ module Puree
   # Abstract base class for resources.
   #
   class Resource
-
     # @param api [String]
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
+    # @param optional bleeding [Boolean]
+    # @param optional basic_auth [Boolean]
     def initialize( api: nil,
                     endpoint: nil,
                     username: nil,
-                    password: nil)
+                    password: nil,
+                    bleeding: true,
+                    basic_auth: nil)
       @resource_type = api
       @api_map = Puree::Map.new.get
-      @endpoint = endpoint.nil? ? Puree::Configuration.endpoint : endpoint
-      @username = username.nil? ? Puree::Configuration.username : username
-      @password = password.nil? ? Puree::Configuration.password : password
+      @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
+      @latest_api = bleeding
+      @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
+      if @basic_auth === true
+        @username = username.nil? ? Puree.username : username
+        @password = password.nil? ? Puree.password : password
+      end
     end
 
     # Get
     #
     # @param uuid [String]
     # @param id [String]
-    # @return [HTTParty::Response]
+    # @param content [Symbol]
+    # @return [Hash]
     def get(uuid: nil, id: nil)
+
+      @options = {
+          basic_auth:     @basic_auth,
+          latest_api:     @latest_api,
+          resource_type:  @resource_type.to_sym,
+          rendering:      :xml_long,
+          uuid:           uuid,
+          id:             id
+      }
+
       missing = missing_credentials
       if !missing.empty?
         missing.each do |m|
@@ -35,19 +53,15 @@ module Puree
 
       # strip any trailing slash
       @endpoint = @endpoint.sub(/(\/)+$/, '')
-      @auth = Base64::strict_encode64(@username + ':' + @password)
 
-      @options = {
-          latest_api:     true,
-          resource_type: @resource_type.to_sym,
-          rendering:      :xml_long,
-          uuid:           uuid,
-          id:             id
-      }
-      headers = {
-          'Accept' => 'application/xml',
-          'Authorization' => 'Basic ' + @auth
-      }
+      headers = {}
+      headers['Accept'] = 'application/xml'
+
+      if @options[:basic_auth] === true
+        @auth = Base64::strict_encode64(@username + ':' + @password)
+        headers['Authorization'] = 'Basic ' + @auth
+      end
+
       query = {}
       query['rendering'] = @options[:rendering]
 
@@ -60,17 +74,25 @@ module Puree
       end
 
       begin
+        # p self.inspect
+        # p build_url
+        # p query
+        # p headers
         @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
+
+      # puts @response.code
       rescue HTTParty::Error => e
-        puts 'HttParty::Error '+ e.message
+        puts 'HTTParty::Error '+ e.message
       end
 
-      if get_data?
-        response_name = service_response_name
-        content = @response.parsed_response[response_name]['result']['content']
-        set_content(content)
-      end
-      @response
+      # if get_data?
+        # response_name = service_response_name
+        # content = @response.parsed_response[response_name]['result']['content']
+        # set_content(content)
+      # end
+
+      metadata ? metadata : {}
+
     end
 
     # Response, if get method has been called
@@ -139,16 +161,6 @@ module Puree
     private
 
 
-    def collect_uuid
-      path = '//renderedItem/@renderedContentUUID'
-      xpath_result = xpath_query path
-      xpath_result.each { |i| @uuids << i.text.strip }
-    end
-
-
-
-
-
     # Node
     #
     # @return [Hash]
@@ -157,7 +169,7 @@ module Puree
     end
 
 
-    # Is there any data after get?
+    # Is there any data after get? For a response that provides a count of the results.
     #
     # @return [Boolean]
     def get_data?
@@ -173,6 +185,10 @@ module Puree
     def service_response_name
       resource_type = @options[:resource_type]
       @api_map[:resource_type][resource_type][:response]
+    end
+
+    def service_xpath_base
+      service_response_name + '/result/content/'
     end
 
     def build_url
@@ -197,12 +213,16 @@ module Puree
       if @endpoint.nil?
         missing << 'endpoint'
       end
-      if @username.nil?
-        missing << 'username'
+
+      if @options[:basic_auth] === true
+        if @username.nil?
+          missing << 'username'
+        end
+        if @password.nil?
+          missing << 'password'
+        end
       end
-      if @password.nil?
-        missing << 'password'
-      end
+
       missing
     end
 

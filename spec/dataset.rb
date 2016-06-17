@@ -16,83 +16,83 @@ describe 'Dataset' do
       @p = Puree::Dataset.new(endpoint: endpoint,
                               username: username,
                               password: password)
-      @p.find uuid: uuid
+      @metadata = @p.find uuid: uuid
+    end
+
+    it '@metadata' do
+      expect(@metadata).to be_an_instance_of(Hash)
     end
 
     it '#access' do
-      expect(@p.access).to be_an_instance_of(String)
+      expect(@metadata['access']).to be_an_instance_of(String)
     end
 
     it '#associated' do
-      expect(@p.associated).to be_an_instance_of(Array)
+      expect(@metadata['associated']).to be_an_instance_of(Array)
     end
 
     it '#available' do
-      expect(@p.available).to be_an_instance_of(Hash)
+      expect(@metadata['available']).to be_an_instance_of(Hash)
     end
 
     it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
+      expect(@metadata['created']).to be_an_instance_of(String)
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String)
+      expect(@metadata['description']).to be_an_instance_of(String)
     end
 
     it '#doi' do
-      expect(@p.doi).to be_an_instance_of(String)
+      expect(@metadata['doi']).to be_an_instance_of(String)
     end
 
     it '#file' do
-      expect(@p.file).to be_an_instance_of(Array)
+      expect(@metadata['file']).to be_an_instance_of(Array)
     end
 
     it '#geographical' do
-      expect(@p.geographical).to be_an_instance_of(Array)
+      expect(@metadata['geographical']).to be_an_instance_of(Array)
     end
 
     it '#keyword' do
-      expect(@p.keyword).to be_an_instance_of(Array)
+      expect(@metadata['keyword']).to be_an_instance_of(Array)
     end
 
     it '#link' do
-      expect(@p.link).to be_an_instance_of(Array)
-    end
-
-    it '#metadata' do
-      expect(@p.metadata).to be_an_instance_of(Hash)
+      expect(@metadata['link']).to be_an_instance_of(Array)
     end
 
     it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
+      expect(@metadata['modified']).to be_an_instance_of(String)
     end
 
     it '#person' do
-      expect(@p.person).to be_an_instance_of(Hash)
+      expect(@metadata['person']).to be_an_instance_of(Hash)
     end
 
     it '#production' do
-      expect(@p.production).to be_an_instance_of(Hash)
+      expect(@metadata['production']).to be_an_instance_of(Hash)
     end
 
     it '#project' do
-      expect(@p.project).to be_an_instance_of(Array)
+      expect(@metadata['project']).to be_an_instance_of(Array)
     end
 
     it '#publication' do
-      expect(@p.publication).to be_an_instance_of(Array)
+      expect(@metadata['publication']).to be_an_instance_of(Array)
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String)
+      expect(@metadata['publisher']).to be_an_instance_of(String)
     end
 
     it '#temporal' do
-      expect(@p.temporal).to be_an_instance_of(Hash)
+      expect(@metadata['temporal']).to be_an_instance_of(Hash)
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
+      expect(@metadata['title']).to be_an_instance_of(String)
     end
 
 

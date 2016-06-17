@@ -3,7 +3,26 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Download stats.
+Metadata :journal, :publisher
+Download, server - optional basic authentication.
+Factory to make resource objects?
+
+## 0.15.0 - 2016-06-16
+### Added
+- Person (email).
+- Server metadata (version).
+- Download statistics.
+- Collection - metadata fetch.
+- Collection - returns uuids or metadata, depending upon parameter.
+- Project metadata (acronym, description, owner, status, temporal, title, type, url).
+- Collection and resource types - optional basic authentication.
+
+### Changed
+- Dataset - organisation becomes owner.
+- Global configuration namespace simplified.
+- Person (affiliation - uuid added to name in a hash).
+- Collection - parameter renamed to resource, in keeping with class structure.
+- Resource types return metadata rather than HTTParty::Response.
 
 ## 0.14.0 - 2016-06-10
 ### Added

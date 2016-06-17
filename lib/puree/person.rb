@@ -7,25 +7,44 @@ module Puree
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
-    def initialize(endpoint: nil, username: nil, password: nil)
+    def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :person,
             endpoint: endpoint,
             username: username,
-            password: password)
+            password: password,
+            basic_auth: basic_auth)
     end
+
+
 
     # Affiliation
     #
-    # @return [Array<String>]
+    # @return [Array<Hash>]
     def affiliation
-      path = '//organisation/name/localizedString'
+      path = '//organisation'
       xpath_result =  xpath_query path
-      affiliations = []
-      xpath_result.each { |i| affiliations << i.text }
-      affiliations.uniq
+      data_arr = []
+      xpath_result.each { |i|
+        data = {}
+        data['uuid'] = i.attr('uuid').strip
+        data['name'] = i.xpath('name/localizedString').text.strip
+        data_arr << data
+      }
+      data_arr.uniq
     end
 
-    # Image
+    # Email
+    #
+    # @return [Array]
+    def email
+      path = '//emails/classificationDefinedStringFieldExtension/value'
+      xpath_result =  xpath_query path
+      data = []
+      xpath_result.each { |i| data << i.text }
+      data.uniq
+    end
+
+    # Image URL
     #
     # @return [Array<String>]
     def image
@@ -74,6 +93,7 @@ module Puree
     def metadata
       o = super
       o['affiliation'] = affiliation
+      o['email'] = email
       o['image'] = image
       o['keyword'] = keyword
       o['name'] = name

@@ -13,3 +13,15 @@ require 'puree/project'
 require 'puree/publication'
 require 'puree/publisher'
 require 'puree/collection'
+require 'puree/download'
+require 'puree/server'
+
+module Puree
+
+  class << self
+
+    include Puree::Configuration
+
+  end
+
+end

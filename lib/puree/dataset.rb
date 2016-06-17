@@ -4,15 +4,39 @@ module Puree
   #
   class Dataset < Resource
 
+    # attr_reader :access,
+    #             :access,
+    #             :associated,
+    #             :description,
+    #             :doi,
+    #             :file,
+    #             :geographical,
+    #             :keyword,
+    #             :link,
+    #             :keyword,
+    #             :owner,
+    #             :person,
+    #             :production,
+    #             :project,
+    #             :publication,
+    #             :publisher,
+    #             :temporal
+
+    # @return [String]
+    # attr_reader  :title
+
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
-    def initialize(endpoint: nil, username: nil, password: nil)
+    # @param optional basic_auth [Boolean]
+    def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :dataset,
             endpoint: endpoint,
             username: username,
-            password: password)
+            password: password,
+            basic_auth: basic_auth)
     end
+
 
     # Link
     #
@@ -30,17 +54,17 @@ module Puree
       data.uniq
     end
 
-    # Organisation
+    # Owner
     #
     # @return [Hash]
-    def organisation
+    def owner
       path = '//content/managedBy'
       xpath_result =  xpath_query path
       o = {}
       o['uuid'] = xpath_result.xpath('@uuid').text.strip
       o['name'] = xpath_result.xpath('name/localizedString').text.strip
       o['type'] = xpath_result.xpath('typeClassification/term/localizedString').text.strip
-      o
+       o
     end
 
     # Publisher
@@ -270,31 +294,44 @@ module Puree
     # @return [Hash]
     def metadata
       o = super
+      # access
       o['access'] = access
+      # associated
       o['associated'] = associated
+      # available
       o['available'] = available
+      # description
       o['description'] = description
+      # doi
       o['doi'] = doi
+      # file
       o['file'] = file
+      # geographical
       o['geographical'] = geographical
+      # keyword
       o['keyword'] = keyword
+      # link
       o['link'] = link
-      o['organisation'] = organisation
+      # owner
+      o['owner'] = owner
+      # person
       o['person'] = person
+      # project
       o['project'] = project
+      # production
       o['production'] = production
+      # publication
       o['publication'] = publication
+      # publisher
       o['publisher'] = publisher
+      # temporal
       o['temporal'] = temporal
+      # title
       o['title'] = title
       o
     end
 
-
-
     private
-
-
 
     # Assembles basic information about a person
     #

@@ -1,13 +1,14 @@
 module Puree
 
-  # Download
+  # Server
   #
-  class Download
+  class Server
+
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
     def initialize(endpoint: nil, username: nil, password: nil)
-      @resource_type = :download
+      @resource_type = :server
       @api_map = Puree::Map.new.get
       @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
       @username = username.nil? ? Puree.username : username
@@ -16,13 +17,8 @@ module Puree
 
     # Get
     #
-    # @param optional limit [Integer]
-    # @param optional offset [Integer]
-    # @param optional resource [Symbol]
-    # @return [Array<Hash>]
-    def get(limit: 20,
-            offset: 0,
-            resource: nil)
+    # @return [Hash]
+    def get
       missing = missing_credentials
       if !missing.empty?
         missing.each do |m|
@@ -39,9 +35,6 @@ module Puree
           latest_api:     true,
           resource_type:  @resource_type.to_sym,
           rendering:      :system,
-          limit:          limit,
-          offset:         offset,
-          resource:       resource.to_sym
       }
       headers = {
           'Accept' => 'application/xml',
@@ -49,18 +42,6 @@ module Puree
       }
       query = {}
       query['rendering'] = @options[:rendering]
-
-      if @options[:limit]
-        query['window.size'] = @options[:limit]
-      end
-
-      if @options[:offset]
-        query['window.offset'] = @options[:offset]
-      end
-
-      if @options[:resource]
-        query['contentType'] = service_family
-      end
 
       begin
         @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
@@ -80,47 +61,31 @@ module Puree
         end
       end
 
-      metadata ? metadata : []
+      metadata ? metadata : {}
     end
-
 
 
 
     # All metadata
-    #
-    # @return [Array<Hash>]
+
+    # @return [Hash]
     def metadata
-      statistic
+      o = {}
+      o['version'] = version
+      o
     end
 
+    # Version
+    #
+    # @return [String]
+    def version
+      path = '//baseVersion'
+      xpath_query(path).text.strip
+    end
 
     private
 
-    # Statistic
-    #
-    # @return [Array<Hash>]
-    def statistic
-      path = '//downloadCount'
-      xpath_result =  xpath_query path
-      data_arr = []
-      xpath_result.each { |i|
-        data = {}
-        data['uuid'] = i.attr('uuid').strip
-        data['download'] = i.attr('downloads').strip
-        data_arr << data
-      }
-      data_arr.uniq
-    end
 
-    def service_family
-      resource_type = @options[:resource]
-      if @api_map[:resource_type].has_key? resource_type
-        @api_map[:resource_type][resource_type][:family]
-      else
-        puts "#{resource_type} is an unrecognised resource type"
-        exit
-      end
-    end
 
     def service_name
       resource_type = @options[:resource_type]
@@ -167,3 +132,4 @@ module Puree
 
   end
 end
+

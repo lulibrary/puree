@@ -17,70 +17,53 @@ Or install it yourself as:
     $ gem install puree
 
 ## Usage
- Authentication
+### Configuration
+Set the endpoint for Pure (e.g. `http://www.example.com/ws/rest`) and the
+authentication credentials. Basic authentication can be turned off.
 
 ```ruby
 
-# Global settings together
-Puree::Configuration.configure do |c|
-  c.endpoint = ENV['PURE_ENDPOINT']
-  c.username = ENV['PURE_USERNAME']
-  c.password = ENV['PURE_PASSWORD']
+# Global settings using a block
+Puree.configure do |config|
+  config.endpoint   = ENV['PURE_ENDPOINT']   # optional, default nil
+  config.username   = ENV['PURE_USERNAME']   # optional, default nil
+  config.password   = ENV['PURE_PASSWORD']   # optional, default nil
+  config.basic_auth = true                   # optional, default false
 end
 
 # Global settings individually
-Puree::Configuration.endpoint = ENV['PURE_ENDPOINT']
-Puree::Configuration.username = ENV['PURE_USERNAME']
-Puree::Configuration.password = ENV['PURE_PASSWORD']
+Puree.endpoint   = ENV['PURE_ENDPOINT']      # optional, default nil
+Puree.username   = ENV['PURE_USERNAME']      # optional, default nil
+Puree.password   = ENV['PURE_PASSWORD']      # optional, default nil
+Puree.basic_auth = true                      # optional, default false
 
 # Use global settings
 d = Puree::Dataset.new
 
 # Override one or more global settings in an instance
-d = Puree::Dataset.new endpoint: 'http://example.com/ws/rest',
-                       username: 'another_username',
-                       password: 'another_password'
+d = Puree::Dataset.new endpoint:   ENV['ANOTHER_PURE_ENDPOINT'],  # optional, default nil
+                       username:   ENV['ANOTHER_PURE_USERNAME'],  # optional, default nil
+                       password:   ENV['ANOTHER_PURE_PASSWORD'],  # optional, default nil
+                       basic_auth: true                           # optional, default false
 ```
 
-
-Dataset
+### Dataset
+Get the metadata into a hash.
 
 ```ruby
-
 d = Puree::Dataset.new
 
 # Get metadata using ID
-d.find id: 12345678
+metadata = d.find id: 12345678
 
-# Reuse instance
-d.find id: 87654321
+# Reuse instance with another ID
+metadata = d.find id: 87654321
 
 # Get metadata using UUID
-d.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+metadata = d.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 
-# Filter metadata into simple data structures
-d.access
-d.associated
-d.available
-d.created
-d.description
-d.doi
-d.file
-d.geographical
-d.keyword
-d.link
-d.modified
-d.organisation
-d.person
-d.production
-d.project
-d.publication
-d.publisher
-d.temporal
-d.title
-
-# Combine metadata into one simple data structure
-d.metadata
+# Get specific metadata
+metadata['doi']
 
 # Access HTTParty functionality
 d.response # HTTParty object
@@ -90,34 +73,45 @@ d.response.message
 d.response.headers # hash
 ```
 
-Collection
+### Collection (dataset)
+Get an array of metadata of resource type specified in constructor. The limit parameter has no maximum value.
 
 ```ruby
-c = Puree::Collection.new api: :dataset
+c = Puree::Collection.new resource: :dataset
 
-# Get three minimal datasets, starting at record ten, created and modified in January 2016.
-c.find limit:          3,  # optional, default 20
-       offset:         10, # optional, default 0
-       created_start:  '2016-01-01', # optional
-       created_end:    '2016-01-31', # optional
-       modified_start: '2016-01-01', # optional
-       modified_end:   '2016-01-31'  # optional
-
-# Get UUIDs for datasets
-uuids = c.uuid
-
-# Get metadata using UUID
-datasets = []
-uuids.each do |uuid|
-    d = Puree::Dataset.new
-    d.find uuid: uuid
-    datasets << d.metadata
-end
+# Get metadata for fifty datasets, starting at record ten, created and modified in January 2016
+metadata =  c.find limit:          50,            # optional, default 20, no maximum
+                   offset:         10,            # optional, default 0
+                   created_start:  '2016-01-01',  # optional
+                   created_end:    '2016-01-31',  # optional
+                   modified_start: '2016-01-01',  # optional
+                   modified_end:   '2016-01-31'   # optional
 ```
 
-## Data structures
+
+Get just the UUIDs
+
+`full: false`
+
+### Download (dataset)
+Uses limit and offset like Collection. Resources available :dataset.
+
+```ruby
+p = Puree::Download.new
+metadata = p.find resource: :dataset,
+                  limit:    1000
+```
+
+## Resource data structures
+
+### Common to all
+#### created
+#### modified
+#### uuid
 
 ### Dataset
+access
+associated
 
 #### available
 Date made available. If year is present, month and day will have data or an empty string.
@@ -129,6 +123,9 @@ Date made available. If year is present, month and day will have data or an empt
   "day" => "4"
 }
 ```
+
+#### description
+#### doi
 
 #### file
 An array of files.
@@ -149,6 +146,9 @@ An array of files.
 ]
 ```
 
+#### geographical
+#### keyword
+
 #### link
 An array of links.
 
@@ -161,7 +161,7 @@ An array of links.
 ]
 ```
 
-#### organisation
+#### owner
 Organisation responsible.
 
 ```ruby
@@ -201,6 +201,7 @@ Contains an array of internal persons, an array of external persons and an array
   ]
 }
 ```
+
 
 #### project
 An array of projects associated with the dataset.
@@ -252,6 +253,9 @@ An array of research outputs associated with the dataset.
 ]
 ```
 
+#### publisher
+
+
 #### production, temporal
 Date range. If year is present, month and day will have data or an empty string.
 
@@ -269,6 +273,9 @@ Date range. If year is present, month and day will have data or an empty string.
   }
 }
 ```
+
+#### title
+
 
 ### Organisation
 
@@ -298,6 +305,35 @@ Parent organisation.
 }
 ```
 
+### Project
+
+#### owner
+Organisation responsible.
+
+```ruby
+{
+  "uuid" => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+  "name" => "Institute for the Arts",
+  "type" => "Department"
+}
+```
+
+#### temporal
+```ruby
+{
+  "temporal" => {
+    "expected" => {
+      "start" => "2016-03-01Z",
+      "end" => "2018-02-28Z"
+    },
+    "actual" => {
+      "start" => "2016-03-01Z",
+      "end" => ""
+    }
+  }
+}
+```
+
 ### Publication
 
 #### file
@@ -310,6 +346,23 @@ An array of files.
     "mime" => "application/octet-stream",
     "size" => "1616665158",
     "url" => "http://example.com/ws/rest/files/12345678/foo.csv",
+  },
+]
+```
+
+## Other data structures
+### Download
+An array of hashes, where each hash is a resource.
+
+```ruby
+[
+  {
+    "uuid" => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+    "download" => "1999"
+  },
+  {
+    "uuid" => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",
+    "download" => "666"
   },
 ]
 ```
@@ -352,15 +405,7 @@ Resource metadata
 :publication
 ```
 
-Resource metadata (system data and single hash only)
-
-```ruby
-:journal
-:project
-:publisher
-```
-
-Collections (for obtaining identifiers)
+Collections
 
 ```ruby
 :dataset
@@ -371,4 +416,11 @@ Collections (for obtaining identifiers)
 :project
 :publication
 :publisher
+```
+
+Other metadata
+
+```ruby
+:download
+:server
 ```
