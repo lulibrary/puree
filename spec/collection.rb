@@ -9,7 +9,9 @@ describe 'Collection' do
     p = Puree::Collection.new(resource: :dataset,
                               endpoint: endpoint,
                               username: username,
-                              password: password)
+                              password: password,
+                              basic_auth: true
+    )
     expect(p).to be_an_instance_of Puree::Collection
   end
 
@@ -21,7 +23,8 @@ describe 'Collection' do
       @p = Puree::Collection.new(resource: :dataset,
                                  endpoint: endpoint,
                                  username: username,
-                                 password: password)
+                                 password: password,
+                                 basic_auth: true)
       @metadata = @p.find limit: 5
     end
 

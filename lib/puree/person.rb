@@ -7,6 +7,7 @@ module Puree
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
+    # @param optional basic_auth [Boolean]
     def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :person,
             endpoint: endpoint,
@@ -48,7 +49,7 @@ module Puree
     #
     # @return [Array<String>]
     def image
-      path = '//photos/file/url'
+      path = '/photos/file/url'
       xpath_result =  xpath_query path
       data = []
       xpath_result.each { |i| data << i.text }
@@ -70,12 +71,13 @@ module Puree
     #
     # @return [Hash]
     def name
-      data = node 'name'
+      path = '/name'
+      xpath_result =  xpath_query path
+      first = xpath_result.xpath('firstName').text.strip
+      last = xpath_result.xpath('lastName').text.strip
       o = {}
-      if !data.nil? && !data.empty?
-        o['first'] = data['firstName'].strip
-        o['last'] = data['lastName'].strip
-      end
+      o['first'] = first
+      o['last'] = last
       o
     end
 
@@ -83,8 +85,8 @@ module Puree
     #
     # @return [String]
     def orcid
-      data = node 'orcid'
-      !data.nil? && !data.empty? ? data.strip : ''
+      path = '/orcid'
+      xpath_query_for_single_value path
     end
 
     # All metadata

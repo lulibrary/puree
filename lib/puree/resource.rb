@@ -3,6 +3,9 @@ module Puree
   # Abstract base class for resources.
   #
   class Resource
+
+    attr_reader :response
+
     # @param api [String]
     # @param endpoint [String]
     # @param optional username [String]
@@ -30,15 +33,15 @@ module Puree
     #
     # @param uuid [String]
     # @param id [String]
-    # @param content [Symbol]
     # @return [Hash]
-    def get(uuid: nil, id: nil)
+    def get(uuid: nil, id: nil, rendering: :xml_long)
+      reset
 
       @options = {
           basic_auth:     @basic_auth,
           latest_api:     @latest_api,
           resource_type:  @resource_type.to_sym,
-          rendering:      :xml_long,
+          rendering:      rendering,
           uuid:           uuid,
           id:             id
       }
@@ -73,34 +76,26 @@ module Puree
         end
       end
 
-      begin
-        # p self.inspect
-        # p build_url
-        # p query
-        # p headers
-        @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
-
-      # puts @response.code
-      rescue HTTParty::Error => e
-        puts 'HTTParty::Error '+ e.message
+      if @options['rendering']
+        query['rendering'] = @options['rendering']
       end
 
-      # if get_data?
-        # response_name = service_response_name
-        # content = @response.parsed_response[response_name]['result']['content']
-        # set_content(content)
-      # end
+      begin
+        url = build_url
+        req = HTTP.headers accept: headers['Accept']
+        if @options[:basic_auth]
+          req = req.auth headers['Authorization']
+        end
+        @response = req.get(url, params: query)
+        @doc = Nokogiri::XML @response.body
+        @doc.remove_namespaces!
 
-      metadata ? metadata : {}
+      rescue HTTP::Error => e
+        puts 'HTTP::Error '+ e.message
+      end
 
-    end
+      get_data? ? metadata : {}
 
-    # Response, if get method has been called
-    #
-    # @return [HTTParty::Response]
-    # @return [Nil]
-    def response
-      @response ? @response : nil
     end
 
     # Set content
@@ -125,24 +120,24 @@ module Puree
     #
     # @return [String]
     def created
-      data = node 'created'
-      !data.nil? && !data.empty? ? data.strip : ''
+      path = '/created'
+      xpath_query_for_single_value path
     end
 
     # Modified (UTC datetime)
     #
     # @return [String]
     def modified
-      data = node 'modified'
-      !data.nil? && !data.empty? ? data.strip : ''
+      path = '/modified'
+      xpath_query_for_single_value path
     end
 
     # UUID
     #
     # @return [String]
     def uuid
-      data = node 'uuid'
-      !data.nil? && !data.empty? ? data.strip : ''
+      path = '/@uuid'
+      xpath_query_for_single_value path
     end
 
     # All metadata
@@ -161,20 +156,13 @@ module Puree
     private
 
 
-    # Node
-    #
-    # @return [Hash]
-    def node(path)
-      @content ? @content[path] : {}
-    end
-
-
     # Is there any data after get? For a response that provides a count of the results.
     #
     # @return [Boolean]
     def get_data?
-      response_name = service_response_name
-      @response.parsed_response[response_name]['count'] != '0' ? true : false
+      path = service_xpath_count
+      xpath_result = @doc.xpath path
+      xpath_result.text.strip === '1' ? true : false
     end
 
     def service_name
@@ -188,7 +176,15 @@ module Puree
     end
 
     def service_xpath_base
-      service_response_name + '/result/content/'
+      service_response_name + '/result/content'
+    end
+
+    def service_xpath_count
+      service_response_name + '/count'
+    end
+
+    def service_xpath(str_to_find)
+      service_xpath_base + str_to_find
     end
 
     def build_url
@@ -201,12 +197,17 @@ module Puree
       @endpoint + '/' + service_api_mode
     end
 
+    # content based
     def xpath_query(path)
-      xml = @response.body
-      doc = Nokogiri::XML xml
-      doc.remove_namespaces!
-      doc.xpath path
+      path_from_root = service_xpath path
+      @doc.xpath path_from_root
     end
+
+    def xpath_query_for_single_value(path)
+      xpath_result = xpath_query path
+      xpath_result ? xpath_result.text.strip : ''
+    end
+
 
     def missing_credentials
       missing = []
@@ -224,6 +225,10 @@ module Puree
       end
 
       missing
+    end
+
+    def reset
+      @response = nil
     end
 
     alias :find :get

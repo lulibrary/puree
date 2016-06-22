@@ -1,4 +1,4 @@
-require 'httparty'
+require 'http'
 require 'nokogiri'
 require 'puree/configuration'
 require 'puree/date'
@@ -15,6 +15,7 @@ require 'puree/publisher'
 require 'puree/collection'
 require 'puree/download'
 require 'puree/server'
+require 'puree/version'
 
 module Puree
 

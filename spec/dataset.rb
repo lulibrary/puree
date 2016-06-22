@@ -15,7 +15,8 @@ describe 'Dataset' do
       uuid = ENV['PURE_DATASET_UUID']
       @p = Puree::Dataset.new(endpoint: endpoint,
                               username: username,
-                              password: password)
+                              password: password,
+                              basic_auth: true)
       @metadata = @p.find uuid: uuid
     end
 

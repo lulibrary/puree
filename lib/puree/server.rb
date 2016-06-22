@@ -4,15 +4,24 @@ module Puree
   #
   class Server
 
+    attr_reader :response
+
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
-    def initialize(endpoint: nil, username: nil, password: nil)
+    # @param optional basic_auth [Boolean]
+    def initialize(endpoint: nil,
+                   username: nil,
+                   password: nil,
+                   basic_auth: nil)
       @resource_type = :server
       @api_map = Puree::Map.new.get
       @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
-      @username = username.nil? ? Puree.username : username
-      @password = password.nil? ? Puree.password : password
+      @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
+      if @basic_auth === true
+        @username = username.nil? ? Puree.username : username
+        @password = password.nil? ? Puree.password : password
+      end
     end
 
     # Get
@@ -32,6 +41,7 @@ module Puree
       @auth = Base64::strict_encode64(@username + ':' + @password)
 
       @options = {
+          basic_auth:     @basic_auth,
           latest_api:     true,
           resource_type:  @resource_type.to_sym,
           rendering:      :system,
@@ -44,30 +54,23 @@ module Puree
       query['rendering'] = @options[:rendering]
 
       begin
-        @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
-      rescue HTTParty::Error => e
-        puts 'HTTParty::Error '+ e.message
-      end
-
-      # if result and content are used as elements in response
-      response_name = service_response_name
-      if @response.parsed_response[response_name].has_key? 'result'
-        result = @response.parsed_response[response_name]['result']
-        if result.has_key? 'content'
-          if get_data?
-            content = @response.parsed_response[response_name]['result']['content']
-            set_content(content)
-          end
+        url = build_url
+        req = HTTP.headers accept: headers['Accept']
+        if @options[:basic_auth]
+          req = req.auth headers['Authorization']
         end
+        @response = req.get(url, params: query)
+        @doc = Nokogiri::XML @response.body
+        @doc.remove_namespaces!
+      rescue HTTP::Error => e
+        puts 'HTTP::Error '+ e.message
       end
 
-      metadata ? metadata : {}
+      get_data? ? metadata : {}
     end
 
-
-
     # All metadata
-
+    #
     # @return [Hash]
     def metadata
       o = {}
@@ -79,13 +82,22 @@ module Puree
     #
     # @return [String]
     def version
-      path = '//baseVersion'
+      path = service_response_name + '/baseVersion'
       xpath_query(path).text.strip
     end
 
     private
 
 
+    # Is there any data after get?
+    #
+    # @return [Boolean]
+    def get_data?
+      # n.b. arbitrary element existence check
+      path = service_response_name + '/baseVersion'
+      xpath_result = @doc.xpath path
+      xpath_result.size ? true : false
+    end
 
     def service_name
       resource_type = @options[:resource_type]

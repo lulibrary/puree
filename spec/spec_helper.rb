@@ -1,4 +1,4 @@
-require 'httparty'
+require 'http'
 require 'nokogiri'
 require 'puree/configuration'
 require 'puree/date'

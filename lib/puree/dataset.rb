@@ -4,27 +4,6 @@ module Puree
   #
   class Dataset < Resource
 
-    # attr_reader :access,
-    #             :access,
-    #             :associated,
-    #             :description,
-    #             :doi,
-    #             :file,
-    #             :geographical,
-    #             :keyword,
-    #             :link,
-    #             :keyword,
-    #             :owner,
-    #             :person,
-    #             :production,
-    #             :project,
-    #             :publication,
-    #             :publisher,
-    #             :temporal
-
-    # @return [String]
-    # attr_reader  :title
-
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
@@ -42,7 +21,7 @@ module Puree
     #
     # @return [Array<Hash>]
     def link
-      path = '//links/link'
+      path = '/links/link'
       xpath_result = xpath_query path
       data = []
       xpath_result.each { |i|
@@ -58,7 +37,7 @@ module Puree
     #
     # @return [Hash]
     def owner
-      path = '//content/managedBy'
+      path = '/managedBy'
       xpath_result =  xpath_query path
       o = {}
       o['uuid'] = xpath_result.xpath('@uuid').text.strip
@@ -71,16 +50,15 @@ module Puree
     #
     # @return [String]
     def publisher
-      path = '//publisher/name'
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
+      path = '/publisher/name'
+      xpath_query_for_single_value path
     end
 
     # Combines project and publication
     #
-    # @return [Hash]
+    # @return [Array<Hash>]
     def associated
-      path = '//associatedContent//relatedContent'
+      path = '/associatedContent//relatedContent'
       xpath_result =  xpath_query path
       data_arr = []
       xpath_result.each { |i|
@@ -118,16 +96,15 @@ module Puree
     #
     # @return [String]
     def title
-      path = '//title/localizedString'
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
+      path = '/title/localizedString'
+      xpath_query_for_single_value path
     end
 
     # Keyword
     #
     # @return [Array<String>]
     def keyword
-      path = '//keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+      path = '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
       xpath_result =  xpath_query path
       data_arr = xpath_result.map { |i| i.text.strip }
       data_arr.uniq
@@ -137,84 +114,84 @@ module Puree
     #
     # @return [String]
     def description
-      path = '//descriptions/classificationDefinedField/value/localizedString'
+      path = '/descriptions/classificationDefinedField/value/localizedString'
+      xpath_query_for_single_value path
+    end
+
+    # Organisation
+    #
+    # @return [Array<Hash>]
+    def organisation
+      path = '/organisations/organisation'
       xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
+      data = []
+      xpath_result.each do |i|
+        o = {}
+        o['uuid'] = i.xpath('@uuid').text.strip
+        o['name'] = i.xpath('name/localizedString').text.strip
+        o['type'] = i.xpath('typeClassification/term/localizedString').text.strip
+        data << o
+      end
+      data
     end
 
     # Person (internal, external, other)
     #
-    # @return [Hash]
+    # @return [Array<Hash>]
     def person
-      data = node('persons')
-      persons = {}
-      if !data.nil? && !data.empty?
-        data = data['dataSetPersonAssociation']
-      else
-        return persons
+      data = {}
+      # internal
+      path = '/persons/dataSetPersonAssociation'
+      xpath_result = xpath_query path
+      internal = []
+      external = []
+      other = []
+
+      xpath_result.each do |i|
+        o = {}
+        name = {}
+        name['first'] = i.xpath('name/firstName').text.strip
+        name['last'] = i.xpath('name/lastName').text.strip
+        o['name'] = name
+        o['role'] = i.xpath('personRole/term/localizedString').text.strip
+
+        uuid_internal = i.at_xpath('person/@uuid')
+        uuid_external = i.at_xpath('externalPerson/@uuid')
+        if uuid_internal
+          o['uuid'] = uuid_internal
+          internal << o
+        elsif uuid_external
+          o['uuid'] = uuid_external
+          external << o
+        else
+          other << o
+          o['uuid'] = ''
+        end
       end
-      internal_persons = []
-      external_persons = []
-      other_persons = []
-      case data
-        when Array
-          data.each do |d|
-            person = generic_person d
-            if d.key? 'person'
-              person['uuid'] = d['person']['uuid'].strip
-              internal_persons << person
-            end
-            if d.key? 'externalPerson'
-              person['uuid'] = d['externalPerson']['uuid'].strip
-              external_persons << person
-            end
-            if !d.key?('person') && !d.key?('externalPerson')
-              person['uuid'] = ''
-              other_persons << person
-            end
-          end
-        when Hash
-          person = generic_person data
-          if data.key? 'person'
-            person['uuid'] = data['person']['uuid'].strip
-            internal_persons << person
-          end
-          if data.key? 'externalPerson'
-            person['uuid'] = data['externalPerson']['uuid'].strip
-            external_persons << person
-          end
-          if !data.key?('person') && !data.key?('externalPerson')
-            person['uuid'] = ''
-            other_persons << person
-          end
-      end
-      persons['internal'] = internal_persons.uniq
-      persons['external'] = external_persons.uniq
-      persons['other'] = other_persons.uniq
-      persons
+      data['internal'] = internal
+      data['external'] = external
+      data['other'] = other
+      data
     end
-
-
 
     # Date made available
     #
     # @return [Hash]
     def available
-      data = node('dateMadeAvailable')
-      Puree::Date.normalise(data)
+      temporal_start_date 'dateMadeAvailable'
     end
 
     # Geographical coverage
     #
     # @return [Array<String>]
     def geographical
-      data = node 'geographicalCoverage'
-      if !data.nil? && !data.empty?
-        data = data['localizedString']["__content__"]
-        data.is_a?(Array) ? data.uniq : data.split(',').map(&:strip).uniq
-      else
-        []
+      path = '/geographicalCoverage/localizedString'
+      xpath_result = xpath_query path
+      data = []
+      xpath_result.each do |i|
+        data << i.text.strip
       end
+      data
     end
 
     # Date of data production
@@ -236,8 +213,8 @@ module Puree
     #
     # @return [String]
     def access
-      data = node 'openAccessPermission'
-      !data.nil? && !data.empty? ? data['term']['localizedString']["__content__"].strip : ''
+      path = '/openAccessPermission/term/localizedString'
+      xpath_query_for_single_value path
     end
 
 
@@ -245,7 +222,7 @@ module Puree
     #
     # @return [Array<Hash>]
     def file
-      path = '//documents/document'
+      path = '/documents/document'
       xpath_result = xpath_query path
 
       docs = []
@@ -278,9 +255,8 @@ module Puree
     #
     # @return [String]
     def doi
-      path = '//content/doi'
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
+      path = '/doi'
+      xpath_query_for_single_value path
     end
 
     # def state
@@ -294,39 +270,23 @@ module Puree
     # @return [Hash]
     def metadata
       o = super
-      # access
       o['access'] = access
-      # associated
       o['associated'] = associated
-      # available
       o['available'] = available
-      # description
       o['description'] = description
-      # doi
       o['doi'] = doi
-      # file
       o['file'] = file
-      # geographical
       o['geographical'] = geographical
-      # keyword
       o['keyword'] = keyword
-      # link
       o['link'] = link
-      # owner
+      o['organisation'] = organisation
       o['owner'] = owner
-      # person
       o['person'] = person
-      # project
       o['project'] = project
-      # production
       o['production'] = production
-      # publication
       o['publication'] = publication
-      # publisher
       o['publisher'] = publisher
-      # temporal
       o['temporal'] = temporal
-      # title
       o['title'] = title
       o
     end
@@ -369,16 +329,26 @@ module Puree
     #
     # @return [Hash]
     def temporal_start_date(start_node)
-      data = node start_node
-      !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
+      path = start_node
+      xpath_result = xpath_query path
+      o = {}
+      o['day'] = xpath_result.xpath('day').text.strip
+      o['month'] = xpath_result.xpath('month').text.strip
+      o['year'] = xpath_result.xpath('year').text.strip
+      Puree::Date.normalise(o)
     end
 
     # Temporal coverage end date
     #
     # @return [Hash]
     def temporal_end_date(end_node)
-      data = node end_node
-      !data.nil? && !data.empty? ? Puree::Date.normalise(data) : {}
+      path = end_node
+      xpath_result = xpath_query path
+      o = {}
+      o['day'] = xpath_result.xpath('day').text.strip
+      o['month'] = xpath_result.xpath('month').text.strip
+      o['year'] = xpath_result.xpath('year').text.strip
+      Puree::Date.normalise(o)
     end
 
     # Associated type

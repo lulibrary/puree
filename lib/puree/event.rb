@@ -7,6 +7,7 @@ module Puree
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
+    # @param optional basic_auth [Boolean]
     def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :event,
             endpoint: endpoint,
@@ -22,7 +23,7 @@ module Puree
     #
     # @return [String]
     def city
-      path = '//city'
+      path = '/city'
       xpath_query(path).text.strip
     end
 
@@ -30,7 +31,7 @@ module Puree
     #
     # @return [String]
     def country
-      path = '//country/term/localizedString'
+      path = '/country/term/localizedString'
       xpath_query(path).text.strip
     end
 
@@ -39,7 +40,7 @@ module Puree
     # @return [Hash]
     def date
       data = {}
-      path = '//dateRange'
+      path = '/dateRange'
       range = xpath_query path
       data['start'] = range.xpath('startDate').text.strip
       data['end'] = range.xpath('startDate').text.strip
@@ -50,7 +51,7 @@ module Puree
     #
     # @return [String]
     def description
-      path = '//content/description'
+      path = '/description'
       xpath_query(path).text.strip
     end
 
@@ -58,7 +59,7 @@ module Puree
     #
     # @return [String]
     def location
-      path = '//location'
+      path = '/location'
       xpath_query(path).text.strip
     end
 
@@ -66,16 +67,16 @@ module Puree
     #
     # @return [String]
     def title
-      path = '//title/localizedString'
-      xpath_query(path).text.strip
+      path = '/title/localizedString'
+      xpath_query_for_single_value path
     end
 
     # Type
     #
     # @return [String]
     def type
-      path = '//content/typeClassification/term/localizedString'
-      xpath_query(path).text.strip
+      path = '//typeClassification/term/localizedString'
+      xpath_query_for_single_value path
     end
 
     # All metadata

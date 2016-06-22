@@ -7,6 +7,7 @@ module Puree
     # @param endpoint [String]
     # @param optional username [String]
     # @param optional password [String]
+    # @param optional basic_auth [Boolean]
     def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :organisation,
             endpoint: endpoint,
@@ -21,8 +22,8 @@ module Puree
     #
     # @return [Array<Hash>]
     def address
-      path = '//addresses/classifiedAddress'
-      xpath_result =  xpath_query path
+      path = '/addresses/classifiedAddress'
+      xpath_result = xpath_query path
 
       data = []
 
@@ -42,7 +43,7 @@ module Puree
     #
     # @return [Array<String>]
     def email
-      path = '//emails/classificationDefinedStringFieldExtension/value'
+      path = '/emails/classificationDefinedStringFieldExtension/value'
       xpath_result =  xpath_query path
       arr = []
       xpath_result.each { |i| arr << i.text.strip }
@@ -53,8 +54,8 @@ module Puree
     #
     # @return [String]
     def name
-      data = node 'name'
-      !data.nil? && !data.empty? ? data['localizedString']['__content__'].strip : ''
+      path = '/name/localizedString'
+      xpath_query_for_single_value path
     end
 
     # Parent
@@ -73,7 +74,7 @@ module Puree
     #
     # @return [Array<String>]
     def phone
-      path = '//phoneNumbers/classificationDefinedStringFieldExtension/value'
+      path = '/phoneNumbers/classificationDefinedStringFieldExtension/value'
       xpath_result =  xpath_query path
       arr = []
       xpath_result.each { |i| arr << i.text.strip }
@@ -84,16 +85,15 @@ module Puree
     #
     # @return [String]
     def type
-      path = '//content/typeClassification/term/localizedString'
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
+      path = '/typeClassification/term/localizedString'
+      xpath_query_for_single_value path
     end
 
     # URL
     #
     # @return [Array<String>]
     def url
-      path = '//content/webAddresses/classificationDefinedFieldExtension/value/localizedString'
+      path = '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
       xpath_result = xpath_query path
       arr = []
       xpath_result.each { |i| arr << i.text.strip }
@@ -121,7 +121,7 @@ module Puree
     #
     # @return [Array<Hash>]
     def organisation
-      path = '//organisations/organisation'
+      path = '/organisations/organisation'
       xpath_result =  xpath_query path
 
       data = []

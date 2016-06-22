@@ -42,7 +42,8 @@ module Puree
             created_end:      nil,
             modified_start:   nil,
             modified_end:     nil,
-            full:             true
+            full:             true,
+            rendering:        :xml_long
     )
 
       @options = {
@@ -56,7 +57,8 @@ module Puree
           created_end:      created_end,
           modified_start:   modified_start,
           modified_end:     modified_end,
-          full:             full
+          full:             full,
+          record_rendering: rendering
       }
 
       missing = missing_credentials
@@ -106,7 +108,35 @@ module Puree
         query['modifiedDate.toDate'] = @options[:modified_end]
       end
 
-      @response = HTTParty.get(build_url, query: query, headers: headers)
+      if @options['rendering']
+        query['rendering'] = @options['rendering']
+      end
+
+      # @response = HTTParty.get(build_url, query: query, headers: headers)
+
+      begin
+        # p self.inspect
+        # p build_url
+        # p query
+        # p headers
+        # @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
+        url = build_url
+        req = HTTP.headers accept: 'application/xml'
+        if @options[:basic_auth]
+          req = req.auth headers['Authorization']
+        end
+        @response = req.get(url, params: query)
+        @doc = Nokogiri::XML @response.body
+        @doc.remove_namespaces!
+
+        code = @response.code
+        # body = @response.body
+        # puts "#{self.class.name} #{code}"
+          # puts "#{self.class.name} #{body}"
+
+      rescue HTTP::Error => e
+        puts 'HTTP::Error '+ e.message
+      end
 
       if @options[:full]
         collect_resource
@@ -142,16 +172,18 @@ module Puree
       if @options[:basic_auth] === true
         r = Object.const_get(resource_class).new endpoint:   @endpoint,
                                                  username:   @username,
-                                                 password:   @password
+                                                 password:   @password,
+                                                 basic_auth: true
       else
-        r = Object.const_get(resource_class).new endpoint:   @endpoint,
-                                                 basic_auth: false
+        r = Object.const_get(resource_class).new endpoint:   @endpoint
       end
       # whitelist symbol
       if @api_map[:resource_type].has_key?(@resource_type)
         uuid.each do |u|
-          record = r.find uuid: u
-          # puts record
+          record = r.find uuid: u,
+                          rendering:  @options[:record_rendering]
+          # puts JSON.pretty_generate( record, :indent => '  ')
+          # p u
           data << record
         end
         data
@@ -162,6 +194,7 @@ module Puree
     end
 
     def collect_uuid
+      @uuids = []
       path = '//renderedItem/@renderedContentUUID'
       xpath_result = xpath_query path
       xpath_result.each { |i| @uuids << i.text.strip }
@@ -188,11 +221,9 @@ module Puree
     end
 
     def xpath_query(path)
-      xml = @response.body
-      doc = Nokogiri::XML xml
-      doc.remove_namespaces!
-      doc.xpath path
+      @doc.xpath path
     end
+
 
     def missing_credentials
       missing = []
