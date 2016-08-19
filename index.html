@@ -60,15 +60,19 @@ metadata <span class="pl-k">=</span> d.find <span class="pl-c1">uuid:</span> <sp
 
 <div class="highlight highlight-source-ruby"><pre>metadata[<span class="pl-s"><span class="pl-pds">'</span>doi<span class="pl-pds">'</span></span>]</pre></div>
 
+<p>...or using a method...</p>
+
+<div class="highlight highlight-source-ruby"><pre>d.doi</pre></div>
+
 <h3>
-<a id="collection-of-50-resources" class="anchor" href="#collection-of-50-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collection of 50 resources</h3>
+<a id="collection-of-resources" class="anchor" href="#collection-of-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collection of resources</h3>
 
 <p>Tell Purée what you are looking for...</p>
 
 <div class="highlight highlight-source-ruby"><pre>c <span class="pl-k">=</span> <span class="pl-c1">Puree</span>::<span class="pl-c1">Collection</span>.<span class="pl-k">new</span> <span class="pl-c1">resource:</span> <span class="pl-c1">:dataset</span>
 metadata <span class="pl-k">=</span> c.find <span class="pl-c1">limit:</span> <span class="pl-c1">50</span></pre></div>
 
-<p>...and get the data from an array of hashes.</p>
+<p>...and get the data from an array of hashes or from an array of instances.</p>
 
 <h2>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
