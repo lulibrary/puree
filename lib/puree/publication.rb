@@ -4,13 +4,13 @@ module Puree
   #
   class Publication < Resource
 
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
-    def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
+    def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :publication,
-            endpoint: endpoint,
+            base_url: base_url,
             username: username,
             password: password,
             basic_auth: basic_auth)
@@ -20,22 +20,107 @@ module Puree
     #
     # @return [String]
     def category
-      path = '/publicationCategory/publicationCategory/term/localizedString'
-      xpath_query_for_single_value path
+      @metadata['category']
     end
 
     # Description
     #
     # @return [String]
     def description
-      path = '/abstract/localizedString'
-      xpath_query_for_single_value path
+      @metadata['description']
     end
 
     # Event
     #
     # @return [Hash]
     def event
+      @metadata['event']
+    end
+
+    # Digital Object Identifier
+    #
+    # @return [String]
+    def doi
+      @metadata['doi']
+    end
+
+    # Supporting file
+    #
+    # @return [Array<Hash>]
+    def file
+      @metadata['file']
+    end
+
+    # Organisation
+    #
+    # @return [Array<Hash>]
+    def organisation
+      @metadata['organisation']
+    end
+
+    # Page
+    #
+    # @return [Array<String>]
+    def page
+      @metadata['page']
+    end
+
+    # Person (internal, external, other)
+    #
+    # @return [Array<Hash>]
+    def person
+      @metadata['person']
+    end
+
+    # Status
+    #
+    # @return [Array<Hash>]
+    def status
+      @metadata['status']
+    end
+
+    # Title
+    #
+    # @return [String]
+    def title
+      @metadata['title']
+    end
+
+    # Subtitle
+    #
+    # @return [String]
+    def subtitle
+      @metadata['subtitle']
+    end
+
+    # Type
+    #
+    # @return [String]
+    def type
+      @metadata['type']
+    end
+
+    # All metadata
+    #
+    # @return [Hash]
+    def metadata
+      @metadata
+    end
+
+
+    private
+
+    def extract_category
+      path = '/publicationCategory/publicationCategory/term/localizedString'
+      xpath_query_for_single_value path
+    end
+
+    def extract_description
+      path = '/abstract/localizedString'
+      xpath_query_for_single_value path
+    end
+
+    def extract_event
       path = '/event'
       xpath_result = xpath_query path
       o = {}
@@ -44,18 +129,12 @@ module Puree
       o
     end
 
-    # Digital Object Identifier
-    #
-    # @return [String]
-    def doi
+    def extract_doi
       path = '//doi'
       xpath_query_for_single_value path
     end
 
-    # Supporting file
-    #
-    # @return [Array<Hash>]
-    def file
+    def extract_file
       path = '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation/file'
       xpath_result = xpath_query path
       docs = []
@@ -71,10 +150,7 @@ module Puree
       docs.uniq
     end
 
-    # Organisation
-    #
-    # @return [Array<Hash>]
-    def organisation
+    def extract_organisation
       path = '/organisations/association/organisation'
       xpath_result = xpath_query path
       data = []
@@ -88,18 +164,12 @@ module Puree
       data
     end
 
-    # Page
-    #
-    # @return [Array<String>]
-    def page
+    def extract_page
       path = '/numberOfPages'
       xpath_query_for_single_value path
     end
 
-    # Person (internal, external, other)
-    #
-    # @return [Array<Hash>]
-    def person
+    def extract_person
       data = {}
       # internal
       path = '/persons/personAssociation'
@@ -135,10 +205,7 @@ module Puree
       data
     end
 
-    # Status
-    #
-    # @return [Array<Hash>]
-    def status
+    def extract_status
       path = '/publicationStatuses/publicationStatus'
       xpath_result = xpath_query path
       data = []
@@ -155,48 +222,36 @@ module Puree
       data
     end
 
-    # Title
-    #
-    # @return [String]
-    def title
+    def extract_title
       path = '/title'
       xpath_query_for_single_value path
     end
 
-    # Subtitle
-    #
-    # @return [String]
-    def subtitle
+    def extract_subtitle
       path = '/subtitle'
       xpath_query_for_single_value path
     end
 
-    # Type
-    #
-    # @return [String]
-    def type
+    def extract_type
       path = '/typeClassification/term/localizedString'
       xpath_query_for_single_value path
     end
 
-    # All metadata
-    #
-    # @return [Hash]
-    def metadata
+    def combine_metadata
       o = super
-      o['category'] = category
-      o['description'] = description
-      o['doi'] = doi
-      o['event'] = event
-      o['file'] = file
-      o['organisation'] = organisation
-      o['page'] = page
-      o['person'] = person
-      o['status'] = status
-      o['subtitle'] = subtitle
-      o['title'] = title
-      o['type'] = type
-      o
+      o['category'] = extract_category
+      o['description'] = extract_description
+      o['doi'] = extract_doi
+      o['event'] = extract_event
+      o['file'] = extract_file
+      o['organisation'] = extract_organisation
+      o['page'] = extract_page
+      o['person'] = extract_person
+      o['status'] = extract_status
+      o['subtitle'] = extract_subtitle
+      o['title'] = extract_title
+      o['type'] = extract_type
+      @metadata = o
     end
 
   end

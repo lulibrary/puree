@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'Collection' do
 
   it '#new' do
-    endpoint = ENV['PURE_ENDPOINT']
+    base_url = ENV['PURE_BASE_URL']
     username = ENV['PURE_USERNAME']
     password = ENV['PURE_PASSWORD']
     p = Puree::Collection.new(resource: :dataset,
-                              endpoint: endpoint,
+                              base_url: base_url,
                               username: username,
                               password: password,
                               basic_auth: true
@@ -17,11 +17,11 @@ describe 'Collection' do
 
   describe 'data retrieval' do
     before(:all) do
-      endpoint = ENV['PURE_ENDPOINT']
+      base_url = ENV['PURE_BASE_URL']
       username = ENV['PURE_USERNAME']
       password = ENV['PURE_PASSWORD']
       @p = Puree::Collection.new(resource: :dataset,
-                                 endpoint: endpoint,
+                                 base_url: base_url,
                                  username: username,
                                  password: password,
                                  basic_auth: true)

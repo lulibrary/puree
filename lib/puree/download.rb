@@ -5,17 +5,17 @@ module Puree
   class Download
     attr_reader :response
 
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
-    def initialize(endpoint: nil,
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
+    def initialize(base_url: nil,
                    username: nil,
                    password: nil,
                    basic_auth: nil)
       @resource_type = :download
       @api_map = Puree::Map.new.get
-      @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
+      @base_url = base_url.nil? ? Puree.base_url : base_url
       @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
       if @basic_auth === true
         @username = username.nil? ? Puree.username : username
@@ -25,9 +25,9 @@ module Puree
 
     # Get
     #
-    # @param optional limit [Integer]
-    # @param optional offset [Integer]
-    # @param optional resource [Symbol]
+    # @param limit [Integer]
+    # @param offset [Integer]
+    # @param resource [Symbol]
     # @return [Array<Hash>]
     def get(limit: 20,
             offset: 0,
@@ -41,7 +41,7 @@ module Puree
       end
 
       # strip any trailing slash
-      @endpoint = @endpoint.sub(/(\/)+$/, '')
+      @base_url = @base_url.sub(/(\/)+$/, '')
       @auth = Base64::strict_encode64(@username + ':' + @password)
 
       @options = {
@@ -85,7 +85,7 @@ module Puree
         puts 'HTTP::Error '+ e.message
       end
 
-      get_data? ? metadata : []
+      get_data? ? combine_metadata : []
     end
 
 
@@ -95,11 +95,16 @@ module Puree
     #
     # @return [Array<Hash>]
     def metadata
-      statistic
+      @metadata
     end
 
 
     private
+
+
+    def combine_metadata
+      @metadata = extract_statistic
+    end
 
     # Is there any data after get?
     #
@@ -114,7 +119,7 @@ module Puree
     # Statistic
     #
     # @return [Array<Hash>]
-    def statistic
+    def extract_statistic
       path = service_response_name + '/downloadCount'
       xpath_result =  xpath_query path
       data_arr = []
@@ -154,7 +159,7 @@ module Puree
       else
         service_api_mode = service + '.current'
       end
-      @endpoint + '/' + service_api_mode
+      @base_url + '/' + service_api_mode
     end
 
     def xpath_query(path)
@@ -166,8 +171,8 @@ module Puree
 
     def missing_credentials
       missing = []
-      if @endpoint.nil?
-        missing << 'endpoint'
+      if @base_url.nil?
+        missing << 'base_url'
       end
       if @username.nil?
         missing << 'username'

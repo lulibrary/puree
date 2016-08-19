@@ -7,20 +7,20 @@ module Puree
     attr_reader :response
 
     # @param api [String]
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional bleeding [Boolean]
-    # @param optional basic_auth [Boolean]
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param bleeding [Boolean]
+    # @param basic_auth [Boolean]
     def initialize( api: nil,
-                    endpoint: nil,
+                    base_url: nil,
                     username: nil,
                     password: nil,
                     bleeding: true,
                     basic_auth: nil)
       @resource_type = api
       @api_map = Puree::Map.new.get
-      @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
+      @base_url = base_url.nil? ? Puree.base_url : base_url
       @latest_api = bleeding
       @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
       if @basic_auth === true
@@ -55,7 +55,7 @@ module Puree
       end
 
       # strip any trailing slash
-      @endpoint = @endpoint.sub(/(\/)+$/, '')
+      @base_url = @base_url.sub(/(\/)+$/, '')
 
       headers = {}
       headers['Accept'] = 'application/xml'
@@ -94,7 +94,7 @@ module Puree
         puts 'HTTP::Error '+ e.message
       end
 
-      get_data? ? metadata : {}
+      get_data? ? combine_metadata : {}
 
     end
 
@@ -116,10 +116,14 @@ module Puree
       @content ? @content : {}
     end
 
+
+
+    private
+
     # Created (UTC datetime)
     #
     # @return [String]
-    def created
+    def extract_created
       path = '/created'
       xpath_query_for_single_value path
     end
@@ -127,7 +131,7 @@ module Puree
     # Modified (UTC datetime)
     #
     # @return [String]
-    def modified
+    def extract_modified
       path = '/modified'
       xpath_query_for_single_value path
     end
@@ -135,7 +139,7 @@ module Puree
     # UUID
     #
     # @return [String]
-    def uuid
+    def extract_uuid
       path = '/@uuid'
       xpath_query_for_single_value path
     end
@@ -143,18 +147,13 @@ module Puree
     # All metadata
     #
     # @return [Hash]
-    def metadata
+    def combine_metadata
       o = {}
-      o['uuid'] = uuid
-      o['created'] = created
-      o['modified'] = modified
+      o['uuid'] = extract_uuid
+      o['created'] = extract_created
+      o['modified'] = extract_modified
       o
     end
-
-
-
-    private
-
 
     # Is there any data after get? For a response that provides a count of the results.
     #
@@ -194,7 +193,7 @@ module Puree
       else
         service_api_mode = service + '.current'
       end
-      @endpoint + '/' + service_api_mode
+      @base_url + '/' + service_api_mode
     end
 
     # content based
@@ -211,8 +210,8 @@ module Puree
 
     def missing_credentials
       missing = []
-      if @endpoint.nil?
-        missing << 'endpoint'
+      if @base_url.nil?
+        missing << 'base_url'
       end
 
       if @options[:basic_auth] === true

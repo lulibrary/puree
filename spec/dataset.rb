@@ -9,11 +9,11 @@ describe 'Dataset' do
 
   describe 'data retrieval' do
     before(:all) do
-      endpoint = ENV['PURE_ENDPOINT']
+      base_url = ENV['PURE_BASE_URL']
       username = ENV['PURE_USERNAME']
       password = ENV['PURE_PASSWORD']
       uuid = ENV['PURE_DATASET_UUID']
-      @p = Puree::Dataset.new(endpoint: endpoint,
+      @p = Puree::Dataset.new(base_url: base_url,
                               username: username,
                               password: password,
                               basic_auth: true)
@@ -52,10 +52,6 @@ describe 'Dataset' do
       expect(@metadata['file']).to be_an_instance_of(Array)
     end
 
-    it '#geographical' do
-      expect(@metadata['geographical']).to be_an_instance_of(Array)
-    end
-
     it '#keyword' do
       expect(@metadata['keyword']).to be_an_instance_of(Array)
     end
@@ -86,6 +82,10 @@ describe 'Dataset' do
 
     it '#publisher' do
       expect(@metadata['publisher']).to be_an_instance_of(String)
+    end
+
+    it '#spatial' do
+      expect(@metadata['spatial']).to be_an_instance_of(Array)
     end
 
     it '#temporal' do

@@ -5,18 +5,18 @@ module Puree
   class Collection
 
     # @param resource [Symbol]
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
     def initialize(resource: nil,
-                   endpoint: nil,
+                   base_url: nil,
                    username: nil,
                    password: nil,
                    basic_auth: nil)
       @resource_type = resource
       @api_map = Puree::Map.new.get
-      @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
+      @base_url = base_url.nil? ? Puree.base_url : base_url
       @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
       if @basic_auth === true
         @username = username.nil? ? Puree.username : username
@@ -27,14 +27,16 @@ module Puree
 
     # Gets an array of objects of resource type specified in constructor
     #
-    # @param optional limit [Integer]
-    # @param optional offset [Integer]
-    # @param optional created_start [String]
-    # @param optional created_end [String]
-    # @param optional modified_start [String]
-    # @param optional modified_end [String]
-    # @param optional full [Boolean]
+    # @param limit [Integer]
+    # @param offset [Integer]
+    # @param created_start [String]
+    # @param created_end [String]
+    # @param modified_start [String]
+    # @param modified_end [String]
+    # @param full [Boolean]
+    # @param instance [Boolean]
     # @return [Array<Object>]
+    # @return [Array<Resource subtype>]
     def get(
             limit:            20,
             offset:           0,
@@ -43,6 +45,7 @@ module Puree
             modified_start:   nil,
             modified_end:     nil,
             full:             true,
+            instance:         false,
             rendering:        :xml_long
     )
 
@@ -58,6 +61,7 @@ module Puree
           modified_start:   modified_start,
           modified_end:     modified_end,
           full:             full,
+          instance:         instance,
           record_rendering: rendering
       }
 
@@ -70,7 +74,7 @@ module Puree
       end
 
       # strip any trailing slash
-      @endpoint = @endpoint.sub(/(\/)+$/, '')
+      @base_url = @base_url.sub(/(\/)+$/, '')
 
       headers = {}
       headers['Accept'] = 'application/xml'
@@ -129,7 +133,7 @@ module Puree
         @doc = Nokogiri::XML @response.body
         @doc.remove_namespaces!
 
-        code = @response.code
+        # code = @response.code
         # body = @response.body
         # puts "#{self.class.name} #{code}"
           # puts "#{self.class.name} #{body}"
@@ -170,12 +174,12 @@ module Puree
       resource_class = 'Puree::' + @resource_type.to_s.capitalize
 
       if @options[:basic_auth] === true
-        r = Object.const_get(resource_class).new endpoint:   @endpoint,
+        r = Object.const_get(resource_class).new base_url:   @base_url,
                                                  username:   @username,
                                                  password:   @password,
                                                  basic_auth: true
       else
-        r = Object.const_get(resource_class).new endpoint:   @endpoint
+        r = Object.const_get(resource_class).new base_url:   @base_url
       end
       # whitelist symbol
       if @api_map[:resource_type].has_key?(@resource_type)
@@ -184,7 +188,12 @@ module Puree
                           rendering:  @options[:record_rendering]
           # puts JSON.pretty_generate( record, :indent => '  ')
           # p u
-          data << record
+          if @options[:instance]
+            data << r
+          else
+            # just the data
+            data << record
+          end
         end
         data
       else
@@ -217,7 +226,7 @@ module Puree
       else
         service_api_mode = service + '.current'
       end
-      @endpoint + '/' + service_api_mode
+      @base_url + '/' + service_api_mode
     end
 
     def xpath_query(path)
@@ -227,8 +236,8 @@ module Puree
 
     def missing_credentials
       missing = []
-      if @endpoint.nil?
-        missing << 'endpoint'
+      if @base_url.nil?
+        missing << 'base_url'
       end
 
       if @options[:basic_auth] === true

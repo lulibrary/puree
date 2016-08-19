@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Adrian Albin-Clark"]
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
   spec.summary       = %q{A client for the Pure Research Information System API.}
-  spec.description   = %q{Pur&#233;e consumes the Pure Research Information System API and puts the metadata into simple data structures.}
+  spec.description   = %q{Puree consumes the Pure Research Information System API and puts the metadata into simple data structures.}
   spec.homepage      = "https://github.com/lulibrary/puree.git"
   spec.license       = "MIT"
 

@@ -4,41 +4,110 @@ module Puree
   #
   class Project < Resource
 
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
-    def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
+    def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :project,
-            endpoint: endpoint,
+            base_url: base_url,
             username: username,
             password: password,
             bleeding: false,
             basic_auth: basic_auth)
     end
 
-
-
     # Acronym
     #
     # @return [String]
     def acronym
-      path = '/acronym'
-      xpath_query_for_single_value path
+      @metadata['acronym']
     end
 
     # Description
     #
     # @return [String]
     def description
-      path = '/description/localizedString'
-      xpath_query_for_single_value path
+      @metadata['description']
     end
 
     # Organisation
     #
     # @return [Array<Hash>]
     def organisation
+      @metadata['organisation']
+    end
+
+    # Owner
+    #
+    # @return [Hash]
+    def owner
+      @metadata['owner']
+    end
+
+    # Person (internal, external, other)
+    #
+    # @return [Array<Hash>]
+    def person
+      @metadata['person']
+    end
+
+    # Status
+    #
+    # @return [String]
+    def status
+      @metadata['status']
+    end
+
+    # Temporal, expected and actual start and end dates as UTC datetime.
+    #
+    # @return [Hash]
+    def temporal
+      @metadata['temporal']
+    end
+
+    # Title
+    #
+    # @return [String]
+    def title
+      @metadata['title']
+    end
+
+    # Type
+    #
+    # @return [String]
+    def type
+      @metadata['type']
+    end
+
+    # URL
+    #
+    # @return [String]
+    def url
+      @metadata['url']
+    end
+
+    # All metadata
+    #
+    # @return [Hash]
+    def metadata
+      @metadata
+    end
+
+
+    private
+
+    def extract_acronym
+      path = '/acronym'
+      xpath_query_for_single_value path
+    end
+
+    def extract_description
+      path = '/description/localizedString'
+      xpath_query_for_single_value path
+    end
+
+    def extract_organisation
       path = '/organisations/association/organisation'
       xpath_result = xpath_query path
       data = []
@@ -52,10 +121,7 @@ module Puree
       data
     end
 
-    # Owner
-    #
-    # @return [Hash]
-    def owner
+    def extract_owner
       path = '/owner'
       xpath_result =  xpath_query path
       o = {}
@@ -65,10 +131,7 @@ module Puree
       o
     end
 
-    # Person (internal, external, other)
-    #
-    # @return [Array<Hash>]
-    def person
+    def extract_person
       data = {}
       # internal
       path = '/persons/participantAssociation'
@@ -104,18 +167,12 @@ module Puree
       data
     end
 
-    # Status
-    #
-    # @return [String]
-    def status
+    def extract_status
       path = '/status/term/localizedString'
       xpath_query_for_single_value path
     end
 
-    # Temporal, expected and actual start and end dates as UTC datetime.
-    #
-    # @return [Hash]
-    def temporal
+    def extract_temporal
       o = {}
       o['expected'] = {}
       o['actual'] = {}
@@ -139,46 +196,34 @@ module Puree
       o
     end
 
-    # Title
-    #
-    # @return [String]
-    def title
+    def extract_title
       path = '/title/localizedString'
       xpath_query_for_single_value path
     end
 
-    # Type
-    #
-    # @return [String]
-    def type
+    def extract_type
       path = '/typeClassification/term/localizedString'
       xpath_query_for_single_value path
     end
 
-    # URL
-    #
-    # @return [String]
-    def url
+    def extract_url
       path = '/projectURL'
       xpath_query_for_single_value path
     end
 
-    # All metadata
-    #
-    # @return [Hash]
-    def metadata
+    def combine_metadata
       o = super
-      o['acronym'] = acronym
-      o['description'] = description
-      o['organisation'] = organisation
-      o['owner'] = owner
-      o['person'] = person
-      o['status'] = status
-      o['temporal'] = temporal
-      o['title'] = title
-      o['type'] = type
-      o['url'] = url
-      o
+      o['acronym'] = extract_acronym
+      o['description'] = extract_description
+      o['organisation'] = extract_organisation
+      o['owner'] = extract_owner
+      o['person'] = extract_person
+      o['status'] = extract_status
+      o['temporal'] = extract_temporal
+      o['title'] = extract_title
+      o['type'] = extract_type
+      o['url'] = extract_url
+      @metadata = o
     end
 
   end

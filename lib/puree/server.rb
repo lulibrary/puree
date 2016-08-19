@@ -6,17 +6,17 @@ module Puree
 
     attr_reader :response
 
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
-    def initialize(endpoint: nil,
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
+    def initialize(base_url: nil,
                    username: nil,
                    password: nil,
                    basic_auth: nil)
       @resource_type = :server
       @api_map = Puree::Map.new.get
-      @endpoint = endpoint.nil? ? Puree.endpoint : endpoint
+      @base_url = base_url.nil? ? Puree.base_url : base_url
       @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
       if @basic_auth === true
         @username = username.nil? ? Puree.username : username
@@ -37,7 +37,7 @@ module Puree
       end
 
       # strip any trailing slash
-      @endpoint = @endpoint.sub(/(\/)+$/, '')
+      @base_url = @base_url.sub(/(\/)+$/, '')
       @auth = Base64::strict_encode64(@username + ':' + @password)
 
       @options = {
@@ -66,27 +66,35 @@ module Puree
         puts 'HTTP::Error '+ e.message
       end
 
-      get_data? ? metadata : {}
+      get_data? ? combine_metadata : {}
     end
 
     # All metadata
     #
     # @return [Hash]
     def metadata
-      o = {}
-      o['version'] = version
-      o
+      @metadata
     end
 
     # Version
     #
     # @return [String]
     def version
-      path = service_response_name + '/baseVersion'
-      xpath_query(path).text.strip
+      @metadata['version']
     end
 
     private
+
+    def combine_metadata
+      o = {}
+      o['version'] = extract_version
+      @metadata = o
+    end
+
+    def extract_version
+      path = service_response_name + '/baseVersion'
+      xpath_query(path).text.strip
+    end
 
 
     # Is there any data after get?
@@ -116,7 +124,7 @@ module Puree
       else
         service_api_mode = service + '.current'
       end
-      @endpoint + '/' + service_api_mode
+      @base_url + '/' + service_api_mode
     end
 
     def xpath_query(path)
@@ -128,8 +136,8 @@ module Puree
 
     def missing_credentials
       missing = []
-      if @endpoint.nil?
-        missing << 'endpoint'
+      if @base_url.nil?
+        missing << 'base_url'
       end
       if @username.nil?
         missing << 'username'

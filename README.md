@@ -32,14 +32,20 @@ metadata = d.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 metadata['doi']
 ```
 
-### Collection of 50 resources
+...or using a method...
+
+```ruby
+d.doi
+```
+
+### Collection of resources
 Tell Pur&#233;e what you are looking for...
 
 ```ruby
 c = Puree::Collection.new resource: :dataset
 metadata = c.find limit: 50
 ```
-...and get the data from an array of hashes.
+...and get the data from an array of hashes or from an array of instances.
 
 ## Documentation
 [API in YARD](http://www.rubydoc.info/gems/puree/frames)

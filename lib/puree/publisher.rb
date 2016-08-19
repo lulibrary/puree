@@ -4,25 +4,31 @@ module Puree
   #
   class Publisher < Resource
 
-    # @param endpoint [String]
-    # @param optional username [String]
-    # @param optional password [String]
-    # @param optional basic_auth [Boolean]
-    def initialize(endpoint: nil, username: nil, password: nil, basic_auth: nil)
+    # @param base_url [String]
+    # @param username [String]
+    # @param password [String]
+    # @param basic_auth [Boolean]
+    def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
       super(api: :publisher,
-            endpoint: endpoint,
+            base_url: base_url,
             username: username,
             password: password,
             basic_auth: basic_auth)
     end
 
-
-
     # All metadata
     #
     # @return [Hash]
     def metadata
-      super
+      @metadata
+    end
+
+
+    private
+
+    def combine_metadata
+      o = super
+      @metadata = o
     end
 
   end

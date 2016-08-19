@@ -3,8 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-Metadata :journal, publisher
-Factory to make resource objects?
+- Metadata: clipping?, externalPerson?, journal?, publisher?
+- Factory to make resource objects?
+- Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
+
+## 0.16.0 - 2016-08-19
+### Added
+- Collection - instance parameter.
+
+### Changed
+- Parameter endpoint renamed to base_url.
+- Dataset (geographical renamed to spatial).
+- Metadata methods return pre-extracted data.
 
 ## 0.15.0 - 2016-06-22
 ### Added
