@@ -36,7 +36,7 @@ module Puree
     # @param full [Boolean]
     # @param instance [Boolean]
     # @return [Array<Object>]
-    # @return [Array<Resource subtype>]
+    # @return [Array<Resource subclass>]
     def get(
             limit:            20,
             offset:           0,

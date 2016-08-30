@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
+## 0.16.1 - 2016-08-30
+### Fixed
+- Dataset, Project, Publication - person uuid returns text rather than a Nokogiri object.
+
 ## 0.16.0 - 2016-08-19
 ### Added
 - Collection - instance parameter.

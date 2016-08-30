@@ -1,5 +1,5 @@
 # Pur&#233;e [![Gem Version](https://badge.fury.io/rb/puree.svg)](https://badge.fury.io/rb/puree)
-Pur&#233;e consumes the Pure Research Information System API and puts the metadata into simple data structures.
+Consumes the Pure Research Information System API and puts the metadata into simple data structures.
 
 ## Installation
 
@@ -48,7 +48,7 @@ metadata = c.find limit: 50
 ...and get the data from an array of hashes or from an array of instances.
 
 ## Documentation
-[API in YARD](http://www.rubydoc.info/gems/puree/frames)
+[API in YARD](http://www.rubydoc.info/gems/puree)
 
 [Detailed usage](https://github.com/lulibrary/puree/wiki)
 

@@ -151,10 +151,10 @@ module Puree
         uuid_internal = i.at_xpath('person/@uuid')
         uuid_external = i.at_xpath('externalPerson/@uuid')
         if uuid_internal
-          o['uuid'] = uuid_internal
+          o['uuid'] = uuid_internal.text.strip
           internal << o
         elsif uuid_external
-          o['uuid'] = uuid_external
+          o['uuid'] = uuid_external.text.strip
           external << o
         else
           other << o
