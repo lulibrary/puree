@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
+## 0.17.0 - 2016-09-02
+### Added
+- Resource subclasses - uuid, created, modified as methods.
+- Resource subclasses - set content from XML string.
+
+### Fixed
+- Organisation - organisation extraction.
+
 ## 0.16.1 - 2016-08-30
 ### Fixed
 - Dataset, Project, Publication - person uuid returns text rather than a Nokogiri object.

@@ -1,5 +1,7 @@
 module Puree
 
+  # Pure API map
+  #
   class Map
 
     def initialize
@@ -36,7 +38,7 @@ module Puree
       # add_family
     end
 
-    # Pure API map
+    # Get
     #
     # @return [Hash]
     def get

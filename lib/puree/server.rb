@@ -22,6 +22,7 @@ module Puree
         @username = username.nil? ? Puree.username : username
         @password = password.nil? ? Puree.password : password
       end
+      @metadata = {}
     end
 
     # Get

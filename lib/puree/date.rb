@@ -1,5 +1,7 @@
 module Puree
 
+  # Date utilities
+  #
   module Date
 
     # Converts a date with three components (year, month, day) to ISO 8601 date format

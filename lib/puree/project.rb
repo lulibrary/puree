@@ -47,7 +47,7 @@ module Puree
 
     # Person (internal, external, other)
     #
-    # @return [Array<Hash>]
+    # @return [Hash<Array,Array,Array>]
     def person
       @metadata['person']
     end

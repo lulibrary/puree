@@ -17,6 +17,8 @@ require 'puree/download'
 require 'puree/server'
 require 'puree/version'
 
+# Top level namespace
+#
 module Puree
 
   class << self

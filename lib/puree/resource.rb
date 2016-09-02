@@ -27,6 +27,12 @@ module Puree
         @username = username.nil? ? Puree.username : username
         @password = password.nil? ? Puree.password : password
       end
+      @metadata = {}
+      @options = {
+          basic_auth:     @basic_auth,
+          latest_api:     @latest_api,
+          resource_type:  @resource_type.to_sym
+      }
     end
 
     # Get
@@ -37,14 +43,9 @@ module Puree
     def get(uuid: nil, id: nil, rendering: :xml_long)
       reset
 
-      @options = {
-          basic_auth:     @basic_auth,
-          latest_api:     @latest_api,
-          resource_type:  @resource_type.to_sym,
-          rendering:      rendering,
-          uuid:           uuid,
-          id:             id
-      }
+      @options[:rendering] = rendering
+      @options[:uuid] = uuid
+      @options[:id] = id
 
       missing = missing_credentials
       if !missing.empty?
@@ -76,8 +77,8 @@ module Puree
         end
       end
 
-      if @options['rendering']
-        query['rendering'] = @options['rendering']
+      if @options[:rendering]
+        query['rendering'] = @options[:rendering]
       end
 
       begin
@@ -87,8 +88,7 @@ module Puree
           req = req.auth headers['Authorization']
         end
         @response = req.get(url, params: query)
-        @doc = Nokogiri::XML @response.body
-        @doc.remove_namespaces!
+        make_doc @response.body
 
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
@@ -98,47 +98,57 @@ module Puree
 
     end
 
-    # Set content
+    # UUID
     #
-    # @param content [Hash]
-    def set_content(content)
-      if !content.nil? && !content.empty?
-        @content = content
-      else
-        @content = {}
-      end
+    # @return [String]
+    def uuid
+      @metadata['uuid']
     end
-
-    # Content
-    #
-    # @return [Hash]
-    def content
-      @content ? @content : {}
-    end
-
-
-
-    private
 
     # Created (UTC datetime)
     #
     # @return [String]
-    def extract_created
-      path = '/created'
-      xpath_query_for_single_value path
+    def created
+      @metadata['created']
     end
 
     # Modified (UTC datetime)
     #
     # @return [String]
+    def modified
+      @metadata['modified']
+    end
+
+    # Set content from XML. In order for metadata extraction to work, the XML must have
+    # been retrieved using the .current version of the Pure API endpoints
+    #
+    # @param xml [String]
+    def set_content(xml)
+      if xml
+        make_doc xml
+        if get_data?
+          combine_metadata
+        end
+      end
+    end
+
+    private
+
+    def make_doc(xml)
+      @doc = Nokogiri::XML xml
+      @doc.remove_namespaces!
+    end
+
+    def extract_created
+      path = '/created'
+      xpath_query_for_single_value path
+    end
+
     def extract_modified
       path = '/modified'
       xpath_query_for_single_value path
     end
 
-    # UUID
-    #
-    # @return [String]
     def extract_uuid
       path = '/@uuid'
       xpath_query_for_single_value path
@@ -231,6 +241,7 @@ module Puree
     end
 
     alias :find :get
+
 
   end
 end

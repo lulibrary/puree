@@ -10,9 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
   spec.summary       = %q{A client for the Pure Research Information System API.}
   spec.description   = %q{Consumes the Pure Research Information System API and puts the metadata into simple data structures.}
-  spec.homepage      = "https://github.com/lulibrary/puree.git"
+  spec.homepage      = "https://rubygems.org/gems/puree/"
   spec.license       = "MIT"
-
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})

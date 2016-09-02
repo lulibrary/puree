@@ -60,14 +60,14 @@ module Puree
 
     # Page
     #
-    # @return [Array<String>]
+    # @return [String]
     def page
       @metadata['page']
     end
 
     # Person (internal, external, other)
     #
-    # @return [Array<Hash>]
+    # @return [Hash<Array,Array,Array>]
     def person
       @metadata['person']
     end

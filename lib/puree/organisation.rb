@@ -164,6 +164,7 @@ module Puree
       o['address'] = extract_address
       o['email'] = extract_email
       o['name'] = extract_name
+      o['organisation'] = extract_organisation
       o['parent'] = extract_parent
       o['phone'] = extract_phone
       o['type'] = extract_type

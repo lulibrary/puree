@@ -50,8 +50,4 @@ metadata = c.find limit: 50
 ## Documentation
 [API in YARD](http://www.rubydoc.info/gems/puree)
 
-[Detailed usage](https://github.com/lulibrary/puree/wiki)
-
-
-
-
+[Detailed usage in GitBook](https://aalbinclark.gitbooks.io/puree)
