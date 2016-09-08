@@ -6,7 +6,7 @@ module Puree
 
     attr_reader :response
 
-    # @param api [String]
+    # @param api [Symbol]
     # @param base_url [String]
     # @param username [String]
     # @param password [String]

@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
+## 0.17.1 - 2016-09-08
+### Fixed
+- Dataset - available extraction.
+
 ## 0.17.0 - 2016-09-02
 ### Added
 - Resource subclasses - uuid, created, modified as methods.

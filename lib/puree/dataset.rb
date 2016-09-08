@@ -172,7 +172,7 @@ module Puree
     end
 
     def extract_available
-      temporal_start_date 'dateMadeAvailable'
+      temporal_start_date '/dateMadeAvailable'
     end
 
     def extract_description
