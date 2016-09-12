@@ -44,7 +44,7 @@ Ingesting research data management data from the Current Research Information Sy
 
 #VSLIDE
 
-## Using the Pure API
+Pure API
 
 #VSLIDE
 
