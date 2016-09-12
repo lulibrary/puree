@@ -2,7 +2,7 @@
 
 ## Rationale
 
-Several projects revealed challenges when getting specific data from the Pure Research Information System API.
+Projects revealed challenges getting specific data from the Pure Research Information System API.
 
 #VSLIDE
 
