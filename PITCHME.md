@@ -36,7 +36,7 @@ Enriching author metadata.
 
 Ingesting research data management data from the Current Research Information System (CRIS) of multiple institutions.
 
-[GitHub](http://dmao.info/)
+<a href="http://dmao.info/" target="_blank">GitHub</a>
 
 #HSLIDE
 
@@ -95,14 +95,14 @@ metadata = c.find limit: 50
 
 ## Location
 
-[RubyGems](https://rubygems.org/gems/puree)
+<a href="https://rubygems.org/gems/puree" target="_blank">RubyGems</a>
 
-[GitHub](https://github.com/lulibrary/puree)
+<a href="https://github.com/lulibrary/puree" target="_blank">GitHub</a>
 
 #VSLIDE
 
 ## Documentation
 
-[API in YARD](http://www.rubydoc.info/gems/puree)
+<a href="http://www.rubydoc.info/gems/puree" target="_blank">API in YARD</a>
 
-[Detailed usage in GitBook](https://aalbinclark.gitbooks.io/puree)
+<a href="https://aalbinclark.gitbooks.io/puree" target="_blank">Detailed usage in GitBook</a>
