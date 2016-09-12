@@ -40,11 +40,7 @@ Ingesting research data management data from the Current Research Information Sy
 
 #HSLIDE
 
-## Challenges
-
-#VSLIDE
-
-Pure API
+## Pure API challenges
 
 #VSLIDE
 
@@ -59,7 +55,7 @@ Pure API
 
 #VSLIDE
 
-- Consumes the Pure Research Information System API.
+- Consumes the Pure API.
 - Metadata available in simple data structures.
 - No XML processing needed in any code.
 
