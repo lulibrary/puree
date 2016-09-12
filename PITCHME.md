@@ -36,7 +36,7 @@ Enriching author metadata.
 
 Ingesting research data management data from the Current Research Information System (CRIS) of multiple institutions.
 
-<a href="http://dmao.info/" target="_blank">GitHub</a>
+<a href="http://dmao.info/" target="_blank">Project website</a>
 
 #HSLIDE
 
