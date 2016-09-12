@@ -10,7 +10,7 @@ Several projects revealed challenges when getting specific data from the Pure Re
 
 Transforming metadata to the DataCite XML schema and minting Digital Object Identifiers.
 
-[GitHub](https://github.com/lulibrary/doi)
+<a href="https://github.com/lulibrary/doi" target="_blank">GitHub</a>
 
 #VSLIDE
 
