@@ -40,7 +40,11 @@ Ingesting research data management data from the Current Research Information Sy
 
 #HSLIDE
 
-#### Challenges using the Pure API
+## Challenges
+
+#VSLIDE
+
+## Using the Pure API
 
 #VSLIDE
 
