@@ -59,15 +59,13 @@ Ingesting research data management data from the Current Research Information Sy
 - Metadata available in simple data structures.
 - No XML processing needed in any code.
 
-#HSLIDE
+#VSLIDE
 
 ## Usage
 
 #VSLIDE
 
-#### The following examples are for the Dataset resource type.
-
-#### Single resource
+## Single resource
 Tell Pur&#233;e what you are looking for...
 
 ```ruby
@@ -88,7 +86,7 @@ d.doi
 
 #VSLIDE
 
-#### Collection of resources
+## Collection of resources
 Tell Pur&#233;e what you are looking for...
 
 ```ruby
