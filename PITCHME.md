@@ -61,10 +61,6 @@ Ingesting research data management data from the Current Research Information Sy
 
 #VSLIDE
 
-## Usage
-
-#VSLIDE
-
 ## Single resource
 Tell Pur&#233;e what you are looking for...
 
