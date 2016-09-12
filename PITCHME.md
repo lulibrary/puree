@@ -45,9 +45,9 @@ Ingesting research data management data from the Current Research Information Sy
 #VSLIDE
 
 - Metadata at resource level e.g. dataset.
-- Only XML available.
-- XML needs processing to extract specific metadata.
-- Local web services consuming the Pure API are not useful when contributing FOSS.
+- Only XML available. <!-- .element: class="fragment" -->
+- XML needs processing to extract specific metadata. <!-- .element: class="fragment" -->
+- Local web services consuming the Pure API are not useful when contributing FOSS. <!-- .element: class="fragment" -->
 
 #HSLIDE
 
@@ -56,8 +56,8 @@ Ingesting research data management data from the Current Research Information Sy
 #VSLIDE
 
 - Consumes the Pure API.
-- Metadata available in simple data structures.
-- No XML processing needed in any code.
+- Metadata available in simple data structures. <!-- .element: class="fragment" -->
+- No XML processing needed in any code. <!-- .element: class="fragment" -->
 
 #VSLIDE
 
