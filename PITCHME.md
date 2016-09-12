@@ -49,7 +49,7 @@ Ingesting research data management data from the Current Research Information Sy
 - XML needs processing to extract specific metadata.
 - Local web services consuming the Pure API are not useful when contributing FOSS.
 
-#HSLIDE
+#VSLIDE
 
 ## Pur&#233;e: an answer to the challenges
 
