@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.18.0 - 2016-09-20
 ### Added
-- Collection - count of available records in system.
+- Collection - count of records available.
 
 ## 0.17.1 - 2016-09-08
 ### Fixed

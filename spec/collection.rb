@@ -47,4 +47,16 @@ describe 'Collection' do
 
   end
 
+  describe 'data retrieval count' do
+    before(:all) do
+      new
+      @p.find limit: 0
+    end
+
+    it '#count' do
+      expect(@p.count).to be_an_instance_of(Fixnum)
+    end
+
+  end
+
 end

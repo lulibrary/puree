@@ -160,7 +160,7 @@ module Puree
     end
 
 
-    # Count of available records in system
+    # Count of records available for a resource type
     #
     # @return [Integer]
     def count
@@ -171,7 +171,7 @@ module Puree
 
     def extract_count
       path = '//count'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value(path).to_i
     end
 
 
