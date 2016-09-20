@@ -65,6 +65,8 @@ module Puree
           record_rendering: rendering
       }
 
+      reset
+
       missing = missing_credentials
       if !missing.empty?
         missing.each do |m|
@@ -88,7 +90,7 @@ module Puree
 
       query['rendering'] = @options[:rendering]
 
-      if @options[:limit]
+      if @options[:limit] >= 0
         query['window.size'] = @options[:limit]
       end
 
@@ -133,6 +135,7 @@ module Puree
         @doc = Nokogiri::XML @response.body
         @doc.remove_namespaces!
 
+        @count = extract_count
         # code = @response.code
         # body = @response.body
         # puts "#{self.class.name} #{code}"
@@ -157,7 +160,19 @@ module Puree
     end
 
 
+    # Count of available records in system
+    #
+    # @return [Integer]
+    def count
+      @count
+    end
+
     private
+
+    def extract_count
+      path = '//count'
+      xpath_query_for_single_value path
+    end
 
 
     # Array of UUIDs
@@ -233,6 +248,11 @@ module Puree
       @doc.xpath path
     end
 
+    def xpath_query_for_single_value(path)
+      xpath_result = xpath_query path
+      xpath_result ? xpath_result.text.strip : ''
+    end
+
 
     def missing_credentials
       missing = []
@@ -250,6 +270,11 @@ module Puree
       end
 
       missing
+    end
+
+    def reset
+      @response = nil
+      @count = nil
     end
 
     alias :find :get

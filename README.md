@@ -1,4 +1,4 @@
-# Pur&#233;e [![Gem Version](https://badge.fury.io/rb/puree.svg)](https://badge.fury.io/rb/puree) [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/lulibrary/puree/master?grs=github&t=sky)
+# Pur&#233;e [![Gem Version](https://badge.fury.io/rb/puree.svg)](https://badge.fury.io/rb/puree) [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/lulibrary/puree)
 Consumes the Pure Research Information System API and puts the metadata into simple data structures.
 
 ## Installation
