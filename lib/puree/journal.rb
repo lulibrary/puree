@@ -16,6 +16,26 @@ module Puree
             basic_auth: basic_auth)
     end
 
+    # ISSN
+    #
+    # @return [String]
+    def issn
+      @metadata['issn']
+    end
+
+    # Publisher
+    #
+    # @return [String]
+    def publisher
+      @metadata['publisher']
+    end
+
+    # Title
+    #
+    # @return [String]
+    def title
+      @metadata['title']
+    end
 
     # All metadata
     #
@@ -27,8 +47,26 @@ module Puree
 
     private
 
+    def extract_issn
+      path = '/issns/issn/string'
+      xpath_query_for_single_value path
+    end
+
+    def extract_publisher
+      path = '/publisher/name'
+      xpath_query_for_single_value path
+    end
+
+    def extract_title
+      path = '/titles/title/string'
+      xpath_query_for_single_value path
+    end
+
     def combine_metadata
       o = super
+      o['issn'] = extract_issn
+      o['publisher'] = extract_publisher
+      o['title'] = extract_title
       @metadata = o
     end
 

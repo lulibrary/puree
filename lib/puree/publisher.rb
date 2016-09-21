@@ -16,6 +16,21 @@ module Puree
             basic_auth: basic_auth)
     end
 
+    # Name
+    #
+    # @return [String]
+    def name
+      @metadata['name']
+    end
+
+    # Adds no value as value is Publisher
+    # Type
+    #
+    # @return [String]
+    # def type
+    #   @metadata['type']
+    # end
+
     # All metadata
     #
     # @return [Hash]
@@ -26,8 +41,21 @@ module Puree
 
     private
 
+    def extract_name
+      path = '/name'
+      xpath_query_for_single_value path
+    end
+
+    # Adds no value as value is Publisher
+    # def extract_type
+    #   path = '/typeClassification/term/localizedString'
+    #   xpath_query_for_single_value path
+    # end
+
     def combine_metadata
       o = super
+      o['name'] = extract_name
+      # o['type'] = extract_type
       @metadata = o
     end
 

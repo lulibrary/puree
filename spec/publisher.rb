@@ -40,6 +40,15 @@ describe 'Publisher' do
       expect(@p.modified).to be_an_instance_of(String)
     end
 
+    it '#name' do
+      expect(@p.name).to be_an_instance_of(String)
+    end
+
+    # Adds no value as value is Publisher
+    # it '#type' do
+    #   expect(@p.type).to be_an_instance_of(String)
+    # end
+
     it '#uuid' do
       expect(@p.uuid).to be_an_instance_of(String)
     end

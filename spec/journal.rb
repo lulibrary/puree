@@ -32,12 +32,24 @@ describe 'Journal' do
       expect(@p.created).to be_an_instance_of(String)
     end
 
+    it '#issn' do
+      expect(@p.issn).to be_an_instance_of(String)
+    end
+
     it '#metadata' do
       expect(@p.metadata).to be_an_instance_of(Hash)
     end
 
     it '#modified' do
       expect(@p.modified).to be_an_instance_of(String)
+    end
+
+    it '#publisher' do
+      expect(@p.publisher).to be_an_instance_of(String)
+    end
+
+    it '#title' do
+      expect(@p.title).to be_an_instance_of(String)
     end
 
     it '#uuid' do

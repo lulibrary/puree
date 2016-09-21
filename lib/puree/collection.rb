@@ -118,14 +118,7 @@ module Puree
         query['rendering'] = @options['rendering']
       end
 
-      # @response = HTTParty.get(build_url, query: query, headers: headers)
-
       begin
-        # p self.inspect
-        # p build_url
-        # p query
-        # p headers
-        # @response = HTTParty.get(build_url, query: query, headers: headers, timeout: 120)
         url = build_url
         req = HTTP.headers accept: 'application/xml'
         if @options[:basic_auth]
@@ -136,10 +129,6 @@ module Puree
         @doc.remove_namespaces!
 
         @count = extract_count
-        # code = @response.code
-        # body = @response.body
-        # puts "#{self.class.name} #{code}"
-          # puts "#{self.class.name} #{body}"
 
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
@@ -164,10 +153,15 @@ module Puree
     #
     # @return [Integer]
     def count
-      @count
+      @count ||= get_count
     end
 
     private
+
+    def get_count
+      find limit: 0
+      extract_count
+    end
 
     def extract_count
       path = '//count'

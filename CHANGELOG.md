@@ -3,9 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Metadata: clipping?, externalPerson?, journal?, publisher?
+- Metadata: activity?, clipping?, externalPerson?
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
+
+## 0.19.0 - 2016-09-21
+### Added
+- Journal - issn, publisher.
+- Publisher - name.
+
+### Changed
+- Collection - simpler api for count of records available.
 
 ## 0.18.0 - 2016-09-20
 ### Added
