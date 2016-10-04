@@ -56,6 +56,10 @@ describe 'Publication' do
       expect(@p.metadata).to be_an_instance_of(Hash)
     end
 
+    it '#metadata' do
+      expect(@p.metadata).not_to be_empty
+    end
+
     it '#modified' do
       expect(@p.modified).to be_an_instance_of(String)
     end
@@ -109,6 +113,10 @@ describe 'Publication' do
 
     it '#metadata' do
       expect(@p.metadata).to be_an_instance_of(Hash)
+    end
+
+    it '#metadata' do
+      expect(@p.metadata).not_to be_empty
     end
 
   end

@@ -24,6 +24,10 @@ describe 'Download' do
       expect(@metadata).to be_an_instance_of(Array)
     end
 
+    it '#find' do
+      expect(@metadata).not_to be_empty
+    end
+
   end
 
 end

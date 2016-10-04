@@ -23,6 +23,10 @@ describe 'Server' do
       expect(@metadata).to be_an_instance_of(Hash)
     end
 
+    it '#find' do
+      expect(@metadata).not_to be_empty
+    end
+
     it '#version' do
       expect(@p.version).to be_an_instance_of(String)
     end
