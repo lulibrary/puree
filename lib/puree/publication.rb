@@ -171,7 +171,6 @@ module Puree
 
     def extract_person
       data = {}
-      # internal
       path = '/persons/personAssociation'
       xpath_result = xpath_query path
       internal = []
@@ -184,7 +183,7 @@ module Puree
         name['first'] = i.xpath('name/firstName').text.strip
         name['last'] = i.xpath('name/lastName').text.strip
         o['name'] = name
-        o['role'] = i.xpath('personRole/term/localizedString').text.strip
+        o['role'] = 'Author'
 
         uuid_internal = i.at_xpath('person/@uuid')
         uuid_external = i.at_xpath('externalPerson/@uuid')

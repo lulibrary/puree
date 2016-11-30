@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
+## 0.19.1 - 2016-11-30
+### Fixed
+- Dataset, Publication - person role extraction.
+
 ## 0.19.0 - 2016-09-21
 ### Added
 - Journal - issn, publisher.

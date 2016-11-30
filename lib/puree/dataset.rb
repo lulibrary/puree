@@ -261,7 +261,6 @@ module Puree
 
     def extract_person
       data = {}
-      # internal
       path = '/persons/dataSetPersonAssociation'
       xpath_result = xpath_query path
       internal = []
@@ -274,7 +273,24 @@ module Puree
         name['first'] = i.xpath('name/firstName').text.strip
         name['last'] = i.xpath('name/lastName').text.strip
         o['name'] = name
-        o['role'] = i.xpath('personRole/term/localizedString').text.strip
+
+        roles = {
+            '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
+            '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
+            '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
+            '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
+            '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
+            '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
+            '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
+            '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
+            '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
+            '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
+            '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
+            '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
+            '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
+        }
+        role_uri = i.xpath('personRole/uri').text.strip
+        o['role'] = roles[role_uri].to_s
 
         uuid_internal = i.at_xpath('person/@uuid')
         uuid_external = i.at_xpath('externalPerson/@uuid')
