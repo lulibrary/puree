@@ -172,7 +172,7 @@ module Puree
     end
 
     def extract_available
-      temporal_start_date '/dateMadeAvailable'
+      temporal_start_date 'dateMadeAvailable'
     end
 
     def extract_description
@@ -418,7 +418,7 @@ module Puree
     #
     # @return [Hash]
     def temporal_start_date(start_node)
-      path = start_node
+      path = "/#{start_node}"
       xpath_result = xpath_query path
       o = {}
       o['day'] = xpath_result.xpath('day').text.strip
@@ -431,7 +431,7 @@ module Puree
     #
     # @return [Hash]
     def temporal_end_date(end_node)
-      path = end_node
+      path = "/#{end_node}"
       xpath_result = xpath_query path
       o = {}
       o['day'] = xpath_result.xpath('day').text.strip
