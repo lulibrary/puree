@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Dataset - spatial_point.
 
 ### Changed
- - Dataset - extract multiple places from spatial.
+- Dataset - extract multiple places from spatial.
 
 ## 0.19.2 - 2017-01-27
 ### Fixed
