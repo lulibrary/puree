@@ -100,6 +100,10 @@ describe 'Dataset' do
       expect(@p.spatial).to be_an_instance_of(Array)
     end
 
+    it '#spatial_point' do
+      expect(@p.spatial_point).to be_an_instance_of(Hash)
+    end
+
     it '#temporal' do
       expect(@p.temporal).to be_an_instance_of(Hash)
     end

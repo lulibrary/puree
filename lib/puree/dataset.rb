@@ -121,11 +121,18 @@ module Puree
       @metadata['publisher']
     end
 
-    # Spatial coverage
+    # Spatial coverage (place names)
     #
     # @return [Array<String>]
     def spatial
       @metadata['spatial']
+    end
+
+    # Spatial coverage point
+    #
+    # @return [Hash]
+    def spatial_point
+      @metadata['spatial_point']
     end
 
     # Temporal coverage
@@ -338,10 +345,24 @@ module Puree
       path = '/geographicalCoverage/localizedString'
       xpath_result = xpath_query path
       data = []
-      xpath_result.each do |i|
-        data << i.text.strip
+      if !xpath_result[0].nil?
+        str = xpath_result[0].text
+        str.gsub!(/ and/, ',')
+        data = str.split(',')
       end
-      data
+      data.uniq
+    end
+
+    def extract_spatial_point
+      path = '/geoLocation/point'
+      xpath_result = xpath_query path
+      o = {}
+      if !xpath_result[0].nil?
+        arr = xpath_result.text.split(',')
+        o['latitude'] = arr[0].strip.to_f
+        o['longitude'] = arr[1].strip.to_f
+      end
+      o
     end
 
     def extract_temporal
@@ -377,6 +398,7 @@ module Puree
       o['publication'] = extract_publication
       o['publisher'] = extract_publisher
       o['spatial'] = extract_spatial
+      o['spatial_point'] = extract_spatial_point
       o['temporal'] = extract_temporal
       o['title'] = extract_title
       @metadata = o

@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
+## 0.20.0 - 2017-01-30
+### Added
+- Dataset - spatial_point.
+
+### Changed
+ - Dataset - extract multiple places from spatial.
+
 ## 0.19.2 - 2017-01-27
 ### Fixed
 - Dataset - production, temporal extraction.
