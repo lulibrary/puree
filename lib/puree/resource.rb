@@ -119,6 +119,13 @@ module Puree
       @metadata['modified']
     end
 
+    # Locale (e.g. en-GB)
+    #
+    # @return [String]
+    def locale
+      @metadata['locale']
+    end
+
     # Set content from XML. In order for metadata extraction to work, the XML must have
     # been retrieved using the .current version of the Pure API endpoints
     #
@@ -154,6 +161,12 @@ module Puree
       xpath_query_for_single_value path
     end
 
+    def extract_locale
+      path = '/@locale'
+      str = xpath_query_for_single_value path
+      str.gsub('_','-')
+    end
+
     # All metadata
     #
     # @return [Hash]
@@ -162,6 +175,7 @@ module Puree
       o['uuid'] = extract_uuid
       o['created'] = extract_created
       o['modified'] = extract_modified
+      o['locale'] = extract_locale
       o
     end
 

@@ -13,7 +13,7 @@ module Puree
             base_url: base_url,
             username: username,
             password: password,
-            bleeding: false,
+            bleeding: false, # stable API does not return person roles
             basic_auth: basic_auth)
     end
 

@@ -182,17 +182,25 @@ module Puree
       data = []
       resource_class = 'Puree::' + @resource_type.to_s.capitalize
 
-      if @options[:basic_auth] === true
-        r = Object.const_get(resource_class).new base_url:   @base_url,
-                                                 username:   @username,
-                                                 password:   @password,
-                                                 basic_auth: true
-      else
-        r = Object.const_get(resource_class).new base_url:   @base_url
-      end
+      # if @options[:basic_auth] === true
+      #   r = Object.const_get(resource_class).new base_url:   @base_url,
+      #                                            username:   @username,
+      #                                            password:   @password,
+      #                                            basic_auth: true
+      # else
+      #   r = Object.const_get(resource_class).new base_url:   @base_url
+      # end
       # whitelist symbol
       if @api_map[:resource_type].has_key?(@resource_type)
         uuid.each do |u|
+          if @options[:basic_auth] === true
+            r = Object.const_get(resource_class).new base_url:   @base_url,
+                                                     username:   @username,
+                                                     password:   @password,
+                                                     basic_auth: true
+          else
+            r = Object.const_get(resource_class).new base_url:   @base_url
+          end
           record = r.find uuid: u,
                           rendering:  @options[:record_rendering]
           # puts JSON.pretty_generate( record, :indent => '  ')

@@ -342,15 +342,14 @@ module Puree
     end
 
     def extract_spatial
+      # Data from free-form text box
       path = '/geographicalCoverage/localizedString'
       xpath_result = xpath_query path
       data = []
-      if !xpath_result[0].nil?
-        str = xpath_result[0].text
-        str.gsub!(/ and/, ',')
-        data = str.split(',')
+      xpath_result.each do |i|
+        data << i.text.strip
       end
-      data.uniq
+      data
     end
 
     def extract_spatial_point

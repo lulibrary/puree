@@ -52,6 +52,10 @@ describe 'Event' do
       expect(@p.location).to be_an_instance_of(String)
     end
 
+    it '#locale' do
+      expect(@p.locale).to be_an_instance_of(String)
+    end
+
     it '#metadata' do
       expect(@p.metadata).to be_an_instance_of(Hash)
     end

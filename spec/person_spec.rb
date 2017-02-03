@@ -48,6 +48,10 @@ describe 'Person' do
       expect(@p.keyword).to be_an_instance_of(Array)
     end
 
+    it '#locale' do
+      expect(@p.locale).to be_an_instance_of(String)
+    end
+
     it '#metadata' do
       expect(@p.metadata).to be_an_instance_of(Hash)
     end
