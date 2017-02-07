@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe 'Publication' do
 
-  def request
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @uuid = ENV['PURE_PUBLICATION_UUID']
-    @p = Puree::Publication.new(base_url: base_url,
-                            username: username,
-                            password: password,
-                            basic_auth: true)
-    @metadata = @p.find uuid: @uuid
-  end
-
   it '#new' do
     p = Puree::Publication.new
     expect(p).to be_an_instance_of Puree::Publication
@@ -21,7 +9,7 @@ describe 'Publication' do
 
   describe 'data retrieval' do
     before(:all) do
-      request
+      request :publication
     end
 
     it '#find' do
@@ -103,7 +91,7 @@ describe 'Publication' do
 
   describe 'data retrieval from file' do
     before(:all) do
-      request
+      request :publication
 
       filename = "#{ENV['PURE_FILE_PATH']}publication.#{@uuid}.xml"
       File.write(filename, @p.response.body)

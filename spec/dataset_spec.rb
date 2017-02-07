@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe 'Dataset' do
 
-  def request
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @uuid = ENV['PURE_DATASET_UUID']
-    @p = Puree::Dataset.new(base_url: base_url,
-                            username: username,
-                            password: password,
-                            basic_auth: true)
-    @metadata = @p.find uuid: @uuid
-  end
-
   it '#new' do
     p = Puree::Dataset.new
     expect(p).to be_an_instance_of Puree::Dataset
@@ -21,7 +9,7 @@ describe 'Dataset' do
 
   describe 'data retrieval' do
     before(:all) do
-      request
+      request :dataset
     end
 
     it '#find' do
@@ -123,7 +111,7 @@ describe 'Dataset' do
 
   describe 'data retrieval from file' do
     before(:all) do
-      request
+      request :dataset
 
       filename = "#{ENV['PURE_FILE_PATH']}dataset.#{@uuid}.xml"
       File.write(filename, @p.response.body)

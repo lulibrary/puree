@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe 'Journal' do
 
-  def request
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @uuid = ENV['PURE_JOURNAL_UUID']
-    @p = Puree::Journal.new(base_url: base_url,
-                          username: username,
-                          password: password,
-                          basic_auth: true)
-    @metadata = @p.find uuid: @uuid
-  end
-
   it '#new' do
     p = Puree::Journal.new
     expect(p).to be_an_instance_of Puree::Journal
@@ -21,7 +9,7 @@ describe 'Journal' do
 
   describe 'data retrieval' do
     before(:all) do
-      request
+      request :journal
     end
 
     it '#find' do
@@ -67,7 +55,7 @@ describe 'Journal' do
 
   describe 'data retrieval from file' do
     before(:all) do
-      request
+      request :journal
 
       filename = "#{ENV['PURE_FILE_PATH']}journal.#{@uuid}.xml"
       File.write(filename, @p.response.body)

@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe 'Project' do
 
-  def request
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @uuid = ENV['PURE_PROJECT_UUID']
-    @p = Puree::Project.new(base_url: base_url,
-                           username: username,
-                           password: password,
-                           basic_auth: true)
-    @metadata = @p.find uuid: @uuid
-  end
-
   it '#new' do
     p = Puree::Project.new
     expect(p).to be_an_instance_of Puree::Project
@@ -21,7 +9,7 @@ describe 'Project' do
 
   describe 'data retrieval' do
     before(:all) do
-      request
+      request :project
     end
 
     it '#find' do
@@ -95,7 +83,7 @@ describe 'Project' do
 
   describe 'data retrieval from file' do
     before(:all) do
-      request
+      request :project
 
       filename = "#{ENV['PURE_FILE_PATH']}project.#{@uuid}.xml"
       File.write(filename, @p.response.body)

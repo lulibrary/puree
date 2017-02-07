@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe 'Organisation' do
 
-  def request
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @uuid = ENV['PURE_ORGANISATION_UUID']
-    @p = Puree::Organisation.new(base_url: base_url,
-                            username: username,
-                            password: password,
-                            basic_auth: true)
-    @metadata = @p.find uuid: @uuid
-  end
-
   it '#new' do
     p = Puree::Organisation.new
     expect(p).to be_an_instance_of Puree::Organisation
@@ -21,7 +9,7 @@ describe 'Organisation' do
 
   describe 'data retrieval' do
     before(:all) do
-      request
+      request :organisation
     end
 
     it '#find' do
@@ -87,7 +75,7 @@ describe 'Organisation' do
 
   describe 'data retrieval from file' do
     before(:all) do
-      request
+      request :organisation
 
       filename = "#{ENV['PURE_FILE_PATH']}organisation.#{@uuid}.xml"
       File.write(filename, @p.response.body)
