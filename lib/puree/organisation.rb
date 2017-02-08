@@ -102,10 +102,7 @@ module Puree
 
     def extract_email
       path = '/emails/classificationDefinedStringFieldExtension/value'
-      xpath_result =  xpath_query path
-      arr = []
-      xpath_result.each { |i| arr << i.text.strip }
-      arr.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def extract_name
@@ -140,10 +137,7 @@ module Puree
 
     def extract_phone
       path = '/phoneNumbers/classificationDefinedStringFieldExtension/value'
-      xpath_result =  xpath_query path
-      arr = []
-      xpath_result.each { |i| arr << i.text.strip }
-      arr.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def extract_type
@@ -153,10 +147,7 @@ module Puree
 
     def extract_url
       path = '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
-      xpath_result = xpath_query path
-      arr = []
-      xpath_result.each { |i| arr << i.text.strip }
-      arr.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def combine_metadata
