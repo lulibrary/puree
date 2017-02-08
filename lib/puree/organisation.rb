@@ -113,7 +113,7 @@ module Puree
     def extract_organisation
       path = '/organisations/organisation'
       xpath_result =  xpath_query path
-      Puree::Extractor::Organisation.simple(xpath_result)
+      Puree::Extractor::Generic.multi_header(xpath_result)
     end
 
     def extract_parent
