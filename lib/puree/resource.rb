@@ -42,11 +42,9 @@ module Puree
     # @return [Hash]
     def get(uuid: nil, id: nil, rendering: :xml_long)
       reset
-
       @options[:rendering] = rendering
       @options[:uuid] = uuid
       @options[:id] = id
-
       missing = missing_credentials
       if !missing.empty?
         missing.each do |m|
@@ -54,21 +52,16 @@ module Puree
         end
         exit
       end
-
       # strip any trailing slash
       @base_url = @base_url.sub(/(\/)+$/, '')
-
       headers = {}
       headers['Accept'] = 'application/xml'
-
       if @options[:basic_auth] === true
         @auth = Base64::strict_encode64(@username + ':' + @password)
         headers['Authorization'] = 'Basic ' + @auth
       end
-
       query = {}
       query['rendering'] = @options[:rendering]
-
       if @options[:uuid]
         query['uuids.uuid'] = @options[:uuid]
       else
@@ -76,11 +69,9 @@ module Puree
           query['pureInternalIds.id'] = @options[:id]
         end
       end
-
       if @options[:rendering]
         query['rendering'] = @options[:rendering]
       end
-
       begin
         url = build_url
         req = HTTP.headers accept: headers['Accept']
@@ -89,13 +80,10 @@ module Puree
         end
         @response = req.get(url, params: query)
         make_doc @response.body
-
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
       end
-
       get_data? ? combine_metadata : {}
-
     end
 
     # UUID
