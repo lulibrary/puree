@@ -82,26 +82,17 @@ module Puree
 
     def extract_email
       path = '//emails/classificationDefinedStringFieldExtension/value'
-      xpath_result =  xpath_query path
-      data = []
-      xpath_result.each { |i| data << i.text }
-      data.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def extract_image
       path = '/photos/file/url'
-      xpath_result =  xpath_query path
-      data = []
-      xpath_result.each { |i| data << i.text }
-      data.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def extract_keyword
       path = '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-      xpath_result =  xpath_query path
-      data = []
-      xpath_result.each { |i| data << i.text }
-      data.uniq
+      xpath_query_for_multi_value(path)
     end
 
     def extract_name

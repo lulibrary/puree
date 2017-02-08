@@ -231,6 +231,12 @@ module Puree
       xpath_result ? xpath_result.text.strip : ''
     end
 
+    def xpath_query_for_multi_value(path)
+      xpath_result = xpath_query path
+      arr = []
+      xpath_result.each { |i| arr << i.text.strip }
+      arr.uniq
+    end
 
     def missing_credentials
       missing = []
