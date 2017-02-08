@@ -1,7 +1,6 @@
 module Puree
 
   # Dataset resource
-  #
   class Dataset < Resource
 
     # @param base_url [String]
@@ -17,140 +16,120 @@ module Puree
     end
 
     # Open access permission
-    #
     # @return [String]
     def access
       @metadata['access']
     end
 
     # Combines project and publication
-    #
     # @return [Array<Hash>]
     def associated
       @metadata['associated']
     end
 
     # Date made available
-    #
     # @return [Hash]
     def available
       @metadata['available']
     end
 
     # Description
-    #
     # @return [String]
     def description
       @metadata['description']
     end
 
     # Digital Object Identifier
-    #
     # @return [String]
     def doi
       @metadata['doi']
     end
 
     # Supporting file
-    #
     # @return [Array<Hash>]
     def file
       @metadata['file']
     end
 
     # Keyword
-    #
     # @return [Array<String>]
     def keyword
       @metadata['keyword']
     end
 
     # Link
-    #
     # @return [Array<Hash>]
     def link
       @metadata['link']
     end
 
     # Organisation
-    #
     # @return [Array<Hash>]
     def organisation
       @metadata['organisation']
     end
 
     # Owner
-    #
     # @return [Hash]
     def owner
       @metadata['owner']
     end
 
     # Person (internal, external, other)
-    #
     # @return [Array<Hash>]
     def person
       @metadata['person']
     end
 
     # Date of data production
-    #
     # @return [Hash]
     def production
       @metadata['production']
     end
 
     # Project
-    #
     # @return [Array<Hash>]
     def project
       @metadata['project']
     end
 
     # Publication
-    #
     # @return [Array<Hash>]
     def publication
       @metadata['publication']
     end
 
     # Publisher
-    #
     # @return [String]
     def publisher
       @metadata['publisher']
     end
 
     # Spatial coverage (place names)
-    #
     # @return [Array<String>]
     def spatial
       @metadata['spatial']
     end
 
     # Spatial coverage point
-    #
     # @return [Hash]
     def spatial_point
       @metadata['spatial_point']
     end
 
     # Temporal coverage
-    #
     # @return [Hash]
     def temporal
       @metadata['temporal']
     end
 
     # Title
-    #
     # @return [String]
     def title
       @metadata['title']
     end
 
     # All metadata
-    #
     # @return [Hash]
     def metadata
       @metadata
@@ -251,28 +230,12 @@ module Puree
       internal = []
       external = []
       other = []
-
       xpath_result.each do |i|
         o = {}
         name = {}
         name['first'] = i.xpath('name/firstName').text.strip
         name['last'] = i.xpath('name/lastName').text.strip
         o['name'] = name
-        roles = {
-            '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
-            '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
-            '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
-            '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
-            '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
-            '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
-            '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
-            '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
-            '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
-            '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
-            '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
-            '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
-            '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
-        }
         role_uri = i.xpath('personRole/uri').text.strip
         o['role'] = roles[role_uri].to_s
         uuid_internal = i.at_xpath('person/@uuid')
@@ -376,7 +339,6 @@ module Puree
     end
 
     # Temporal range
-    #
     # @return [Hash]
     def temporal_range(start_node, end_node)
       data = {}
@@ -394,7 +356,6 @@ module Puree
     end
 
     # Temporal coverage date
-    #
     # @return [Hash]
     def temporal_date(node)
       path = "/#{node}"
@@ -407,7 +368,6 @@ module Puree
     end
 
     # Associated type
-    #
     # @return [Hash]
     def associated_type(type)
       associated_arr = extract_associated
@@ -421,6 +381,24 @@ module Puree
         end
       end
       data_arr
+    end
+
+    def roles
+      {
+        '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
+        '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
+        '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
+        '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
+        '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
+        '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
+        '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
+        '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
+        '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
+        '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
+        '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
+        '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
+        '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
+      }
     end
 
   end
