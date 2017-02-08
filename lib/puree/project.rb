@@ -110,17 +110,13 @@ module Puree
     def extract_organisation
       path = '/organisations/association/organisation'
       xpath_result = xpath_query path
-      Puree::Extractor::Organisation.simple(xpath_result)
+      Puree::Extractor::Generic.multi_header(xpath_result)
     end
 
     def extract_owner
       path = '/owner'
       xpath_result =  xpath_query path
-      o = {}
-      o['uuid'] = xpath_result.xpath('@uuid').text.strip
-      o['name'] = xpath_result.xpath('name/localizedString').text.strip
-      o['type'] = xpath_result.xpath('typeClassification/term/localizedString').text.strip
-      o
+      Puree::Extractor::Generic.header(xpath_result)
     end
 
     def extract_person
