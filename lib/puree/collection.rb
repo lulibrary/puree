@@ -128,13 +128,37 @@ module Puree
 
     def params
       query = {}
+
       query['rendering'] = @options[:rendering]
-      query['window.size'] = @options[:limit]
-      query['window.offset'] = @options[:offset]
-      query['createdDate.fromDate'] = @options[:created_start]
-      query['createdDate.toDate'] = @options[:created_end]
-      query['modifiedDate.fromDate'] = @options[:modified_start]
-      query['modifiedDate.toDate'] = @options[:modified_end]
+
+      if @options[:limit] >= 0
+        query['window.size'] = @options[:limit]
+      end
+
+      if @options[:offset]
+        query['window.offset'] = @options[:offset]
+      end
+
+      if @options[:created_start]
+        query['createdDate.fromDate'] = @options[:created_start]
+      end
+
+      if @options[:created_end]
+        query['createdDate.toDate'] = @options[:created_end]
+      end
+
+      if @options[:modified_start]
+        query['modifiedDate.fromDate'] = @options[:modified_start]
+      end
+
+      if @options[:modified_end]
+        query['modifiedDate.toDate'] = @options[:modified_end]
+      end
+
+      if @options['rendering']
+        query['rendering'] = @options['rendering']
+      end
+
       query
     end
 
