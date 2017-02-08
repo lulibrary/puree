@@ -156,7 +156,6 @@ module Puree
       @metadata
     end
 
-
     private
 
     def extract_access
@@ -179,7 +178,7 @@ module Puree
     end
 
     def extract_available
-      temporal_start_date 'dateMadeAvailable'
+      temporal_date 'dateMadeAvailable'
     end
 
     def extract_description
@@ -195,9 +194,7 @@ module Puree
     def extract_file
       path = '/documents/document'
       xpath_result = xpath_query path
-
       docs = []
-
       xpath_result.each do |d|
         doc = {}
         # doc['id'] = f.xpath('id').text.strip
@@ -209,7 +206,6 @@ module Puree
         # doc['createdDate'] = d.xpath('createdDate').text.strip
         # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
         # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
-
         license = {}
         license_name = d.xpath('documentLicense/term/localizedString').text.strip
         license['name'] = license_name
@@ -217,7 +213,6 @@ module Puree
         license['url'] = license_url
         doc['license'] = license
         docs << doc
-
       end
       docs.uniq
     end
@@ -272,7 +267,6 @@ module Puree
         name['first'] = i.xpath('name/firstName').text.strip
         name['last'] = i.xpath('name/lastName').text.strip
         o['name'] = name
-
         roles = {
             '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
             '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
@@ -290,7 +284,6 @@ module Puree
         }
         role_uri = i.xpath('personRole/uri').text.strip
         o['role'] = roles[role_uri].to_s
-
         uuid_internal = i.at_xpath('person/@uuid')
         uuid_external = i.at_xpath('externalPerson/@uuid')
         if uuid_internal
@@ -416,35 +409,22 @@ module Puree
       data = {}
       data['start'] = {}
       data['end'] = {}
-      start_date = temporal_start_date start_node
+      start_date = temporal_date start_node
       if !start_date.nil? && !start_date.empty?
         data['start'] = start_date
       end
-      end_date = temporal_end_date end_node
+      end_date = temporal_date end_node
       if !end_date.nil? && !end_date.empty?
         data['end'] = end_date
       end
       data
     end
 
-    # Temporal coverage start date
+    # Temporal coverage date
     #
     # @return [Hash]
-    def temporal_start_date(start_node)
-      path = "/#{start_node}"
-      xpath_result = xpath_query path
-      o = {}
-      o['day'] = xpath_result.xpath('day').text.strip
-      o['month'] = xpath_result.xpath('month').text.strip
-      o['year'] = xpath_result.xpath('year').text.strip
-      Puree::Date.normalise(o)
-    end
-
-    # Temporal coverage end date
-    #
-    # @return [Hash]
-    def temporal_end_date(end_node)
-      path = "/#{end_node}"
+    def temporal_date(node)
+      path = "/#{node}"
       xpath_result = xpath_query path
       o = {}
       o['day'] = xpath_result.xpath('day').text.strip
