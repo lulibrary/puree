@@ -37,8 +37,6 @@ module Puree
       iso_date
     end
 
-    private
-
     # Forces a date to have three components (year, month, day)
     #
     # @param data [Hash]

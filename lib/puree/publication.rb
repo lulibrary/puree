@@ -153,15 +153,7 @@ module Puree
     def extract_organisation
       path = '/organisations/association/organisation'
       xpath_result = xpath_query path
-      data = []
-      xpath_result.each do |i|
-        o = {}
-        o['uuid'] = i.xpath('@uuid').text.strip
-        o['name'] = i.xpath('name/localizedString').text.strip
-        o['type'] = i.xpath('typeClassification/term/localizedString').text.strip
-        data << o
-      end
-      data
+      Puree::Extractor::Organisation.simple(xpath_result)
     end
 
     def extract_page
