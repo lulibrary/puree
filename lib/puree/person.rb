@@ -68,8 +68,7 @@ module Puree
     private
 
     def extract_affiliation
-      path = '//organisation'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query '//organisation'
       data_arr = []
       xpath_result.each { |i|
         data = {}
@@ -81,23 +80,19 @@ module Puree
     end
 
     def extract_email
-      path = '//emails/classificationDefinedStringFieldExtension/value'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
     end
 
     def extract_image
-      path = '/photos/file/url'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '/photos/file/url'
     end
 
     def extract_keyword
-      path = '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
     end
 
     def extract_name
-      path = '/name'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query '/name'
       first = xpath_result.xpath('firstName').text.strip
       last = xpath_result.xpath('lastName').text.strip
       o = {}
@@ -107,8 +102,7 @@ module Puree
     end
 
     def extract_orcid
-      path = '/orcid'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/orcid'
     end
 
     def combine_metadata
