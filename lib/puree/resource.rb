@@ -164,7 +164,7 @@ module Puree
     def extract_locale
       path = '/@locale'
       str = xpath_query_for_single_value path
-      str.gsub('_','-')
+      str.tr('_','-')
     end
 
     # All metadata
