@@ -217,11 +217,7 @@ module Puree
 
     def extract_owner
       xpath_result = xpath_query '/managedBy'
-      o = {}
-      o['uuid'] = xpath_result.xpath('@uuid').text.strip
-      o['name'] = xpath_result.xpath('name/localizedString').text.strip
-      o['type'] = xpath_result.xpath('typeClassification/term/localizedString').text.strip
-      o
+      Puree::Extractor::Generic.header xpath_result
     end
 
     def extract_person
