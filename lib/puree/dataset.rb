@@ -159,13 +159,11 @@ module Puree
     private
 
     def extract_access
-      path = '/openAccessPermission/term/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/openAccessPermission/term/localizedString'
     end
 
     def extract_associated
-      path = '/associatedContent//relatedContent'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query '/associatedContent//relatedContent'
       data_arr = []
       xpath_result.each { |i|
         data = {}
@@ -187,13 +185,11 @@ module Puree
     end
 
     def extract_doi
-      path = '/doi'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/doi'
     end
 
     def extract_file
-      path = '/documents/document'
-      xpath_result = xpath_query path
+      xpath_result = xpath_query '/documents/document'
       docs = []
       xpath_result.each do |d|
         doc = {}
@@ -218,15 +214,13 @@ module Puree
     end
 
     def extract_keyword
-      path = '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-      xpath_result =  xpath_query path
+      xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
       data_arr = xpath_result.map { |i| i.text.strip }
       data_arr.uniq
     end
 
     def extract_link
-      path = '/links/link'
-      xpath_result = xpath_query path
+      xpath_result = xpath_query '/links/link'
       data = []
       xpath_result.each { |i|
         o = {}
@@ -238,14 +232,12 @@ module Puree
     end
 
     def extract_organisation
-      path = '/organisations/organisation'
-      xpath_result = xpath_query path
-      Puree::Extractor::Generic.multi_header(xpath_result)
+      xpath_result = xpath_query '/organisations/organisation'
+      Puree::Extractor::Generic.multi_header xpath_result
     end
 
     def extract_owner
-      path = '/managedBy'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query '/managedBy'
       o = {}
       o['uuid'] = xpath_result.xpath('@uuid').text.strip
       o['name'] = xpath_result.xpath('name/localizedString').text.strip
@@ -255,8 +247,7 @@ module Puree
 
     def extract_person
       data = {}
-      path = '/persons/dataSetPersonAssociation'
-      xpath_result = xpath_query path
+      xpath_result = xpath_query '/persons/dataSetPersonAssociation'
       internal = []
       external = []
       other = []
@@ -322,14 +313,12 @@ module Puree
     end
 
     def extract_publisher
-      path = '/publisher/name'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/publisher/name'
     end
 
     def extract_spatial
       # Data from free-form text box
-      path = '/geographicalCoverage/localizedString'
-      xpath_result = xpath_query path
+      xpath_result = xpath_query '/geographicalCoverage/localizedString'
       data = []
       xpath_result.each do |i|
         data << i.text.strip
@@ -338,8 +327,7 @@ module Puree
     end
 
     def extract_spatial_point
-      path = '/geoLocation/point'
-      xpath_result = xpath_query path
+      xpath_result = xpath_query '/geoLocation/point'
       o = {}
       if !xpath_result[0].nil?
         arr = xpath_result.text.split(',')
@@ -354,8 +342,7 @@ module Puree
     end
 
     def extract_title
-      path = '/title/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/title/localizedString'
     end
 
     # def state
@@ -388,20 +375,6 @@ module Puree
       @metadata = o
     end
 
-    # Assembles basic information about a person
-    #
-    # @param generic_data [Hash]
-    # @return [Hash]
-    def generic_person(generic_data)
-      person = {}
-      name = {}
-      name['first'] = generic_data['name']['firstName']
-      name['last'] = generic_data['name']['lastName']
-      person['name'] = name
-      person['role'] = generic_data['personRole']['term']['localizedString']["__content__"]
-      person
-    end
-
     # Temporal range
     #
     # @return [Hash]
@@ -430,7 +403,7 @@ module Puree
       o['day'] = xpath_result.xpath('day').text.strip
       o['month'] = xpath_result.xpath('month').text.strip
       o['year'] = xpath_result.xpath('year').text.strip
-      Puree::Date.normalise(o)
+      Puree::Date.normalise o
     end
 
     # Associated type
