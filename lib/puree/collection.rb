@@ -86,45 +86,13 @@ module Puree
         headers['Authorization'] = 'Basic ' + @auth
       end
 
-      query = {}
-
-      query['rendering'] = @options[:rendering]
-
-      if @options[:limit] >= 0
-        query['window.size'] = @options[:limit]
-      end
-
-      if @options[:offset]
-        query['window.offset'] = @options[:offset]
-      end
-
-      if @options[:created_start]
-        query['createdDate.fromDate'] = @options[:created_start]
-      end
-
-      if @options[:created_end]
-        query['createdDate.toDate'] = @options[:created_end]
-      end
-
-      if @options[:modified_start]
-        query['modifiedDate.fromDate'] = @options[:modified_start]
-      end
-
-      if @options[:modified_end]
-        query['modifiedDate.toDate'] = @options[:modified_end]
-      end
-
-      if @options['rendering']
-        query['rendering'] = @options['rendering']
-      end
-
       begin
         url = build_url
         req = HTTP.headers accept: 'application/xml'
         if @options[:basic_auth]
           req = req.auth headers['Authorization']
         end
-        @response = req.get(url, params: query)
+        @response = req.get(url, params: params)
         @doc = Nokogiri::XML @response.body
         @doc.remove_namespaces!
 
@@ -157,6 +125,42 @@ module Puree
     end
 
     private
+
+    def params
+      query = {}
+
+      query['rendering'] = @options[:rendering]
+
+      if @options[:limit] >= 0
+        query['window.size'] = @options[:limit]
+      end
+
+      if @options[:offset]
+        query['window.offset'] = @options[:offset]
+      end
+
+      if @options[:created_start]
+        query['createdDate.fromDate'] = @options[:created_start]
+      end
+
+      if @options[:created_end]
+        query['createdDate.toDate'] = @options[:created_end]
+      end
+
+      if @options[:modified_start]
+        query['modifiedDate.fromDate'] = @options[:modified_start]
+      end
+
+      if @options[:modified_end]
+        query['modifiedDate.toDate'] = @options[:modified_end]
+      end
+
+      if @options['rendering']
+        query['rendering'] = @options['rendering']
+      end
+
+      query
+    end
 
     def get_count
       find limit: 0
