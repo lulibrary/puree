@@ -36,7 +36,6 @@ module Puree
     end
 
     # Get
-    #
     # @param uuid [String]
     # @param id [String]
     # @return [Hash]
