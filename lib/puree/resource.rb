@@ -1,7 +1,6 @@
 module Puree
 
   # Abstract base class for resources.
-  #
   class Resource
 
     attr_reader :response
@@ -86,28 +85,24 @@ module Puree
     end
 
     # UUID
-    #
     # @return [String]
     def uuid
       @metadata['uuid']
     end
 
     # Created (UTC datetime)
-    #
     # @return [String]
     def created
       @metadata['created']
     end
 
     # Modified (UTC datetime)
-    #
     # @return [String]
     def modified
       @metadata['modified']
     end
 
     # Locale (e.g. en-GB)
-    #
     # @return [String]
     def locale
       @metadata['locale']
@@ -115,7 +110,6 @@ module Puree
 
     # Set content from XML. In order for metadata extraction to work, the XML must have
     # been retrieved using the .current version of the Pure API endpoints
-    #
     # @param xml [String]
     def set_content(xml)
       if xml
@@ -155,7 +149,6 @@ module Puree
     end
 
     # All metadata
-    #
     # @return [Hash]
     def combine_metadata
       o = {}
@@ -167,7 +160,6 @@ module Puree
     end
 
     # Is there any data after get? For a response that provides a count of the results.
-    #
     # @return [Boolean]
     def get_data?
       path = service_xpath_count
