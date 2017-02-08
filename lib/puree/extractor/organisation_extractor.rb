@@ -17,7 +17,7 @@ module Puree
           o['type'] = i.xpath('typeClassification/term/localizedString').text.strip
           data << o
         end
-        data
+        data.uniq
       end
 
     end

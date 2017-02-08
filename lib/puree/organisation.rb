@@ -113,17 +113,7 @@ module Puree
     def extract_organisation
       path = '/organisations/organisation'
       xpath_result =  xpath_query path
-
-      data = []
-
-      xpath_result.each do |d|
-        o = {}
-        o['uuid'] = d.xpath('@uuid').text.strip
-        o['name'] = d.xpath('name/localizedString').text.strip
-        o['type'] = d.xpath('typeClassification/term/localizedString').text.strip
-        data << o
-      end
-      data.uniq
+      Puree::Extractor::Organisation.simple(xpath_result)
     end
 
     def extract_parent
