@@ -69,14 +69,7 @@ module Puree
 
     def extract_affiliation
       xpath_result = xpath_query '//organisation'
-      data_arr = []
-      xpath_result.each { |i|
-        data = {}
-        data['uuid'] = i.attr('uuid').strip
-        data['name'] = i.xpath('name/localizedString').text.strip
-        data_arr << data
-      }
-      data_arr.uniq
+      ::Puree::Extractor::Person.extract_affiliation xpath_result
     end
 
     def extract_email
@@ -93,12 +86,7 @@ module Puree
 
     def extract_name
       xpath_result = xpath_query '/name'
-      first = xpath_result.xpath('firstName').text.strip
-      last = xpath_result.xpath('lastName').text.strip
-      o = {}
-      o['first'] = first
-      o['last'] = last
-      o
+      ::Puree::Extractor::Person.extract_name xpath_result
     end
 
     def extract_orcid
