@@ -132,23 +132,19 @@ module Puree
     end
 
     def extract_created
-      path = '/created'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/created'
     end
 
     def extract_modified
-      path = '/modified'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/modified'
     end
 
     def extract_uuid
-      path = '/@uuid'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/@uuid'
     end
 
     def extract_locale
-      path = '/@locale'
-      str = xpath_query_for_single_value path
+      str = xpath_query_for_single_value '/@locale'
       str.tr('_','-')
     end
 
