@@ -98,66 +98,30 @@ module Puree
     private
 
     def extract_acronym
-      path = '/acronym'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/acronym'
     end
 
     def extract_description
-      path = '/description/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/description/localizedString'
     end
 
     def extract_organisation
-      path = '/organisations/association/organisation'
-      xpath_result = xpath_query path
-      Puree::Extractor::Generic.multi_header(xpath_result)
+      xpath_result = xpath_query '/organisations/association/organisation'
+      Puree::Extractor::Generic.multi_header xpath_result
     end
 
     def extract_owner
-      path = '/owner'
-      xpath_result =  xpath_query path
-      Puree::Extractor::Generic.header(xpath_result)
+      xpath_result =  xpath_query '/owner'
+      Puree::Extractor::Generic.header xpath_result
     end
 
     def extract_person
-      data = {}
-      # internal
-      path = '/persons/participantAssociation'
-      xpath_result = xpath_query path
-      internal = []
-      external = []
-      other = []
-
-      xpath_result.each do |i|
-        o = {}
-        name = {}
-        name['first'] = i.xpath('person/name/firstName').text.strip
-        name['last'] = i.xpath('person/name/lastName').text.strip
-        o['name'] = name
-        o['role'] = i.xpath('personRole/term/localizedString').text.strip
-
-        uuid_internal = i.at_xpath('person/@uuid')
-        uuid_external = i.at_xpath('externalPerson/@uuid')
-        if uuid_internal
-          o['uuid'] = uuid_internal.text.strip
-          internal << o
-        elsif uuid_external
-          o['uuid'] = uuid_external.text.strip
-          external << o
-        else
-          other << o
-          o['uuid'] = ''
-        end
-      end
-      data['internal'] = internal
-      data['external'] = external
-      data['other'] = other
-      data
+      xpath_result = xpath_query '/persons/participantAssociation'
+      ::Puree::Extractor::Project.extract_person xpath_result
     end
 
     def extract_status
-      path = '/status/term/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/status/term/localizedString'
     end
 
     def extract_temporal
@@ -165,38 +129,31 @@ module Puree
       o['expected'] = {}
       o['actual'] = {}
 
-      path = '/expectedStartDate'
-      xpath_result =  xpath_query path
+      xpath_result =  xpath_query '/expectedStartDate'
       o['expected']['start'] = xpath_result.text.strip
 
-      path = '/expectedEndDate'
-      xpath_result =  xpath_query path
+      xpath_result =  xpath_query '/expectedEndDate'
       o['expected']['end'] = xpath_result.text.strip
 
-      path = '/startFinishDate/startDate'
-      xpath_result =  xpath_query path
+      xpath_result =  xpath_query '/startFinishDate/startDate'
       o['actual']['start'] = xpath_result.text.strip
 
-      path = '/startFinishDate/endDate'
-      xpath_result =  xpath_query path
+      xpath_result =  xpath_query '/startFinishDate/endDate'
       o['actual']['end'] = xpath_result.text.strip
 
       o
     end
 
     def extract_title
-      path = '/title/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/title/localizedString'
     end
 
     def extract_type
-      path = '/typeClassification/term/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/typeClassification/term/localizedString'
     end
 
     def extract_url
-      path = '/projectURL'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/projectURL'
     end
 
     def combine_metadata

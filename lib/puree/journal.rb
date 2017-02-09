@@ -48,18 +48,15 @@ module Puree
     private
 
     def extract_issn
-      path = '/issns/issn/string'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/issns/issn/string'
     end
 
     def extract_publisher
-      path = '/publisher/name'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/publisher/name'
     end
 
     def extract_title
-      path = '/titles/title/string'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/titles/title/string'
     end
 
     def combine_metadata
