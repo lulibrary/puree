@@ -166,20 +166,12 @@ module Puree
 
     def extract_keyword
       xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-      data_arr = xpath_result.map { |i| i.text.strip }
-      data_arr.uniq
+      ::Puree::Extractor::Dataset.extract_keyword xpath_result
     end
 
     def extract_link
       xpath_result = xpath_query '/links/link'
-      data = []
-      xpath_result.each { |i|
-        o = {}
-        o['url'] = i.xpath('url').text.strip
-        o['description'] = i.xpath('description').text.strip
-        data << o
-      }
-      data.uniq
+      ::Puree::Extractor::Dataset.extract_link xpath_result
     end
 
     def extract_organisation
@@ -222,22 +214,12 @@ module Puree
     def extract_spatial
       # Data from free-form text box
       xpath_result = xpath_query '/geographicalCoverage/localizedString'
-      data = []
-      xpath_result.each do |i|
-        data << i.text.strip
-      end
-      data
+      ::Puree::Extractor::Dataset.extract_spatial xpath_result
     end
 
     def extract_spatial_point
       xpath_result = xpath_query '/geoLocation/point'
-      o = {}
-      if !xpath_result[0].nil?
-        arr = xpath_result.text.split(',')
-        o['latitude'] = arr[0].strip.to_f
-        o['longitude'] = arr[1].strip.to_f
-      end
-      o
+      ::Puree::Extractor::Dataset.extract_spatial_point xpath_result
     end
 
     def extract_temporal
