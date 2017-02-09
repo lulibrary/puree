@@ -83,36 +83,20 @@ module Puree
     private
 
     def extract_address
-      path = '/addresses/classifiedAddress'
-      xpath_result = xpath_query path
-
-      data = []
-
-      xpath_result.each do |d|
-        o = {}
-        o['street'] = d.xpath('street').text.strip
-        o['building'] = d.xpath('building').text.strip
-        o['postcode'] = d.xpath('postalCode').text.strip
-        o['city'] = d.xpath('city').text.strip
-        o['country'] = d.xpath('country/term/localizedString').text.strip
-        data << o
-      end
-      data.uniq
+      xpath_result = xpath_query '/addresses/classifiedAddress'
+      ::Puree::Extractor::Organisation.extract_address(xpath_result)
     end
 
     def extract_email
-      path = '/emails/classificationDefinedStringFieldExtension/value'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '/emails/classificationDefinedStringFieldExtension/value'
     end
 
     def extract_name
-      path = '/name/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/name/localizedString'
     end
 
     def extract_organisation
-      path = '/organisations/organisation'
-      xpath_result =  xpath_query path
+      xpath_result = xpath_query '/organisations/organisation'
       Puree::Extractor::Generic.multi_header(xpath_result)
     end
 
@@ -126,18 +110,15 @@ module Puree
     end
 
     def extract_phone
-      path = '/phoneNumbers/classificationDefinedStringFieldExtension/value'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '/phoneNumbers/classificationDefinedStringFieldExtension/value'
     end
 
     def extract_type
-      path = '/typeClassification/term/localizedString'
-      xpath_query_for_single_value path
+      xpath_query_for_single_value '/typeClassification/term/localizedString'
     end
 
     def extract_url
-      path = '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
-      xpath_query_for_multi_value(path)
+      xpath_query_for_multi_value '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
     end
 
     def combine_metadata
