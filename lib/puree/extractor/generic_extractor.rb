@@ -8,17 +8,17 @@ module Puree
     #
     module Generic
 
-      def self.header(xpath_result_node)
+      def self.header(nokogiri_xml_element)
         o = {}
-        o['uuid'] = xpath_result_node.xpath('@uuid').text.strip
-        o['name'] = xpath_result_node.xpath('name/localizedString').text.strip
-        o['type'] = xpath_result_node.xpath('typeClassification/term/localizedString').text.strip
+        o['uuid'] = nokogiri_xml_element.xpath('@uuid').text.strip
+        o['name'] = nokogiri_xml_element.xpath('name/localizedString').text.strip
+        o['type'] = nokogiri_xml_element.xpath('typeClassification/term/localizedString').text.strip
         o
       end
 
-      def self.multi_header(xpath_result)
+      def self.multi_header(nokogiri_xml_nodeset)
         data = []
-        xpath_result.each do |i|
+        nokogiri_xml_nodeset.each do |i|
           data << header(i)
         end
         data.uniq
