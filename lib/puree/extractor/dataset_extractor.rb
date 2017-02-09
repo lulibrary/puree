@@ -44,6 +44,22 @@ module Puree
         docs.uniq
       end
 
+      def self.extract_keyword(xpath_result)
+        data_arr = xpath_result.map { |i| i.text.strip }
+        data_arr.uniq
+      end
+
+      def self.extract_link(xpath_result)
+        data = []
+        xpath_result.each { |i|
+          o = {}
+          o['url'] = i.xpath('url').text.strip
+          o['description'] = i.xpath('description').text.strip
+          data << o
+        }
+        data.uniq
+      end
+
       def self.extract_person(xpath_result)
         data = {}
         internal = []
@@ -74,6 +90,35 @@ module Puree
         data['external'] = external
         data['other'] = other
         data
+      end
+
+      def self.extract_publication
+        data_arr = []
+        extract_associated.each do |i|
+          if i['type'] != 'Research'
+            data_arr << i
+          end
+        end
+        data_arr.uniq
+      end
+
+      def self.extract_spatial(xpath_result)
+        # Data from free-form text box
+        data = []
+        xpath_result.each do |i|
+          data << i.text.strip
+        end
+        data
+      end
+
+      def self.extract_spatial_point(xpath_result)
+        o = {}
+        if !xpath_result[0].nil?
+          arr = xpath_result.text.split(',')
+          o['latitude'] = arr[0].strip.to_f
+          o['longitude'] = arr[1].strip.to_f
+        end
+        o
       end
 
       def self.roles
