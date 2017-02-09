@@ -323,24 +323,6 @@ module Puree
       data_arr
     end
 
-    def roles
-      {
-        '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
-        '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
-        '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
-        '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
-        '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
-        '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
-        '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
-        '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
-        '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
-        '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
-        '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
-        '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
-        '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
-      }
-    end
-
   end
 
 end
