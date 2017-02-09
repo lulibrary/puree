@@ -58,25 +58,13 @@ module Puree
         @auth = Base64::strict_encode64(@username + ':' + @password)
         headers['Authorization'] = 'Basic ' + @auth
       end
-      query = {}
-      query['rendering'] = @options[:rendering]
-      if @options[:uuid]
-        query['uuids.uuid'] = @options[:uuid]
-      else
-        if @options[:id]
-          query['pureInternalIds.id'] = @options[:id]
-        end
-      end
-      if @options[:rendering]
-        query['rendering'] = @options[:rendering]
-      end
       begin
         url = build_url
         req = HTTP.headers accept: headers['Accept']
         if @options[:basic_auth]
           req = req.auth headers['Authorization']
         end
-        @response = req.get(url, params: query)
+        @response = req.get(url, params: params)
         make_doc @response.body
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
@@ -121,6 +109,22 @@ module Puree
     end
 
     private
+
+    def params
+      query = {}
+      query['rendering'] = @options[:rendering]
+      if @options[:uuid]
+        query['uuids.uuid'] = @options[:uuid]
+      else
+        if @options[:id]
+          query['pureInternalIds.id'] = @options[:id]
+        end
+      end
+      if @options[:rendering]
+        query['rendering'] = @options[:rendering]
+      end
+      query
+    end
 
     def make_doc(xml)
       @doc = Nokogiri::XML xml
