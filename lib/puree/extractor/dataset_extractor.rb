@@ -8,18 +8,6 @@ module Puree
     #
     module Dataset
 
-      def self.extract_associated(xpath_result)
-        data_arr = []
-        xpath_result.each { |i|
-          data = {}
-          data['type'] = i.xpath('typeClassification').text.strip
-          data['title'] = i.xpath('title').text.strip
-          data['uuid'] = i.attr('uuid').strip
-          data_arr << data
-        }
-        data_arr.uniq
-      end
-
       def self.extract_file(xpath_result)
         docs = []
         xpath_result.each do |d|
@@ -90,16 +78,6 @@ module Puree
         data['external'] = external
         data['other'] = other
         data
-      end
-
-      def self.extract_publication
-        data_arr = []
-        extract_associated.each do |i|
-          if i['type'] != 'Research'
-            data_arr << i
-          end
-        end
-        data_arr.uniq
       end
 
       def self.extract_spatial(xpath_result)
