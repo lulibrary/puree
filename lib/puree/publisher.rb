@@ -41,20 +41,16 @@ module Puree
 
     private
 
-    def extract_name
-      xpath_query_for_single_value '/name'
-    end
-
     # Adds no value as value is Publisher
-    # def extract_type
+    # def type
     #   path = '/typeClassification/term/localizedString'
     #   xpath_query_for_single_value path
     # end
 
     def combine_metadata
       o = super
-      o['name'] = extract_name
-      # o['type'] = extract_type
+      o['name'] = @extractor.name
+      # o['type'] = type
       @metadata = o
     end
 

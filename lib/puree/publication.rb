@@ -107,76 +107,22 @@ module Puree
       @metadata
     end
 
-
     private
-
-    def extract_category
-      xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
-    end
-
-    def extract_description
-      xpath_query_for_single_value '/abstract/localizedString'
-    end
-
-    def extract_event
-      xpath_result = xpath_query '/event'
-      Puree::Extractor::Publication.extract_event xpath_result
-    end
-
-    def extract_doi
-      xpath_query_for_single_value '//doi'
-    end
-
-    def extract_file
-      xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation/file'
-      Puree::Extractor::Publication.extract_file xpath_result
-    end
-
-    def extract_organisation
-      xpath_result = xpath_query '/organisations/association/organisation'
-      Puree::Extractor::Generic.multi_header xpath_result
-    end
-
-    def extract_page
-      xpath_query_for_single_value '/numberOfPages'
-    end
-
-    def extract_person
-      xpath_result = xpath_query '/persons/personAssociation'
-      Puree::Extractor::Publication.extract_person xpath_result
-    end
-
-    def extract_status
-      xpath_result = xpath_query '/publicationStatuses/publicationStatus'
-      Puree::Extractor::Publication.extract_status xpath_result
-    end
-
-    def extract_title
-      xpath_query_for_single_value '/title'
-    end
-
-    def extract_subtitle
-      xpath_query_for_single_value '/subtitle'
-    end
-
-    def extract_type
-      xpath_query_for_single_value '/typeClassification/term/localizedString'
-    end
 
     def combine_metadata
       o = super
-      o['category'] = extract_category
-      o['description'] = extract_description
-      o['doi'] = extract_doi
-      o['event'] = extract_event
-      o['file'] = extract_file
-      o['organisation'] = extract_organisation
-      o['page'] = extract_page
-      o['person'] = extract_person
-      o['status'] = extract_status
-      o['subtitle'] = extract_subtitle
-      o['title'] = extract_title
-      o['type'] = extract_type
+      o['category'] = @extractor.category
+      o['description'] = @extractor.description
+      o['doi'] = @extractor.doi
+      o['event'] = @extractor.event
+      o['file'] = @extractor.file
+      o['organisation'] = @extractor.organisation
+      o['page'] = @extractor.page
+      o['person'] = @extractor.person
+      o['status'] = @extractor.status
+      o['subtitle'] = @extractor.subtitle
+      o['title'] = @extractor.title
+      o['type'] = @extractor.type
       @metadata = o
     end
 

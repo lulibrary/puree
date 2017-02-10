@@ -65,11 +65,11 @@ module Puree
           req = req.auth headers['Authorization']
         end
         @response = req.get(url, params: params)
-        make_doc @response.body
+        make_extractor
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
       end
-      get_data? ? combine_metadata : {}
+      @extractor.get_data? ? combine_metadata : {}
     end
 
     # UUID
@@ -101,10 +101,8 @@ module Puree
     # @param xml [String]
     def set_content(xml)
       if xml
-        make_doc xml
-        if get_data?
-          combine_metadata
-        end
+        make_extractor
+        @extractor.get_data? ? combine_metadata : {}
       end
     end
 
@@ -126,67 +124,25 @@ module Puree
       query
     end
 
-    def make_doc(xml)
-      @doc = Nokogiri::XML xml
-      @doc.remove_namespaces!
-    end
-
-    def extract_created
-      xpath_query_for_single_value '/created'
-    end
-
-    def extract_modified
-      xpath_query_for_single_value '/modified'
-    end
-
-    def extract_uuid
-      xpath_query_for_single_value '/@uuid'
-    end
-
-    def extract_locale
-      str = xpath_query_for_single_value '/@locale'
-      str.tr('_','-')
+    def make_extractor
+      resource_class = "Puree::Extractor::#{@resource_type.to_s.capitalize}"
+      @extractor = Object.const_get(resource_class).new xml: @response.body
     end
 
     # All metadata
     # @return [Hash]
     def combine_metadata
       o = {}
-      o['uuid'] = extract_uuid
-      o['created'] = extract_created
-      o['modified'] = extract_modified
-      o['locale'] = extract_locale
+      o['uuid'] = @extractor.uuid
+      o['created'] = @extractor.created
+      o['modified'] = @extractor.modified
+      o['locale'] = @extractor.locale
       o
-    end
-
-    # Is there any data after get? For a response that provides a count of the results.
-    # @return [Boolean]
-    def get_data?
-      path = service_xpath_count
-      xpath_result = @doc.xpath path
-      xpath_result.text.strip === '1' ? true : false
     end
 
     def service_name
       resource_type = @options[:resource_type]
       @api_map[:resource_type][resource_type][:service]
-    end
-
-    def service_response_name
-      resource_type = @options[:resource_type]
-      @api_map[:resource_type][resource_type][:response]
-    end
-
-    def service_xpath_base
-      service_response_name + '/result/content'
-    end
-
-    def service_xpath_count
-      service_response_name + '/count'
-    end
-
-    def service_xpath(str_to_find)
-      service_xpath_base + str_to_find
     end
 
     def build_url
@@ -197,24 +153,6 @@ module Puree
         service_api_mode = service + '.current'
       end
       @base_url + '/' + service_api_mode
-    end
-
-    # content based
-    def xpath_query(path)
-      path_from_root = service_xpath path
-      @doc.xpath path_from_root
-    end
-
-    def xpath_query_for_single_value(path)
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
-    end
-
-    def xpath_query_for_multi_value(path)
-      xpath_result = xpath_query path
-      arr = []
-      xpath_result.each { |i| arr << i.text.strip }
-      arr.uniq
     end
 
     def missing_credentials

@@ -8,6 +8,11 @@ module Puree
     #
     class Dataset < Puree::Extractor::Base
 
+      def initialize(xml:)
+        @resource_type = :dataset
+        super
+      end
+
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -82,12 +87,12 @@ module Puree
 
       def organisation
         xpath_result = xpath_query '/organisations/organisation'
-        Puree::Extractor::Generic.multi_header xpath_result
+        Puree::Extractor::Shared.multi_header xpath_result
       end
 
       def owner
         xpath_result = xpath_query '/managedBy'
-        Puree::Extractor::Generic.header xpath_result
+        Puree::Extractor::Shared.header xpath_result
       end
 
       def person

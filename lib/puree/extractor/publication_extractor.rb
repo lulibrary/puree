@@ -6,16 +6,35 @@ module Puree
 
     # Publication extractor
     #
-    module Publication
+    class Publication < Puree::Extractor::Base
 
-      def self.extract_event(xpath_result)
+      def initialize(xml:)
+        @resource_type = :publication
+        super
+      end
+
+      def category
+        xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
+      end
+
+      def description
+        xpath_query_for_single_value '/abstract/localizedString'
+      end
+
+      def event
+        xpath_result = xpath_query '/event'
         o = {}
         o['uuid'] = xpath_result.xpath('@uuid').text.strip
         o['title'] = xpath_result.xpath('title/localizedString').text.strip
         o
       end
 
-      def self.extract_file(xpath_result)
+      def doi
+        xpath_query_for_single_value '//doi'
+      end
+
+      def file
+        xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation/file'
         docs = []
         xpath_result.each do |d|
           doc = {}
@@ -29,7 +48,17 @@ module Puree
         docs.uniq
       end
 
-      def self.extract_person(xpath_result)
+      def organisation
+        xpath_result = xpath_query '/organisations/association/organisation'
+        Puree::Extractor::Shared.multi_header xpath_result
+      end
+
+      def page
+        xpath_query_for_single_value '/numberOfPages'
+      end
+
+      def person
+        xpath_result = xpath_query '/persons/personAssociation'
         data = {}
         internal = []
         external = []
@@ -61,7 +90,8 @@ module Puree
         data
       end
 
-      def self.extract_status(xpath_result)
+      def status
+        xpath_result = xpath_query '/publicationStatuses/publicationStatus'
         data = []
         xpath_result.each do |i|
           o = {}
@@ -74,6 +104,18 @@ module Puree
           data << o
         end
         data
+      end
+
+      def title
+        xpath_query_for_single_value '/title'
+      end
+
+      def subtitle
+        xpath_query_for_single_value '/subtitle'
+      end
+
+      def type
+        xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
 
     end

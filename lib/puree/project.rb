@@ -94,80 +94,20 @@ module Puree
       @metadata
     end
 
-
     private
-
-    def extract_acronym
-      xpath_query_for_single_value '/acronym'
-    end
-
-    def extract_description
-      xpath_query_for_single_value '/description/localizedString'
-    end
-
-    def extract_organisation
-      xpath_result = xpath_query '/organisations/association/organisation'
-      Puree::Extractor::Generic.multi_header xpath_result
-    end
-
-    def extract_owner
-      xpath_result =  xpath_query '/owner'
-      Puree::Extractor::Generic.header xpath_result
-    end
-
-    def extract_person
-      xpath_result = xpath_query '/persons/participantAssociation'
-      ::Puree::Extractor::Project.extract_person xpath_result
-    end
-
-    def extract_status
-      xpath_query_for_single_value '/status/term/localizedString'
-    end
-
-    def extract_temporal
-      o = {}
-      o['expected'] = {}
-      o['actual'] = {}
-
-      xpath_result =  xpath_query '/expectedStartDate'
-      o['expected']['start'] = xpath_result.text.strip
-
-      xpath_result =  xpath_query '/expectedEndDate'
-      o['expected']['end'] = xpath_result.text.strip
-
-      xpath_result =  xpath_query '/startFinishDate/startDate'
-      o['actual']['start'] = xpath_result.text.strip
-
-      xpath_result =  xpath_query '/startFinishDate/endDate'
-      o['actual']['end'] = xpath_result.text.strip
-
-      o
-    end
-
-    def extract_title
-      xpath_query_for_single_value '/title/localizedString'
-    end
-
-    def extract_type
-      xpath_query_for_single_value '/typeClassification/term/localizedString'
-    end
-
-    def extract_url
-      xpath_query_for_single_value '/projectURL'
-    end
 
     def combine_metadata
       o = super
-      o['acronym'] = extract_acronym
-      o['description'] = extract_description
-      o['organisation'] = extract_organisation
-      o['owner'] = extract_owner
-      o['person'] = extract_person
-      o['status'] = extract_status
-      o['temporal'] = extract_temporal
-      o['title'] = extract_title
-      o['type'] = extract_type
-      o['url'] = extract_url
+      o['acronym'] = @extractor.acronym
+      o['description'] = @extractor.description
+      o['organisation'] = @extractor.organisation
+      o['owner'] = @extractor.owner
+      o['person'] = @extractor.person
+      o['status'] = @extractor.status
+      o['temporal'] = @extractor.temporal
+      o['title'] = @extractor.title
+      o['type'] = @extractor.type
+      o['url'] = @extractor.url
       @metadata = o
     end
 

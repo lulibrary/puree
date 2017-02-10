@@ -75,44 +75,15 @@ module Puree
 
     private
 
-    def extract_city
-      xpath_query('/city').text.strip
-    end
-
-    def extract_country
-      xpath_query('/country/term/localizedString').text.strip
-    end
-
-    def extract_date
-      xpath_result = xpath_query '/dateRange'
-      ::Puree::Extractor::Event.extract_date xpath_result
-    end
-
-    def extract_description
-      xpath_query('/description').text.strip
-    end
-
-    def extract_location
-      xpath_query('/location').text.strip
-    end
-
-    def extract_title
-      xpath_query_for_single_value '/title/localizedString'
-    end
-
-    def extract_type
-      xpath_query_for_single_value '//typeClassification/term/localizedString'
-    end
-
     def combine_metadata
       o = super
-      o['city'] = extract_city
-      o['country'] = extract_country
-      o['date'] = extract_date
-      o['description'] = extract_description
-      o['location'] = extract_location
-      o['title'] = extract_title
-      o['type'] = extract_type
+      o['city'] = @extractor.city
+      o['country'] = @extractor.country
+      o['date'] = @extractor.date
+      o['description'] = @extractor.description
+      o['location'] = @extractor.location
+      o['title'] = @extractor.title
+      o['type'] = @extractor.type
       @metadata = o
     end
 

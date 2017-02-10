@@ -79,58 +79,18 @@ module Puree
       @metadata
     end
 
-
     private
-
-    def extract_address
-      xpath_result = xpath_query '/addresses/classifiedAddress'
-      ::Puree::Extractor::Organisation.extract_address(xpath_result)
-    end
-
-    def extract_email
-      xpath_query_for_multi_value '/emails/classificationDefinedStringFieldExtension/value'
-    end
-
-    def extract_name
-      xpath_query_for_single_value '/name/localizedString'
-    end
-
-    def extract_organisation
-      xpath_result = xpath_query '/organisations/organisation'
-      Puree::Extractor::Generic.multi_header(xpath_result)
-    end
-
-    def extract_parent
-      data = extract_organisation
-      o = {}
-      if !data.empty?
-        o = data.first
-      end
-      o
-    end
-
-    def extract_phone
-      xpath_query_for_multi_value '/phoneNumbers/classificationDefinedStringFieldExtension/value'
-    end
-
-    def extract_type
-      xpath_query_for_single_value '/typeClassification/term/localizedString'
-    end
-
-    def extract_url
-      xpath_query_for_multi_value '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
-    end
 
     def combine_metadata
       o = super
-      o['address'] = extract_address
-      o['email'] = extract_email
-      o['name'] = extract_name
-      o['organisation'] = extract_organisation
-      o['parent'] = extract_parent
-      o['phone'] = extract_phone
-      o['type'] = extract_type
-      o['url'] = extract_url
+      o['address'] = @extractor.address
+      o['email'] = @extractor.email
+      o['name'] = @extractor.name
+      o['organisation'] = @extractor.organisation
+      o['parent'] = @extractor.parent
+      o['phone'] = @extractor.phone
+      o['type'] = @extractor.type
+      o['url'] = @extractor.url
       @metadata = o
     end
 

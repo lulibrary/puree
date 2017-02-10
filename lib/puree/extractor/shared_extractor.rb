@@ -4,9 +4,9 @@ module Puree
   #
   module Extractor
 
-    # Generic extractor
+    # Shared extractor
     #
-    module Generic
+    module Shared
 
       def self.header(nokogiri_xml_element)
         o = {}
