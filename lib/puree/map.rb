@@ -29,8 +29,7 @@ module Puree
           server: {
             service: 'servermeta',
             response: 'GetServerMetaResponse'
-          },
-
+          }
         }
       }
 
@@ -38,14 +37,16 @@ module Puree
       # add_family
     end
 
-    # Get
+    # Gets endpoints with their corresponding XML response names
     #
     # @return [Hash]
     def get
       @api_map
     end
 
-
+    def service_name(resource_type)
+      @api_map[:resource_type][resource_type][:service]
+    end
 
     private
 
