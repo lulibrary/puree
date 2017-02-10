@@ -158,180 +158,30 @@ module Puree
 
     private
 
-    def extract_access
-      xpath_query_for_single_value '/openAccessPermission/term/localizedString'
-    end
-
-    def extract_associated
-      xpath_result = xpath_query '/associatedContent//relatedContent'
-      data_arr = []
-      xpath_result.each { |i|
-        data = {}
-        data['type'] = i.xpath('typeClassification').text.strip
-        data['title'] = i.xpath('title').text.strip
-        data['uuid'] = i.attr('uuid').strip
-        data_arr << data
-      }
-      data_arr.uniq
-    end
-
-    def extract_available
-      temporal_date 'dateMadeAvailable'
-    end
-
-    def extract_description
-      path = '/descriptions/classificationDefinedField/value/localizedString'
-      xpath_query_for_single_value path
-    end
-
-    def extract_doi
-      xpath_query_for_single_value '/doi'
-    end
-
-    def extract_file
-      xpath_result = xpath_query '/documents/document'
-      ::Puree::Extractor::Dataset.extract_file xpath_result
-    end
-
-    def extract_keyword
-      xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-      ::Puree::Extractor::Dataset.extract_keyword xpath_result
-    end
-
-    def extract_link
-      xpath_result = xpath_query '/links/link'
-      ::Puree::Extractor::Dataset.extract_link xpath_result
-    end
-
-    def extract_organisation
-      xpath_result = xpath_query '/organisations/organisation'
-      Puree::Extractor::Generic.multi_header xpath_result
-    end
-
-    def extract_owner
-      xpath_result = xpath_query '/managedBy'
-      Puree::Extractor::Generic.header xpath_result
-    end
-
-    def extract_person
-      xpath_result = xpath_query '/persons/dataSetPersonAssociation'
-      ::Puree::Extractor::Dataset.extract_person xpath_result
-    end
-
-    def extract_production
-      temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
-    end
-
-    def extract_project
-      associated_type('Research').uniq
-    end
-
-    def extract_publication
-      data_arr = []
-      extract_associated.each do |i|
-        if i['type'] != 'Research'
-          data_arr << i
-        end
-      end
-      data_arr.uniq
-    end
-
-    def extract_publisher
-      xpath_query_for_single_value '/publisher/name'
-    end
-
-    def extract_spatial
-      # Data from free-form text box
-      xpath_result = xpath_query '/geographicalCoverage/localizedString'
-      ::Puree::Extractor::Dataset.extract_spatial xpath_result
-    end
-
-    def extract_spatial_point
-      xpath_result = xpath_query '/geoLocation/point'
-      ::Puree::Extractor::Dataset.extract_spatial_point xpath_result
-    end
-
-    def extract_temporal
-      temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
-    end
-
-    def extract_title
-      xpath_query_for_single_value '/title/localizedString'
-    end
-
-    # def state
-    #   # useful?
-    #   data = node 'startedWorkflows'
-    #    !data.empty? ? data['startedWorkflow']['state'] : ''
-    # end
-
     def combine_metadata
+      extractor = Puree::Extractor::Dataset.new resource_type: :dataset,
+                                                xml: @response.body
       o = super
-      o['access'] = extract_access
-      o['associated'] = extract_associated
-      o['available'] = extract_available
-      o['description'] = extract_description
-      o['doi'] = extract_doi
-      o['file'] = extract_file
-      o['keyword'] = extract_keyword
-      o['link'] = extract_link
-      o['organisation'] = extract_organisation
-      o['owner'] = extract_owner
-      o['person'] = extract_person
-      o['project'] = extract_project
-      o['production'] = extract_production
-      o['publication'] = extract_publication
-      o['publisher'] = extract_publisher
-      o['spatial'] = extract_spatial
-      o['spatial_point'] = extract_spatial_point
-      o['temporal'] = extract_temporal
-      o['title'] = extract_title
+      o['access'] = extractor.access
+      o['associated'] = extractor.associated
+      o['available'] = extractor.available
+      o['description'] = extractor.description
+      o['doi'] = extractor.doi
+      o['file'] = extractor.file
+      o['keyword'] = extractor.keyword
+      o['link'] = extractor.link
+      o['organisation'] = extractor.organisation
+      o['owner'] = extractor.owner
+      o['person'] = extractor.person
+      o['project'] = extractor.project
+      o['production'] = extractor.production
+      o['publication'] = extractor.publication
+      o['publisher'] = extractor.publisher
+      o['spatial'] = extractor.spatial
+      o['spatial_point'] = extractor.spatial_point
+      o['temporal'] = extractor.temporal
+      o['title'] = extractor.title
       @metadata = o
-    end
-
-    # Temporal range
-    # @return [Hash]
-    def temporal_range(start_node, end_node)
-      data = {}
-      data['start'] = {}
-      data['end'] = {}
-      start_date = temporal_date start_node
-      if !start_date.nil? && !start_date.empty?
-        data['start'] = start_date
-      end
-      end_date = temporal_date end_node
-      if !end_date.nil? && !end_date.empty?
-        data['end'] = end_date
-      end
-      data
-    end
-
-    # Temporal coverage date
-    # @return [Hash]
-    def temporal_date(node)
-      path = "/#{node}"
-      xpath_result = xpath_query path
-      o = {}
-      o['day'] = xpath_result.xpath('day').text.strip
-      o['month'] = xpath_result.xpath('month').text.strip
-      o['year'] = xpath_result.xpath('year').text.strip
-      Puree::Date.normalise o
-    end
-
-    # Associated type
-    # @return [Hash]
-    def associated_type(type)
-      associated_arr = extract_associated
-      data_arr = []
-      associated_arr.each do |i|
-        data = {}
-        if i['type'] === type
-          data['title'] = i['title']
-          data['uuid'] = i['uuid']
-          data_arr << data
-        end
-      end
-      data_arr
     end
 
   end
