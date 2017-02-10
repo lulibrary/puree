@@ -67,40 +67,14 @@ module Puree
 
     private
 
-    def extract_affiliation
-      xpath_result = xpath_query '//organisation'
-      ::Puree::Extractor::Person.extract_affiliation xpath_result
-    end
-
-    def extract_email
-      xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
-    end
-
-    def extract_image
-      xpath_query_for_multi_value '/photos/file/url'
-    end
-
-    def extract_keyword
-      xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-    end
-
-    def extract_name
-      xpath_result = xpath_query '/name'
-      ::Puree::Extractor::Person.extract_name xpath_result
-    end
-
-    def extract_orcid
-      xpath_query_for_single_value '/orcid'
-    end
-
     def combine_metadata
       o = super
-      o['affiliation'] = extract_affiliation
-      o['email'] = extract_email
-      o['image'] = extract_image
-      o['keyword'] = extract_keyword
-      o['name'] = extract_name
-      o['orcid'] = extract_orcid
+      o['affiliation'] = @extractor.affiliation
+      o['email'] = @extractor.email
+      o['image'] = @extractor.image
+      o['keyword'] = @extractor.keyword
+      o['name'] = @extractor.name
+      o['orcid'] = @extractor.orcid
       @metadata = o
     end
 

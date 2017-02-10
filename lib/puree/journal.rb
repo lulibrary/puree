@@ -44,26 +44,13 @@ module Puree
       @metadata
     end
 
-
     private
-
-    def extract_issn
-      xpath_query_for_single_value '/issns/issn/string'
-    end
-
-    def extract_publisher
-      xpath_query_for_single_value '/publisher/name'
-    end
-
-    def extract_title
-      xpath_query_for_single_value '/titles/title/string'
-    end
 
     def combine_metadata
       o = super
-      o['issn'] = extract_issn
-      o['publisher'] = extract_publisher
-      o['title'] = extract_title
+      o['issn'] = @extractor.issn
+      o['publisher'] = @extractor.publisher
+      o['title'] = @extractor.title
       @metadata = o
     end
 

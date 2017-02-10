@@ -159,28 +159,26 @@ module Puree
     private
 
     def combine_metadata
-      extractor = Puree::Extractor::Dataset.new resource_type: :dataset,
-                                                xml: @response.body
       o = super
-      o['access'] = extractor.access
-      o['associated'] = extractor.associated
-      o['available'] = extractor.available
-      o['description'] = extractor.description
-      o['doi'] = extractor.doi
-      o['file'] = extractor.file
-      o['keyword'] = extractor.keyword
-      o['link'] = extractor.link
-      o['organisation'] = extractor.organisation
-      o['owner'] = extractor.owner
-      o['person'] = extractor.person
-      o['project'] = extractor.project
-      o['production'] = extractor.production
-      o['publication'] = extractor.publication
-      o['publisher'] = extractor.publisher
-      o['spatial'] = extractor.spatial
-      o['spatial_point'] = extractor.spatial_point
-      o['temporal'] = extractor.temporal
-      o['title'] = extractor.title
+      o['access'] = @extractor.access
+      o['associated'] = @extractor.associated
+      o['available'] = @extractor.available
+      o['description'] = @extractor.description
+      o['doi'] = @extractor.doi
+      o['file'] = @extractor.file
+      o['keyword'] = @extractor.keyword
+      o['link'] = @extractor.link
+      o['organisation'] = @extractor.organisation
+      o['owner'] = @extractor.owner
+      o['person'] = @extractor.person
+      o['project'] = @extractor.project
+      o['production'] = @extractor.production
+      o['publication'] = @extractor.publication
+      o['publisher'] = @extractor.publisher
+      o['spatial'] = @extractor.spatial
+      o['spatial_point'] = @extractor.spatial_point
+      o['temporal'] = @extractor.temporal
+      o['title'] = @extractor.title
       @metadata = o
     end
 

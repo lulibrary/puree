@@ -6,9 +6,33 @@ module Puree
 
     # Project extractor
     #
-    module Project
+    class Project < Puree::Extractor::Base
 
-      def self.extract_person(xpath_result)
+      def initialize(xml:)
+        @resource_type = :project
+        super
+      end
+
+      def acronym
+        xpath_query_for_single_value '/acronym'
+      end
+
+      def description
+        xpath_query_for_single_value '/description/localizedString'
+      end
+
+      def organisation
+        xpath_result = xpath_query '/organisations/association/organisation'
+        Puree::Extractor::Shared.multi_header xpath_result
+      end
+
+      def owner
+        xpath_result =  xpath_query '/owner'
+        Puree::Extractor::Shared.header xpath_result
+      end
+
+      def person
+        xpath_result = xpath_query '/persons/participantAssociation'
         data = {}
         internal = []
         external = []
@@ -39,6 +63,42 @@ module Puree
         data['other'] = other
         data
       end
+
+      def status
+        xpath_query_for_single_value '/status/term/localizedString'
+      end
+
+      def temporal
+        o = {}
+        o['expected'] = {}
+        o['actual'] = {}
+
+        xpath_result =  xpath_query '/expectedStartDate'
+        o['expected']['start'] = xpath_result.text.strip
+
+        xpath_result =  xpath_query '/expectedEndDate'
+        o['expected']['end'] = xpath_result.text.strip
+
+        xpath_result =  xpath_query '/startFinishDate/startDate'
+        o['actual']['start'] = xpath_result.text.strip
+
+        xpath_result =  xpath_query '/startFinishDate/endDate'
+        o['actual']['end'] = xpath_result.text.strip
+
+        o
+      end
+
+      def title
+        xpath_query_for_single_value '/title/localizedString'
+      end
+
+      def type
+        xpath_query_for_single_value '/typeClassification/term/localizedString'
+      end
+
+      def url
+        xpath_query_for_single_value '/projectURL'
+      end      
 
     end
 

@@ -8,8 +8,7 @@ module Puree
     #
     class Base
 
-      def initialize(resource_type:, xml:)
-        @resource_type = resource_type
+      def initialize(xml:)
         @api_map = Puree::Map.new.get
         make_doc xml
       end
@@ -32,13 +31,6 @@ module Puree
         arr.uniq
       end
 
-      private
-
-      def make_doc(xml)
-        @doc = Nokogiri::XML xml
-        @doc.remove_namespaces!
-      end
-
       # Is there any data after get? For a response that provides a count of the results.
       # @return [Boolean]
       def get_data?
@@ -47,8 +39,28 @@ module Puree
         xpath_result.text.strip === '1' ? true : false
       end
 
-      def service_name
-        @api_map[:resource_type][@resource_type][:service]
+      def created
+        xpath_query_for_single_value '/created'
+      end
+
+      def modified
+        xpath_query_for_single_value '/modified'
+      end
+
+      def uuid
+        xpath_query_for_single_value '/@uuid'
+      end
+
+      def locale
+        str = xpath_query_for_single_value '/@locale'
+        str.tr('_','-')
+      end
+
+      private
+
+      def make_doc(xml)
+        @doc = Nokogiri::XML xml
+        @doc.remove_namespaces!
       end
 
       def service_response_name
@@ -66,6 +78,7 @@ module Puree
       def service_xpath(str_to_find)
         service_xpath_base + str_to_find
       end
+
     end
 
   end
