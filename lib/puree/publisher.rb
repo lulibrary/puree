@@ -9,11 +9,8 @@ module Puree
     # @param password [String]
     # @param basic_auth [Boolean]
     def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
-      super(api: :publisher,
-            base_url: base_url,
-            username: username,
-            password: password,
-            basic_auth: basic_auth)
+      super
+      @resource_type = :publisher
     end
 
     # Name

@@ -7,19 +7,16 @@ module Puree
 
     attr_reader :response
 
-    # @param api [Symbol]
     # @param base_url [String]
     # @param username [String]
     # @param password [String]
     # @param bleeding [Boolean]
     # @param basic_auth [Boolean]
-    def initialize( api: nil,
-                    base_url: nil,
-                    username: nil,
-                    password: nil,
-                    bleeding: true,
-                    basic_auth: nil)
-      @resource_type = api
+    def initialize(base_url: nil,
+                   username: nil,
+                   password: nil,
+                   bleeding: true,
+                   basic_auth: nil)
       @latest_api = bleeding
       flexible_auth(base_url, username, password, basic_auth)
       @metadata = {}

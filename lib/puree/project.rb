@@ -9,12 +9,9 @@ module Puree
     # @param password [String]
     # @param basic_auth [Boolean]
     def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
-      super(api: :project,
-            base_url: base_url,
-            username: username,
-            password: password,
-            bleeding: false, # stable API does not return person roles
-            basic_auth: basic_auth)
+      super
+      @latest_api = false # stable API does not return person roles
+      @resource_type = :project
     end
 
     # Acronym
