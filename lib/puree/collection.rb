@@ -3,6 +3,7 @@ module Puree
   # Collection of resources
   #
   class Collection
+    include Puree::Auth
 
     # @param resource [Symbol]
     # @param base_url [String]
@@ -16,12 +17,7 @@ module Puree
                    basic_auth: nil)
       @resource_type = resource
       @api_map = Puree::Map.new.get
-      @base_url = base_url.nil? ? Puree.base_url : base_url
-      @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
-      if @basic_auth === true
-        @username = username.nil? ? Puree.username : username
-        @password = password.nil? ? Puree.password : password
-      end
+      flexible_auth(base_url, username, password, basic_auth)
       @uuids = []
     end
 

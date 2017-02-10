@@ -45,7 +45,7 @@ module Puree
         req = HTTP.headers accept: headers['Accept']
         if @basic_auth
           req = req.auth headers['Authorization']
-      end
+        end
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
       end

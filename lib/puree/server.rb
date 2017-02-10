@@ -3,6 +3,7 @@ module Puree
   # Server
   #
   class Server
+    include Puree::Auth
 
     attr_reader :response
 
@@ -16,12 +17,7 @@ module Puree
                    basic_auth: nil)
       @resource_type = :server
       @api_map = Puree::Map.new.get
-      @base_url = base_url.nil? ? Puree.base_url : base_url
-      @basic_auth = basic_auth.nil? ? Puree.basic_auth : basic_auth
-      if @basic_auth === true
-        @username = username.nil? ? Puree.username : username
-        @password = password.nil? ? Puree.password : password
-      end
+      flexible_auth(base_url, username, password, basic_auth)
       @metadata = {}
     end
 
@@ -29,6 +25,18 @@ module Puree
     #
     # @return [Hash]
     def get
+
+      # request = Puree::Request.new
+      # @response = request.get uuid:           nil,
+      #                         id:             nil,
+      #                         rendering:      :system,
+      #                         basic_auth:     @basic_auth,
+      #                         latest_api:     true,
+      #                         resource_type:  @resource_type.to_sym,
+      #                         base_url:       @base_url,
+      #                         username:       @username,
+      #                         password:       @password
+
       missing = missing_credentials
       if !missing.empty?
         missing.each do |m|

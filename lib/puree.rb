@@ -1,6 +1,7 @@
 require 'http'
 require 'nokogiri'
 require 'puree/configuration'
+require 'puree/auth'
 require 'puree/date'
 require 'puree/extractor/base_extractor'
 require 'puree/extractor/dataset_extractor'
