@@ -24,6 +24,7 @@ require 'puree/publication'
 require 'puree/publisher'
 require 'puree/collection'
 require 'puree/download'
+require 'puree/request'
 require 'puree/server'
 
 module Puree

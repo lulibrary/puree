@@ -25,6 +25,7 @@ require 'puree/publisher'
 require 'puree/collection'
 require 'puree/download'
 require 'puree/server'
+require 'puree/request'
 require 'puree/version'
 
 # Top level namespace
