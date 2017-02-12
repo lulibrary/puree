@@ -3,9 +3,22 @@ require 'spec_helper'
 describe 'Dataset' do
 
   it '#new' do
-    p = Puree::Dataset.new
+    p = Puree::Dataset.new base_url: ENV['PURE_BASE_URL']
     expect(p).to be_an_instance_of Puree::Dataset
   end
+
+# TO DO
+  # it '#no auth' do
+  #   p = Puree::Dataset.new base_url: ENV['PURE_BASE_URL_OPEN']
+    # @uuid = random_uuid(resource)
+    # resource_class = 'Puree::' + resource.to_s.capitalize
+    # @p = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL']
+    # @p.basic_auth username: ENV['PURE_USERNAME'],
+    #               password: ENV['PURE_PASSWORD']
+    # @metadata = @p.find uuid: @uuid
+    #
+    # expect(p).to be_an_instance_of Puree::Dataset
+  # end
 
   describe 'data retrieval' do
     before(:all) do
@@ -113,10 +126,10 @@ describe 'Dataset' do
     before(:all) do
       request :dataset
 
-      filename = "#{ENV['PURE_FILE_PATH']}dataset.#{@uuid}.xml"
-      File.write(filename, @p.response.body)
+      @filename = "#{ENV['PURE_FILE_PATH']}dataset.#{@uuid}.xml"
+      File.write(@filename, @p.response.body)
 
-      @metadata = @p.set_content File.read(filename)
+      @metadata = @p.set_content File.read(@filename)
     end
 
     it '#set_content' do
@@ -129,6 +142,10 @@ describe 'Dataset' do
 
     it '#metadata' do
       expect(@p.metadata).not_to be_empty
+    end
+
+    after(:all) do
+      File.delete @filename if File.exists? @filename
     end
 
   end

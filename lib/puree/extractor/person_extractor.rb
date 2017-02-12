@@ -6,7 +6,7 @@ module Puree
 
     # Person extractor
     #
-    class Person < Puree::Extractor::Base
+    class Person < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :person
