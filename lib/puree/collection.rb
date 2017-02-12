@@ -186,12 +186,11 @@ module Puree
       if @api_map[:resource_type].has_key?(@resource_type)
         uuid.each do |u|
           if @options[:basic_auth] === true
-            r = Object.const_get(resource_class).new base_url:   @base_url,
-                                                     username:   @username,
-                                                     password:   @password,
-                                                     basic_auth: true
+            r = Object.const_get(resource_class).new base_url: @base_url
+            r.basic_auth username: @username,
+                         password: @password
           else
-            r = Object.const_get(resource_class).new base_url:   @base_url
+            r = Object.const_get(resource_class).new base_url: @base_url
           end
           record = r.find uuid: u,
                           rendering:  @options[:record_rendering]

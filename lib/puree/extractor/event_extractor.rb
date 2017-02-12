@@ -6,7 +6,7 @@ module Puree
 
     # Event extractor
     #
-    class Event < Puree::Extractor::Base
+    class Event < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :event

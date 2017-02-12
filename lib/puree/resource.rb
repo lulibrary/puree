@@ -3,23 +3,20 @@ module Puree
   # Abstract base class for resources.
   #
   class Resource
-    include Puree::Auth
 
     attr_reader :response
 
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
     # @param bleeding [Boolean]
-    # @param basic_auth [Boolean]
-    def initialize(base_url: nil,
-                   username: nil,
-                   password: nil,
-                   bleeding: true,
-                   basic_auth: nil)
+    def initialize(base_url:, bleeding: true)
       @latest_api = bleeding
-      flexible_auth(base_url, username, password, basic_auth)
+      @request = Puree::Request.new base_url: base_url
       @metadata = {}
+    end
+
+    def basic_auth(username:, password:)
+      @request.basic_auth username: username,
+                          password: password
     end
 
     # Get
@@ -29,19 +26,12 @@ module Puree
     # @return [Hash]
     def get(uuid: nil, id: nil, rendering: :xml_long)
       reset
-      request = Puree::Request.new
-      @response = request.get uuid:           uuid,
-                              id:             id,
-                              rendering:      rendering,
-                              basic_auth:     @basic_auth,
-                              latest_api:     @latest_api,
-                              resource_type:  @resource_type.to_sym,
-                              base_url:       @base_url,
-                              username:       @username,
-                              password:       @password
+      @response = @request.get uuid:           uuid,
+                               id:             id,
+                               rendering:      rendering,
+                               latest_api:     @latest_api,
+                               resource_type:  @resource_type
       set_content @response.body
-      make_extractor
-      @extractor.get_data? ? combine_metadata : {}
     end
 
     # UUID

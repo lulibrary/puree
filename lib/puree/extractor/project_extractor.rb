@@ -6,7 +6,7 @@ module Puree
 
     # Project extractor
     #
-    class Project < Puree::Extractor::Base
+    class Project < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :project
