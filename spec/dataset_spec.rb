@@ -6,19 +6,19 @@ describe 'Dataset' do
     p = Puree::Dataset.new base_url: ENV['PURE_BASE_URL']
     expect(p).to be_an_instance_of Puree::Dataset
   end
-
+#
 # TO DO
-  # it '#no auth' do
-  #   p = Puree::Dataset.new base_url: ENV['PURE_BASE_URL_OPEN']
-    # @uuid = random_uuid(resource)
-    # resource_class = 'Puree::' + resource.to_s.capitalize
-    # @p = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL']
-    # @p.basic_auth username: ENV['PURE_USERNAME'],
-    #               password: ENV['PURE_PASSWORD']
-    # @metadata = @p.find uuid: @uuid
-    #
-    # expect(p).to be_an_instance_of Puree::Dataset
-  # end
+#   it '#no auth' do
+#     p = Puree::Dataset.new base_url: ENV['PURE_BASE_URL_OPEN']
+#     @uuid = random_uuid(resource)
+#     resource_class = 'Puree::' + resource.to_s.capitalize
+#     @p = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL']
+#     @p.basic_auth username: ENV['PURE_USERNAME'],
+#                   password: ENV['PURE_PASSWORD']
+#     @metadata = @p.find uuid: @uuid
+#
+#     expect(p).to be_an_instance_of Puree::Dataset
+#   end
 
   describe 'data retrieval' do
     before(:all) do

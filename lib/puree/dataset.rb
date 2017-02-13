@@ -149,6 +149,10 @@ module Puree
       @metadata
     end
 
+    def obj
+      Puree::DatasetResource.new
+    end
+
     private
 
     def combine_metadata

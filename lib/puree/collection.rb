@@ -89,25 +89,11 @@ module Puree
           req = req.auth headers['Authorization']
         end
         @response = req.get(url, params: params)
-        @doc = Nokogiri::XML @response.body
-        @doc.remove_namespaces!
 
-        @count = extract_count
+        set_content @response.body
 
       rescue HTTP::Error => e
         puts 'HTTP::Error '+ e.message
-      end
-
-      if @options[:full]
-        collect_resource
-      else
-        data = []
-        uuid.each do |u|
-          o = {}
-          o['uuid'] = u
-          data << o
-        end
-        data
       end
 
     end
@@ -121,6 +107,20 @@ module Puree
     end
 
     private
+
+    def combine_metadata
+      if @options[:full]
+        collect_resource
+      else
+        data = []
+        uuid.each do |u|
+          o = {}
+          o['uuid'] = u
+          data << o
+        end
+        data
+      end
+    end
 
     def params
       query = {}
@@ -160,21 +160,14 @@ module Puree
 
     def get_count
       find limit: 0
-      extract_count
+      @extractor.count
     end
-
-    def extract_count
-      path = '//count'
-      xpath_query_for_single_value(path).to_i
-    end
-
 
     # Array of UUIDs
     #
     # @return [Array<String>]
     def uuid
-      collect_uuid
-      @uuids
+      @extractor.uuid
     end
 
 
@@ -194,8 +187,6 @@ module Puree
           end
           record = r.find uuid: u,
                           rendering:  @options[:record_rendering]
-          # puts JSON.pretty_generate( record, :indent => '  ')
-          # p u
           if @options[:instance]
             data << r
           else
@@ -208,13 +199,6 @@ module Puree
         puts 'Invalid resource class'
         exit
       end
-    end
-
-    def collect_uuid
-      @uuids = []
-      path = '//renderedItem/@renderedContentUUID'
-      xpath_result = xpath_query path
-      xpath_result.each { |i| @uuids << i.text.strip }
     end
 
     def service_name
@@ -237,16 +221,6 @@ module Puree
       @base_url + '/' + service_api_mode
     end
 
-    def xpath_query(path)
-      @doc.xpath path
-    end
-
-    def xpath_query_for_single_value(path)
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
-    end
-
-
     def missing_credentials
       missing = []
       if @base_url.nil?
@@ -268,6 +242,21 @@ module Puree
     def reset
       @response = nil
       @count = nil
+    end
+
+    # Set content from XML. In order for metadata extraction to work, the XML must have
+    # been retrieved using the .current version of the Pure API endpoints
+    #
+    # @param xml [String]
+    def set_content(xml)
+      if xml
+        make_extractor
+        @extractor.get_data? ? combine_metadata : {}
+      end
+    end
+
+    def make_extractor
+      @extractor = Puree::Extractor::CollectionExtractor.new xml: @response.body
     end
 
     alias :find :get
