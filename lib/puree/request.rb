@@ -3,14 +3,13 @@ module Puree
   class Request
 
     def initialize(base_url: nil)
-      versatile_url_config base_url
+      @base_url = base_url
       @api_map = Puree::Map.new
       @headers = {}
     end
 
     def basic_auth(username:, password:)
-      versatile_basic_auth_config username, password
-      auth = Base64::strict_encode64(@username + ':' + @password)
+      auth = Base64::strict_encode64("#{username}:#{password}")
       @headers['Authorization'] = 'Basic ' + auth
     end
 
@@ -21,15 +20,23 @@ module Puree
             resource_type:,
             limit: 20,
             offset: 0,
+            created_start: nil,
+            created_end: nil,
+            modified_start: nil,
+            modified_end: nil,
             content_type: nil)
           @latest_api =    latest_api
           @resource_type =  resource_type.to_sym
           @rendering =      rendering
           @uuid =           uuid
           @id =             id
-          @limit = limit
-          @offset = offset
-          @content_type = content_type
+          @limit =          limit
+          @offset =         offset
+          @created_start =  created_start
+          @created_end =    created_end
+          @modified_start = modified_start
+          @modified_end =   modified_end
+          @content_type =   content_type
 
       # strip any trailing slash
       @base_url = @base_url.sub(/(\/)+$/, '')
@@ -53,7 +60,15 @@ module Puree
       query['rendering'] = @rendering
       query['window.size'] = @limit
       query['offset'] = @offset
-      query['contentType'] = @content_type
+
+      # Pure does allow blank value
+      query['contentType'] = @content_type if @content_type
+
+      # Pure does not allow blanks for these
+      query['createdDate.toDate'] = @created_start if @created_start
+      query['createdDate.fromDate'] = @created_end if @created_end
+      query['modifiedDate.toDate'] = @modified_start if @modified_start
+      query['modifiedDate.fromDate'] = @modified_end if @modified_end
       query
     end
 
@@ -65,17 +80,6 @@ module Puree
         service_api_mode = service + '.current'
       end
       @base_url + '/' + service_api_mode
-    end
-
-    private
-
-    def versatile_url_config(base_url)
-      @base_url = base_url.nil? ? Puree.base_url : base_url
-    end
-
-    def versatile_basic_auth_config(username, password)
-      @username = username.nil? ? Puree.username : username
-      @password = password.nil? ? Puree.password : password
     end
 
   end

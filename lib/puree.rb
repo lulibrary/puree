@@ -1,7 +1,5 @@
 require 'http'
 require 'nokogiri'
-require 'puree/configuration'
-require 'puree/auth'
 require 'puree/date'
 require 'puree/extractor/base_extractor'
 require 'puree/extractor/resource_extractor'
@@ -33,15 +31,3 @@ require 'puree/download'
 require 'puree/server'
 require 'puree/request'
 require 'puree/version'
-
-# Top level namespace
-#
-module Puree
-
-  class << self
-
-    include Puree::Configuration
-
-  end
-
-end
