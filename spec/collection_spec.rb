@@ -1,16 +1,17 @@
 require 'spec_helper'
 
-describe 'Collection' do
+describe 'Collection of datasets' do
 
   def new
-    base_url = ENV['PURE_BASE_URL']
-    username = ENV['PURE_USERNAME']
-    password = ENV['PURE_PASSWORD']
-    @p = Puree::Collection.new(resource: :dataset,
-                              base_url: base_url,
-                              username: username,
-                              password: password,
-                              basic_auth: true)
+    @p = Puree::Collection.new resource: :dataset,
+                               base_url: ENV['PURE_BASE_URL']
+  end
+
+  def setup
+    new
+    @p.basic_auth username: ENV['PURE_USERNAME'],
+                  password: ENV['PURE_PASSWORD']
+
   end
 
   it '#new' do
@@ -20,7 +21,7 @@ describe 'Collection' do
 
   describe 'data retrieval' do
     before(:all) do
-      new
+      setup
       @metadata = @p.find limit: 5
     end
 
@@ -32,7 +33,7 @@ describe 'Collection' do
 
   describe 'data retrieval instance' do
     before(:all) do
-      new
+      setup
       @metadata = @p.find limit: 5,
                           instance: true
     end
@@ -49,7 +50,7 @@ describe 'Collection' do
 
   describe 'data retrieval count' do
     before(:all) do
-      new
+      setup
       @p.find limit: 0
     end
 

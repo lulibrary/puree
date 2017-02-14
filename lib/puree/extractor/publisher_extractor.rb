@@ -6,7 +6,7 @@ module Puree
 
     # Publisher extractor
     #
-    class Publisher < Puree::Extractor::Base
+    class Publisher < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :publisher

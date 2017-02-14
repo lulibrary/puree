@@ -3,90 +3,39 @@ module Puree
   # Download
   #
   class Download
-    include Puree::Auth
 
     attr_reader :response
 
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
-    # @param basic_auth [Boolean]
-    def initialize(base_url: nil,
-                   username: nil,
-                   password: nil,
-                   basic_auth: nil)
+    def initialize(base_url:)
       @resource_type = :download
-      @api_map = Puree::Map.new.get
-      flexible_auth(base_url, username, password, basic_auth)
+      @request = Puree::Request.new base_url: base_url
+      @api_map = Puree::Map.new.get # Workararound to provide access to service_family
+      @metadata = {}
+    end
+
+    def basic_auth(username:, password:)
+      @request.basic_auth username: username,
+                          password: password
     end
 
     # Get
     #
     # @param limit [Integer]
     # @param offset [Integer]
-    # @param resource [Symbol]
+    # @param resource [Symbol] The resource being reported
     # @return [Array<Hash>]
     def get(limit: 20,
             offset: 0,
-            resource: nil)
-      missing = missing_credentials
-      if !missing.empty?
-        missing.each do |m|
-          puts "#{self.class.name}" + '#' + "#{__method__} missing #{m}"
-        end
-        exit
-      end
-
-      # strip any trailing slash
-      @base_url = @base_url.sub(/(\/)+$/, '')
-      @auth = Base64::strict_encode64(@username + ':' + @password)
-
-      @options = {
-          basic_auth:     @basic_auth,
-          latest_api:     true,
-          resource_type:  @resource_type.to_sym,
-          rendering:      :system,
-          limit:          limit,
-          offset:         offset,
-          resource:       resource.to_sym
-      }
-      headers = {
-          'Accept' => 'application/xml',
-          'Authorization' => 'Basic ' + @auth
-      }
-      query = {}
-      query['rendering'] = @options[:rendering]
-
-      if @options[:limit]
-        query['window.size'] = @options[:limit]
-      end
-
-      if @options[:offset]
-        query['window.offset'] = @options[:offset]
-      end
-
-      if @options[:resource]
-        query['contentType'] = service_family
-      end
-
-      begin
-        url = build_url
-        req = HTTP.headers accept: headers['Accept']
-        if @options[:basic_auth]
-          req = req.auth headers['Authorization']
-        end
-        @response = req.get(url, params: query)
-        @doc = Nokogiri::XML @response.body
-        @doc.remove_namespaces!
-      rescue HTTP::Error => e
-        puts 'HTTP::Error '+ e.message
-      end
-
-      get_data? ? combine_metadata : []
+            resource:)
+      reset
+      @response = @request.get rendering:      :system,
+                               limit:          limit,
+                               offset:         offset,
+                               resource_type:  @resource_type,
+                               content_type:   service_family(resource)
+      set_content @response.body
     end
-
-
-
 
     # All metadata
     #
@@ -98,86 +47,36 @@ module Puree
 
     private
 
-
     def combine_metadata
-      @metadata = extract_statistic
+      @metadata = @extractor.statistic
     end
 
-    # Is there any data after get?
+    def reset
+      @response = nil
+    end
+
+    # Set content from XML. In order for metadata extraction to work, the XML must have
+    # been retrieved using the .current version of the Pure API endpoints
     #
-    # @return [Boolean]
-    def get_data?
-      # n.b. arbitrary element existence check
-      path = service_response_name + '/downloadCount'
-      xpath_result = @doc.xpath path
-      xpath_result.size ? true : false
+    # @param xml [String]
+    def set_content(xml)
+      if xml
+        make_extractor
+        @extractor.get_data? ? combine_metadata : {}
+      end
     end
 
-    # Statistic
-    #
-    # @return [Array<Hash>]
-    def extract_statistic
-      path = service_response_name + '/downloadCount'
-      xpath_result =  xpath_query path
-      data_arr = []
-      xpath_result.each { |i|
-        data = {}
-        data['uuid'] = i.attr('uuid').strip
-        data['download'] = i.attr('downloads').strip
-        data_arr << data
-      }
-      data_arr.uniq
+    def make_extractor
+      @extractor = Puree::Extractor::Download.new xml: @response.body
     end
 
-    def service_family
-      resource_type = @options[:resource]
+    def service_family(resource_type)
       if @api_map[:resource_type].has_key? resource_type
+        # Family data is only populated for datasets (required for download)
         @api_map[:resource_type][resource_type][:family]
       else
-        puts "#{resource_type} is an unrecognised resource type"
-        exit
+        raise "#{resource_type} is an unrecognised resource type"
       end
-    end
-
-    def service_name
-      resource_type = @options[:resource_type]
-      @api_map[:resource_type][resource_type][:service]
-    end
-
-    def service_response_name
-      resource_type = @options[:resource_type]
-      @api_map[:resource_type][resource_type][:response]
-    end
-
-    def build_url
-      service = service_name
-      if @options[:latest_api] === false
-        service_api_mode = service
-      else
-        service_api_mode = service + '.current'
-      end
-      @base_url + '/' + service_api_mode
-    end
-
-    def xpath_query(path)
-      xml = @response.body
-      doc = Nokogiri::XML xml
-      doc.remove_namespaces!
-      doc.xpath path
-    end
-
-    def missing_credentials
-      missing = []
-      if @base_url.nil?
-        missing << 'base_url'
-      end
-      if @username.nil?
-        missing << 'username'
-      end
-      if @password.nil?
-        missing << 'password'
-      end
-      missing
     end
 
     alias :find :get

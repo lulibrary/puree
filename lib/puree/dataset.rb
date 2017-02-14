@@ -4,11 +4,7 @@ module Puree
   #
   class Dataset < Resource
 
-    # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
-    # @param basic_auth [Boolean]
-    def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
+    def initialize(base_url: nil)
       super
       @resource_type = :dataset
     end
@@ -151,6 +147,10 @@ module Puree
     # @return [Hash]
     def metadata
       @metadata
+    end
+
+    def obj
+      Puree::DatasetResource.new
     end
 
     private

@@ -6,7 +6,7 @@ module Puree
 
     # Organisation extractor
     #
-    class Organisation < Puree::Extractor::Base
+    class Organisation < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :organisation

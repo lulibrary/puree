@@ -6,7 +6,7 @@ module Puree
 
     # Dataset extractor
     #
-    class Dataset < Puree::Extractor::Base
+    class Dataset < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :dataset

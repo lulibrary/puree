@@ -1,10 +1,11 @@
 require 'http'
 require 'nokogiri'
-require 'puree/configuration'
-require 'puree/auth'
 require 'puree/date'
 require 'puree/extractor/base_extractor'
+require 'puree/extractor/resource_extractor'
+require 'puree/extractor/collection_extractor'
 require 'puree/extractor/dataset_extractor'
+require 'puree/extractor/download_extractor'
 require 'puree/extractor/event_extractor'
 require 'puree/extractor/journal_extractor'
 require 'puree/extractor/organisation_extractor'
@@ -12,6 +13,7 @@ require 'puree/extractor/person_extractor'
 require 'puree/extractor/project_extractor'
 require 'puree/extractor/publication_extractor'
 require 'puree/extractor/publisher_extractor'
+require 'puree/extractor/server_extractor'
 require 'puree/extractor/shared_extractor'
 require 'puree/map'
 require 'puree/resource'
@@ -28,25 +30,11 @@ require 'puree/download'
 require 'puree/request'
 require 'puree/server'
 
-module Puree
-
-  class << self
-
-    include Puree::Configuration
-
-  end
-
-end
-
-def auth
-  Puree.base_url   = ENV['PURE_BASE_URL']
-  Puree.username   = ENV['PURE_USERNAME']
-  Puree.password   = ENV['PURE_PASSWORD']
-  Puree.basic_auth = true
-end
-
 def random_uuid(resource)
-  c = Puree::Collection.new resource: resource
+  c = Puree::Collection.new resource: resource,
+                            base_url: ENV['PURE_BASE_URL']
+  c.basic_auth username: ENV['PURE_USERNAME'],
+               password: ENV['PURE_PASSWORD']
   collection = c.find limit: 1,
                       offset: rand(0..c.count-1),
                       full: false
@@ -54,9 +42,13 @@ def random_uuid(resource)
 end
 
 def request(resource)
-  auth
+  # auth
   @uuid = random_uuid(resource)
   resource_class = 'Puree::' + resource.to_s.capitalize
-  @p = Object.const_get(resource_class).new
+  @p = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL']
+  @p.basic_auth username: ENV['PURE_USERNAME'],
+                password: ENV['PURE_PASSWORD']
   @metadata = @p.find uuid: @uuid
+  # puts @p.response.code
+  # puts @p.response.body
 end

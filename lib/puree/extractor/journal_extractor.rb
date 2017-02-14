@@ -6,7 +6,7 @@ module Puree
 
     # Journal extractor
     #
-    class Journal < Puree::Extractor::Base
+    class Journal < Puree::Extractor::Resource
 
       def initialize(xml:)
         @resource_type = :journal

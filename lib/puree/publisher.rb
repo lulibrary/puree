@@ -5,10 +5,7 @@ module Puree
   class Publisher < Resource
 
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
-    # @param basic_auth [Boolean]
-    def initialize(base_url: nil, username: nil, password: nil, basic_auth: nil)
+    def initialize(base_url: nil)
       super
       @resource_type = :publisher
     end

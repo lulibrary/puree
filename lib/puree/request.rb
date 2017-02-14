@@ -2,59 +2,54 @@ module Puree
 
   class Request
 
-    def initialize
+    def initialize(base_url: nil)
+      @base_url = base_url
       @api_map = Puree::Map.new
+      @headers = {}
     end
 
-    def get(uuid:,
-            id:,
-            rendering:,
-            basic_auth:,
-            latest_api:,
+    def basic_auth(username:, password:)
+      auth = Base64::strict_encode64("#{username}:#{password}")
+      @headers['Authorization'] = 'Basic ' + auth
+    end
+
+    def get(uuid: nil,
+            id: nil,
+            rendering: :xml_long,
+            latest_api: true,
             resource_type:,
-            base_url:,
-            username:,
-            password:)
-          @basic_auth =     basic_auth
+            limit: 20,
+            offset: 0,
+            created_start: nil,
+            created_end: nil,
+            modified_start: nil,
+            modified_end: nil,
+            content_type: nil)
           @latest_api =    latest_api
-          @resource_type =  resource_type
+          @resource_type =  resource_type.to_sym
           @rendering =      rendering
           @uuid =           uuid
           @id =             id
-          @base_url =       base_url
-          @username =      username
-          @password =      password
+          @limit =          limit
+          @offset =         offset
+          @created_start =  created_start
+          @created_end =    created_end
+          @modified_start = modified_start
+          @modified_end =   modified_end
+          @content_type =   content_type
 
-      missing = missing_credentials
-      if !missing.empty?
-        missing.each do |m|
-          puts "#{self.class.name}" + '#' + "#{__method__} missing #{m}"
-        end
-        exit
-      end
       # strip any trailing slash
       @base_url = @base_url.sub(/(\/)+$/, '')
-      headers = {}
-      headers['Accept'] = 'application/xml'
-      if @basic_auth === true
-        @auth = Base64::strict_encode64(@username + ':' + @password)
-        headers['Authorization'] = 'Basic ' + @auth
+      @headers['Accept'] = 'application/xml'
+      @req = HTTP.headers accept: @headers['Accept']
+      if @headers['Authorization']
+        @req = @req.auth @headers['Authorization']
       end
-      url = build_url
-      begin
-        req = HTTP.headers accept: headers['Accept']
-        if @basic_auth
-          req = req.auth headers['Authorization']
-        end
-      rescue HTTP::Error => e
-        puts 'HTTP::Error '+ e.message
-      end
-      req.get(url, params: params)
+      @req.get(build_url, params: params)
     end
 
     def params
       query = {}
-      query['rendering'] = @rendering
       if @uuid
         query['uuids.uuid'] = @uuid
       else
@@ -62,9 +57,18 @@ module Puree
           query['pureInternalIds.id'] = @id
         end
       end
-      if @rendering
-        query['rendering'] = @rendering
-      end
+      query['rendering'] = @rendering
+      query['window.size'] = @limit
+      query['offset'] = @offset
+
+      # Pure does allow blank value
+      query['contentType'] = @content_type if @content_type
+
+      # Pure does not allow blanks for these
+      query['createdDate.toDate'] = @created_start if @created_start
+      query['createdDate.fromDate'] = @created_end if @created_end
+      query['modifiedDate.toDate'] = @modified_start if @modified_start
+      query['modifiedDate.fromDate'] = @modified_end if @modified_end
       query
     end
 
@@ -76,24 +80,6 @@ module Puree
         service_api_mode = service + '.current'
       end
       @base_url + '/' + service_api_mode
-    end
-
-    def missing_credentials
-      missing = []
-      if @base_url.nil?
-        missing << 'base_url'
-      end
-
-      if @basic_auth === true
-        if @username.nil?
-          missing << 'username'
-        end
-        if @password.nil?
-          missing << 'password'
-        end
-      end
-
-      missing
     end
 
   end

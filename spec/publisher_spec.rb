@@ -54,10 +54,10 @@ describe 'Publisher' do
     before(:all) do
       request :publisher
 
-      filename = "#{ENV['PURE_FILE_PATH']}publisher.#{@uuid}.xml"
-      File.write(filename, @p.response.body)
+      @filename = "#{ENV['PURE_FILE_PATH']}publisher.#{@uuid}.xml"
+      File.write(@filename, @p.response.body)
 
-      @metadata = @p.set_content File.read(filename)
+      @metadata = @p.set_content File.read(@filename)
     end
 
     it '#set_content' do
@@ -70,6 +70,10 @@ describe 'Publisher' do
 
     it '#metadata' do
       expect(@p.metadata).not_to be_empty
+    end
+
+    after(:all) do
+      File.delete @filename if File.exists? @filename
     end
 
   end

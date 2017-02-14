@@ -3,22 +3,20 @@ module Puree
   # Collection of resources
   #
   class Collection
-    include Puree::Auth
 
-    # @param resource [Symbol]
     # @param base_url [String]
-    # @param username [String]
-    # @param password [String]
-    # @param basic_auth [Boolean]
-    def initialize(resource: nil,
-                   base_url: nil,
-                   username: nil,
-                   password: nil,
-                   basic_auth: nil)
+    # @param resource [Symbol]
+    def initialize(base_url:, resource: nil)
+      @base_url = base_url
       @resource_type = resource
+      @request = Puree::Request.new base_url: base_url
       @api_map = Puree::Map.new.get
-      flexible_auth(base_url, username, password, basic_auth)
-      @uuids = []
+    end
+
+    def basic_auth(username:, password:)
+      @request.basic_auth username: username,
+                          password: password
+      @basic_auth = true
     end
 
     # Gets an array of objects of resource type specified in constructor
@@ -44,72 +42,19 @@ module Puree
             instance:         false,
             rendering:        :xml_long
     )
-
-      @options = {
-          basic_auth:       @basic_auth,
-          latest_api:       true,
-          resource_type:    @resource_type.to_sym,
-          rendering:        :system,
-          limit:            limit,
-          offset:           offset,
-          created_start:    created_start,
-          created_end:      created_end,
-          modified_start:   modified_start,
-          modified_end:     modified_end,
-          full:             full,
-          instance:         instance,
-          record_rendering: rendering
-      }
-
       reset
-
-      missing = missing_credentials
-      if !missing.empty?
-        missing.each do |m|
-          puts "#{self.class.name}" + '#' + "#{__method__} missing #{m}"
-        end
-        exit
-      end
-
-      # strip any trailing slash
-      @base_url = @base_url.sub(/(\/)+$/, '')
-
-      headers = {}
-      headers['Accept'] = 'application/xml'
-
-      if @options[:basic_auth] === true
-        @auth = Base64::strict_encode64(@username + ':' + @password)
-        headers['Authorization'] = 'Basic ' + @auth
-      end
-
-      begin
-        url = build_url
-        req = HTTP.headers accept: 'application/xml'
-        if @options[:basic_auth]
-          req = req.auth headers['Authorization']
-        end
-        @response = req.get(url, params: params)
-        @doc = Nokogiri::XML @response.body
-        @doc.remove_namespaces!
-
-        @count = extract_count
-
-      rescue HTTP::Error => e
-        puts 'HTTP::Error '+ e.message
-      end
-
-      if @options[:full]
-        collect_resource
-      else
-        data = []
-        uuid.each do |u|
-          o = {}
-          o['uuid'] = u
-          data << o
-        end
-        data
-      end
-
+      @full = full
+      @instance = instance
+      @record_rendering = rendering
+      @response = @request.get rendering:       :system,
+                               limit:           limit,
+                               offset:           offset,
+                               resource_type:    @resource_type,
+                               created_start:    created_start,
+                               created_end:      created_end,
+                               modified_start:   modified_start,
+                               modified_end:     modified_end
+      set_content @response.body
     end
 
 
@@ -122,61 +67,31 @@ module Puree
 
     private
 
-    def params
-      query = {}
-
-      query['rendering'] = @options[:rendering]
-
-      if @options[:limit] >= 0
-        query['window.size'] = @options[:limit]
+    def combine_metadata
+      if @full
+        collect_resource
+      else
+        data = []
+        uuid.each do |u|
+          o = {}
+          o['uuid'] = u
+          data << o
+        end
+        data
       end
-
-      if @options[:offset]
-        query['window.offset'] = @options[:offset]
-      end
-
-      if @options[:created_start]
-        query['createdDate.fromDate'] = @options[:created_start]
-      end
-
-      if @options[:created_end]
-        query['createdDate.toDate'] = @options[:created_end]
-      end
-
-      if @options[:modified_start]
-        query['modifiedDate.fromDate'] = @options[:modified_start]
-      end
-
-      if @options[:modified_end]
-        query['modifiedDate.toDate'] = @options[:modified_end]
-      end
-
-      if @options['rendering']
-        query['rendering'] = @options['rendering']
-      end
-
-      query
     end
 
     def get_count
       find limit: 0
-      extract_count
+      @extractor.count
     end
-
-    def extract_count
-      path = '//count'
-      xpath_query_for_single_value(path).to_i
-    end
-
 
     # Array of UUIDs
     #
     # @return [Array<String>]
     def uuid
-      collect_uuid
-      @uuids
+      @uuids ||= @extractor.uuid
     end
-
 
     def collect_resource
       data = []
@@ -185,19 +100,14 @@ module Puree
       # whitelist symbol
       if @api_map[:resource_type].has_key?(@resource_type)
         uuid.each do |u|
-          if @options[:basic_auth] === true
-            r = Object.const_get(resource_class).new base_url:   @base_url,
-                                                     username:   @username,
-                                                     password:   @password,
-                                                     basic_auth: true
-          else
-            r = Object.const_get(resource_class).new base_url:   @base_url
+          r = Object.const_get(resource_class).new base_url: @base_url
+          if @basic_auth === true
+            r.basic_auth username: @username,
+                         password: @password
           end
           record = r.find uuid: u,
-                          rendering:  @options[:record_rendering]
-          # puts JSON.pretty_generate( record, :indent => '  ')
-          # p u
-          if @options[:instance]
+                          rendering:  @record_rendering
+          if @instance
             data << r
           else
             # just the data
@@ -211,64 +121,25 @@ module Puree
       end
     end
 
-    def collect_uuid
-      @uuids = []
-      path = '//renderedItem/@renderedContentUUID'
-      xpath_result = xpath_query path
-      xpath_result.each { |i| @uuids << i.text.strip }
-    end
-
-    def service_name
-      resource_type = @options[:resource_type]
-      @api_map[:resource_type][resource_type][:service]
-    end
-
-    def service_response_name
-      resource_type = @options[:resource_type]
-      @api_map[:resource_type][resource_type][:response]
-    end
-
-    def build_url
-      service = service_name
-      if @options[:latest_api] === false
-        service_api_mode = service
-      else
-        service_api_mode = service + '.current'
-      end
-      @base_url + '/' + service_api_mode
-    end
-
-    def xpath_query(path)
-      @doc.xpath path
-    end
-
-    def xpath_query_for_single_value(path)
-      xpath_result = xpath_query path
-      xpath_result ? xpath_result.text.strip : ''
-    end
-
-
-    def missing_credentials
-      missing = []
-      if @base_url.nil?
-        missing << 'base_url'
-      end
-
-      if @options[:basic_auth] === true
-        if @username.nil?
-          missing << 'username'
-        end
-        if @password.nil?
-          missing << 'password'
-        end
-      end
-
-      missing
-    end
-
     def reset
       @response = nil
       @count = nil
+      @uuids = nil
+    end
+
+    # Set content from XML. In order for metadata extraction to work, the XML must have
+    # been retrieved using the .current version of the Pure API endpoints
+    #
+    # @param xml [String]
+    def set_content(xml)
+      if xml
+        make_extractor
+        @extractor.get_data? ? combine_metadata : {}
+      end
+    end
+
+    def make_extractor
+      @extractor = Puree::Extractor::CollectionExtractor.new xml: @response.body
     end
 
     alias :find :get
