@@ -4,7 +4,7 @@ describe 'Collection of datasets' do
 
   def new
     @p = Puree::Extractor::Collection.new resource: :dataset,
-                               base_url: ENV['PURE_BASE_URL']
+                               url: ENV['PURE_URL']
   end
 
   def setup

@@ -6,11 +6,11 @@ module Puree
 
       attr_reader :response
 
-      # @param base_url [String]
+      # @param url [String]
       # @param bleeding [Boolean]
-      def initialize(base_url:, bleeding: true)
+      def initialize(url:, bleeding: true)
         @latest_api = bleeding
-        @request = Puree::API::Request.new base_url: base_url
+        @request = Puree::API::Request.new url: url
         @metadata = {}
       end
 
