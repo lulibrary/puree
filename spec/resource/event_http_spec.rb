@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Event' do
 
   it '#new' do
-    p = Puree::Extractor::Event.new base_url: ENV['PURE_BASE_URL']
+    p = Puree::Extractor::Event.new url: ENV['PURE_URL']
     expect(p).to be_an_instance_of Puree::Extractor::Event
   end
 

@@ -4,8 +4,8 @@ module Puree
 
     class Event < Resource
 
-      # @param base_url [String]
-      def initialize(base_url:)
+      # @param url [String]
+      def initialize(url:)
         super
         setup :event
       end      

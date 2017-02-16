@@ -6,11 +6,11 @@ module Puree
 
       attr_reader :response
 
-      # @param base_url [String]
+      # @param url [String]
       # @param basic_auth [Boolean]
-      def initialize(base_url:)
+      def initialize(url:)
         @resource_type = :server
-        @request = Puree::API::Request.new base_url: base_url
+        @request = Puree::API::Request.new url: url
         @metadata = {}
       end
 

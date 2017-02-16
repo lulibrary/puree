@@ -4,8 +4,8 @@ module Puree
 
     class Request
 
-      def initialize(base_url: nil)
-        @base_url = base_url
+      def initialize(url:)
+        @url = url
         @api_map = Puree::API::Map.new
         @headers = {}
       end
@@ -41,7 +41,7 @@ module Puree
             @content_type =   content_type
 
         # strip any trailing slash
-        @base_url = @base_url.sub(/(\/)+$/, '')
+        @url = @url.sub(/(\/)+$/, '')
         @headers['Accept'] = 'application/xml'
         @req = HTTP.headers accept: @headers['Accept']
         if @headers['Authorization']
@@ -81,7 +81,7 @@ module Puree
         else
           service_api_mode = service + '.current'
         end
-        @base_url + '/' + service_api_mode
+        @url + '/' + service_api_mode
       end
 
     end

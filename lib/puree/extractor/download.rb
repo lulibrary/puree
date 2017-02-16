@@ -6,10 +6,10 @@ module Puree
 
       attr_reader :response
 
-      # @param base_url [String]
-      def initialize(base_url:)
+      # @param url [String]
+      def initialize(url:)
         @resource_type = :download
-        @request = Puree::API::Request.new base_url: base_url
+        @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get # Workararound to provide access to service_family
         @metadata = {}
       end

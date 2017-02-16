@@ -4,7 +4,7 @@ module Puree
 
     class Publisher < Puree::XMLExtractor::Resource
 
-      # @param base_url [String]
+      # @param url [String]
       def initialize(xml:)
         super
         @resource_type = :publisher

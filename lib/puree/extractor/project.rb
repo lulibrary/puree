@@ -4,8 +4,8 @@ module Puree
 
     class Project < Resource
 
-      # @param base_url [String]
-      def initialize(base_url:)
+      # @param url [String]
+      def initialize(url:)
         super
         @latest_api = false # stable API does not return person roles
         setup :project
