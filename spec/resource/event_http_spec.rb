@@ -1,0 +1,69 @@
+require 'spec_helper'
+
+describe 'Event' do
+
+  it '#new' do
+    p = Puree::Extractor::Event.new base_url: ENV['PURE_BASE_URL']
+    expect(p).to be_an_instance_of Puree::Extractor::Event
+  end
+
+  before(:all) do
+    request :event
+  end
+
+  describe 'data retrieval' do
+
+    it 'data structure' do
+      expect(@p).to be_a Puree::Event
+    end
+
+    it '#city' do
+      expect(@p.city).to be_an_instance_of(String)
+    end
+
+    it '#country' do
+      expect(@p.country).to be_an_instance_of(String)
+    end
+
+    it '#created' do
+      expect(@p.created).to be_an_instance_of(String)
+    end
+
+    it '#created' do
+      expect(@p.created).not_to be_empty
+    end
+
+    it '#date' do
+      expect(@p.date).to be_an_instance_of(Hash)
+    end
+
+    it '#description' do
+      expect(@p.description).to be_an_instance_of(String)
+    end
+
+    it '#location' do
+      expect(@p.location).to be_an_instance_of(String)
+    end
+
+    it '#locale' do
+      expect(@p.locale).to be_an_instance_of(String)
+    end
+
+    it '#modified' do
+      expect(@p.modified).to be_an_instance_of(String)
+    end
+
+    it '#title' do
+      expect(@p.title).to be_an_instance_of(String)
+    end
+
+    it '#type' do
+      expect(@p.type).to be_an_instance_of(String)
+    end
+
+    it '#uuid' do
+      expect(@p.uuid).to be_an_instance_of(String)
+    end
+  end
+
+end
