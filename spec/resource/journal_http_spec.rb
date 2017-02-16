@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Journal' do
 
   it '#new' do
-    p = Puree::Extractor::Journal.new base_url: ENV['PURE_BASE_URL']
+    p = Puree::Extractor::Journal.new url: ENV['PURE_URL']
     expect(p).to be_an_instance_of Puree::Extractor::Journal
   end
 

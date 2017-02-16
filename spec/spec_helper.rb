@@ -48,7 +48,7 @@ require 'puree/extractor/server'
 
 def random_uuid(resource)
   c = Puree::Extractor::Collection.new resource: resource,
-                            base_url: ENV['PURE_BASE_URL']
+                            url: ENV['PURE_URL']
   c.basic_auth username: ENV['PURE_USERNAME'],
                password: ENV['PURE_PASSWORD']
   collection = c.find limit: 1,
@@ -59,7 +59,7 @@ end
 def request(resource)
   @uuid = random_uuid(resource)
   resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
-  @extractor = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL']
+  @extractor = Object.const_get(resource_class).new url: ENV['PURE_URL']
   @extractor.basic_auth username: ENV['PURE_USERNAME'],
                 password: ENV['PURE_PASSWORD']
   @p = @extractor.find uuid: @uuid
@@ -67,7 +67,7 @@ end
 
 def random_uuid_open(resource)
   c = Puree::Extractor::Collection.new resource: resource,
-                            base_url: ENV['PURE_BASE_URL_OPEN']
+                            url: ENV['PURE_URL_OPEN']
   collection = c.find limit: 1,
                       offset: rand(0..c.count-1)
   collection[0]['uuid']
@@ -76,7 +76,7 @@ end
 def request_open(resource)
   @uuid = random_uuid_open(resource)
   resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
-  @extractor = Object.const_get(resource_class).new base_url: ENV['PURE_BASE_URL_OPEN']
+  @extractor = Object.const_get(resource_class).new url: ENV['PURE_URL_OPEN']
   @p = @extractor.find uuid: @uuid
 end
 

@@ -4,12 +4,12 @@ module Puree
 
     class Collection
 
-      # @param base_url [String]
+      # @param url [String]
       # @param resource [Symbol]
-      def initialize(base_url:, resource: nil)
-        @base_url = base_url
+      def initialize(url:, resource: nil)
+        @url = url
         @resource_type = resource
-        @request = Puree::API::Request.new base_url: base_url
+        @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get
       end
 
@@ -84,7 +84,7 @@ module Puree
 
         # whitelist symbol
         if @api_map[:resource_type].has_key?(@resource_type)
-          r = Object.const_get(resource_class).new base_url: @base_url
+          r = Object.const_get(resource_class).new url: @url
           if @basic_auth === true
             r.basic_auth username: @username,
                          password: @password
