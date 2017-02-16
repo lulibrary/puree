@@ -1,0 +1,106 @@
+module Puree
+
+  module Extractor
+
+    class Resource
+
+      attr_reader :response
+
+      # @param base_url [String]
+      # @param bleeding [Boolean]
+      def initialize(base_url:, bleeding: true)
+        @latest_api = bleeding
+        @request = Puree::API::Request.new base_url: base_url
+        @metadata = {}
+      end
+
+      def setup(resource)
+        @resource_type = resource
+        resource_class = "Puree::#{resource.to_s.capitalize}"
+        @model = Object.const_get(resource_class).new
+      end
+
+      def basic_auth(username:, password:)
+        @request.basic_auth username: username,
+                            password: password
+      end
+
+      # Get
+      #
+      # @param uuid [String]
+      # @param id [String]
+      # @return [Struct] Resource metadata e.g. Puree::Dataset
+      def get(uuid: nil, id: nil, rendering: :xml_long)
+        reset
+        @response = @request.get uuid:           uuid,
+                                 id:             id,
+                                 rendering:      rendering,
+                                 latest_api:     @latest_api,
+                                 resource_type:  @resource_type
+        set_content @response.body
+      end
+
+      # @return [String]
+      def uuid
+        @metadata['uuid']
+      end
+
+      # Created (UTC datetime)
+      #
+      # @return [String]
+      def created
+        @metadata['created']
+      end
+
+      # Modified (UTC datetime)
+      #
+      # @return [String]
+      def modified
+        @metadata['modified']
+      end
+
+      # Locale (e.g. en-GB)
+      #
+      # @return [String]
+      def locale
+        @metadata['locale']
+      end
+
+      # Set content from XML. In order for metadata extraction to work, the XML must have
+      # been retrieved using the .current version of the Pure API endpoints
+      #
+      # @param xml [String]
+      def set_content(xml)
+        if xml
+          make_xml_extractor
+          @extractor.get_data? ? combine_metadata : {}
+        end
+      end
+
+      private
+
+      def make_xml_extractor
+        resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
+        @extractor = Object.const_get(resource_class).new xml: @response.body
+      end
+
+      # All metadata
+      # @return [Hash]
+      def combine_metadata
+        @model.uuid = @extractor.uuid
+        @model.created = @extractor.created
+        @model.modified = @extractor.modified
+        @model.locale = @extractor.locale
+      end
+
+      def reset
+        @response = nil
+      end
+
+      alias :find :get
+
+    end
+
+  end
+
+end
