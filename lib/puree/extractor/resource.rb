@@ -40,32 +40,6 @@ module Puree
         set_content @response.body
       end
 
-      # @return [String]
-      def uuid
-        @metadata['uuid']
-      end
-
-      # Created (UTC datetime)
-      #
-      # @return [String]
-      def created
-        @metadata['created']
-      end
-
-      # Modified (UTC datetime)
-      #
-      # @return [String]
-      def modified
-        @metadata['modified']
-      end
-
-      # Locale (e.g. en-GB)
-      #
-      # @return [String]
-      def locale
-        @metadata['locale']
-      end
-
       # Set content from XML. In order for metadata extraction to work, the XML must have
       # been retrieved using the .current version of the Pure API endpoints
       #
