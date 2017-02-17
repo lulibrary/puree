@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    class Publication < Resource
+    class Publication < Puree::Extractor::Resource
 
       # @param url [String]
       def initialize(url:)

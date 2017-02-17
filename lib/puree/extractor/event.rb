@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    class Event < Resource
+    class Event < Puree::Extractor::Resource
 
       # @param url [String]
       def initialize(url:)

@@ -14,12 +14,6 @@ module Puree
         @metadata = {}
       end
 
-      def setup(resource)
-        @resource_type = resource
-        resource_class = "Puree::#{resource.to_s.capitalize}"
-        @model = Object.const_get(resource_class).new
-      end
-
       def basic_auth(username:, password:)
         @request.basic_auth username: username,
                             password: password
@@ -52,6 +46,12 @@ module Puree
       end
 
       private
+
+      def setup(resource)
+        @resource_type = resource
+        resource_class = "Puree::#{resource.to_s.capitalize}"
+        @model = Object.const_get(resource_class).new
+      end
 
       def make_xml_extractor
         resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"

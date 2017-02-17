@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    class Person < Resource
+    class Person < Puree::Extractor::Resource
 
       # @param url [String]
       def initialize(url:)

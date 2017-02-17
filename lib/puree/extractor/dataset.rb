@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    class Dataset < Resource
+    class Dataset < Puree::Extractor::Resource
 
       # @param url [String]
       def initialize(url:)
