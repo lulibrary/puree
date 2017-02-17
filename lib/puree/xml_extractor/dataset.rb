@@ -31,9 +31,9 @@ module Puree
       end
 
       # Date made available
-      # @return [Hash]
+      # @return [Time]
       def available
-        temporal_date 'dateMadeAvailable'
+        Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
       end
 
       # Digital Object Identifier
@@ -226,7 +226,7 @@ module Puree
       end
 
       # Temporal range
-      # @return [Hash]
+      # @return [Hash<Time,Time>]
       def temporal_range(start_node, end_node)
         data = {}
         data['start'] = {}
@@ -239,7 +239,10 @@ module Puree
         if !end_date.nil? && !end_date.empty?
           data['end'] = end_date
         end
-        data
+        range = Puree::TemporalRange.new
+        range.start = Puree::Util::Date.hash_to_time data['start']
+        range.end = Puree::Util::Date.hash_to_time data['end']
+        range
       end
 
       # Temporal coverage date
@@ -251,7 +254,7 @@ module Puree
         o['day'] = xpath_result.xpath('day').text.strip
         o['month'] = xpath_result.xpath('month').text.strip
         o['year'] = xpath_result.xpath('year').text.strip
-        Puree::Date.normalise o
+        Puree::Util::Date.normalise o
       end
 
       def roles

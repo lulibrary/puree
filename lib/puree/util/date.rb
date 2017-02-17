@@ -4,6 +4,12 @@ module Puree
 
     module Date
 
+      # @param data [Hash]
+      # @return [Time]
+      def self.hash_to_time(hash)
+        Time.new hash['year'], hash['month'], hash['day']
+      end
+
       # Converts a date with three components (year, month, day) to ISO 8601 date format
       #
       # @param data [Hash]

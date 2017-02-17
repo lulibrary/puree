@@ -32,6 +32,7 @@ require 'puree/model/person'
 require 'puree/model/project'
 require 'puree/model/publication'
 require 'puree/model/publisher'
+require 'puree/model/temporal_range'
 
 require 'puree/extractor/resource'
 require 'puree/extractor/dataset'
