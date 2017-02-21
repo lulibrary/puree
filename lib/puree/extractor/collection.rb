@@ -4,6 +4,8 @@ module Puree
 
     class Collection
 
+      attr_reader :response
+
       # @param url [String]
       # @param resource [Symbol]
       def initialize(url:, resource: nil)

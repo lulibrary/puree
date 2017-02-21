@@ -15,13 +15,13 @@ module Puree
       def combine_metadata
         super
         @model.address = @extractor.address
-        @model.email = @extractor.email
+        @model.email_addresses = @extractor.email_addresses
         @model.name = @extractor.name
-        @model.organisation = @extractor.organisation
+        @model.organisations = @extractor.organisations
         @model.parent = @extractor.parent
-        @model.phone = @extractor.phone
+        @model.phone_numbers = @extractor.phone_numbers
         @model.type = @extractor.type
-        @model.url = @extractor.url
+        @model.urls = @extractor.urls
         @metadata = @model
       end
 

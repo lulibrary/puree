@@ -14,10 +14,10 @@ module Puree
 
       def combine_metadata
         super
-        @model.affiliation = @extractor.affiliation
-        @model.email = @extractor.email
-        @model.image = @extractor.image
-        @model.keyword = @extractor.keyword
+        @model.affiliations = @extractor.affiliations
+        @model.email_addresses = @extractor.email_addresses
+        @model.image_urls = @extractor.image_urls
+        @model.keywords = @extractor.keywords
         @model.name = @extractor.name
         @model.orcid = @extractor.orcid
         @metadata = @model

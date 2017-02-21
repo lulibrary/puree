@@ -9,60 +9,64 @@ module Puree
         @resource_type = :organisation
       end
 
-      # @return [Array<Hash>]
+      # @return [Array<Puree::Address>]
       def address
         xpath_result = xpath_query '/addresses/classifiedAddress'
         data = []
         xpath_result.each do |d|
-          o = {}
-          o['street'] = d.xpath('street').text.strip
-          o['building'] = d.xpath('building').text.strip
-          o['postcode'] = d.xpath('postalCode').text.strip
-          o['city'] = d.xpath('city').text.strip
-          o['country'] = d.xpath('country/term/localizedString').text.strip
-          data << o
+          street = d.xpath('street').text.strip
+          building = d.xpath('building').text.strip
+          postcode = d.xpath('postalCode').text.strip
+          city = d.xpath('city').text.strip
+          country = d.xpath('country/term/localizedString').text.strip
+          a = Puree::Address.new
+          a.street = street.empty? ? nil : street
+          a.building = building.empty? ? nil : building
+          a.postcode = postcode.empty? ? nil : postcode
+          a.city = city.empty? ? nil : city
+          a.country = country.empty? ? nil : country
+          data << a
         end
         data.uniq
       end
 
       # @return [Array<String>]
-      def email
+      def email_addresses
         xpath_query_for_multi_value '/emails/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def name
         xpath_query_for_single_value '/name/localizedString'
       end
 
-      # @return [Array<Hash>]
-      def organisation
+      # @return [Array<Puree::OrganisationHeader>]
+      def organisations
         xpath_result = xpath_query '/organisations/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Hash]
+      # @return [Puree::OrganisationHeader]
       def parent
-        data = organisation
-        o = {}
+        data = organisations
         if !data.empty?
-          o = data.first
+          return data.first
         end
-        o
+        return nil
       end
 
       # @return [Array<String>]
-      def phone
+      def phone_numbers
         xpath_query_for_multi_value '/phoneNumbers/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
 
       # @return [Array<String>]
-      def url
+      def urls
         xpath_query_for_multi_value '/webAddresses/classificationDefinedFieldExtension/value/localizedString'
       end
 

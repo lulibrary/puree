@@ -7,7 +7,19 @@ module Puree
       # @param data [Hash]
       # @return [Time]
       def self.hash_to_time(hash)
-        Time.new hash['year'], hash['month'], hash['day']
+        h = normalise hash
+        if !h['year'].empty? && !h['month'].empty? && !h['day'].empty?
+          return Time.new h['year'].to_i,
+                          h['month'].to_i,
+                          h['day'].to_i
+        end
+        if !h['year'].empty? && !h['month'].empty?
+          return Time.new h['year'].to_i,
+                          h['month'].to_i
+        end
+        if !h['year'].empty?
+          return Time.new h['year'].to_i
+        end
       end
 
       # Converts a date with three components (year, month, day) to ISO 8601 date format

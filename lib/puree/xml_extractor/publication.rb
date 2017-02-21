@@ -9,122 +9,148 @@ module Puree
         super
       end
 
-      # @return [String]
+      # @return [String, nil]
       def category
         xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def description
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
-      # @return [Hash]
+      # @return [Puree::EventHeader]
       def event
         xpath_result = xpath_query '/event'
-        o = {}
-        o['uuid'] = xpath_result.xpath('@uuid').text.strip
-        o['title'] = xpath_result.xpath('title/localizedString').text.strip
-        o
+        if !xpath_result.empty?
+          header = Puree::EventHeader.new
+          header.uuid = xpath_result.xpath('@uuid').text.strip
+          header.title = xpath_result.xpath('title/localizedString').text.strip
+          header
+        end
       end
 
-      # @return [String]
+      # @return [String, nil]
       def doi
         xpath_query_for_single_value '//doi'
       end
 
-      # @return [Array<Hash>]
-      def file
+      # @return [Array<Puree::File>]
+      def files
         xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation/file'
         docs = []
         xpath_result.each do |d|
-          doc = {}
-          # doc['id'] = d.xpath('id').text
-          doc['name'] = d.xpath('fileName').text.strip
-          doc['mime'] = d.xpath('mimeType').text.strip
-          doc['size'] = d.xpath('size').text.strip
-          doc['url'] = d.xpath('url').text.strip
-          docs << doc
+          model = Puree::File.new
+          model.name = d.xpath('fileName').text.strip
+          model.mime = d.xpath('mimeType').text.strip
+          model.size = d.xpath('size').text.strip
+          model.url = d.xpath('url').text.strip
+          docs << model
         end
         docs.uniq
       end
 
-      # @return [Array<Hash>]
-      def organisation
+      # @return [Array<Puree::OrganisationHeader>]
+      def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [String]
+      # @return [Fixnum, nil]
       def page
-        xpath_query_for_single_value '/numberOfPages'
+        xpath_query_for_single_value('/numberOfPages').to_i
       end
 
-      # Person (internal, external, other)
-      # @return [Hash<Array,Array,Array>]
-      def person
-        xpath_result = xpath_query '/persons/personAssociation'
-        data = {}
-        internal = []
-        external = []
-        other = []
-        xpath_result.each do |i|
-          o = {}
-          name = {}
-          name['first'] = i.xpath('name/firstName').text.strip
-          name['last'] = i.xpath('name/lastName').text.strip
-          o['name'] = name
-          o['role'] = 'Author'
-
-          uuid_internal = i.at_xpath('person/@uuid')
-          uuid_external = i.at_xpath('externalPerson/@uuid')
-          if uuid_internal
-            o['uuid'] = uuid_internal.text.strip
-            internal << o
-          elsif uuid_external
-            o['uuid'] = uuid_external.text.strip
-            external << o
-          else
-            other << o
-            o['uuid'] = ''
-          end
-        end
-        data['internal'] = internal
-        data['external'] = external
-        data['other'] = other
-        data
+      # Internal persons
+      # @return [Array<Puree::EndeavourPerson>]
+      def persons_internal
+        person 'internal'
       end
 
-      # @return [Array<Hash>]
-      def status
+      # External persons
+      # @return [Array<Puree::EndeavourPerson>]
+      def persons_external
+        person 'external'
+      end
+
+      # Other persons
+      # @return [Array<Puree::EndeavourPerson>]
+      def persons_other
+        person 'other'
+      end
+
+      # @return [Array<Puree::PublicationStatus>]
+      def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'
         data = []
         xpath_result.each do |i|
-          o = {}
-          o['stage'] = i.xpath('publicationStatus/term/localizedString').text.strip
+          s = Puree::PublicationStatus.new
+          s.stage = i.xpath('publicationStatus/term/localizedString').text.strip
+          # s.date =
+          # o = {}
+          # o['stage'] = i.xpath('publicationStatus/term/localizedString').text.strip
           ymd = {}
           ymd['year'] = i.xpath('publicationDate/year').text.strip
           ymd['month'] = i.xpath('publicationDate/month').text.strip
           ymd['day'] = i.xpath('publicationDate/day').text.strip
-          o['date'] = Puree::Date.normalise(ymd)
-          data << o
+
+          # iso = Puree::Util::Date.iso ymd
+          # o['date'] = Puree::Util::Date.iso_date_to_time iso
+          #
+          # s.date = Puree::Util::Date.iso_date_to_time iso
+
+          s.date = Puree::Util::Date.hash_to_time ymd
+
+          data << s
         end
         data
       end
 
-      # @return [String]
+      # @return [String, nil]
       def title
         xpath_query_for_single_value '/title'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def subtitle
         xpath_query_for_single_value '/subtitle'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
+      end
+
+      private
+
+      # Internal persons
+      # @return [Array<Endeavour::Person>]
+      def person(type)
+        xpath_result = xpath_query '/persons/personAssociation'
+        arr = []
+        xpath_result.each do |i|
+          person = Puree::EndeavourPerson.new
+
+          name = Puree::PersonName.new
+          name.first = i.xpath('name/firstName').text.strip
+          name.last = i.xpath('name/lastName').text.strip
+          person.name = name
+
+          person.role = 'Author'
+
+          if type === 'internal'
+            uuid = i.at_xpath('person/@uuid')
+          elsif type === 'external'
+            uuid = i.at_xpath('externalPerson/@uuid')
+          end
+          if uuid
+            uuid = uuid.text.strip
+          end
+          person.uuid = uuid
+
+          arr << person
+        end
+        arr
       end
 
     end

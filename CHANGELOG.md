@@ -7,13 +7,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Factory to make resource objects?
 - Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
-## 1.0.0 - 2017-02-15
+## 1.0.0 - 2017-02-17
 ### Changed
 - Simplified basic auth.
-- Resource returned as a struct.
+- Resource types returned as a struct.
+- Data structures converted to classes.
+- All dates in Time format.
 
 ### Removed
-- Global configuration
+- Global configuration.
+
+### Fixed
+- Event - end date extraction.
 
 ## 0.20.0 - 2017-02-03
 ### Added

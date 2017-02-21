@@ -13,68 +13,62 @@ describe 'Project' do
 
   describe 'data retrieval' do
 
+    header
+
     it 'data structure' do
       expect(@p).to be_a Puree::Project
     end
 
     it '#acronym' do
-      expect(@p.acronym).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).not_to be_empty
+      expect(@p.acronym).to be_an_instance_of(String) if @p.acronym
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String)
+      expect(@p.description).to be_an_instance_of(String) if @p.description
     end
 
-    it '#locale' do
-      expect(@p.locale).to be_an_instance_of(String)
-    end
-
-    it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
-    end
-
-    it '#organisation' do
-      expect(@p.organisation).to be_an_instance_of(Array)
+    it '#organisations' do
+      expect(@p.organisations).to be_an_instance_of(Array) if @p.organisations
     end
 
     it '#owner' do
-      expect(@p.owner).to be_an_instance_of(Hash)
+      expect(@p.owner).to be_an_instance_of(Puree::OrganisationHeader) if @p.owner
     end
 
-    it '#person' do
-      expect(@p.person).to be_an_instance_of(Hash)
+    it '#persons_internal' do
+      expect(@p.persons_internal).to be_an_instance_of(Array) if @p.persons_internal if @p.persons_internal
     end
 
-    it '#status' do
-      expect(@p.status).to be_an_instance_of(String)
+    it '#persons_external' do
+      expect(@p.persons_external).to be_an_instance_of(Array) if @p.persons_external if @p.persons_external
     end
 
-    it '#temporal' do
-      expect(@p.temporal).to be_an_instance_of(Hash)
+    it '#persons_other' do
+      expect(@p.persons_other).to be_an_instance_of(Array) if @p.persons_other if @p.persons_other
+    end
+
+    it '#statuses' do
+      expect(@p.status).to be_an_instance_of(String) if @p.status
+    end
+
+    it '#temporal_actual' do
+      expect(@p.temporal_actual).to be_an_instance_of(Puree::TemporalRange) if @p.temporal_actual
+    end
+
+    it '#temporal_expected' do
+      expect(@p.temporal_expected).to be_an_instance_of(Puree::TemporalRange) if @p.temporal_expected
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
+      expect(@p.title).to be_an_instance_of(String) if @p.title
     end
 
     it '#type' do
-      expect(@p.type).to be_an_instance_of(String)
+      expect(@p.type).to be_an_instance_of(String) if @p.type
     end
 
     it '#url' do
-      expect(@p.url).to be_an_instance_of(String)
-    end
-
-    it '#uuid' do
-      expect(@p.uuid).to be_an_instance_of(String)
+      expect(@p.url).to be_an_instance_of(String) if @p.url
     end
 
   end

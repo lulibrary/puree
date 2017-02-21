@@ -13,114 +13,88 @@ describe 'Dataset' do
 
   describe 'data retrieval' do
 
+    header
+
     it 'data structure' do
       expect(@p).to be_a Puree::Dataset
     end
 
     it '#access' do
-      expect(@p.access).to be_an_instance_of(String)
+      expect(@p.access).to be_an_instance_of(String) if @p.access
     end
 
     it '#associated' do
-      expect(@p.associated).to be_an_instance_of(Array)
+      expect(@p.associated).to be_an_instance_of(Array) if @p.associated
     end
 
     it '#available' do
-      expect(@p.available).to be_an_instance_of(Hash)
-    end
-
-    it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).not_to be_empty
+      expect(@p.available).to be_an_instance_of(Time) if @p.available
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String)
+      expect(@p.description).to be_an_instance_of(String) if @p.description
     end
 
     it '#doi' do
-      expect(@p.doi).to be_an_instance_of(String)
+      expect(@p.doi).to be_an_instance_of(String) if @p.doi
     end
 
-    it '#file' do
-      expect(@p.file).to be_an_instance_of(Array)
+    it '#files' do
+      expect(@p.files).to be_an_instance_of(Array) if @p.files
     end
 
-    it '#keyword' do
-      expect(@p.keyword).to be_an_instance_of(Array)
+    it '#keywords' do
+      expect(@p.keywords).to be_an_instance_of(Array) if @p.keywords
     end
 
-    it '#link' do
-      expect(@p.link).to be_an_instance_of(Array)
+    it '#links' do
+      expect(@p.links).to be_an_instance_of(Array) if @p.links
     end
 
-    it '#locale' do
-      expect(@p.locale).to be_an_instance_of(String)
+    it '#persons_internal' do
+      expect(@p.persons_internal).to be_an_instance_of(Array) if @p.persons_internal
     end
 
-    it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
+    it '#persons_external' do
+      expect(@p.persons_external).to be_an_instance_of(Array) if @p.persons_external
     end
 
-    it '#person' do
-      expect(@p.person).to be_an_instance_of(Hash)
+    it '#persons_other' do
+      expect(@p.persons_other).to be_an_instance_of(Array) if @p.persons_other
     end
 
     it '#production' do
-      expect(@p.production).to be_an_instance_of(Hash)
+      expect(@p.production).to be_an_instance_of(Puree::TemporalRange) if @p.production
     end
 
-    it '#project' do
-      expect(@p.project).to be_an_instance_of(Array)
+    it '#projects' do
+      expect(@p.projects).to be_an_instance_of(Array) if @p.projects
     end
 
-    it '#publication' do
-      expect(@p.publication).to be_an_instance_of(Array)
+    it '#publications' do
+      expect(@p.publications).to be_an_instance_of(Array) if @p.publications
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String)
+      expect(@p.publisher).to be_an_instance_of(String) if @p.publisher
     end
 
-    it '#spatial' do
-      expect(@p.spatial).to be_an_instance_of(Array)
+    it '#spatial_places' do
+      expect(@p.spatial_places).to be_an_instance_of(Array) if @p.spatial_places
     end
 
     it '#spatial_point' do
-      expect(@p.spatial_point).to be_an_instance_of(Hash)
+      expect(@p.spatial_point).to be_an_instance_of(Hash) if @p.spatial_point
     end
 
     it '#temporal' do
-      expect(@p.temporal).to be_an_instance_of(Hash)
+      expect(@p.temporal).to be_an_instance_of(Puree::TemporalRange) if @p.temporal
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
+      expect(@p.title).to be_an_instance_of(String) if @p.title
     end
 
-    it '#uuid' do
-      expect(@p.uuid).to be_an_instance_of(String)
-    end
   end
-
-  # describe 'data retrieval from file' do
-  #   before(:all) do
-  #     @filename = "#{ENV['PURE_FILE_PATH']}dataset.#{@uuid}.xml"
-  #     File.write(@filename, @extractor.response.body)
-  #     @p = @extractor.set_content File.read(@filename)
-  #   end
-  #
-  #   it '#created' do
-  #     expect(@p.created).not_to be_empty
-  #   end
-  #
-  #   after(:all) do
-  #     File.delete @filename if File.exists? @filename
-  #   end
-  #
-  # end
 
 end

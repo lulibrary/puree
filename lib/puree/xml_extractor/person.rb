@@ -9,36 +9,28 @@ module Puree
         @resource_type = :person
       end
 
-      # @return [Array<Hash>]
-      def affiliation
+      # @return [Array<Puree::OrganisationHeader>]
+      def affiliations
         xpath_result = xpath_query '//organisation'
-        data_arr = []
-        xpath_result.each { |i|
-          data = {}
-          data['uuid'] = i.attr('uuid').strip
-          data['name'] = i.xpath('name/localizedString').text.strip
-          data_arr << data
-        }
-        data_arr.uniq
+        Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Array]
-      def email
+      # @return [Array<String>]
+      def email_addresses
         xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
       end
 
-      # Image URL
       # @return [Array<String>]
-      def image
+      def image_urls
         xpath_query_for_multi_value '/photos/file/url'
       end
 
       # @return [Array<String>]
-      def keyword
+      def keywords
         xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
       end
 
-      # @return [Hash]
+      # @return [Puree::PersonName]
       def name
         xpath_result = xpath_query '/name'
         first = xpath_result.xpath('firstName').text.strip
@@ -46,10 +38,13 @@ module Puree
         o = {}
         o['first'] = first
         o['last'] = last
-        o
+        model = Puree::PersonName.new
+        model.first = first
+        model.last = last
+        model
       end
 
-      # @return [String]
+      # @return [String, nil]
       def orcid
         xpath_query_for_single_value '/orcid'
       end

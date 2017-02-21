@@ -4,14 +4,14 @@ module Puree
 
     class Resource
 
-      attr_reader :response
+      attr_reader :metadata, :response
 
       # @param url [String]
       # @param bleeding [Boolean]
       def initialize(url:, bleeding: true)
         @latest_api = bleeding
         @request = Puree::API::Request.new url: url
-        @metadata = {}
+        @metadata = nil
       end
 
       def basic_auth(username:, password:)

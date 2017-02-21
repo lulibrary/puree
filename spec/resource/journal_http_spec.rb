@@ -13,40 +13,22 @@ describe 'Journal' do
 
   describe 'data retrieval' do
 
+    header
+
     it 'data structure' do
       expect(@p).to be_a Puree::Journal
     end
 
-    it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).not_to be_empty
-    end
-
     it '#issn' do
-      expect(@p.issn).to be_an_instance_of(String)
-    end
-
-    it '#locale' do
-      expect(@p.locale).to be_an_instance_of(String)
-    end
-
-    it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
+      expect(@p.issn).to be_an_instance_of(String) if @p.issn
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String)
+      expect(@p.publisher).to be_an_instance_of(String) if @p.publisher
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
-    end
-
-    it '#uuid' do
-      expect(@p.uuid).to be_an_instance_of(String)
+      expect(@p.title).to be_an_instance_of(String) if @p.title
     end
 
   end

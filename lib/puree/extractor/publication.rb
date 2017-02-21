@@ -18,11 +18,13 @@ module Puree
         @model.description = @extractor.description
         @model.doi = @extractor.doi
         @model.event = @extractor.event
-        @model.file = @extractor.file
-        @model.organisation = @extractor.organisation
+        @model.files = @extractor.files
+        @model.organisations = @extractor.organisations
         @model.page = @extractor.page
-        @model.person = @extractor.person
-        @model.status = @extractor.status
+        @model.persons_internal = @extractor.persons_internal
+        @model.persons_external = @extractor.persons_external
+        @model.persons_other = @extractor.persons_other
+        @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle
         @model.title = @extractor.title
         @model.type = @extractor.type

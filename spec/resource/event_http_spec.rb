@@ -13,57 +13,40 @@ describe 'Event' do
 
   describe 'data retrieval' do
 
+    header
+
     it 'data structure' do
       expect(@p).to be_a Puree::Event
     end
 
     it '#city' do
-      expect(@p.city).to be_an_instance_of(String)
+      expect(@p.city).to be_an_instance_of(String) if @p.city
     end
 
     it '#country' do
-      expect(@p.country).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).not_to be_empty
+      expect(@p.country).to be_an_instance_of(String) if @p.country
     end
 
     it '#date' do
-      expect(@p.date).to be_an_instance_of(Hash)
+      expect(@p.date).to be_an_instance_of(Puree::TemporalRange) if @p.date
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String)
+      expect(@p.description).to be_an_instance_of(String) if @p.description
     end
 
     it '#location' do
-      expect(@p.location).to be_an_instance_of(String)
-    end
-
-    it '#locale' do
-      expect(@p.locale).to be_an_instance_of(String)
-    end
-
-    it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
+      expect(@p.location).to be_an_instance_of(String) if @p.location
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
+      expect(@p.title).to be_an_instance_of(String) if @p.title
     end
 
     it '#type' do
-      expect(@p.type).to be_an_instance_of(String)
+      expect(@p.type).to be_an_instance_of(String) if @p.type
     end
 
-    it '#uuid' do
-      expect(@p.uuid).to be_an_instance_of(String)
-    end
   end
 
 end
