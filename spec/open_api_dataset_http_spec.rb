@@ -8,9 +8,8 @@ describe 'Open API' do
       request_open resource
     end
 
-    it '#metadata' do
-      expect(@p.created).not_to be_empty
-    end
+    header
+
   end
 
 end

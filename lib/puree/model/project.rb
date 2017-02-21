@@ -4,11 +4,14 @@ module Puree
 
     :acronym,
     :description,
-    :organisation,
+    :organisations,
     :owner,
-    :person,
+    :persons_internal,
+    :persons_external,
+    :persons_other,
     :status,
-    :temporal,
+    :temporal_actual,
+    :temporal_expected,
     :title,
     :type,
     :url

@@ -23,14 +23,15 @@ module Puree
       end
 
       # Created (UTC datetime)
-      # @return [String]
+      # @return [Time]
       def created
-        xpath_query_for_single_value '/created'
+        Time.parse xpath_query_for_single_value('/created')
       end
 
       # Modified (UTC datetime)
+      # @return [Time]
       def modified
-        xpath_query_for_single_value '/modified'
+        Time.parse xpath_query_for_single_value('/modified')
       end
 
       def uuid
@@ -38,10 +39,10 @@ module Puree
       end
 
       # Locale (e.g. en-GB)
-      # @return [String]
+      # @return [String, nil]
       def locale
         str = xpath_query_for_single_value '/@locale'
-        str.tr('_','-')
+        str.tr('_','-') if str
       end
 
       private

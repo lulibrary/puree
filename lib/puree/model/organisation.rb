@@ -3,13 +3,13 @@ module Puree
   class Organisation < Struct.new(*Resource.members,
 
     :address,
-    :email,
+    :email_addresses,
     :name,
-    :organisation,
+    :organisations,
     :parent,
-    :phone,
+    :phone_numbers,
     :type,
-    :url
+    :urls
 
     )
 

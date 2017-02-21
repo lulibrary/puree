@@ -11,7 +11,7 @@ module Puree
 
       def xpath_query_for_single_value(path)
         xpath_result = xpath_query path
-        xpath_result ? xpath_result.text.strip : ''
+        xpath_result.empty? ? nil : xpath_result.text.strip
       end
 
       def xpath_query_for_multi_value(path)

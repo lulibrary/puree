@@ -2,10 +2,10 @@ module Puree
 
   class Person < Struct.new(*Resource.members,
 
-    :affiliation,
-    :email,
-    :image,
-    :keyword,
+    :affiliations,
+    :email_addresses,
+    :image_urls,
+    :keywords,
     :name,
     :orcid
 

@@ -18,71 +18,59 @@ describe 'Publication' do
     end
 
     it '#category' do
-      expect(@p.category).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).to be_an_instance_of(String)
-    end
-
-    it '#created' do
-      expect(@p.created).not_to be_empty
+      expect(@p.category).to be_an_instance_of(String) if @p.category
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String)
+      expect(@p.description).to be_an_instance_of(String) if @p.description
     end
 
     it '#doi' do
-      expect(@p.doi).to be_an_instance_of(String)
+      expect(@p.doi).to be_an_instance_of(String) if @p.doi
     end
 
     it '#event' do
-      expect(@p.event).to be_an_instance_of(Hash)
+      expect(@p.event).to be_an_instance_of(Puree::EventHeader) if @p.event
     end
 
-    it '#file' do
-      expect(@p.file).to be_an_instance_of(Array)
+    it '#files' do
+      expect(@p.files).to be_an_instance_of(Array) if @p.files
     end
 
-    it '#locale' do
-      expect(@p.locale).to be_an_instance_of(String)
-    end
-
-    it '#modified' do
-      expect(@p.modified).to be_an_instance_of(String)
-    end
-
-    it '#organisation' do
-      expect(@p.organisation).to be_an_instance_of(Array)
+    it '#organisations' do
+      expect(@p.organisations).to be_an_instance_of(Array) if @p.organisations
     end
 
     it '#page' do
-      expect(@p.page).to be_an_instance_of(String)
+      expect(@p.page).to be_an_instance_of(Fixnum) if @p.page
     end
 
-    it '#person' do
-      expect(@p.person).to be_an_instance_of(Hash)
+    it '#persons_internal' do
+      expect(@p.persons_internal).to be_an_instance_of(Array) if @p.persons_internal
     end
 
-    it '#status' do
-      expect(@p.status).to be_an_instance_of(Array)
+    it '#persons_external' do
+      expect(@p.persons_external).to be_an_instance_of(Array) if @p.persons_external
+    end
+
+    it '#persons_other' do
+      expect(@p.persons_other).to be_an_instance_of(Array) if @p.persons_other
+    end
+
+    it '#statuses' do
+      expect(@p.statuses).to be_an_instance_of(Array) if @p.statuses
     end
 
     it '#subtitle' do
-      expect(@p.subtitle).to be_an_instance_of(String)
+      expect(@p.subtitle).to be_an_instance_of(String) if @p.subtitle
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String)
+      expect(@p.title).to be_an_instance_of(String) if @p.title
     end
 
     it '#type' do
-      expect(@p.type).to be_an_instance_of(String)
-    end
-
-    it '#uuid' do
-      expect(@p.uuid).to be_an_instance_of(String)
+      expect(@p.type).to be_an_instance_of(String) if @p.type
     end
 
   end

@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    class Project < Resource
+    class Project < Puree::Extractor::Resource
 
       # @param url [String]
       def initialize(url:)
@@ -17,11 +17,14 @@ module Puree
         super
         @model.acronym = @extractor.acronym
         @model.description = @extractor.description
-        @model.organisation = @extractor.organisation
+        @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
-        @model.person = @extractor.person
+        @model.persons_internal = @extractor.persons_internal
+        @model.persons_external = @extractor.persons_external
+        @model.persons_other = @extractor.persons_other
         @model.status = @extractor.status
-        @model.temporal = @extractor.temporal
+        @model.temporal_actual = @extractor.temporal_actual
+        @model.temporal_expected = @extractor.temporal_expected
         @model.title = @extractor.title
         @model.type = @extractor.type
         @model.url = @extractor.url

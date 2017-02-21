@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe 'data retrieval from file' do
+describe 'data retrieval from files' do
   from_file :journal
 end

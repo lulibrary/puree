@@ -4,20 +4,14 @@ module Puree
 
     class Resource
 
-      attr_reader :response
+      attr_reader :metadata, :response
 
       # @param url [String]
       # @param bleeding [Boolean]
       def initialize(url:, bleeding: true)
         @latest_api = bleeding
         @request = Puree::API::Request.new url: url
-        @metadata = {}
-      end
-
-      def setup(resource)
-        @resource_type = resource
-        resource_class = "Puree::#{resource.to_s.capitalize}"
-        @model = Object.const_get(resource_class).new
+        @metadata = nil
       end
 
       def basic_auth(username:, password:)
@@ -40,32 +34,6 @@ module Puree
         set_content @response.body
       end
 
-      # @return [String]
-      def uuid
-        @metadata['uuid']
-      end
-
-      # Created (UTC datetime)
-      #
-      # @return [String]
-      def created
-        @metadata['created']
-      end
-
-      # Modified (UTC datetime)
-      #
-      # @return [String]
-      def modified
-        @metadata['modified']
-      end
-
-      # Locale (e.g. en-GB)
-      #
-      # @return [String]
-      def locale
-        @metadata['locale']
-      end
-
       # Set content from XML. In order for metadata extraction to work, the XML must have
       # been retrieved using the .current version of the Pure API endpoints
       #
@@ -78,6 +46,12 @@ module Puree
       end
 
       private
+
+      def setup(resource)
+        @resource_type = resource
+        resource_class = "Puree::#{resource.to_s.capitalize}"
+        @model = Object.const_get(resource_class).new
+      end
 
       def make_xml_extractor
         resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
