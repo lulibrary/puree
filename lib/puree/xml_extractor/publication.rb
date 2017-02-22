@@ -64,19 +64,19 @@ module Puree
       # Internal persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
-        person 'internal'
+        persons 'internal'
       end
 
       # External persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
-        person 'external'
+        persons 'external'
       end
 
       # Other persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
-        person 'other'
+        persons 'other'
       end
 
       # @return [Array<Puree::Model::PublicationStatus>]
@@ -123,9 +123,8 @@ module Puree
 
       private
 
-      # Internal persons
       # @return [Array<Endeavour::Person>]
-      def person(type)
+      def persons(type)
         xpath_result = xpath_query '/persons/personAssociation'
         arr = []
         xpath_result.each do |i|

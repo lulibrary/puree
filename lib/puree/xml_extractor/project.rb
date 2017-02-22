@@ -81,7 +81,6 @@ module Puree
 
       private
 
-      # Internal persons
       # @return [Array<Endeavour::Person>]
       def persons(type)
         xpath_result = xpath_query '/persons/participantAssociation'
