@@ -12,11 +12,11 @@ module Puree
         @doc.xpath('//count').text.strip.to_i
       end
 
-      def uuid
-        uuids = []
+      def uuids
+        arr = []
         xpath_result = @doc.xpath '//renderedItem/@renderedContentUUID'
-        xpath_result.each { |i| uuids << i.text.strip }
-        uuids
+        xpath_result.each { |i| arr << i.text.strip }
+        arr
       end
 
       # Is there any data after get?

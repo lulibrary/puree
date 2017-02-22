@@ -76,8 +76,8 @@ module Puree
       # Array of UUIDs
       #
       # @return [Array<String>]
-      def uuid
-        @uuids ||= @extractor.uuid
+      def uuids
+        @uuids ||= @extractor.uuids
       end
 
       def collect_resource
@@ -91,7 +91,7 @@ module Puree
             r.basic_auth username: @username,
                          password: @password
           end
-          uuid.each do |u|
+          uuids.each do |u|
             record = r.find uuid: u,
                             rendering:  @record_rendering
             data << record

@@ -208,7 +208,6 @@ module Puree
         data_arr
       end
 
-      # Internal persons
       # @return [Array<Endeavour::Person>]
       def persons(type)
         xpath_result = xpath_query '/persons/dataSetPersonAssociation'
