@@ -56,22 +56,12 @@ module Puree
 
       # @return [Puree::Model::TemporalRange]
       def temporal_expected
-        expected_start = xpath_query('/expectedStartDate').text.strip
-        expected_end = xpath_query('/expectedEndDate').text.strip
-        range = Puree::Model::TemporalRange.new
-        range.start = expected_start
-        range.end = expected_end
-        range
+        temporal_range '/expectedStartDate', '/expectedEndDate'
       end
 
       # @return [Puree::Model::TemporalRange]
       def temporal_actual
-        actual_start = xpath_query('/startFinishDate/startDate').text.strip
-        actual_end = xpath_query('/startFinishDate/endDate').text.strip
-        range = Puree::Model::TemporalRange.new
-        range.start = actual_start
-        range.end = actual_end
-        range
+        temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
       end
 
       # @return [String, nil]
@@ -122,6 +112,14 @@ module Puree
           arr << person
         end
         arr
+      end
+
+      # @return [Puree::Model::TemporalRange]
+      def temporal_range(start_path, end_path)
+        range = Puree::Model::TemporalRange.new
+        range.start = xpath_query(start_path).text.strip
+        range.end = xpath_query(end_path).text.strip
+        range
       end
 
     end
