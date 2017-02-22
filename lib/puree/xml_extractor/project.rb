@@ -86,28 +86,29 @@ module Puree
         xpath_result = xpath_query '/persons/participantAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('person/name/firstName').text.strip
-          name.last = i.xpath('person/name/lastName').text.strip
-          person.name = name
-
-          role = i.xpath('personRole/term/localizedString').text.strip
-          person.role = role
-
-          if type === 'internal'
-            uuid_internal = i.at_xpath('person/@uuid')
-            uuid = uuid_internal.text.strip if uuid_internal
-          elsif type === 'external'
-            uuid_external = i.at_xpath('externalPerson/@uuid')
-            uuid = uuid_external.text.strip if uuid_external
-          elsif type === 'other'
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
             uuid = ''
           end
-          person.uuid = uuid
-
-          arr << person
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('person/name/firstName').text.strip
+            name.last = i.xpath('person/name/lastName').text.strip
+            person.name = name
+            role = i.xpath('personRole/term/localizedString').text.strip
+            person.role = role
+            arr << person
+          end
         end
         arr
       end

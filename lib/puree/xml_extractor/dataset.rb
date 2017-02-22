@@ -56,14 +56,14 @@ module Puree
           doc = Puree::Model::File.new
           doc.name = d.xpath('fileName').text.strip
           doc.mime = d.xpath('mimeType').text.strip
-          doc.size = d.xpath('size').text.strip
+          doc.size = d.xpath('size').text.strip.to_i
           doc.url = d.xpath('url').text.strip
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
           license = Puree::Model::CopyrightLicense.new
           license.name = d.xpath('documentLicense/term/localizedString').text.strip
-          license.url =
+          license.url = d.xpath('documentLicense/description/localizedString').text.strip
           doc.license = license
           docs << doc
         end
@@ -221,28 +221,29 @@ module Puree
         xpath_result = xpath_query '/persons/dataSetPersonAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('name/firstName').text.strip
-          name.last = i.xpath('name/lastName').text.strip
-          person.name = name
-
-          role_uri = i.xpath('personRole/uri').text.strip
-          person.role = roles[role_uri].to_s
-
-          if type === 'internal'
-            uuid_internal = i.at_xpath('person/@uuid')
-            uuid = uuid_internal.text.strip if uuid_internal
-          elsif type === 'external'
-            uuid_external = i.at_xpath('externalPerson/@uuid')
-            uuid = uuid_external.text.strip if uuid_external
-          elsif type === 'other'
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
             uuid = ''
           end
-          person.uuid = uuid
-
-          arr << person
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('name/firstName').text.strip
+            name.last = i.xpath('name/lastName').text.strip
+            person.name = name
+            role_uri = i.xpath('personRole/uri').text.strip
+            person.role = roles[role_uri]
+            arr << person
+          end
         end
         arr
       end

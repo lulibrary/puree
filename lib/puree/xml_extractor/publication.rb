@@ -43,7 +43,7 @@ module Puree
           model = Puree::Model::File.new
           model.name = d.xpath('fileName').text.strip
           model.mime = d.xpath('mimeType').text.strip
-          model.size = d.xpath('size').text.strip
+          model.size = d.xpath('size').text.strip.to_i
           model.url = d.xpath('url').text.strip
           docs << model
         end
@@ -128,28 +128,43 @@ module Puree
         xpath_result = xpath_query '/persons/personAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('name/firstName').text.strip
-          name.last = i.xpath('name/lastName').text.strip
-          person.name = name
-
-          person.role = 'Author'
-
-          if type === 'internal'
-            uuid_internal = i.at_xpath('person/@uuid')
-            uuid = uuid_internal.text.strip if uuid_internal
-          elsif type === 'external'
-            uuid_external = i.at_xpath('externalPerson/@uuid')
-            uuid = uuid_external.text.strip if uuid_external
-          elsif type === 'other'
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
             uuid = ''
           end
-          person.uuid = uuid
-          arr << person
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('name/firstName').text.strip
+            name.last = i.xpath('name/lastName').text.strip
+            person.name = name
+            role_uri = i.xpath('personRole/uri').text.strip
+            person.role = roles[role_uri].to_s
+            arr << person
+          end
         end
         arr
+      end
+
+      def roles
+        {
+            '/dk/atira/pure/researchoutput/roles/bookanthology/author'                   => 'Author',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/author'           => 'Author',
+            '/dk/atira/pure/researchoutput/roles/othercontribution/author'               => 'Author',
+            '/dk/atira/pure/researchoutput/roles/thesis/author'                          => 'Author',
+            '/dk/atira/pure/researchoutput/roles/workingpaper/author'                    => 'Author',
+            '/dk/atira/pure/researchoutput/roles/internalexternal/thesis/supervisor'     => 'Supervisor',
+            '/dk/atira/pure/researchoutput/roles/nontextual/artist'                      => 'Artist'
+        }
       end
 
     end
