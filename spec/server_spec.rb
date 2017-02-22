@@ -4,7 +4,7 @@ describe 'Server' do
 
   it '#new' do
     p = Puree::Extractor::Server.new url: ENV['PURE_URL']
-    expect(p).to be_an_instance_of Puree::Extractor::Server
+    expect(p).to be_a Puree::Extractor::Server
   end
 
   describe 'data retrieval' do
@@ -17,7 +17,7 @@ describe 'Server' do
     end
 
     it '#find' do
-      expect(@metadata).to be_an_instance_of(Hash)
+      expect(@metadata).to be_a(Hash)
     end
 
     it '#find' do
@@ -25,7 +25,7 @@ describe 'Server' do
     end
 
     it '#version' do
-      expect(@p.version).to be_an_instance_of(String)
+      expect(@p.version).to be_a(String)
     end
 
   end

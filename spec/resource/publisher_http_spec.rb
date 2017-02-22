@@ -4,7 +4,7 @@ describe 'Publisher' do
 
   it '#new' do
     p = Puree::Extractor::Publisher.new url: ENV['PURE_URL']
-    expect(p).to be_an_instance_of Puree::Extractor::Publisher
+    expect(p).to be_a Puree::Extractor::Publisher
   end
 
   before(:all) do
@@ -18,7 +18,7 @@ describe 'Publisher' do
     end
 
     it '#name' do
-      expect(@p.name).to be_an_instance_of(String)
+      expect(@p.name).to be_a String
     end
 
   end

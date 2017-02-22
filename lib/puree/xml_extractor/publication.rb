@@ -56,7 +56,7 @@ module Puree
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Fixnum, nil]
+      # @return [Fixnum]
       def page
         xpath_query_for_single_value('/numberOfPages').to_i
       end

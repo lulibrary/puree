@@ -22,18 +22,17 @@ module Puree
         xpath_result.text.strip === '1' ? true : false
       end
 
-      # Created (UTC datetime)
       # @return [Time]
       def created
         Time.parse xpath_query_for_single_value('/created')
       end
 
-      # Modified (UTC datetime)
       # @return [Time]
       def modified
         Time.parse xpath_query_for_single_value('/modified')
       end
 
+      # @return [String]
       def uuid
         xpath_query_for_single_value '/@uuid'
       end

@@ -4,7 +4,7 @@ describe 'Download' do
 
   it '#new' do
     p = Puree::Extractor::Download.new url: ENV['PURE_URL']
-    expect(p).to be_an_instance_of Puree::Extractor::Download
+    expect(p).to be_a Puree::Extractor::Download
   end
 
   describe 'data retrieval' do
@@ -17,7 +17,7 @@ describe 'Download' do
     end
 
     it '#find' do
-      expect(@metadata).to be_an_instance_of(Array)
+      expect(@metadata).to be_a(Array)
     end
 
     it '#find' do

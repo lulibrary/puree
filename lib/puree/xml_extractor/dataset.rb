@@ -203,17 +203,17 @@ module Puree
       private
 
       def associated_type(type)
-        associated_arr = associated
         data_arr = []
-        associated_arr.each do |i|
-          data = {}
+        associated.each do |i|
           if i['type'] === type
-            data['title'] = i['title']
-            data['uuid'] = i['uuid']
-            data_arr << data
+            related = Puree::Model::RelatedContentHeader.new
+            related.type = i['type']
+            related.title = i['title']
+            related.uuid = i['uuid']
+            data_arr << related
           end
         end
-        data_arr
+        data_arr.uniq
       end
 
       # @return [Array<Endeavour::Person>]

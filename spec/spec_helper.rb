@@ -125,18 +125,18 @@ end
 
 def header
   it '#uuid' do
-    expect(@p.uuid).to be_an_instance_of(String) if @p.uuid
+    expect(@p.uuid).to be_a String
   end
 
   it '#created' do
-    expect(@p.created).to be_an_instance_of(Time) if @p.created
+    expect(@p.created).to be_a Time
   end
 
   it '#modified' do
-    expect(@p.modified).to be_an_instance_of(Time) if @p.modified
+    expect(@p.modified).to be_a Time
   end
 
   it '#locale' do
-    expect(@p.locale).to be_an_instance_of(String) if @p.locale
+    expect(@p.locale).to be_a String
   end
 end
