@@ -1,12 +1,9 @@
 module Puree
-
-  class SpatialPoint < Struct.new(
-
-      :latitude,
-      :longitude
-
-  )
-
+  module Model
+    class SpatialPoint < Struct.new(
+        :latitude,
+        :longitude
+    )
+    end
   end
-  
 end

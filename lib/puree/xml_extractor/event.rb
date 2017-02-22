@@ -19,13 +19,13 @@ module Puree
         xpath_query_for_single_value '/country/term/localizedString'
       end
 
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def date
         xpath_result = xpath_query '/dateRange'
         data = {}
         data['start'] = xpath_result.xpath('startDate').text.strip
         data['end'] = xpath_result.xpath('endDate').text.strip
-        range = Puree::TemporalRange.new
+        range = Puree::Model::TemporalRange.new
         range.start = Time.parse data['start']
         if data['end']['year']
           range.end = Time.parse data['end']

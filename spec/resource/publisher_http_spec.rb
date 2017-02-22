@@ -14,7 +14,7 @@ describe 'Publisher' do
   describe 'data retrieval' do
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Publisher
+      expect(@p).to be_a Puree::Model::Publisher
     end
 
     it '#name' do

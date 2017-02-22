@@ -1,12 +1,9 @@
 module Puree
-
-  class EventHeader < Struct.new(
-
-      :uuid,
-      :title
-
-  )
-
+  module Model
+    class EventHeader < Struct.new(
+        :uuid,
+        :title
+    )
+    end
   end
-  
 end

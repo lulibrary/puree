@@ -14,7 +14,7 @@ describe 'Publication' do
   describe 'data retrieval' do
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Publication
+      expect(@p).to be_a Puree::Model::Publication
     end
 
     it '#category' do
@@ -30,7 +30,7 @@ describe 'Publication' do
     end
 
     it '#event' do
-      expect(@p.event).to be_an_instance_of(Puree::EventHeader) if @p.event
+      expect(@p.event).to be_an_instance_of(Puree::Model::EventHeader) if @p.event
     end
 
     it '#files' do

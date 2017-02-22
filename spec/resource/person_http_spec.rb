@@ -16,7 +16,7 @@ describe 'Person' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Person
+      expect(@p).to be_a Puree::Model::Person
     end
 
     it '#affiliations' do
@@ -36,7 +36,7 @@ describe 'Person' do
     end
 
     it '#name' do
-      expect(@p.name).to be_an_instance_of(Puree::PersonName) if @p.name
+      expect(@p.name).to be_an_instance_of(Puree::Model::PersonName) if @p.name
     end
 
     it '#orcid' do

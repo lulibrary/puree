@@ -1,11 +1,9 @@
 module Puree
-
-  class TemporalRange < Struct.new(
-
-      :start,
-      :end
-  )
-
+  module Model
+    class TemporalRange < Struct.new(
+        :start,
+        :end
+    )
+    end
   end
-  
 end
