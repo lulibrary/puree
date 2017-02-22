@@ -1,11 +1,10 @@
 module Puree
+  module Model
+    class Link < Struct.new(
 
-  class Link < Struct.new(
-      
-      :description,
-      :url
-  )
-
+        :description,
+        :url
+    )
+    end
   end
-  
 end

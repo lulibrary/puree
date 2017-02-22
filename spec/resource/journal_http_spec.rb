@@ -16,7 +16,7 @@ describe 'Journal' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Journal
+      expect(@p).to be_a Puree::Model::Journal
     end
 
     it '#issn' do

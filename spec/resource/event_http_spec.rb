@@ -16,7 +16,7 @@ describe 'Event' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Event
+      expect(@p).to be_a Puree::Model::Event
     end
 
     it '#city' do
@@ -28,7 +28,7 @@ describe 'Event' do
     end
 
     it '#date' do
-      expect(@p.date).to be_an_instance_of(Puree::TemporalRange) if @p.date
+      expect(@p.date).to be_an_instance_of(Puree::Model::TemporalRange) if @p.date
     end
 
     it '#description' do

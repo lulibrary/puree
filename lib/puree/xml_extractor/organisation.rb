@@ -9,7 +9,7 @@ module Puree
         @resource_type = :organisation
       end
 
-      # @return [Array<Puree::Address>]
+      # @return [Array<Puree::Model::Address>]
       def address
         xpath_result = xpath_query '/addresses/classifiedAddress'
         data = []
@@ -19,7 +19,7 @@ module Puree
           postcode = d.xpath('postalCode').text.strip
           city = d.xpath('city').text.strip
           country = d.xpath('country/term/localizedString').text.strip
-          a = Puree::Address.new
+          a = Puree::Model::Address.new
           a.street = street.empty? ? nil : street
           a.building = building.empty? ? nil : building
           a.postcode = postcode.empty? ? nil : postcode
@@ -40,13 +40,13 @@ module Puree
         xpath_query_for_single_value '/name/localizedString'
       end
 
-      # @return [Array<Puree::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Puree::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader]
       def parent
         data = organisations
         if !data.empty?

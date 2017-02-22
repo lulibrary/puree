@@ -16,7 +16,7 @@ describe 'Organisation' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Organisation
+      expect(@p).to be_a Puree::Model::Organisation
     end
 
     it '#address' do
@@ -32,7 +32,7 @@ describe 'Organisation' do
     end
 
     it '#parent' do
-      expect(@p.parent).to be_an_instance_of(Puree::OrganisationHeader) if @p.parent
+      expect(@p.parent).to be_an_instance_of(Puree::Model::OrganisationHeader) if @p.parent
     end
 
     it '#phone_numbers' do

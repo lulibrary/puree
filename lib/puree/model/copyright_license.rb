@@ -1,12 +1,9 @@
 module Puree
-
-  class CopyrightLicense < Struct.new(
-
-      :name,
-      :url
-
-  )
-
+  module Model
+    class CopyrightLicense < Struct.new(
+        :name,
+        :url
+    )
+    end
   end
-  
 end

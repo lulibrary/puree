@@ -9,7 +9,7 @@ module Puree
         @resource_type = :person
       end
 
-      # @return [Array<Puree::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationHeader>]
       def affiliations
         xpath_result = xpath_query '//organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
@@ -30,7 +30,7 @@ module Puree
         xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
       end
 
-      # @return [Puree::PersonName]
+      # @return [Puree::Model::PersonName]
       def name
         xpath_result = xpath_query '/name'
         first = xpath_result.xpath('firstName').text.strip
@@ -38,7 +38,7 @@ module Puree
         o = {}
         o['first'] = first
         o['last'] = last
-        model = Puree::PersonName.new
+        model = Puree::Model::PersonName.new
         model.first = first
         model.last = last
         model

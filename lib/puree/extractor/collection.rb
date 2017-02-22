@@ -31,7 +31,7 @@ module Puree
       # @param created_end [String]
       # @param modified_start [String]
       # @param modified_end [String]
-      # @return [Array<Struct>] Resource metadata e.g. Puree::Dataset
+      # @return [Array<Struct>] Resource metadata e.g. Puree::Model::Dataset
       def get(
               limit:            20,
               offset:           0,

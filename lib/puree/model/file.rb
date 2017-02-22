@@ -1,14 +1,12 @@
 module Puree
-
-  class File < Struct.new(
-      
-      :name,
-      :mime,
-      :size,
-      :url,
-      :license
-  )
-
+  module Model
+    class File < Struct.new(
+        :name,
+        :mime,
+        :size,
+        :url,
+        :license
+    )
+    end
   end
-  
 end

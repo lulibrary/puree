@@ -16,7 +16,7 @@ describe 'Project' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Project
+      expect(@p).to be_a Puree::Model::Project
     end
 
     it '#acronym' do
@@ -32,7 +32,7 @@ describe 'Project' do
     end
 
     it '#owner' do
-      expect(@p.owner).to be_an_instance_of(Puree::OrganisationHeader) if @p.owner
+      expect(@p.owner).to be_an_instance_of(Puree::Model::OrganisationHeader) if @p.owner
     end
 
     it '#persons_internal' do
@@ -52,11 +52,11 @@ describe 'Project' do
     end
 
     it '#temporal_actual' do
-      expect(@p.temporal_actual).to be_an_instance_of(Puree::TemporalRange) if @p.temporal_actual
+      expect(@p.temporal_actual).to be_an_instance_of(Puree::Model::TemporalRange) if @p.temporal_actual
     end
 
     it '#temporal_expected' do
-      expect(@p.temporal_expected).to be_an_instance_of(Puree::TemporalRange) if @p.temporal_expected
+      expect(@p.temporal_expected).to be_an_instance_of(Puree::Model::TemporalRange) if @p.temporal_expected
     end
 
     it '#title' do

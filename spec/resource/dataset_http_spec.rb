@@ -16,7 +16,7 @@ describe 'Dataset' do
     header
 
     it 'data structure' do
-      expect(@p).to be_a Puree::Dataset
+      expect(@p).to be_a Puree::Model::Dataset
     end
 
     it '#access' do
@@ -64,7 +64,7 @@ describe 'Dataset' do
     end
 
     it '#production' do
-      expect(@p.production).to be_an_instance_of(Puree::TemporalRange) if @p.production
+      expect(@p.production).to be_an_instance_of(Puree::Model::TemporalRange) if @p.production
     end
 
     it '#projects' do
@@ -84,11 +84,11 @@ describe 'Dataset' do
     end
 
     it '#spatial_point' do
-      expect(@p.spatial_point).to be_an_instance_of(Hash) if @p.spatial_point
+      expect(@p.spatial_point).to be_an_instance_of(Puree::Model::SpatialPoint) if @p.spatial_point
     end
 
     it '#temporal' do
-      expect(@p.temporal).to be_an_instance_of(Puree::TemporalRange) if @p.temporal
+      expect(@p.temporal).to be_an_instance_of(Puree::Model::TemporalRange) if @p.temporal
     end
 
     it '#title' do

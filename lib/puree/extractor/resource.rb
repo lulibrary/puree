@@ -23,7 +23,7 @@ module Puree
       #
       # @param uuid [String]
       # @param id [String]
-      # @return [Struct] Resource metadata e.g. Puree::Dataset
+      # @return [Struct] Resource metadata e.g. Puree::Model::Dataset
       def get(uuid: nil, id: nil, rendering: :xml_long)
         reset
         @response = @request.get uuid:           uuid,
@@ -49,7 +49,7 @@ module Puree
 
       def setup(resource)
         @resource_type = resource
-        resource_class = "Puree::#{resource.to_s.capitalize}"
+        resource_class = "Puree::Model::#{resource.to_s.capitalize}"
         @model = Object.const_get(resource_class).new
       end
 

@@ -19,11 +19,11 @@ module Puree
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
-      # @return [Puree::EventHeader]
+      # @return [Puree::Model::EventHeader]
       def event
         xpath_result = xpath_query '/event'
         if !xpath_result.empty?
-          header = Puree::EventHeader.new
+          header = Puree::Model::EventHeader.new
           header.uuid = xpath_result.xpath('@uuid').text.strip
           header.title = xpath_result.xpath('title/localizedString').text.strip
           header
@@ -35,12 +35,12 @@ module Puree
         xpath_query_for_single_value '//doi'
       end
 
-      # @return [Array<Puree::File>]
+      # @return [Array<Puree::Model::File>]
       def files
         xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation/file'
         docs = []
         xpath_result.each do |d|
-          model = Puree::File.new
+          model = Puree::Model::File.new
           model.name = d.xpath('fileName').text.strip
           model.mime = d.xpath('mimeType').text.strip
           model.size = d.xpath('size').text.strip
@@ -50,7 +50,7 @@ module Puree
         docs.uniq
       end
 
-      # @return [Array<Puree::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
@@ -62,29 +62,29 @@ module Puree
       end
 
       # Internal persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         person 'internal'
       end
 
       # External persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         person 'external'
       end
 
       # Other persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         person 'other'
       end
 
-      # @return [Array<Puree::PublicationStatus>]
+      # @return [Array<Puree::Model::PublicationStatus>]
       def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'
         data = []
         xpath_result.each do |i|
-          s = Puree::PublicationStatus.new
+          s = Puree::Model::PublicationStatus.new
           s.stage = i.xpath('publicationStatus/term/localizedString').text.strip
           # s.date =
           # o = {}
@@ -129,9 +129,9 @@ module Puree
         xpath_result = xpath_query '/persons/personAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::EndeavourPerson.new
+          person = Puree::Model::EndeavourPerson.new
 
-          name = Puree::PersonName.new
+          name = Puree::Model::PersonName.new
           name.first = i.xpath('name/firstName').text.strip
           name.last = i.xpath('name/lastName').text.strip
           person.name = name

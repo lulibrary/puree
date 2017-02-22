@@ -1,12 +1,9 @@
 module Puree
-
-  class PublicationStatus < Struct.new(
-
-      :stage,
-      :date
-
-  )
-
+  module Model
+    class PublicationStatus < Struct.new(
+        :stage,
+        :date
+    )
+    end
   end
-  
 end

@@ -65,7 +65,7 @@ Ingesting research data management data from the Current Research Information Sy
 Tell Pur&#233;e what you are looking for...
 
 ```ruby
-d = Puree::Dataset.new
+d = Puree::Model::Dataset.new
 metadata = d.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```
 ...and get the data from a hash...

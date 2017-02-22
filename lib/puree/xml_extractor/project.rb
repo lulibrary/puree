@@ -19,32 +19,32 @@ module Puree
         xpath_query_for_single_value '/description/localizedString'
       end
 
-      # @return [Array<Puree::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Puree::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader]
       def owner
         xpath_result =  xpath_query '/owner'
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
       # Internal persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
       # External persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
       # Other persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'
       end
@@ -54,21 +54,21 @@ module Puree
         xpath_query_for_single_value '/status/term/localizedString'
       end
 
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def temporal_expected
         expected_start = xpath_query('/expectedStartDate').text.strip
         expected_end = xpath_query('/expectedEndDate').text.strip
-        range = Puree::TemporalRange.new
+        range = Puree::Model::TemporalRange.new
         range.start = expected_start
         range.end = expected_end
         range
       end
 
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def temporal_actual
         actual_start = xpath_query('/startFinishDate/startDate').text.strip
         actual_end = xpath_query('/startFinishDate/endDate').text.strip
-        range = Puree::TemporalRange.new
+        range = Puree::Model::TemporalRange.new
         range.start = actual_start
         range.end = actual_end
         range
@@ -97,9 +97,9 @@ module Puree
         xpath_result = xpath_query '/persons/participantAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::EndeavourPerson.new
+          person = Puree::Model::EndeavourPerson.new
 
-          name = Puree::PersonName.new
+          name = Puree::Model::PersonName.new
           name.first = i.xpath('person/name/firstName').text.strip
           name.last = i.xpath('person/name/lastName').text.strip
           person.name = name

@@ -47,7 +47,7 @@ Fetch the metadata.
 dataset = extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 
 #=>
-# #<struct Puree::Dataset uuid="b050f4b5-e272-4914-8cac-3bdc1e673c58",
+# #<struct Puree::Model::Dataset uuid="b050f4b5-e272-4914-8cac-3bdc1e673c58",
 # created="2015-06-04T16:11:34.713+01:00", modified="2015-07-06T09:59:36
 # .430+01:00", locale="en-GB", access="Embargoed",
 # associated=[{"type"=>"Journal article", "title"=>"The unprecedented scale of

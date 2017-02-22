@@ -16,12 +16,12 @@ module Puree
       end
 
       # Combines projects and publications
-      # @return [Array<Puree::RelatedContentHeader>]
+      # @return [Array<Puree::Model::RelatedContentHeader>]
       def associated
         xpath_result = xpath_query '/associatedContent//relatedContent'
         data_arr = []
         xpath_result.each { |i|
-          related = Puree::RelatedContentHeader.new
+          related = Puree::Model::RelatedContentHeader.new
           related.type = i.xpath('typeClassification').text.strip
           related.title = i.xpath('title').text.strip
           related.uuid = i.attr('uuid').strip
@@ -48,12 +48,12 @@ module Puree
       end
 
       # Supporting files
-      # @return [Array<Puree::File>]
+      # @return [Array<Puree::Model::File>]
       def files
         xpath_result = xpath_query '/documents/document'
         docs = []
         xpath_result.each do |d|
-          doc = Puree::File.new
+          doc = Puree::Model::File.new
           doc_name = d.xpath('fileName').text.strip
           doc.name = doc_name unless doc_name.empty?
           doc_mime = d.xpath('mimeType').text.strip
@@ -65,7 +65,7 @@ module Puree
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
-          license = Puree::CopyrightLicense.new
+          license = Puree::Model::CopyrightLicense.new
           license_name = d.xpath('documentLicense/term/localizedString').text.strip
           license.name = license_name unless license_name.empty?
           license_url = d.xpath('documentLicense/description/localizedString').text.strip
@@ -83,12 +83,12 @@ module Puree
         data_arr.uniq
       end
 
-      # @return [Array<Puree::Link>]
+      # @return [Array<Puree::Model::Link>]
       def links
         xpath_result = xpath_query '/links/link'
         data = []
         xpath_result.each { |i|
-          model =  Puree::Link.new
+          model =  Puree::Model::Link.new
           model.description = i.xpath('description').text.strip
           model.url = i.xpath('url').text.strip
           data << model
@@ -96,48 +96,48 @@ module Puree
         data.uniq
       end
 
-      # @return [Array<Puree::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/organisation'
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Puree::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader]
       def owner
         xpath_result = xpath_query '/managedBy'
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
       # Internal persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
       # External persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
       # Other persons
-      # @return [Array<Puree::EndeavourPerson>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'
       end
 
       # Date of data production
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def production
         temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
       end
 
-      # @return [Array<Puree::RelatedContentHeader>]
+      # @return [Array<Puree::Model::RelatedContentHeader>]
       def projects
         associated_type('Research').uniq
       end
 
-      # @return [Array<Puree::RelatedContentHeader>]
+      # @return [Array<Puree::Model::RelatedContentHeader>]
       def publications
         data_arr = []
         associated.each do |i|
@@ -165,12 +165,12 @@ module Puree
       end
 
       # Spatial coverage point
-      # @return [Puree::SpatialPoint]
+      # @return [Puree::Model::SpatialPoint]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
         if !xpath_result[0].nil?
           arr = xpath_result.text.split(',')
-          point = Puree::SpatialPoint.new
+          point = Puree::Model::SpatialPoint.new
           point.latitude = arr[0].strip.to_f
           point.longitude = arr[1].strip.to_f
         end
@@ -182,7 +182,7 @@ module Puree
       # end
 
       # Temporal coverage
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def temporal
         temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
       end
@@ -214,9 +214,9 @@ module Puree
         xpath_result = xpath_query '/persons/dataSetPersonAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::EndeavourPerson.new
+          person = Puree::Model::EndeavourPerson.new
 
-          name = Puree::PersonName.new
+          name = Puree::Model::PersonName.new
           name.first = i.xpath('name/firstName').text.strip
           name.last = i.xpath('name/lastName').text.strip
           person.name = name
@@ -242,13 +242,13 @@ module Puree
       end
 
       # Temporal range
-      # @return [Puree::TemporalRange]
+      # @return [Puree::Model::TemporalRange]
       def temporal_range(start_node, end_node)
         data = {}
         data['start'] = {}
         data['end'] = {}
         start_date = temporal_date start_node
-        range = Puree::TemporalRange.new
+        range = Puree::Model::TemporalRange.new
         if !start_date['year'].empty?
           range.start = Puree::Util::Date.hash_to_time start_date
         end
