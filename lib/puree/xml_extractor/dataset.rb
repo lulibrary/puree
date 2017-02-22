@@ -83,6 +83,19 @@ module Puree
         data_arr.uniq
       end
 
+      # @return [Array<Puree::Model::LegalCondition>]
+      def legal_conditions
+        xpath_result = xpath_query '/legalConditions/legalCondition'
+        data = []
+        xpath_result.each { |i|
+          model =  Puree::Model::LegalCondition.new
+          model.name = i.xpath('typeClassification/term/localizedString').text.strip
+          model.description = i.xpath('description').text.strip
+          data << model
+        }
+        data.uniq
+      end
+
       # @return [Array<Puree::Model::Link>]
       def links
         xpath_result = xpath_query '/links/link'

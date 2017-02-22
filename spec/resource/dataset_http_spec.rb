@@ -47,6 +47,10 @@ describe 'Dataset' do
       expect(@p.keywords).to be_an_instance_of(Array) if @p.keywords
     end
 
+    it '#legal_conditions' do
+      expect(@p.legal_conditions).to be_an_instance_of(Array) if @p.legal_conditions
+    end
+
     it '#links' do
       expect(@p.links).to be_an_instance_of(Array) if @p.links
     end
