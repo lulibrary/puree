@@ -9,12 +9,12 @@ module Puree
         @resource_type = :event
       end
 
-      # @return [String, nil]
+      # @return [String]
       def city
         xpath_query_for_single_value '/city'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def country
         xpath_query_for_single_value '/country/term/localizedString'
       end
@@ -33,22 +33,22 @@ module Puree
         range
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value  '/description'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def location
         xpath_query_for_single_value '/location'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '//typeClassification/term/localizedString'
       end

@@ -18,7 +18,7 @@ describe 'Publisher' do
     end
 
     it '#name' do
-      expect(@p.name).to be_an_instance_of(String) if @p.name
+      expect(@p.name).to be_an_instance_of(String)
     end
 
   end

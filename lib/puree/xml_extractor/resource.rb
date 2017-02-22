@@ -39,7 +39,7 @@ module Puree
       end
 
       # Locale (e.g. en-GB)
-      # @return [String, nil]
+      # @return [String]
       def locale
         str = xpath_query_for_single_value '/@locale'
         str.tr('_','-') if str

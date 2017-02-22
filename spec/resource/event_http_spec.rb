@@ -20,31 +20,31 @@ describe 'Event' do
     end
 
     it '#city' do
-      expect(@p.city).to be_an_instance_of(String) if @p.city
+      expect(@p.city).to be_an_instance_of(String)
     end
 
     it '#country' do
-      expect(@p.country).to be_an_instance_of(String) if @p.country
+      expect(@p.country).to be_an_instance_of(String)
     end
 
     it '#date' do
-      expect(@p.date).to be_an_instance_of(Puree::Model::TemporalRange) if @p.date
+      expect(@p.date).to be_an_instance_of(Puree::Model::TemporalRange)
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String) if @p.description
+      expect(@p.description).to be_an_instance_of(String)
     end
 
     it '#location' do
-      expect(@p.location).to be_an_instance_of(String) if @p.location
+      expect(@p.location).to be_an_instance_of(String)
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String) if @p.title
+      expect(@p.title).to be_an_instance_of(String)
     end
 
     it '#type' do
-      expect(@p.type).to be_an_instance_of(String) if @p.type
+      expect(@p.type).to be_an_instance_of(String)
     end
 
   end

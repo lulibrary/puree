@@ -9,12 +9,12 @@ module Puree
         super
       end
 
-      # @return [String, nil]
+      # @return [String]
       def category
         xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/abstract/localizedString'
       end
@@ -22,15 +22,15 @@ module Puree
       # @return [Puree::Model::EventHeader]
       def event
         xpath_result = xpath_query '/event'
-        if !xpath_result.empty?
-          header = Puree::Model::EventHeader.new
+        header = Puree::Model::EventHeader.new
+        if !xpath_result.nil?
           header.uuid = xpath_result.xpath('@uuid').text.strip
           header.title = xpath_result.xpath('title/localizedString').text.strip
-          header
         end
+        header
       end
 
-      # @return [String, nil]
+      # @return [String]
       def doi
         xpath_query_for_single_value '//doi'
       end
@@ -106,17 +106,17 @@ module Puree
         data
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def subtitle
         xpath_query_for_single_value '/subtitle'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
@@ -138,15 +138,15 @@ module Puree
           person.role = 'Author'
 
           if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
+            uuid_internal = i.at_xpath('person/@uuid')
+            uuid = uuid_internal.text.strip if uuid_internal
           elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
-          end
-          if uuid
-            uuid = uuid.text.strip
+            uuid_external = i.at_xpath('externalPerson/@uuid')
+            uuid = uuid_external.text.strip if uuid_external
+          elsif type === 'other'
+            uuid = ''
           end
           person.uuid = uuid
-
           arr << person
         end
         arr

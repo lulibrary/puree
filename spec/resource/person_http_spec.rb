@@ -20,27 +20,27 @@ describe 'Person' do
     end
 
     it '#affiliations' do
-      expect(@p.affiliations).to be_an_instance_of(Array) if @p.affiliations
+      expect(@p.affiliations).to be_an_instance_of(Array)
     end
 
     it '#email_addresses' do
-      expect(@p.email_addresses).to be_an_instance_of(Array) if @p.email_addresses
+      expect(@p.email_addresses).to be_an_instance_of(Array)
     end
 
     it '#image_urls' do
-      expect(@p.image_urls).to be_an_instance_of(Array) if @p.image_urls
+      expect(@p.image_urls).to be_an_instance_of(Array)
     end
 
     it '#keywords' do
-      expect(@p.keywords).to be_an_instance_of(Array) if @p.keywords
+      expect(@p.keywords).to be_an_instance_of(Array)
     end
 
     it '#name' do
-      expect(@p.name).to be_an_instance_of(Puree::Model::PersonName) if @p.name
+      expect(@p.name).to be_an_instance_of(Puree::Model::PersonName)
     end
 
     it '#orcid' do
-      expect(@p.orcid).to be_an_instance_of(String) if @p.orcid
+      expect(@p.orcid).to be_an_instance_of(String)
     end
 
   end

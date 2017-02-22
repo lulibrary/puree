@@ -9,17 +9,17 @@ module Puree
         @resource_type = :journal
       end
 
-      # @return [String, nil]
+      # @return [String]
       def issn
         xpath_query_for_single_value '/issns/issn/string'
       end
 
-      ## @return [String, nil]
+      ## @return [String]
       def publisher
         xpath_query_for_single_value '/publisher/name'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/titles/title/string'
       end

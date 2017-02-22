@@ -9,12 +9,12 @@ module Puree
         @resource_type = :project
       end
 
-      # @return [String, nil]
+      # @return [String]
       def acronym
         xpath_query_for_single_value '/acronym'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/description/localizedString'
       end
@@ -49,7 +49,7 @@ module Puree
         persons 'other'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def status
         xpath_query_for_single_value '/status/term/localizedString'
       end
@@ -64,17 +64,17 @@ module Puree
         temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def url
         xpath_query_for_single_value '/projectURL'
       end
@@ -97,14 +97,13 @@ module Puree
           person.role = role
 
           if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
+            uuid_internal = i.at_xpath('person/@uuid')
+            uuid = uuid_internal.text.strip if uuid_internal
           elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
-          # elsif type === 'other'
-          #   uuid = nil
-          end
-          if uuid
-            uuid = uuid.text.strip
+            uuid_external = i.at_xpath('externalPerson/@uuid')
+            uuid = uuid_external.text.strip if uuid_external
+          elsif type === 'other'
+            uuid = ''
           end
           person.uuid = uuid
 

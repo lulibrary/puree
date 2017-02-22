@@ -10,7 +10,7 @@ module Puree
       end
 
       # Open access permission
-      # @return [String, nil]
+      # @return [String]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -37,12 +37,12 @@ module Puree
       end
 
       # Digital Object Identifier
-      # @return [String, nil]
+      # @return [String]
       def doi
         xpath_query_for_single_value '/doi'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
       end
@@ -54,22 +54,16 @@ module Puree
         docs = []
         xpath_result.each do |d|
           doc = Puree::Model::File.new
-          doc_name = d.xpath('fileName').text.strip
-          doc.name = doc_name unless doc_name.empty?
-          doc_mime = d.xpath('mimeType').text.strip
-          doc.mime = doc_mime unless doc_mime.empty?
-          doc_size = d.xpath('size').text.strip
-          doc.size = doc_size unless doc_size.empty?
-          doc_url = d.xpath('url').text.strip
-          doc.url = doc_url unless doc_url.empty?
+          doc.name = d.xpath('fileName').text.strip
+          doc.mime = d.xpath('mimeType').text.strip
+          doc.size = d.xpath('size').text.strip
+          doc.url = d.xpath('url').text.strip
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
           license = Puree::Model::CopyrightLicense.new
-          license_name = d.xpath('documentLicense/term/localizedString').text.strip
-          license.name = license_name unless license_name.empty?
-          license_url = d.xpath('documentLicense/description/localizedString').text.strip
-          license.url = license_url unless license_url.empty?
+          license.name = d.xpath('documentLicense/term/localizedString').text.strip
+          license.url =
           doc.license = license
           docs << doc
         end
@@ -161,7 +155,7 @@ module Puree
         data_arr.uniq
       end
 
-      # @return [String, nil]
+      # @return [String]
       def publisher
         xpath_query_for_single_value '/publisher/name'
       end
@@ -181,12 +175,13 @@ module Puree
       # @return [Puree::Model::SpatialPoint]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
+        point = Puree::Model::SpatialPoint.new
         if !xpath_result[0].nil?
           arr = xpath_result.text.split(',')
-          point = Puree::Model::SpatialPoint.new
           point.latitude = arr[0].strip.to_f
           point.longitude = arr[1].strip.to_f
         end
+        point
       end
 
       # def state
@@ -200,7 +195,7 @@ module Puree
         temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
@@ -237,14 +232,13 @@ module Puree
           person.role = roles[role_uri].to_s
 
           if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
+            uuid_internal = i.at_xpath('person/@uuid')
+            uuid = uuid_internal.text.strip if uuid_internal
           elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
+            uuid_external = i.at_xpath('externalPerson/@uuid')
+            uuid = uuid_external.text.strip if uuid_external
           elsif type === 'other'
-            uuid = nil
-          end
-          if uuid
-            uuid = uuid.text.strip
+            uuid = ''
           end
           person.uuid = uuid
 

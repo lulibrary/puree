@@ -20,15 +20,15 @@ describe 'Journal' do
     end
 
     it '#issn' do
-      expect(@p.issn).to be_an_instance_of(String) if @p.issn
+      expect(@p.issn).to be_an_instance_of(String)
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String) if @p.publisher
+      expect(@p.publisher).to be_an_instance_of(String)
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String) if @p.title
+      expect(@p.title).to be_an_instance_of(String)
     end
 
   end
