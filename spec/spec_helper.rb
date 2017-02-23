@@ -46,6 +46,7 @@ require 'puree/model/organisation_header'
 require 'puree/model/endeavour_person'
 require 'puree/model/person_name'
 require 'puree/model/publication_status'
+require 'puree/model/server'
 require 'puree/model/temporal_range'
 
 require 'puree/extractor/resource'

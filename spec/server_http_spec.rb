@@ -17,15 +17,11 @@ describe 'Server' do
     end
 
     it '#find' do
-      expect(@metadata).to be_a(Hash)
-    end
-
-    it '#find' do
-      expect(@metadata).not_to be_empty
+      expect(@metadata).to be_a Puree::Model::Server
     end
 
     it '#version' do
-      expect(@p.version).to be_a(String)
+      expect(@p.version).to be_a String
     end
 
   end

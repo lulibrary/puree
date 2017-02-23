@@ -20,7 +20,7 @@ module Puree
               rendering: :xml_long,
               latest_api: true,
               resource_type:,
-              limit: 20,
+              limit: 0,
               offset: 0,
               created_start: nil,
               created_end: nil,
@@ -60,8 +60,8 @@ module Puree
           end
         end
         query['rendering'] = @rendering
-        query['window.size'] = @limit
-        query['window.offset'] = @offset
+        query['window.size'] = @limit if @limit > 0 # Server does not work if this is present
+        query['window.offset'] = @offset if @limit > 0
 
         # Pure does allow blank value
         query['contentType'] = @content_type if @content_type
