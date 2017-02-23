@@ -27,7 +27,7 @@ module Puree
 
       # @return [Puree::Model::OrganisationHeader]
       def owner
-        xpath_result =  xpath_query '/owner'
+        xpath_result = xpath_query '/owner'
         Puree::XMLExtractor::Shared.header xpath_result
       end
 

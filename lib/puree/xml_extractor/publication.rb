@@ -157,8 +157,27 @@ module Puree
 
       def roles
         {
+            # Should build using '/dk/atira/pure/researchoutput/roles/' as prefix, with parameter
+
+            ## Article
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/author'          => 'Author',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/illustrator'     => 'Illustrator',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/editor'          => 'Editor',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/translator'      => 'Translator',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/publisher'       => 'Publisher',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/guesteditor'     => 'Guest Editor',
+
+            ## Chapter
+            # Author
+            # Illustrator
+            # Editor
+            # Translator
+            # Publisher
+
+            # ... many, many more research output types ...
+
+            # Examples of others
             '/dk/atira/pure/researchoutput/roles/bookanthology/author'                   => 'Author',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/author'           => 'Author',
             '/dk/atira/pure/researchoutput/roles/othercontribution/author'               => 'Author',
             '/dk/atira/pure/researchoutput/roles/thesis/author'                          => 'Author',
             '/dk/atira/pure/researchoutput/roles/workingpaper/author'                    => 'Author',
