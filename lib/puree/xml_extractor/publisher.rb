@@ -10,7 +10,7 @@ module Puree
         @resource_type = :publisher
       end
 
-      # @return [String, nil]
+      # @return [String]
       def name
         xpath_query_for_single_value '/name'
       end

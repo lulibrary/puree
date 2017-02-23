@@ -4,7 +4,7 @@ describe 'Journal' do
 
   it '#new' do
     p = Puree::Extractor::Journal.new url: ENV['PURE_URL']
-    expect(p).to be_an_instance_of Puree::Extractor::Journal
+    expect(p).to be_a Puree::Extractor::Journal
   end
 
   before(:all) do
@@ -20,15 +20,15 @@ describe 'Journal' do
     end
 
     it '#issn' do
-      expect(@p.issn).to be_an_instance_of(String) if @p.issn
+      expect(@p.issn).to be_a String
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String) if @p.publisher
+      expect(@p.publisher).to be_a String
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String) if @p.title
+      expect(@p.title).to be_a String
     end
 
   end

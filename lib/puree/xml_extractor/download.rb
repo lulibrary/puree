@@ -19,7 +19,7 @@ module Puree
         xpath_result.each { |i|
           data = {}
           data['uuid'] = i.attr('uuid').strip
-          data['download'] = i.attr('downloads').strip
+          data['download'] = i.attr('downloads').strip.to_i
           data_arr << data
         }
         data_arr.uniq

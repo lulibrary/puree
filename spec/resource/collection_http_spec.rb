@@ -16,7 +16,7 @@ describe 'Collection of datasets' do
 
   it '#new' do
     new
-    expect(@p).to be_an_instance_of(Puree::Extractor::Collection)
+    expect(@p).to be_a(Puree::Extractor::Collection)
   end
 
   describe 'data retrieval' do
@@ -26,7 +26,7 @@ describe 'Collection of datasets' do
     end
 
     it 'collection' do
-      expect(@metadata).to be_an_instance_of(Array)
+      expect(@metadata).to be_a(Array)
     end
 
   end
@@ -38,7 +38,7 @@ describe 'Collection of datasets' do
     end
 
     it 'collection' do
-      expect(@metadata).to be_an_instance_of(Array)
+      expect(@metadata).to be_a(Array)
     end
 
     it 'collection item' do
@@ -54,7 +54,7 @@ describe 'Collection of datasets' do
     end
 
     it '#count' do
-      expect(@p.count).to be_an_instance_of(Fixnum)
+      expect(@p.count).to be_a(Fixnum)
     end
 
   end

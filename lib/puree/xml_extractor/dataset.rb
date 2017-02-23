@@ -10,7 +10,7 @@ module Puree
       end
 
       # Open access permission
-      # @return [String, nil]
+      # @return [String]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -37,12 +37,12 @@ module Puree
       end
 
       # Digital Object Identifier
-      # @return [String, nil]
+      # @return [String]
       def doi
         xpath_query_for_single_value '/doi'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
       end
@@ -54,22 +54,16 @@ module Puree
         docs = []
         xpath_result.each do |d|
           doc = Puree::Model::File.new
-          doc_name = d.xpath('fileName').text.strip
-          doc.name = doc_name unless doc_name.empty?
-          doc_mime = d.xpath('mimeType').text.strip
-          doc.mime = doc_mime unless doc_mime.empty?
-          doc_size = d.xpath('size').text.strip
-          doc.size = doc_size unless doc_size.empty?
-          doc_url = d.xpath('url').text.strip
-          doc.url = doc_url unless doc_url.empty?
+          doc.name = d.xpath('fileName').text.strip
+          doc.mime = d.xpath('mimeType').text.strip
+          doc.size = d.xpath('size').text.strip.to_i
+          doc.url = d.xpath('url').text.strip
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
           license = Puree::Model::CopyrightLicense.new
-          license_name = d.xpath('documentLicense/term/localizedString').text.strip
-          license.name = license_name unless license_name.empty?
-          license_url = d.xpath('documentLicense/description/localizedString').text.strip
-          license.url = license_url unless license_url.empty?
+          license.name = d.xpath('documentLicense/term/localizedString').text.strip
+          license.url = d.xpath('documentLicense/description/localizedString').text.strip
           doc.license = license
           docs << doc
         end
@@ -81,6 +75,19 @@ module Puree
         xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
         data_arr = xpath_result.map { |i| i.text.strip }
         data_arr.uniq
+      end
+
+      # @return [Array<Puree::Model::LegalCondition>]
+      def legal_conditions
+        xpath_result = xpath_query '/legalConditions/legalCondition'
+        data = []
+        xpath_result.each { |i|
+          model =  Puree::Model::LegalCondition.new
+          model.name = i.xpath('typeClassification/term/localizedString').text.strip
+          model.description = i.xpath('description').text.strip
+          data << model
+        }
+        data.uniq
       end
 
       # @return [Array<Puree::Model::Link>]
@@ -148,7 +155,7 @@ module Puree
         data_arr.uniq
       end
 
-      # @return [String, nil]
+      # @return [String]
       def publisher
         xpath_query_for_single_value '/publisher/name'
       end
@@ -168,12 +175,13 @@ module Puree
       # @return [Puree::Model::SpatialPoint]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
+        point = Puree::Model::SpatialPoint.new
         if !xpath_result[0].nil?
           arr = xpath_result.text.split(',')
-          point = Puree::Model::SpatialPoint.new
           point.latitude = arr[0].strip.to_f
           point.longitude = arr[1].strip.to_f
         end
+        point
       end
 
       # def state
@@ -187,7 +195,7 @@ module Puree
         temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
@@ -195,17 +203,17 @@ module Puree
       private
 
       def associated_type(type)
-        associated_arr = associated
         data_arr = []
-        associated_arr.each do |i|
-          data = {}
+        associated.each do |i|
           if i['type'] === type
-            data['title'] = i['title']
-            data['uuid'] = i['uuid']
-            data_arr << data
+            related = Puree::Model::RelatedContentHeader.new
+            related.type = i['type']
+            related.title = i['title']
+            related.uuid = i['uuid']
+            data_arr << related
           end
         end
-        data_arr
+        data_arr.uniq
       end
 
       # @return [Array<Endeavour::Person>]
@@ -213,29 +221,29 @@ module Puree
         xpath_result = xpath_query '/persons/dataSetPersonAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('name/firstName').text.strip
-          name.last = i.xpath('name/lastName').text.strip
-          person.name = name
-
-          role_uri = i.xpath('personRole/uri').text.strip
-          person.role = roles[role_uri].to_s
-
-          if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
-          elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
-          elsif type === 'other'
-            uuid = nil
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
+            uuid = ''
           end
-          if uuid
-            uuid = uuid.text.strip
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('name/firstName').text.strip
+            name.last = i.xpath('name/lastName').text.strip
+            person.name = name
+            role_uri = i.xpath('personRole/uri').text.strip
+            person.role = roles[role_uri]
+            arr << person
           end
-          person.uuid = uuid
-
-          arr << person
         end
         arr
       end

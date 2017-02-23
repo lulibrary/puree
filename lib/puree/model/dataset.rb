@@ -9,6 +9,7 @@ module Puree
                                :files,
                                :keywords,
                                :links,
+                               :legal_conditions,
                                :organisations,
                                :owner,
                                :persons_internal,

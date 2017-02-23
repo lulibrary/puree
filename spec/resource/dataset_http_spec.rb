@@ -4,7 +4,7 @@ describe 'Dataset' do
 
   it '#new' do
     p = Puree::Extractor::Dataset.new url: ENV['PURE_URL']
-    expect(p).to be_an_instance_of Puree::Extractor::Dataset
+    expect(p).to be_a Puree::Extractor::Dataset
   end
 
   before(:all) do
@@ -20,79 +20,83 @@ describe 'Dataset' do
     end
 
     it '#access' do
-      expect(@p.access).to be_an_instance_of(String) if @p.access
+      expect(@p.access).to be_a String
     end
 
     it '#associated' do
-      expect(@p.associated).to be_an_instance_of(Array) if @p.associated
+      expect(@p.associated).to all( be_a Puree::Model::RelatedContentHeader )
     end
 
     it '#available' do
-      expect(@p.available).to be_an_instance_of(Time) if @p.available
+      expect(@p.available).to be_a Time
     end
 
     it '#description' do
-      expect(@p.description).to be_an_instance_of(String) if @p.description
+      expect(@p.description).to be_a String
     end
 
     it '#doi' do
-      expect(@p.doi).to be_an_instance_of(String) if @p.doi
+      expect(@p.doi).to be_a String
     end
 
     it '#files' do
-      expect(@p.files).to be_an_instance_of(Array) if @p.files
+      expect(@p.files).to all( be_a Puree::Model::File )
     end
 
     it '#keywords' do
-      expect(@p.keywords).to be_an_instance_of(Array) if @p.keywords
+      expect(@p.keywords).to all( be_a String )
+    end
+
+    it '#legal_conditions' do
+      expect(@p.legal_conditions).to all( be_a Puree::Model::LegalCondition )
     end
 
     it '#links' do
-      expect(@p.links).to be_an_instance_of(Array) if @p.links
+      expect(@p.links).to all( be_a Puree::Model::Link )
     end
 
     it '#persons_internal' do
-      expect(@p.persons_internal).to be_an_instance_of(Array) if @p.persons_internal
+      expect(@p.persons_internal).to all( be_a Puree::Model::EndeavourPerson )
     end
 
     it '#persons_external' do
-      expect(@p.persons_external).to be_an_instance_of(Array) if @p.persons_external
+      expect(@p.persons_external).to all( be_a Puree::Model::EndeavourPerson )
     end
 
     it '#persons_other' do
-      expect(@p.persons_other).to be_an_instance_of(Array) if @p.persons_other
+      expect(@p.persons_other).to all( be_a Puree::Model::EndeavourPerson )
     end
 
     it '#production' do
-      expect(@p.production).to be_an_instance_of(Puree::Model::TemporalRange) if @p.production
+      expect(@p.production).to be_a Puree::Model::TemporalRange
     end
 
     it '#projects' do
-      expect(@p.projects).to be_an_instance_of(Array) if @p.projects
+      expect(@p.projects).to all( be_a Puree::Model::RelatedContentHeader )
     end
 
     it '#publications' do
-      expect(@p.publications).to be_an_instance_of(Array) if @p.publications
+      expect(@p.publications).to all( be_a Puree::Model::RelatedContentHeader )
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_an_instance_of(String) if @p.publisher
+      expect(@p.publisher).to be_a String
     end
 
     it '#spatial_places' do
-      expect(@p.spatial_places).to be_an_instance_of(Array) if @p.spatial_places
+      expect(@p.spatial_places).to all( be_a String )
     end
 
     it '#spatial_point' do
-      expect(@p.spatial_point).to be_an_instance_of(Puree::Model::SpatialPoint) if @p.spatial_point
+      expect(@p.spatial_point).to be_a Puree::Model::SpatialPoint
     end
 
     it '#temporal' do
-      expect(@p.temporal).to be_an_instance_of(Puree::Model::TemporalRange) if @p.temporal
+      expect(@p.temporal).to be_a Puree::Model::TemporalRange
     end
 
     it '#title' do
-      expect(@p.title).to be_an_instance_of(String) if @p.title
+      expect(@p.title).to be_a String
     end
 
   end

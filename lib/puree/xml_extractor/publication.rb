@@ -9,12 +9,12 @@ module Puree
         super
       end
 
-      # @return [String, nil]
+      # @return [String]
       def category
         xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/abstract/localizedString'
       end
@@ -22,15 +22,15 @@ module Puree
       # @return [Puree::Model::EventHeader]
       def event
         xpath_result = xpath_query '/event'
-        if !xpath_result.empty?
-          header = Puree::Model::EventHeader.new
+        header = Puree::Model::EventHeader.new
+        if !xpath_result.nil?
           header.uuid = xpath_result.xpath('@uuid').text.strip
           header.title = xpath_result.xpath('title/localizedString').text.strip
-          header
         end
+        header
       end
 
-      # @return [String, nil]
+      # @return [String]
       def doi
         xpath_query_for_single_value '//doi'
       end
@@ -43,7 +43,7 @@ module Puree
           model = Puree::Model::File.new
           model.name = d.xpath('fileName').text.strip
           model.mime = d.xpath('mimeType').text.strip
-          model.size = d.xpath('size').text.strip
+          model.size = d.xpath('size').text.strip.to_i
           model.url = d.xpath('url').text.strip
           docs << model
         end
@@ -56,7 +56,7 @@ module Puree
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Fixnum, nil]
+      # @return [Fixnum]
       def page
         xpath_query_for_single_value('/numberOfPages').to_i
       end
@@ -106,17 +106,17 @@ module Puree
         data
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def subtitle
         xpath_query_for_single_value '/subtitle'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
@@ -128,28 +128,62 @@ module Puree
         xpath_result = xpath_query '/persons/personAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('name/firstName').text.strip
-          name.last = i.xpath('name/lastName').text.strip
-          person.name = name
-
-          person.role = 'Author'
-
-          if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
-          elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
+            uuid = ''
           end
-          if uuid
-            uuid = uuid.text.strip
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('name/firstName').text.strip
+            name.last = i.xpath('name/lastName').text.strip
+            person.name = name
+            role_uri = i.xpath('personRole/uri').text.strip
+            person.role = roles[role_uri].to_s
+            arr << person
           end
-          person.uuid = uuid
-
-          arr << person
         end
         arr
+      end
+
+      def roles
+        {
+            # Should build using '/dk/atira/pure/researchoutput/roles/' as prefix, with parameter
+
+            ## Article
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/author'          => 'Author',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/illustrator'     => 'Illustrator',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/editor'          => 'Editor',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/translator'      => 'Translator',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/publisher'       => 'Publisher',
+            '/dk/atira/pure/researchoutput/roles/contributiontojournal/guesteditor'     => 'Guest Editor',
+
+            ## Chapter
+            # Author
+            # Illustrator
+            # Editor
+            # Translator
+            # Publisher
+
+            # ... many, many more research output types ...
+
+            # Examples of others
+            '/dk/atira/pure/researchoutput/roles/bookanthology/author'                   => 'Author',
+            '/dk/atira/pure/researchoutput/roles/othercontribution/author'               => 'Author',
+            '/dk/atira/pure/researchoutput/roles/thesis/author'                          => 'Author',
+            '/dk/atira/pure/researchoutput/roles/workingpaper/author'                    => 'Author',
+            '/dk/atira/pure/researchoutput/roles/internalexternal/thesis/supervisor'     => 'Supervisor',
+            '/dk/atira/pure/researchoutput/roles/nontextual/artist'                      => 'Artist'
+        }
       end
 
     end

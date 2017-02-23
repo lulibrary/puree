@@ -44,7 +44,7 @@ module Puree
         model
       end
 
-      # @return [String, nil]
+      # @return [String]
       def orcid
         xpath_query_for_single_value '/orcid'
       end

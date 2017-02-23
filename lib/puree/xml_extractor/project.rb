@@ -9,12 +9,12 @@ module Puree
         @resource_type = :project
       end
 
-      # @return [String, nil]
+      # @return [String]
       def acronym
         xpath_query_for_single_value '/acronym'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def description
         xpath_query_for_single_value '/description/localizedString'
       end
@@ -27,7 +27,7 @@ module Puree
 
       # @return [Puree::Model::OrganisationHeader]
       def owner
-        xpath_result =  xpath_query '/owner'
+        xpath_result = xpath_query '/owner'
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
@@ -49,7 +49,7 @@ module Puree
         persons 'other'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def status
         xpath_query_for_single_value '/status/term/localizedString'
       end
@@ -64,17 +64,17 @@ module Puree
         temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def url
         xpath_query_for_single_value '/projectURL'
       end
@@ -86,29 +86,29 @@ module Puree
         xpath_result = xpath_query '/persons/participantAssociation'
         arr = []
         xpath_result.each do |i|
-          person = Puree::Model::EndeavourPerson.new
-
-          name = Puree::Model::PersonName.new
-          name.first = i.xpath('person/name/firstName').text.strip
-          name.last = i.xpath('person/name/lastName').text.strip
-          person.name = name
-
-          role = i.xpath('personRole/term/localizedString').text.strip
-          person.role = role
-
-          if type === 'internal'
-            uuid = i.at_xpath('person/@uuid')
-          elsif type === 'external'
-            uuid = i.at_xpath('externalPerson/@uuid')
-          # elsif type === 'other'
-          #   uuid = nil
+          uuid_internal = i.at_xpath('person/@uuid')
+          uuid_external = i.at_xpath('externalPerson/@uuid')
+          if uuid_internal
+            person_type = 'internal'
+            uuid = uuid_internal.text.strip
+          elsif uuid_external
+            person_type = 'external'
+            uuid = uuid_external.text.strip
+          else
+            person_type = 'other'
+            uuid = ''
           end
-          if uuid
-            uuid = uuid.text.strip
+          if person_type === type
+            person = Puree::Model::EndeavourPerson.new
+            person.uuid = uuid
+            name = Puree::Model::PersonName.new
+            name.first = i.xpath('person/name/firstName').text.strip
+            name.last = i.xpath('person/name/lastName').text.strip
+            person.name = name
+            role = i.xpath('personRole/term/localizedString').text.strip
+            person.role = role
+            arr << person
           end
-          person.uuid = uuid
-
-          arr << person
         end
         arr
       end

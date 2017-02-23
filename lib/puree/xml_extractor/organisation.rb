@@ -14,17 +14,12 @@ module Puree
         xpath_result = xpath_query '/addresses/classifiedAddress'
         data = []
         xpath_result.each do |d|
-          street = d.xpath('street').text.strip
-          building = d.xpath('building').text.strip
-          postcode = d.xpath('postalCode').text.strip
-          city = d.xpath('city').text.strip
-          country = d.xpath('country/term/localizedString').text.strip
           a = Puree::Model::Address.new
-          a.street = street.empty? ? nil : street
-          a.building = building.empty? ? nil : building
-          a.postcode = postcode.empty? ? nil : postcode
-          a.city = city.empty? ? nil : city
-          a.country = country.empty? ? nil : country
+          a.street = d.xpath('street').text.strip
+          a.building = d.xpath('building').text.strip
+          a.postcode = d.xpath('postalCode').text.strip
+          a.city = d.xpath('city').text.strip
+          a.country = d.xpath('country/term/localizedString').text.strip
           data << a
         end
         data.uniq
@@ -35,7 +30,7 @@ module Puree
         xpath_query_for_multi_value '/emails/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def name
         xpath_query_for_single_value '/name/localizedString'
       end
@@ -60,7 +55,7 @@ module Puree
         xpath_query_for_multi_value '/phoneNumbers/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String, nil]
+      # @return [String]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end

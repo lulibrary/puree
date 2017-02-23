@@ -7,7 +7,6 @@ module Puree
       attr_reader :response
 
       # @param url [String]
-      # @param basic_auth [Boolean]
       def initialize(url:)
         @resource_type = :server
         @request = Puree::API::Request.new url: url
@@ -31,14 +30,14 @@ module Puree
 
       # All metadata
       #
-      # @return [Hash]
+      # @return [Puree::Model::Server]
       def metadata
         @metadata
       end
 
       # Version
       #
-      # @return [String]
+      # @return [Fixnum]
       def version
         @metadata['version']
       end
@@ -46,9 +45,9 @@ module Puree
       private
 
       def combine_metadata
-        o = {}
-        o['version'] = @extractor.version
-        @metadata = o
+        model = Puree::Model::Server.new
+        model.version = @extractor.version
+        @metadata = model
       end
 
       def reset

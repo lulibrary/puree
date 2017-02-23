@@ -22,6 +22,7 @@ module Puree
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
         @model.links = @extractor.links
+        @model.legal_conditions = @extractor.legal_conditions
         @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
         @model.persons_internal = @extractor.persons_internal

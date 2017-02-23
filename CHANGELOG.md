@@ -5,9 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 - Factory to make resource objects?
-- Make ALL dates ISO 8601 YYYY-MM-DD, rather than mirror varying formats from Pure?
 
-## 1.0.0 - 2017-02-17
+## 1.0.0 - 2017-02-22
+### Added
+- Dataset - legal conditions.
+
 ### Changed
 - Simplified basic auth.
 - Resource types returned as a struct.
