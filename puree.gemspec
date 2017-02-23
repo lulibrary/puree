@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Puree::VERSION
   spec.authors       = ["Adrian Albin-Clark"]
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
-  spec.summary       = %q{A client for the Pure Research Information System API.}
-  spec.description   = %q{Consumes the Pure Research Information System API and puts the metadata into simple data structures.}
+  spec.summary       = %q{Metadata extraction from the Pure Research Information System.}
+  spec.description   = %q{Metadata extraction from the Pure Research Information System.}
   spec.homepage      = "https://aalbinclark.gitbooks.io/puree"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
