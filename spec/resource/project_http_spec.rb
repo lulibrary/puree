@@ -52,11 +52,11 @@ describe 'Project' do
     end
 
     it '#temporal_actual' do
-      expect(@p.temporal_actual).to be_a Puree::Model::TemporalRange
+      expect(@p.temporal_actual).to be_a Puree::Model::TemporalRange if @p.temporal_actual
     end
 
     it '#temporal_expected' do
-      expect(@p.temporal_expected).to be_a Puree::Model::TemporalRange
+      expect(@p.temporal_expected).to be_a Puree::Model::TemporalRange if @p.temporal_expected
     end
 
     it '#title' do
