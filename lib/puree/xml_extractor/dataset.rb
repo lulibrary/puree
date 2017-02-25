@@ -10,7 +10,7 @@ module Puree
       end
 
       # Open access permission
-      # @return [String]
+      ## @return [String, Nil]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -31,18 +31,18 @@ module Puree
       end
 
       # Date made available
-      # @return [Time]
+      # @return [Time, Nil]
       def available
         Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
       end
 
       # Digital Object Identifier
-      # @return [String]
+      # @return [String, Nil]
       def doi
         xpath_query_for_single_value '/doi'
       end
 
-      # @return [String]
+      # @return [String, Nil]
       def description
         xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
       end
@@ -134,7 +134,7 @@ module Puree
       end
 
       # Date of data production
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, Nil]
       def production
         temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
       end
@@ -155,7 +155,7 @@ module Puree
         data_arr.uniq
       end
 
-      # @return [String]
+      # @return [String, Nil]
       def publisher
         xpath_query_for_single_value '/publisher/name'
       end
@@ -172,7 +172,7 @@ module Puree
       end
 
       # Spatial coverage point
-      # @return [Puree::Model::SpatialPoint]
+      # @return [Puree::Model::SpatialPoint, Nil]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
         point = Puree::Model::SpatialPoint.new
@@ -180,8 +180,9 @@ module Puree
           arr = xpath_result.text.split(',')
           point.latitude = arr[0].strip.to_f
           point.longitude = arr[1].strip.to_f
+          point
         end
-        point
+        nil
       end
 
       # def state
@@ -190,12 +191,12 @@ module Puree
       # end
 
       # Temporal coverage
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, Nil]
       def temporal
         temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
       end
 
-      # @return [String]
+      # @return [String, Nil]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
@@ -250,31 +251,27 @@ module Puree
 
       # Temporal range
       # @return [Puree::Model::TemporalRange]
-      def temporal_range(start_node, end_node)
-        data = {}
-        data['start'] = {}
-        data['end'] = {}
-        start_date = temporal_date start_node
-        range = Puree::Model::TemporalRange.new
-        if !start_date['year'].empty?
-          range.start = Puree::Util::Date.hash_to_time start_date
+      def temporal_range(start_path, end_path)
+        range_start = Puree::Util::Date.hash_to_time temporal_date(start_path)
+        range_end = Puree::Util::Date.hash_to_time temporal_date(end_path)
+        if range_start || range_end
+          range = Puree::Model::TemporalRange.new
+          range.start = range_start if range_start
+          range.end = range_end if range_end
+          return range
         end
-        end_date = temporal_date end_node
-        if !end_date['year'].empty?
-          range.end = Puree::Util::Date.hash_to_time end_date
-        end
-        range
+        nil
       end
 
       # Temporal coverage date
       # @return [Hash]
-      def temporal_date(node)
-        path = "/#{node}"
+      def temporal_date(date_path)
+        path = "/#{date_path}"
         xpath_result = xpath_query path
         o = {}
-        o['day'] = xpath_result.xpath('day').text.strip
-        o['month'] = xpath_result.xpath('month').text.strip
         o['year'] = xpath_result.xpath('year').text.strip
+        o['month'] = xpath_result.xpath('month').text.strip
+        o['day'] = xpath_result.xpath('day').text.strip
         Puree::Util::Date.normalise o
       end
 

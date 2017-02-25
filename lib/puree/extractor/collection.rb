@@ -33,7 +33,7 @@ module Puree
       # @param modified_end [String]
       # @return [Array<Struct>] Resource metadata e.g. Puree::Model::Dataset
       def get(
-              limit:            20,
+              limit:            0,
               offset:           0,
               created_start:    nil,
               created_end:      nil,
@@ -42,9 +42,8 @@ module Puree
               rendering:        :xml_long
       )
         reset
-        @record_rendering = rendering
-        @response = @request.get rendering:       :system,
-                                 limit:           limit,
+        @response = @request.get rendering:        :system,
+                                 limit:            limit,
                                  offset:           offset,
                                  resource_type:    @resource_type,
                                  created_start:    created_start,
@@ -54,33 +53,49 @@ module Puree
         set_content @response.body
       end
 
+      # Gets a random resource of type specified in constructor
+      #
+      # @param offset [Integer]
+      # @return [Struct] Resource metadata e.g. Puree::Model::Dataset
+      def random_resource
+        reset
+        @response = @request.get rendering:        :system,
+                                 limit:            1,
+                                 offset:           rand(0..count-1),
+                                 resource_type:    @resource_type
+        set_content(response.body)[0]
+      end
+
 
       # Count of records available for a resource type
       #
       # @return [Integer]
       def count
-        @count ||= get_count
+        get_count
       end
 
       private
 
-      def combine_metadata
-        collect_resource
-      end
-
-      def get_count
-        find limit: 0
-        @extractor.count
-      end
-
-      # Array of UUIDs
+      # Array of UUIDs (from system response)
       #
       # @return [Array<String>]
       def uuids
-        @uuids ||= @extractor.uuids
+        @extractor.uuids
       end
 
-      def collect_resource
+      def combine_metadata
+        collect_resources
+      end
+
+      def get_count
+        reset
+        @response = @request.get resource_type: @resource_type,
+                                 rendering: :system
+        make_xml_extractor
+        @extractor.count
+      end
+
+      def collect_resources
         data = []
         resource_class = "Puree::Extractor::#{@resource_type.to_s.capitalize}"
 
@@ -93,7 +108,7 @@ module Puree
           end
           uuids.each do |u|
             record = r.find uuid: u,
-                            rendering:  @record_rendering
+                            rendering: :xml_long
             data << record
           end
           data
@@ -105,7 +120,7 @@ module Puree
       def reset
         @response = nil
         @count = nil
-        @uuids = nil
+        # @uuids = nil
       end
 
       # Set content from XML. In order for metadata extraction to work, the XML must have
@@ -114,12 +129,12 @@ module Puree
       # @param xml [String]
       def set_content(xml)
         if xml
-          make_extractor
-          @extractor.get_data? ? combine_metadata : {}
+          make_xml_extractor
+          combine_metadata if @extractor.get_data?
         end
       end
 
-      def make_extractor
+      def make_xml_extractor
         @extractor = Puree::XMLExtractor::Collection.new xml: @response.body
       end
 

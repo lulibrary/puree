@@ -18,7 +18,7 @@ describe 'Publisher' do
     end
 
     it '#name' do
-      expect(@p.name).to be_a String
+      expect(@p.name).to be_a String if @p.name
     end
 
   end

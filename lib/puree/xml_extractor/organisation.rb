@@ -15,11 +15,16 @@ module Puree
         data = []
         xpath_result.each do |d|
           a = Puree::Model::Address.new
-          a.street = d.xpath('street').text.strip
-          a.building = d.xpath('building').text.strip
-          a.postcode = d.xpath('postalCode').text.strip
-          a.city = d.xpath('city').text.strip
-          a.country = d.xpath('country/term/localizedString').text.strip
+          street = d.xpath('street').text.strip
+          a.street = street unless street.empty?
+          building = d.xpath('building').text.strip
+          a.building = building unless building.empty?
+          postcode = d.xpath('postalCode').text.strip
+          a.postcode = postcode unless building.empty?
+          city = d.xpath('city').text.strip
+          a.city = city unless city.empty?
+          country = d.xpath('country/term/localizedString').text.strip
+          a.country = country unless country.empty?
           data << a
         end
         data.uniq
@@ -30,7 +35,7 @@ module Puree
         xpath_query_for_multi_value '/emails/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def name
         xpath_query_for_single_value '/name/localizedString'
       end
@@ -41,13 +46,9 @@ module Puree
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Puree::Model::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader, nil]
       def parent
-        data = organisations
-        if !data.empty?
-          return data.first
-        end
-        return nil
+        organisations.first unless organisations.empty?
       end
 
       # @return [Array<String>]
@@ -55,7 +56,7 @@ module Puree
         xpath_query_for_multi_value '/phoneNumbers/classificationDefinedStringFieldExtension/value'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end

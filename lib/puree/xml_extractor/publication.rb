@@ -9,12 +9,12 @@ module Puree
         super
       end
 
-      # @return [String]
+      # @return [String, nil]
       def category
         xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def description
         xpath_query_for_single_value '/abstract/localizedString'
       end
@@ -30,7 +30,7 @@ module Puree
         header
       end
 
-      # @return [String]
+      # @return [String, nil]
       def doi
         xpath_query_for_single_value '//doi'
       end
@@ -56,8 +56,8 @@ module Puree
         Puree::XMLExtractor::Shared.multi_header xpath_result
       end
 
-      # @return [Fixnum]
-      def page
+      # @return [Fixnum, nil]
+      def pages
         xpath_query_for_single_value('/numberOfPages').to_i
       end
 
@@ -86,18 +86,11 @@ module Puree
         xpath_result.each do |i|
           s = Puree::Model::PublicationStatus.new
           s.stage = i.xpath('publicationStatus/term/localizedString').text.strip
-          # s.date =
-          # o = {}
-          # o['stage'] = i.xpath('publicationStatus/term/localizedString').text.strip
+
           ymd = {}
           ymd['year'] = i.xpath('publicationDate/year').text.strip
           ymd['month'] = i.xpath('publicationDate/month').text.strip
           ymd['day'] = i.xpath('publicationDate/day').text.strip
-
-          # iso = Puree::Util::Date.iso ymd
-          # o['date'] = Puree::Util::Date.iso_date_to_time iso
-          #
-          # s.date = Puree::Util::Date.iso_date_to_time iso
 
           s.date = Puree::Util::Date.hash_to_time ymd
 
@@ -106,17 +99,17 @@ module Puree
         data
       end
 
-      # @return [String]
+      # @return [String, nil]
       def title
         xpath_query_for_single_value '/title'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def subtitle
         xpath_query_for_single_value '/subtitle'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end

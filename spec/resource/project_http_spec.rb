@@ -20,11 +20,11 @@ describe 'Project' do
     end
 
     it '#acronym' do
-      expect(@p.acronym).to be_a String
+      expect(@p.acronym).to be_a String if @p.acronym
     end
 
     it '#description' do
-      expect(@p.description).to be_a String
+      expect(@p.description).to be_a String if @p.description
     end
 
     it '#organisations' do
@@ -32,7 +32,7 @@ describe 'Project' do
     end
 
     it '#owner' do
-      expect(@p.owner).to be_a Puree::Model::OrganisationHeader
+      expect(@p.owner).to be_a Puree::Model::OrganisationHeader if @p.owner
     end
 
     it '#persons_internal' do
@@ -48,7 +48,7 @@ describe 'Project' do
     end
 
     it '#status' do
-      expect(@p.status).to be_a String
+      expect(@p.status).to be_a String if @p.status
     end
 
     it '#temporal_actual' do
@@ -60,15 +60,15 @@ describe 'Project' do
     end
 
     it '#title' do
-      expect(@p.title).to be_a String
+      expect(@p.title).to be_a String if @p.title
     end
 
     it '#type' do
-      expect(@p.type).to be_a String
+      expect(@p.type).to be_a String if @p.type
     end
 
     it '#url' do
-      expect(@p.url).to be_a String
+      expect(@p.url).to be_a String if @p.url
     end
 
   end

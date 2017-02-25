@@ -20,7 +20,7 @@ describe 'Dataset' do
     end
 
     it '#access' do
-      expect(@p.access).to be_a String
+      expect(@p.access).to be_a String if @p.access
     end
 
     it '#associated' do
@@ -28,15 +28,15 @@ describe 'Dataset' do
     end
 
     it '#available' do
-      expect(@p.available).to be_a Time
+      expect(@p.available).to be_a Time if @p.available
     end
 
     it '#description' do
-      expect(@p.description).to be_a String
+      expect(@p.description).to be_a String if @p.description
     end
 
     it '#doi' do
-      expect(@p.doi).to be_a String
+      expect(@p.doi).to be_a String if @p.doi
     end
 
     it '#files' do
@@ -68,7 +68,7 @@ describe 'Dataset' do
     end
 
     it '#production' do
-      expect(@p.production).to be_a Puree::Model::TemporalRange
+      expect(@p.production).to be_a Puree::Model::TemporalRange if @p.production
     end
 
     it '#projects' do
@@ -80,23 +80,23 @@ describe 'Dataset' do
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_a String
+      expect(@p.publisher).to be_a String if @p.publisher
     end
 
     it '#spatial_places' do
-      expect(@p.spatial_places).to all( be_a String )
+      expect(@p.spatial_places).to all( be_a String ) if @p.spatial_places
     end
 
     it '#spatial_point' do
-      expect(@p.spatial_point).to be_a Puree::Model::SpatialPoint
+      expect(@p.spatial_point).to be_a Puree::Model::SpatialPoint if @p.spatial_point
     end
 
     it '#temporal' do
-      expect(@p.temporal).to be_a Puree::Model::TemporalRange
+      expect(@p.temporal).to be_a Puree::Model::TemporalRange if @p.temporal
     end
 
     it '#title' do
-      expect(@p.title).to be_a String
+      expect(@p.title).to be_a String if @p.title
     end
 
   end

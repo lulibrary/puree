@@ -36,11 +36,11 @@ describe 'Person' do
     end
 
     it '#name' do
-      expect(@p.name).to be_a Puree::Model::PersonName
+      expect(@p.name).to be_a Puree::Model::PersonName if @p.name
     end
 
     it '#orcid' do
-      expect(@p.orcid).to be_a String
+      expect(@p.orcid).to be_a String if @p.orcid
     end
 
   end

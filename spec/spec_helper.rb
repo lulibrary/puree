@@ -64,37 +64,17 @@ require 'puree/extractor/server'
 
 def request(resource)
   @extractor = Puree::Extractor::Collection.new resource: resource,
-                            url: ENV['PURE_URL']
+                                                url: ENV['PURE_URL']
   @extractor.basic_auth username: ENV['PURE_USERNAME'],
-               password: ENV['PURE_PASSWORD']
-  collection = @extractor.find limit: 1,
-                      offset: rand(0..@extractor.count-1)
-  @p = collection[0]
+                        password: ENV['PURE_PASSWORD']
+  @p = @extractor.random_resource
 end
-
-# def request(resource)
-#   @uuid = random_uuid(resource)
-#   resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
-#   @extractor = Object.const_get(resource_class).new url: ENV['PURE_URL']
-#   @extractor.basic_auth username: ENV['PURE_USERNAME'],
-#                 password: ENV['PURE_PASSWORD']
-#   @p = @extractor.find uuid: @uuid
-# end
 
 def request_open(resource)
   @extractor = Puree::Extractor::Collection.new resource: resource,
-                            url: ENV['PURE_URL_OPEN']
-  collection = @extractor.find limit: 1,
-                      offset: rand(0..@extractor.count-1)
-  @p = collection[0]
+                                                url: ENV['PURE_URL_OPEN']
+  @p = @extractor.random_resource
 end
-
-# def request_open(resource)
-#   @uuid = random_uuid_open(resource)
-#   resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
-#   @extractor = Object.const_get(resource_class).new url: ENV['PURE_URL_OPEN']
-#   @p = @extractor.find uuid: @uuid
-# end
 
 def from_file(resource)
   before(:all) do
@@ -126,18 +106,18 @@ end
 
 def header
   it '#uuid' do
-    expect(@p.uuid).to be_a String
+    expect(@p.uuid).to be_a String if @p.uuid
   end
 
   it '#created' do
-    expect(@p.created).to be_a Time
+    expect(@p.created).to be_a Time if @p.created
   end
 
   it '#modified' do
-    expect(@p.modified).to be_a Time
+    expect(@p.modified).to be_a Time if @p.modified
   end
 
   it '#locale' do
-    expect(@p.locale).to be_a String
+    expect(@p.locale).to be_a String if @p.locale
   end
 end

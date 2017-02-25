@@ -20,7 +20,7 @@ module Puree
         @model.event = @extractor.event
         @model.files = @extractor.files
         @model.organisations = @extractor.organisations
-        @model.page = @extractor.page
+        @model.pages = @extractor.pages
         @model.persons_internal = @extractor.persons_internal
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other
