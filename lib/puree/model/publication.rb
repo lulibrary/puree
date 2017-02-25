@@ -7,7 +7,7 @@ module Puree
                                    :event,
                                    :files,
                                    :organisations,
-                                   :page,
+                                   :pages,
                                    :persons_internal,
                                    :persons_external,
                                    :persons_other,

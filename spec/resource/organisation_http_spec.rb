@@ -24,7 +24,7 @@ describe 'Organisation' do
     end
 
     it '#name' do
-      expect(@p.name).to be_a String
+      expect(@p.name).to be_a String if @p.name
     end
 
     it '#organisations' do
@@ -32,7 +32,7 @@ describe 'Organisation' do
     end
 
     it '#parent' do
-      expect(@p.parent).to be_a Puree::Model::OrganisationHeader
+      expect(@p.parent).to be_a Puree::Model::OrganisationHeader if @p.parent
     end
 
     it '#phone_numbers' do
@@ -40,7 +40,7 @@ describe 'Organisation' do
     end
 
     it '#type' do
-      expect(@p.type).to be_a String
+      expect(@p.type).to be_a String if @p.type
     end
 
     it '#urls' do

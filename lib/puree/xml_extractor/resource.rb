@@ -22,23 +22,23 @@ module Puree
         xpath_result.text.strip === '1' ? true : false
       end
 
-      # @return [Time]
+      # @return [Time, nil]
       def created
         Time.parse xpath_query_for_single_value('/created')
       end
 
-      # @return [Time]
+      # @return [Time, nil]
       def modified
         Time.parse xpath_query_for_single_value('/modified')
       end
 
-      # @return [String]
+      # @return [String, nil]
       def uuid
         xpath_query_for_single_value '/@uuid'
       end
 
       # Locale (e.g. en-GB)
-      # @return [String]
+      # @return [String, nil]
       def locale
         str = xpath_query_for_single_value '/@locale'
         str.tr('_','-') if str

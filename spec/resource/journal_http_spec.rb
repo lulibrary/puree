@@ -20,15 +20,15 @@ describe 'Journal' do
     end
 
     it '#issn' do
-      expect(@p.issn).to be_a String
+      expect(@p.issn).to be_a String if @p.issn
     end
 
     it '#publisher' do
-      expect(@p.publisher).to be_a String
+      expect(@p.publisher).to be_a String if @p.publisher
     end
 
     it '#title' do
-      expect(@p.title).to be_a String
+      expect(@p.title).to be_a String if @p.title
     end
 
   end

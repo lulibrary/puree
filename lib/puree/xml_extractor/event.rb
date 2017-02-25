@@ -9,46 +9,47 @@ module Puree
         @resource_type = :event
       end
 
-      # @return [String]
+      # @return [String, nil]
       def city
         xpath_query_for_single_value '/city'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def country
         xpath_query_for_single_value '/country/term/localizedString'
       end
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       def date
         xpath_result = xpath_query '/dateRange'
-        data = {}
-        data['start'] = xpath_result.xpath('startDate').text.strip
-        data['end'] = xpath_result.xpath('endDate').text.strip
-        range = Puree::Model::TemporalRange.new
-        range.start = Time.parse data['start']
-        if data['end']['year']
-          range.end = Time.parse data['end']
+        range_start_str = xpath_result.xpath('startDate').text.strip
+        range_end_str = xpath_result.xpath('endDate').text.strip
+        if !range_start_str.empty?
+          range = Puree::Model::TemporalRange.new
+          range.start = Time.parse range_start_str
+          if !range_end_str.empty?
+            range.end = Time.parse range_end_str
+          end
+          range
         end
-        range
       end
 
-      # @return [String]
+      # @return [String, nil]
       def description
         xpath_query_for_single_value  '/description'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def location
         xpath_query_for_single_value '/location'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '//typeClassification/term/localizedString'
       end

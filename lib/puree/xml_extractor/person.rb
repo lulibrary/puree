@@ -30,21 +30,20 @@ module Puree
         xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
       end
 
-      # @return [Puree::Model::PersonName]
+      # @return [Puree::Model::PersonName, nil]
       def name
         xpath_result = xpath_query '/name'
-        first = xpath_result.xpath('firstName').text.strip
-        last = xpath_result.xpath('lastName').text.strip
-        o = {}
-        o['first'] = first
-        o['last'] = last
-        model = Puree::Model::PersonName.new
-        model.first = first
-        model.last = last
-        model
+        if xpath_result
+          first = xpath_result.xpath('firstName').text.strip
+          last = xpath_result.xpath('lastName').text.strip
+          model = Puree::Model::PersonName.new
+          model.first = first unless first.empty?
+          model.last = last unless last.empty?
+          model
+        end
       end
 
-      # @return [String]
+      # @return [String, nil]
       def orcid
         xpath_query_for_single_value '/orcid'
       end

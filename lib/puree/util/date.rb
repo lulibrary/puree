@@ -20,6 +20,7 @@ module Puree
         if !h['year'].empty?
           return Time.new h['year'].to_i
         end
+        nil
       end
 
       # Converts a date with three components (year, month, day) to ISO 8601 date format

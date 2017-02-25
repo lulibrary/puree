@@ -9,12 +9,12 @@ module Puree
         @resource_type = :project
       end
 
-      # @return [String]
+      # @return [String, nil]
       def acronym
         xpath_query_for_single_value '/acronym'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def description
         xpath_query_for_single_value '/description/localizedString'
       end
@@ -49,7 +49,7 @@ module Puree
         persons 'other'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def status
         xpath_query_for_single_value '/status/term/localizedString'
       end
@@ -64,17 +64,17 @@ module Puree
         temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/typeClassification/term/localizedString'
       end
 
-      # @return [String]
+      # @return [String, nil]
       def url
         xpath_query_for_single_value '/projectURL'
       end
@@ -113,12 +113,17 @@ module Puree
         arr
       end
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       def temporal_range(start_path, end_path)
-        range = Puree::Model::TemporalRange.new
-        range.start = xpath_query(start_path).text.strip
-        range.end = xpath_query(end_path).text.strip
-        range
+        range_start = xpath_query_for_single_value start_path
+        range_end = xpath_query_for_single_value end_path
+        if range_start || range_end
+          range = Puree::Model::TemporalRange.new
+          range.start = Time.new range_start if range_start
+          range.end = Time.new range_end if range_end
+          return range
+        end
+        nil
       end
 
     end

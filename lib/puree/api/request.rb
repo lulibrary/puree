@@ -60,7 +60,7 @@ module Puree
           end
         end
         query['rendering'] = @rendering
-        query['window.size'] = @limit if @limit > 0 # Server does not work if this is present
+        query['window.size'] = @limit if @limit > 0 unless @resource_type === :server # Server does not work if this is present
         query['window.offset'] = @offset if @limit > 0
 
         # Pure does allow blank value

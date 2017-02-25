@@ -59,4 +59,10 @@ describe 'Collection of datasets' do
 
   end
 
+  it '#random_resource' do
+    setup
+    metadata = @p.random_resource
+    expect(metadata).to be_a Puree::Model::Dataset
+  end
+
 end

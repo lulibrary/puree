@@ -20,31 +20,31 @@ describe 'Event' do
     end
 
     it '#city' do
-      expect(@p.city).to be_a String
+      expect(@p.city).to be_a String if @p.city
     end
 
     it '#country' do
-      expect(@p.country).to be_a String
+      expect(@p.country).to be_a String if @p.country
     end
 
     it '#date' do
-      expect(@p.date).to be_a Puree::Model::TemporalRange
+      expect(@p.date).to be_a Puree::Model::TemporalRange if @p.date
     end
 
     it '#description' do
-      expect(@p.description).to be_a String
+      expect(@p.description).to be_a String if @p.description
     end
 
     it '#location' do
-      expect(@p.location).to be_a String
+      expect(@p.location).to be_a String if @p.location
     end
 
     it '#title' do
-      expect(@p.title).to be_a String
+      expect(@p.title).to be_a String if @p.title
     end
 
     it '#type' do
-      expect(@p.type).to be_a String
+      expect(@p.type).to be_a String if @p.type
     end
 
   end

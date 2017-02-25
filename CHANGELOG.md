@@ -6,9 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Metadata: activity?, clipping?, externalPerson?
 - Factory to make resource objects?
 
-## 1.0.0 - 2017-02-22
+## 1.0.0 - 2017-02-24
 ### Added
 - Dataset - legal conditions.
+- Random resource from collection.
 
 ### Changed
 - Simplified basic auth.
@@ -21,6 +22,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Event - end date extraction.
+- Project - slowness.
 
 ## 0.20.0 - 2017-02-03
 ### Added
