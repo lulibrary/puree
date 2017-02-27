@@ -1,10 +1,16 @@
 module Puree
   module Model
-    class OrganisationHeader < Struct.new(
-        :uuid,
-        :name,
-        :type
-    )
+    class OrganisationHeader
+
+      # @return [String, nil]
+      attr_accessor :uuid
+
+      # @return [String, nil]
+      attr_accessor :name
+
+      # @return [String, nil]
+      attr_accessor :type
+
     end
   end
 end

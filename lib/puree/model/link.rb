@@ -1,10 +1,13 @@
 module Puree
   module Model
-    class Link < Struct.new(
+    class Link
 
-        :description,
-        :url
-    )
+      # @return [String, nil]
+      attr_accessor :description
+
+      # @return [String, nil]
+      attr_accessor :url
+
     end
   end
 end

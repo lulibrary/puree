@@ -1,9 +1,13 @@
 module Puree
   module Model
-    class LegalCondition < Struct.new(
-        :name,
-        :description
-    )
+    class LegalCondition
+
+      # @return [String, nil]
+      attr_accessor :name
+
+      # @return [String, nil]
+      attr_accessor :description
+
     end
   end
 end

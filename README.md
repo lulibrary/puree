@@ -158,3 +158,8 @@ extractor = Puree::Extractor::Collection.new url: ENV['PURE_URL'],
                                              resource: :dataset
 collection = extractor.find limit: 50
 ```
+
+### Person name formatting
+
+### Random resource
+

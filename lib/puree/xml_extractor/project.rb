@@ -31,19 +31,16 @@ module Puree
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
-      # Internal persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
-      # External persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
-      # Other persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'

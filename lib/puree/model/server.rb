@@ -1,8 +1,10 @@
 module Puree
   module Model
-    class Server < Struct.new(
-        :version
-    )
+    class Server
+
+    # @return [String, nil]
+    attr_accessor :version
+
     end
   end
 end

@@ -10,7 +10,7 @@ module Puree
       end
 
       # Open access permission
-      ## @return [String, Nil]
+      # @return [String, Nil]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -36,15 +36,15 @@ module Puree
         Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
       end
 
+      # @return [String, Nil]
+      def description
+        xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
+      end
+
       # Digital Object Identifier
       # @return [String, Nil]
       def doi
         xpath_query_for_single_value '/doi'
-      end
-
-      # @return [String, Nil]
-      def description
-        xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
       end
 
       # Supporting files
@@ -115,19 +115,16 @@ module Puree
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
-      # Internal persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
-      # External persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
-      # Other persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'
@@ -148,7 +145,7 @@ module Puree
       def publications
         data_arr = []
         associated.each do |i|
-          if i['type'] != 'Research'
+          if i.type != 'Research'
             data_arr << i
           end
         end
@@ -206,11 +203,11 @@ module Puree
       def associated_type(type)
         data_arr = []
         associated.each do |i|
-          if i['type'] === type
+          if i.type === type
             related = Puree::Model::RelatedContentHeader.new
-            related.type = i['type']
-            related.title = i['title']
-            related.uuid = i['uuid']
+            related.type = i.type
+            related.title = i.title
+            related.uuid = i.uuid
             data_arr << related
           end
         end

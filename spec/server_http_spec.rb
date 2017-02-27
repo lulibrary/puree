@@ -21,7 +21,7 @@ describe 'Server' do
     end
 
     it '#version' do
-      expect(@p.version).to be_a String
+      expect(@p.version).to be_a String if @p.version
     end
 
   end

@@ -1,9 +1,13 @@
 module Puree
   module Model
-    class TemporalRange < Struct.new(
-        :start,
-        :end
-    )
+    class TemporalRange
+
+        # @return [Time, nil]
+        attr_accessor :start
+
+        # @return [Time, nil]
+        attr_accessor :end
+
     end
   end
 end

@@ -1,9 +1,13 @@
 module Puree
   module Model
-    class PersonName < Struct.new(
-        :first,
-        :last
-    )
+    class PersonName
+
+      # @return [String, nil]
+      attr_accessor :first
+
+      # @return [String, nil]
+      attr_accessor :last
+
 
       # @return [String]
       def first_last
@@ -22,8 +26,9 @@ module Puree
 
       # @return [String]
       def last_initial
-        "#{last}, #{first[0, 1]}"
+        "#{last}, #{first[0, 1]}."
       end
+
     end
   end
 end

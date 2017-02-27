@@ -89,7 +89,7 @@ def from_file(resource)
     resource_extractor = Object.const_get(resource_class).new url: ENV['PURE_URL']
     resource_extractor.basic_auth username: ENV['PURE_USERNAME'],
                                   password: ENV['PURE_PASSWORD']
-    resource_extractor.find uuid: collection_result[0]['uuid']
+    resource_extractor.find uuid: collection_result[0].uuid
     @filename = "#{ENV['PURE_FILE_PATH']}resource.to_s.#{@uuid}.xml"
     xml = resource_extractor.response.body
     File.write(@filename, xml)

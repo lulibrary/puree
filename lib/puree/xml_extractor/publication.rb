@@ -19,6 +19,11 @@ module Puree
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
+      # @return [String, nil]
+      def doi
+        xpath_query_for_single_value '//doi'
+      end
+
       # @return [Puree::Model::EventHeader]
       def event
         xpath_result = xpath_query '/event'
@@ -28,11 +33,6 @@ module Puree
           header.title = xpath_result.xpath('title/localizedString').text.strip
         end
         header
-      end
-
-      # @return [String, nil]
-      def doi
-        xpath_query_for_single_value '//doi'
       end
 
       # @return [Array<Puree::Model::File>]
@@ -61,19 +61,16 @@ module Puree
         xpath_query_for_single_value('/numberOfPages').to_i
       end
 
-      # Internal persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
-      # External persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
-      # Other persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'
@@ -100,13 +97,13 @@ module Puree
       end
 
       # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title'
+      def subtitle
+        xpath_query_for_single_value '/subtitle'
       end
 
       # @return [String, nil]
-      def subtitle
-        xpath_query_for_single_value '/subtitle'
+      def title
+        xpath_query_for_single_value '/title'
       end
 
       # @return [String, nil]

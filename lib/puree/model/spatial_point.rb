@@ -1,9 +1,13 @@
 module Puree
   module Model
-    class SpatialPoint < Struct.new(
-        :latitude,
-        :longitude
-    )
+    class SpatialPoint
+
+      # @return [Float, nil]
+      attr_accessor :latitude
+
+      # @return [Float, nil]
+      attr_accessor :longitude
+
     end
   end
 end
