@@ -31,19 +31,16 @@ module Puree
         Puree::XMLExtractor::Shared.header xpath_result
       end
 
-      # Internal persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal'
       end
 
-      # External persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
         persons 'external'
       end
 
-      # Other persons
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
         persons 'other'
@@ -101,13 +98,16 @@ module Puree
           if person_type === type
             person = Puree::Model::EndeavourPerson.new
             person.uuid = uuid
+
             name = Puree::Model::PersonName.new
             name.first = i.xpath('person/name/firstName').text.strip
             name.last = i.xpath('person/name/lastName').text.strip
             person.name = name
+
             role = i.xpath('personRole/term/localizedString').text.strip
             person.role = role
-            arr << person
+
+            arr << person if person.data?
           end
         end
         arr

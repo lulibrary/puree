@@ -10,7 +10,7 @@ module Puree
       def initialize(url:)
         @resource_type = :server
         @request = Puree::API::Request.new url: url
-        @metadata = {}
+        @metadata = nil
       end
 
       def basic_auth(username:, password:)
@@ -39,7 +39,7 @@ module Puree
       #
       # @return [Fixnum]
       def version
-        @metadata['version']
+        @metadata.version
       end
 
       private

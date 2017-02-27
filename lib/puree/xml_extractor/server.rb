@@ -9,6 +9,7 @@ module Puree
         super
       end
 
+      # @return [String]
       def version
         path = "#{service_response_name}/baseVersion"
         @doc.xpath(path).text.strip
