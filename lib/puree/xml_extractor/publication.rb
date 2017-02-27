@@ -24,15 +24,16 @@ module Puree
         xpath_query_for_single_value '//doi'
       end
 
-      # @return [Puree::Model::EventHeader]
+      # @return [Puree::Model::EventHeader, nil]
       def event
         xpath_result = xpath_query '/event'
-        header = Puree::Model::EventHeader.new
-        if !xpath_result.nil?
+        if !xpath_result.empty?
+          header = Puree::Model::EventHeader.new
           header.uuid = xpath_result.xpath('@uuid').text.strip
           header.title = xpath_result.xpath('title/localizedString').text.strip
+          return header if header.data?
         end
-        header
+        nil
       end
 
       # @return [Array<Puree::Model::File>]
@@ -133,13 +134,16 @@ module Puree
           if person_type === type
             person = Puree::Model::EndeavourPerson.new
             person.uuid = uuid
+
             name = Puree::Model::PersonName.new
             name.first = i.xpath('name/firstName').text.strip
             name.last = i.xpath('name/lastName').text.strip
             person.name = name
+
             role_uri = i.xpath('personRole/uri').text.strip
-            person.role = roles[role_uri].to_s
-            arr << person
+            person.role = roles[role_uri]
+
+            arr << person if person.data?
           end
         end
         arr

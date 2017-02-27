@@ -64,7 +64,7 @@ module Puree
           license = Puree::Model::CopyrightLicense.new
           license.name = d.xpath('documentLicense/term/localizedString').text.strip
           license.url = d.xpath('documentLicense/description/localizedString').text.strip
-          doc.license = license
+          doc.license = license if license.data?
           docs << doc
         end
         docs.uniq
@@ -234,20 +234,23 @@ module Puree
           if person_type === type
             person = Puree::Model::EndeavourPerson.new
             person.uuid = uuid
+
             name = Puree::Model::PersonName.new
             name.first = i.xpath('name/firstName').text.strip
             name.last = i.xpath('name/lastName').text.strip
             person.name = name
+
             role_uri = i.xpath('personRole/uri').text.strip
             person.role = roles[role_uri]
-            arr << person
+
+            arr << person if person.data?
           end
         end
         arr
       end
 
       # Temporal range
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       def temporal_range(start_path, end_path)
         range_start = Puree::Util::Date.hash_to_time temporal_date(start_path)
         range_end = Puree::Util::Date.hash_to_time temporal_date(end_path)

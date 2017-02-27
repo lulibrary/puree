@@ -1,12 +1,22 @@
 module Puree
   module Model
-    class LegalCondition
+    class LegalCondition < Puree::Model::Structure
 
       # @return [String, nil]
-      attr_accessor :name
+      attr_reader :name
 
       # @return [String, nil]
-      attr_accessor :description
+      attr_reader :description
+
+      # @param [String]
+      def name=(v)
+        @name = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def description=(v)
+        @description = v if v && !v.empty?
+      end
 
     end
   end

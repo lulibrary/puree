@@ -1,28 +1,45 @@
 module Puree
   module Model
-    class Address
+    class Address < Puree::Model::Structure
 
       # @return [String, nil]
-      attr_accessor :street
+      attr_reader :street
 
       # @return [String, nil]
-      attr_accessor :building
+      attr_reader :building
 
       # @return [String, nil]
-      attr_accessor :postcode
+      attr_reader :postcode
 
       # @return [String, nil]
-      attr_accessor :city
+      attr_reader :city
 
       # @return [String, nil]
-      attr_accessor :country
+      attr_reader :country
 
-      def initialize
-        @street = nil
-        @building = nil
-        @postcode = nil
-        @city = nil
-        @country = nil
+      # @param [String]
+      def street=(v)
+        @street = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def building=(v)
+        @building = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def postcode=(v)
+        @postcode = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def city=(v)
+        @city = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def country=(v)
+        @country = v if v && !v.empty?
       end
 
     end

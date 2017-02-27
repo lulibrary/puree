@@ -23,6 +23,8 @@ require 'puree/xml_extractor/server'
 require 'puree/api/map'
 require 'puree/api/request'
 
+require 'puree/model/structure'
+
 require 'puree/model/resource'
 require 'puree/model/dataset'
 require 'puree/model/event'

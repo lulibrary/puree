@@ -1,6 +1,6 @@
 module Puree
   module Model
-    class SpatialPoint
+    class SpatialPoint < Puree::Model::Structure
 
       # @return [Float, nil]
       attr_accessor :latitude

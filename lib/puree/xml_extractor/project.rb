@@ -98,13 +98,16 @@ module Puree
           if person_type === type
             person = Puree::Model::EndeavourPerson.new
             person.uuid = uuid
+
             name = Puree::Model::PersonName.new
             name.first = i.xpath('person/name/firstName').text.strip
             name.last = i.xpath('person/name/lastName').text.strip
             person.name = name
+
             role = i.xpath('personRole/term/localizedString').text.strip
             person.role = role
-            arr << person
+
+            arr << person if person.data?
           end
         end
         arr

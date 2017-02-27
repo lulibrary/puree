@@ -1,15 +1,30 @@
 module Puree
   module Model
-    class EndeavourPerson
+    class EndeavourPerson < Puree::Model::Structure
 
       # @return [String, Nil]
-      attr_accessor :uuid
+      attr_reader :uuid
 
       # @return [String, Nil]
-      attr_accessor :name
+      attr_reader :name
 
       # @return [String, Nil]
-      attr_accessor :role
+      attr_reader :role
+
+      # @param [String]
+      def uuid=(v)
+        @uuid = v if v && !v.empty?
+      end
+
+      # @param [Puree::Model::PersonName]
+      def name=(v)
+        @name = v if v && v.data?
+      end
+
+      # @param [String]
+      def role=(v)
+        @role = v if v && !v.empty?
+      end
 
     end
   end

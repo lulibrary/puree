@@ -1,6 +1,6 @@
 module Puree
   module Model
-    class TemporalRange
+    class TemporalRange < Puree::Model::Structure
 
         # @return [Time, nil]
         attr_accessor :start

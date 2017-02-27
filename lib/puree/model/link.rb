@@ -1,12 +1,22 @@
 module Puree
   module Model
-    class Link
+    class Link < Puree::Model::Structure
 
       # @return [String, nil]
-      attr_accessor :description
+      attr_reader :description
 
       # @return [String, nil]
-      attr_accessor :url
+      attr_reader :url
+
+      # @param [String]
+      def description=(v)
+        @description = v if v && !v.empty?
+      end
+
+      # @param [String]
+      def url=(v)
+        @url = v if v && !v.empty?
+      end
 
     end
   end
