@@ -13,7 +13,7 @@ describe 'Organisation' do
 
   describe 'data retrieval' do
 
-    header
+    resource_header
 
     it 'data structure' do
       expect(@p).to be_a Puree::Model::Organisation

@@ -2,12 +2,14 @@ module Puree
 
   module Util
 
+    # Date transformations
+    #
     module Date
 
       # @param data [Hash]
       # @return [Time]
-      def self.hash_to_time(hash)
-        h = normalise hash
+      def self.hash_to_time(data)
+        h = normalise data
         if !h['year'].empty? && !h['month'].empty? && !h['day'].empty?
           return Time.new h['year'].to_i,
                           h['month'].to_i,

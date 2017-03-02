@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Publication XML extractor
+    #
     class Publication < Puree::XMLExtractor::Resource
 
       def initialize(xml:)
@@ -54,7 +56,7 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
-        Puree::XMLExtractor::Shared.multi_header xpath_result
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
       # @return [Fixnum, nil]

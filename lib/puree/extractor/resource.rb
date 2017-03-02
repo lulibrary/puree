@@ -2,18 +2,23 @@ module Puree
 
   module Extractor
 
+    # Resource extractor
+    #
     class Resource
 
-      attr_reader :metadata, :response
+      attr_reader :response
 
       # @param url [String]
       # @param bleeding [Boolean]
       def initialize(url:, bleeding: true)
         @latest_api = bleeding
         @request = Puree::API::Request.new url: url
-        @metadata = nil
       end
 
+      # Provide credentials if necessary
+      #
+      # @param username [String]
+      # @param password [String]
       def basic_auth(username:, password:)
         @request.basic_auth username: username,
                             password: password
@@ -25,7 +30,6 @@ module Puree
       # @param id [String]
       # @return [Struct] Resource metadata e.g. Puree::Model::Dataset
       def get(uuid: nil, id: nil, rendering: :xml_long)
-        reset
         @response = @request.get uuid:           uuid,
                                  id:             id,
                                  rendering:      rendering,
@@ -40,9 +44,14 @@ module Puree
       # @param xml [String]
       def set_content(xml)
         if xml
-          make_xml_extractor
+          make_xml_extractor xml
           @extractor.get_data? ? combine_metadata : {}
         end
+      end
+
+      # @param path [String]
+      def from_file(path)
+        set_content File.read path
       end
 
       private
@@ -53,9 +62,9 @@ module Puree
         @model = Object.const_get(resource_class).new
       end
 
-      def make_xml_extractor
+      def make_xml_extractor xml
         resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
-        @extractor = Object.const_get(resource_class).new xml: @response.body
+        @extractor = Object.const_get(resource_class).new xml: xml
       end
 
       # All metadata
@@ -65,10 +74,6 @@ module Puree
         @model.created = @extractor.created
         @model.modified = @extractor.modified
         @model.locale = @extractor.locale
-      end
-
-      def reset
-        @response = nil
       end
 
       alias :find :get

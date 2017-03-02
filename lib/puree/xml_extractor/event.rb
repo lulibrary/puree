@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Event XML extractor
+    #
     class Event < Puree::XMLExtractor::Resource
 
       def initialize(xml:)
@@ -36,7 +38,7 @@ module Puree
 
       # @return [String, nil]
       def description
-        xpath_query_for_single_value  '/description'
+        xpath_query_for_single_value '/description'
       end
 
       # @return [String, nil]

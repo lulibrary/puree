@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A person
+    #
     class Person < Resource
 
       # @return [Array<Puree::Model::OrganisationHeader>]

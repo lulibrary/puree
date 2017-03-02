@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # An organised event
+    #
     class Event < Resource
 
       # @return [String, nil]

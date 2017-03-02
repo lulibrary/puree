@@ -2,6 +2,8 @@ module Puree
 
   module API
 
+    # Pure endpoints and corresponding XML root element in response
+    #
     class Map
 
       def initialize
@@ -44,6 +46,9 @@ module Puree
         @api_map
       end
 
+      # Endpoint for resource type
+      #
+      # @param resource_type [Symbol]
       def service_name(resource_type)
         @api_map[:resource_type][resource_type][:service]
       end

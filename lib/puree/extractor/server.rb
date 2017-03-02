@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Server extractor
+    #
     class Server
 
       attr_reader :response
@@ -10,9 +12,12 @@ module Puree
       def initialize(url:)
         @resource_type = :server
         @request = Puree::API::Request.new url: url
-        @metadata = nil
       end
 
+      # Provide credentials if necessary
+      #
+      # @param username [String]
+      # @param password [String]
       def basic_auth(username:, password:)
         @request.basic_auth username: username,
                             password: password
@@ -22,24 +27,9 @@ module Puree
       #
       # @return [Hash]
       def get
-        reset
         @response = @request.get rendering:      :system,
                                  resource_type:  @resource_type
         set_content @response.body
-      end
-
-      # All metadata
-      #
-      # @return [Puree::Model::Server]
-      def metadata
-        @metadata
-      end
-
-      # Version
-      #
-      # @return [Fixnum]
-      def version
-        @metadata.version
       end
 
       private
@@ -47,11 +37,7 @@ module Puree
       def combine_metadata
         model = Puree::Model::Server.new
         model.version = @extractor.version
-        @metadata = model
-      end
-
-      def reset
-        @response = nil
+        model
       end
 
       # Set content from XML. In order for metadata extraction to work, the XML must have

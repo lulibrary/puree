@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Dataset XML extractor
+    #
     class Dataset < Puree::XMLExtractor::Resource
 
       def initialize(xml:)
@@ -18,7 +20,7 @@ module Puree
       # Combines projects and publications
       # @return [Array<Puree::Model::RelatedContentHeader>]
       def associated
-        xpath_result = xpath_query '/associatedContent//relatedContent'
+        xpath_result = xpath_query '/associatedContent/relatedContent'
         data_arr = []
         xpath_result.each { |i|
           related = Puree::Model::RelatedContentHeader.new
@@ -106,13 +108,13 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/organisation'
-        Puree::XMLExtractor::Shared.multi_header xpath_result
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
       # @return [Puree::Model::OrganisationHeader]
       def owner
         xpath_result = xpath_query '/managedBy'
-        Puree::XMLExtractor::Shared.header xpath_result
+        Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]

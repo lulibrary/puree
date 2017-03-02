@@ -2,10 +2,12 @@ module Puree
 
   module XMLExtractor
 
+    # Shared XML extractor
+    #
     module Shared
 
       # @return [Puree::Model::OrganisationHeader]
-      def self.header(nokogiri_xml_element)
+      def self.organisation_header(nokogiri_xml_element)
         h = Puree::Model::OrganisationHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
         h.name = nokogiri_xml_element.xpath('name/localizedString').text.strip
@@ -14,10 +16,10 @@ module Puree
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
-      def self.multi_header(nokogiri_xml_nodeset)
+      def self.organisation_multi_header(nokogiri_xml_nodeset)
         data = []
         nokogiri_xml_nodeset.each do |i|
-          data << header(i)
+          data << organisation_header(i)
         end
         data.uniq
       end

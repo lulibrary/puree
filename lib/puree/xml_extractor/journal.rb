@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Journal XML extractor
+    #
     class Journal < Puree::XMLExtractor::Resource
 
       def initialize(xml:)

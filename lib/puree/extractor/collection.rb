@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Collection extractor. Can get any amount of resources in a collection.
+    #
     class Collection
 
       attr_reader :response
@@ -15,6 +17,10 @@ module Puree
         @api_map = Puree::API::Map.new.get
       end
 
+      # Provide credentials if necessary
+      #
+      # @param username [String]
+      # @param password [String]
       def basic_auth(username:, password:)
         @request.basic_auth username: username,
                             password: password
@@ -31,17 +37,15 @@ module Puree
       # @param created_end [String]
       # @param modified_start [String]
       # @param modified_end [String]
-      # @return [Array<Struct>] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset
       def get(
               limit:            0,
               offset:           0,
               created_start:    nil,
               created_end:      nil,
               modified_start:   nil,
-              modified_end:     nil,
-              rendering:        :xml_long
+              modified_end:     nil
       )
-        reset
         @response = @request.get rendering:        :system,
                                  limit:            limit,
                                  offset:           offset,
@@ -55,10 +59,8 @@ module Puree
 
       # Gets a random resource of type specified in constructor
       #
-      # @param offset [Integer]
-      # @return [Struct] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass] Resource metadata e.g. Puree::Model::Dataset
       def random_resource
-        reset
         @response = @request.get rendering:        :system,
                                  limit:            1,
                                  offset:           rand(0..count-1),
@@ -88,7 +90,6 @@ module Puree
       end
 
       def get_count
-        reset
         @response = @request.get resource_type: @resource_type,
                                  rendering: :system
         make_xml_extractor
@@ -101,12 +102,12 @@ module Puree
 
         # whitelist symbol
         if @api_map[:resource_type].has_key?(@resource_type)
-          r = Object.const_get(resource_class).new url: @url
-          if @basic_auth === true
-            r.basic_auth username: @username,
-                         password: @password
-          end
           uuids.each do |u|
+            r = Object.const_get(resource_class).new url: @url
+            if @basic_auth === true
+              r.basic_auth username: @username,
+                           password: @password
+            end
             record = r.find uuid: u,
                             rendering: :xml_long
             data << record
@@ -115,12 +116,6 @@ module Puree
         else
           raise 'Invalid resource class'
         end
-      end
-
-      def reset
-        @response = nil
-        @count = nil
-        # @uuids = nil
       end
 
       # Set content from XML. In order for metadata extraction to work, the XML must have

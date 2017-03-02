@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A publication
+    #
     class Publication < Resource
 
       # @return [String, nil]

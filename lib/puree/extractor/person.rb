@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Person extractor
+    #
     class Person < Puree::Extractor::Resource
 
       # @param url [String]
@@ -20,7 +22,7 @@ module Puree
         @model.keywords = @extractor.keywords
         @model.name = @extractor.name
         @model.orcid = @extractor.orcid
-        @metadata = @model
+        @model
       end
 
     end

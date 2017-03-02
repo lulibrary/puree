@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Base XML extractor
+    #
     class Base
 
       def initialize(xml:)

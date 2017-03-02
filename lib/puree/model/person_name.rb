@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # The name of a person
+    #
     class PersonName < Puree::Model::Structure
 
       # @return [String, nil]
@@ -8,12 +11,12 @@ module Puree
       # @return [String, nil]
       attr_reader :last
 
-      # @param [String]
+      # @param v [String]
       def first=(v)
         @first = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def last=(v)
         @last = v if v && !v.empty?
       end

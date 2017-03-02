@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Organisation extractor
+    #
     class Organisation < Puree::Extractor::Resource
 
       # @param url [String]
@@ -22,7 +24,7 @@ module Puree
         @model.phone_numbers = @extractor.phone_numbers
         @model.type = @extractor.type
         @model.urls = @extractor.urls
-        @metadata = @model
+        @model
       end
 
     end

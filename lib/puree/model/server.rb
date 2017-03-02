@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # Pure host information
+    #
     class Server
 
     # @return [String, nil]
