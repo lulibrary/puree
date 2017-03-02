@@ -29,38 +29,64 @@ The following examples are for the Dataset resource type.
 
 ### Single resource
 
-Configure an extractor to get data from a Pure host.
+Configure a resource extractor to get data from a Pure host.
 
 ```ruby
-extractor = Puree::Extractor::Dataset.new url: ENV['PURE_URL']
+dataset_extractor = Puree::Extractor::Dataset.new url: ENV['PURE_URL']
 ```
 
 Provide authentication details if needed.
 
 ```ruby
-extractor.basic_auth username: ENV['PURE_USERNAME'],
-                     password: ENV['PURE_PASSWORD']
+dataset_extractor.basic_auth username: ENV['PURE_USERNAME'],
+                             password: ENV['PURE_PASSWORD']
 ```
 Fetch the metadata.
 
 ```ruby
-dataset = extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=>
+dataset = dataset_extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+# =>
 #<Puree::Model::Dataset:0x987f7a4>
 ```
 
-### Collection of resources
-Fetch a bunch.
+Access specific metadata e.g. an internal person's name.
 
 ```ruby
-extractor = Puree::Extractor::Collection.new url: ENV['PURE_URL'],
-                                             resource: :dataset
-collection = extractor.find limit: 50
+dataset.persons_internal[0].name
+# =>
+#<Puree::Model::PersonName:0x9add67c @first="Foo", @last="Bar">
 ```
 
-### Person name formatting
-TO DO
+Choose a formatting style for a person's name.
 
-### Random resource
-TO DO
+```ruby
+dataset.persons_internal[0].name.last_initial
+# =>
+# "Bar, F."
+```
+
+### Collection
+
+Configure a collection extractor to get data from a Pure host.
+
+```ruby
+collection_extractor = Puree::Extractor::Collection.new url: ENV['PURE_URL'],
+                                                        resource: :dataset
+```
+
+Fetch a bunch of resources.
+
+```ruby
+dataset_collection = collection_extractor.find limit: 2
+# =>
+#<Puree::Model::Dataset:0xa62fd90>
+#<Puree::Model::Dataset:0xa5e8c24>
+```
+
+Fetch a random resource from the entire collection.
+
+```ruby
+random_dataset = collection_extractor.random_resource
+```
+
 

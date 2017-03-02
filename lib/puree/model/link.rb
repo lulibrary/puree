@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # URL which points to something of interest
+    #
     class Link < Puree::Model::Structure
 
       # @return [String, nil]
@@ -8,12 +11,12 @@ module Puree
       # @return [String, nil]
       attr_reader :url
 
-      # @param [String]
+      # @param v [String]
       def description=(v)
         @description = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def url=(v)
         @url = v if v && !v.empty?
       end

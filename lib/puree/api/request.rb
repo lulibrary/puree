@@ -2,6 +2,8 @@ module Puree
 
   module API
 
+    # Handles requests to Pure
+    #
     class Request
 
       def initialize(url:)
@@ -10,11 +12,29 @@ module Puree
         @headers = {}
       end
 
+      # Provide credentials if necessary
+      #
+      # @param username [String]
+      # @param password [String]
       def basic_auth(username:, password:)
         auth = Base64::strict_encode64("#{username}:#{password}")
         @headers['Authorization'] = 'Basic ' + auth
       end
 
+      # Perform a GET request to Pure
+      #
+      # @param uuid [String]
+      # @param id [String]
+      # @param rendering [String]
+      # @param latest_api [Boolean]
+      # @param resource_type [String]
+      # @param limit [Fixnum]
+      # @param offset [Fixnum]
+      # @param created_start [String]
+      # @param created_end [String]
+      # @param modified_start [String]
+      # @param modified_end [String]
+      # @param content_type [String]
       def get(uuid: nil,
               id: nil,
               rendering: :xml_long,
@@ -49,6 +69,8 @@ module Puree
         end
         @req.get(build_url, params: params)
       end
+
+      private
 
       def params
         query = {}

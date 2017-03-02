@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Dataset extractor
+    #
     class Dataset < Puree::Extractor::Resource
 
       # @param url [String]
@@ -36,7 +38,7 @@ module Puree
         @model.spatial_point = @extractor.spatial_point
         @model.temporal = @extractor.temporal
         @model.title = @extractor.title
-        @metadata = @model
+        @model
       end
 
     end

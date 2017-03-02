@@ -64,3 +64,9 @@ require 'puree/extractor/publisher'
 require 'puree/extractor/collection'
 require 'puree/extractor/download'
 require 'puree/extractor/server'
+
+# Metadata extraction from the Pure Research Information System.
+#
+module Puree
+
+end

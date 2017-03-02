@@ -81,32 +81,27 @@ end
 def from_file(resource)
   before(:all) do
     request resource
-    collection_extractor = Puree::Extractor::Collection.new resource: resource,
-                                                            url: ENV['PURE_URL']
-    collection_extractor.basic_auth username: ENV['PURE_USERNAME'],
-                                    password: ENV['PURE_PASSWORD']
-    collection_result = collection_extractor.find limit: 1,
-                              offset: rand(0..collection_extractor.count-1)
     resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
     resource_extractor = Object.const_get(resource_class).new url: ENV['PURE_URL']
     resource_extractor.basic_auth username: ENV['PURE_USERNAME'],
                                   password: ENV['PURE_PASSWORD']
-    resource_extractor.find uuid: collection_result[0].uuid
-    @filename = "#{ENV['PURE_FILE_PATH']}resource.to_s.#{@uuid}.xml"
+    res = resource_extractor.find uuid: @p.uuid
+    @filename = "#{ENV['PURE_FILE_PATH']}#{resource.to_s}.#{res.uuid}.xml"
     xml = resource_extractor.response.body
     File.write(@filename, xml)
-    resource_extractor.set_content File.read(@filename)
-    @p = resource_extractor.metadata
+    resource_class = "Puree::Extractor::#{resource.to_s.capitalize}"
+    resource_extractor = Object.const_get(resource_class).new url: nil
+    @p = resource_extractor.from_file @filename
   end
 
-  header
+  resource_header
 
   after(:all) do
-    File.delete @filename if File.exists? @filename
+    # File.delete @filename if File.exists? @filename
   end
 end
 
-def header
+def resource_header
   it '#uuid' do
     expect(@p.uuid).to be_a String if @p.uuid
   end

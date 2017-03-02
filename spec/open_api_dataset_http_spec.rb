@@ -8,7 +8,7 @@ describe 'Open API' do
       request_open resource
     end
 
-    header
+    resource_header
 
   end
 

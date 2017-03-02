@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Download extractor
+    #
     class Download
 
       attr_reader :response
@@ -14,6 +16,10 @@ module Puree
         @metadata = {}
       end
 
+      # Provide credentials if necessary
+      #
+      # @param username [String]
+      # @param password [String]
       def basic_auth(username:, password:)
         @request.basic_auth username: username,
                             password: password
@@ -28,7 +34,6 @@ module Puree
       def get(limit: 20,
               offset: 0,
               resource:)
-        reset
         @response = @request.get rendering:      :system,
                                  limit:          limit,
                                  offset:         offset,
@@ -49,10 +54,6 @@ module Puree
 
       def combine_metadata
         @metadata = @extractor.statistic
-      end
-
-      def reset
-        @response = nil
       end
 
       # Set content from XML. In order for metadata extraction to work, the XML must have

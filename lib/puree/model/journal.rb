@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A journal
+    #
     class Journal < Resource
 
       # @return [String, nil]

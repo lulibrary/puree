@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # An organisational unit as defined by the institution
+    #
     class Organisation < Resource
 
       # @return [Array<Puree::Model::Address>]

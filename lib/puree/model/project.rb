@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A project
+    #
     class Project < Resource
 
       # @return [String, nil]

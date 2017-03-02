@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Project XML extractor
+    #
     class Project < Puree::XMLExtractor::Resource
 
       def initialize(xml:)
@@ -22,13 +24,13 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
-        Puree::XMLExtractor::Shared.multi_header xpath_result
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
       # @return [Puree::Model::OrganisationHeader]
       def owner
         xpath_result = xpath_query '/owner'
-        Puree::XMLExtractor::Shared.header xpath_result
+        Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]

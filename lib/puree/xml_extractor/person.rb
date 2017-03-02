@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Person XML extractor
+    #
     class Person < Puree::XMLExtractor::Resource
 
       def initialize(xml:)
@@ -12,7 +14,7 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       def affiliations
         xpath_result = xpath_query '//organisation'
-        Puree::XMLExtractor::Shared.multi_header xpath_result
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
       # @return [Array<String>]

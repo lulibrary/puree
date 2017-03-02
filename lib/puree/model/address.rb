@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # Address where something is located
+    #
     class Address < Puree::Model::Structure
 
       # @return [String, nil]
@@ -17,27 +20,27 @@ module Puree
       # @return [String, nil]
       attr_reader :country
 
-      # @param [String]
+      # @param v [String]
       def street=(v)
         @street = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def building=(v)
         @building = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def postcode=(v)
         @postcode = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def city=(v)
         @city = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def country=(v)
         @country = v if v && !v.empty?
       end

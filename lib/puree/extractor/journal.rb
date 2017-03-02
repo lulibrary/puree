@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Journal extractor
+    #
     class Journal < Puree::Extractor::Resource
 
       # @param url [String]
@@ -17,7 +19,7 @@ module Puree
         @model.issn = @extractor.issn
         @model.publisher = @extractor.publisher
         @model.title = @extractor.title
-        @metadata = @model
+        @model
       end
 
     end

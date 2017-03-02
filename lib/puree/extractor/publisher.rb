@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Publisher extractor
+    #
     class Publisher < Puree::Extractor::Resource
 
       # @param url [String]
@@ -15,7 +17,7 @@ module Puree
       def combine_metadata
         super
         @model.name = @extractor.name
-        @metadata = @model
+        @model
       end
 
     end

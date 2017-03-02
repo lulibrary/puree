@@ -2,9 +2,10 @@ module Puree
 
   module XMLExtractor
 
+    # Publisher XML extractor
+    #
     class Publisher < Puree::XMLExtractor::Resource
 
-      # @param url [String]
       def initialize(xml:)
         super
         @resource_type = :publisher

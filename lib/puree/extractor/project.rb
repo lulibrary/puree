@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Project extractor
+    #
     class Project < Puree::Extractor::Resource
 
       # @param url [String]
@@ -28,7 +30,7 @@ module Puree
         @model.title = @extractor.title
         @model.type = @extractor.type
         @model.url = @extractor.url
-        @metadata = @model
+        @model
       end
 
     end

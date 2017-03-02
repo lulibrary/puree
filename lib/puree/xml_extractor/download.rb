@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Download XML extractor
+    #
     class Download < Puree::XMLExtractor::Base
 
       def initialize(xml:)

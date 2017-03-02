@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A structure
+    #
     class Structure
 
       def data?

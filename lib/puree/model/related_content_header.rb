@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A minimal representation of related content
+    #
     class RelatedContentHeader < Puree::Model::Structure
 
       # @return [String, nil]
@@ -11,17 +14,17 @@ module Puree
       # @return [String, nil]
       attr_reader :type
 
-      # @param [String]
+      # @param v [String]
       def uuid=(v)
         @uuid = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def title=(v)
         @title = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def type=(v)
         @type = v if v && !v.empty?
       end

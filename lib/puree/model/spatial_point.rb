@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A geographical point
+    #
     class SpatialPoint < Puree::Model::Structure
 
       # @return [Float, nil]

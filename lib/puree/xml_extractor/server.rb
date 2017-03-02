@@ -2,6 +2,8 @@ module Puree
 
   module XMLExtractor
 
+    # Server XML extractor
+    #
     class Server < Puree::XMLExtractor::Base
 
       def initialize(xml:)

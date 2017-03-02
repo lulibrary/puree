@@ -2,6 +2,8 @@ module Puree
 
   module Extractor
 
+    # Event extractor
+    #
     class Event < Puree::Extractor::Resource
 
       # @param url [String]
@@ -21,7 +23,7 @@ module Puree
         @model.location = @extractor.location
         @model.title = @extractor.title
         @model.type = @extractor.type
-        @metadata = @model
+        @model
       end
 
     end

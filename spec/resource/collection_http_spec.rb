@@ -42,7 +42,7 @@ describe 'Collection of datasets' do
     end
 
     it 'collection item' do
-      expect(@metadata[0]).to be_a Puree::Model::Dataset
+      expect(@metadata).to all( be_a Puree::Model::Dataset )
     end
 
   end

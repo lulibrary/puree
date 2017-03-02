@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A resource
+    #
     class Resource
 
       # @return [String, nil]
@@ -14,22 +17,22 @@ module Puree
       # @return [String, nil]
       attr_reader :locale
 
-      # @param [String]
+      # @param v [String]
       def uuid=(v)
         @uuid = v if v && !v.empty?
       end
 
-      # @param [Time]
+      # @param v [Time]
       def created=(v)
         @created = v
       end
 
-      # @param [Time]
+      # @param v [Time]
       def modified=(v)
         @modified = v
       end
 
-      # @param [String]
+      # @param v [String]
       def locale=(v)
         @locale = v if v && !v.empty?
       end

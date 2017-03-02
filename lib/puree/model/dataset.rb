@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A dataset produced during some research
+    #
     class Dataset < Resource
 
       # Open access permission

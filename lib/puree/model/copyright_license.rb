@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A copyright license
+    #
     class CopyrightLicense < Puree::Model::Structure
 
       # @return [String, nil]
@@ -8,12 +11,12 @@ module Puree
       # @return [String, nil]
       attr_reader :url
 
-      # @param [String]
+      # @param v [String]
       def name=(v)
         @name = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def url=(v)
         @url = v if v && !v.empty?
       end

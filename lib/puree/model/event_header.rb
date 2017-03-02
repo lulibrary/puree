@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # A minimal representation of an Event
+    #
     class EventHeader < Puree::Model::Structure
 
       # @return [String, nil]
@@ -8,12 +11,12 @@ module Puree
       # @return [String, nil]
       attr_reader :title
 
-      # @param [String]
+      # @param v [String]
       def uuid=(v)
         @uuid = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def title=(v)
         @title = v if v && !v.empty?
       end

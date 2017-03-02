@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # Status of a publication
+    #
     class PublicationStatus < Puree::Model::Structure
 
       # @return [String, nil]
@@ -8,7 +11,7 @@ module Puree
       # @return [Time, nil]
       attr_accessor :date
 
-      # @param [String]
+      # @param v [String]
       def stage=(v)
         @stage = v if v && !v.empty?
       end

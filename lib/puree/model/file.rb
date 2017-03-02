@@ -1,5 +1,8 @@
 module Puree
   module Model
+
+    # Description of a file
+    #
     class File < Puree::Model::Structure
 
       # @return [String, nil]
@@ -17,22 +20,22 @@ module Puree
       # @return [Puree::Model::CopyrightLicense, nil]
       attr_reader :license
 
-      # @param [String]
+      # @param v [String]
       def name=(v)
         @name = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def mime=(v)
         @mime = v if v && !v.empty?
       end
 
-      # @param [String]
+      # @param v [String]
       def url=(v)
         @url = v if v && !v.empty?
       end
 
-      # @param [Puree::Model::CopyrightLicense]
+      # @param v [Puree::Model::CopyrightLicense]
       def license=(v)
         @license = v if v && v.data?
       end
