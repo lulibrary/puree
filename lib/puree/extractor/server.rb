@@ -25,10 +25,9 @@ module Puree
 
       # Get server information.
       #
-      # @return [Puree::Model::Server]
+      # @return [Puree::Model::Server, nil]
       def get
-        @response = @request.get rendering:      :system,
-                                 resource_type:  @resource_type
+        @response = @request.get resource_type:  @resource_type
         set_content @response.body
       end
 
@@ -44,6 +43,7 @@ module Puree
       # been retrieved using the .current version of the Pure API endpoints
       #
       # @param xml [String]
+      # @return [Puree::Model::Server, nil]
       def set_content(xml)
         if xml
           make_extractor

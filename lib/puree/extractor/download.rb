@@ -54,7 +54,7 @@ module Puree
       def set_content(xml)
         if xml
           make_extractor
-          @extractor.get_data? ? combine_metadata : nil
+          @extractor.get_data? ? combine_metadata : []
         end
       end
 
