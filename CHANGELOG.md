@@ -6,14 +6,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Metadata: activity?, clipping?, externalPerson?
 - Factory to make resource objects?
 
-## 1.0.0 - 2017-02-24
+## 1.0.0 - 2017-03-03
 ### Added
 - Dataset - legal conditions.
 - Random resource from collection.
+- Read resource subclass XML from file.
 
 ### Changed
 - Simplified basic auth.
-- Resource types returned as a struct.
+- Resource types returned as a namespaced instance.
 - Data structures converted to classes.
 - All dates in Time format.
 
@@ -22,7 +23,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Event - end date extraction.
-- Project - slowness.
 
 ## 0.20.0 - 2017-02-03
 ### Added

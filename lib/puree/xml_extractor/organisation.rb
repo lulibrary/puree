@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Organisation XML extractor
+    # Organisation XML extractor.
     #
     class Organisation < Puree::XMLExtractor::Resource
 

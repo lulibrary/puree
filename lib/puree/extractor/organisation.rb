@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Organisation extractor
+    # Organisation extractor.
     #
     class Organisation < Puree::Extractor::Resource
 

@@ -1,30 +1,30 @@
 module Puree
   module Model
 
-    # A dataset produced during some research
+    # A dataset produced during some research.
     #
     class Dataset < Resource
 
-      # Open access permission
+      # Open access permission.
       # @return [String, nil]
       attr_accessor :access
 
-      # Combines projects and publications
+      # Combines projects and publications.
       # @return [Array<Puree::Model::RelatedContentHeader>]
       attr_accessor :associated
 
-      # Date made available
+      # Date made available.
       # @return [Time, nil]
       attr_accessor :available
 
       # @return [String, nil]
       attr_accessor :description
 
-      # Digital Object Identifier
+      # Digital Object Identifier.
       # @return [String, nil]
       attr_accessor :doi
 
-      # Supporting files
+      # Supporting files.
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 
@@ -40,7 +40,7 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
-      # @return [Puree::Model::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -52,7 +52,7 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
-      # Date of data production
+      # Date of data production.
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :production
 
@@ -68,11 +68,11 @@ module Puree
       # @return [Array<String>]
       attr_accessor :spatial_places
 
-      # Spatial coverage point
+      # Spatial coverage point.
       # @return [Puree::Model::SpatialPoint, nil]
       attr_accessor :spatial_point
 
-      # Temporal coverage
+      # Temporal coverage.
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :temporal
 

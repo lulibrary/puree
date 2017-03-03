@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Server extractor
+    # Server extractor.
     #
     class Server
 
@@ -14,7 +14,7 @@ module Puree
         @request = Puree::API::Request.new url: url
       end
 
-      # Provide credentials if necessary
+      # Provide credentials if necessary.
       #
       # @param username [String]
       # @param password [String]
@@ -23,9 +23,9 @@ module Puree
                             password: password
       end
 
-      # Get
+      # Get server information.
       #
-      # @return [Hash]
+      # @return [Puree::Model::Server]
       def get
         @response = @request.get rendering:      :system,
                                  resource_type:  @resource_type
@@ -47,7 +47,7 @@ module Puree
       def set_content(xml)
         if xml
           make_extractor
-          @extractor.get_data? ? combine_metadata : {}
+          @extractor.get_data? ? combine_metadata : nil
         end
       end
 

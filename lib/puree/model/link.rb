@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # URL which points to something of interest
+    # URL which points to something of interest.
     #
     class Link < Puree::Model::Structure
 

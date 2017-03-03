@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Journal extractor
+    # Journal extractor.
     #
     class Journal < Puree::Extractor::Resource
 

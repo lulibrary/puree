@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A resource
+    # A resource.
     #
     class Resource
 

@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Collection extractor. Can get any amount of resources in a collection.
+    # A collection extractor can retrieve any number of resources of the same type.
     #
     class Collection
 
@@ -10,14 +10,14 @@ module Puree
 
       # @param url [String]
       # @param resource [Symbol]
-      def initialize(url:, resource: nil)
+      def initialize(url:, resource:)
         @url = url
         @resource_type = resource
         @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get
       end
 
-      # Provide credentials if necessary
+      # Provide credentials if necessary.
       #
       # @param username [String]
       # @param password [String]
@@ -29,10 +29,10 @@ module Puree
         @basic_auth = true
       end
 
-      # Gets an array of objects of resource type specified in constructor
+      # Gets an array of objects of resource type specified in constructor.
       #
-      # @param limit [Integer]
-      # @param offset [Integer]
+      # @param limit [Fixnum]
+      # @param offset [Fixnum]
       # @param created_start [String]
       # @param created_end [String]
       # @param modified_start [String]
@@ -57,7 +57,7 @@ module Puree
         set_content @response.body
       end
 
-      # Gets a random resource of type specified in constructor
+      # Gets a random resource of type specified in constructor.
       #
       # @return [Puree::Model::Resource subclass] Resource metadata e.g. Puree::Model::Dataset
       def random_resource
@@ -69,9 +69,9 @@ module Puree
       end
 
 
-      # Count of records available for a resource type
+      # Count of records available for a resource type.
       #
-      # @return [Integer]
+      # @return [Fixnum]
       def count
         get_count
       end

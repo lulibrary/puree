@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Project XML extractor
+    # Project XML extractor.
     #
     class Project < Puree::XMLExtractor::Resource
 
@@ -27,7 +27,7 @@ module Puree
         Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
-      # @return [Puree::Model::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader, nil]
       def owner
         xpath_result = xpath_query '/owner'
         Puree::XMLExtractor::Shared.organisation_header xpath_result
@@ -53,12 +53,12 @@ module Puree
         xpath_query_for_single_value '/status/term/localizedString'
       end
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       def temporal_expected
         temporal_range '/expectedStartDate', '/expectedEndDate'
       end
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       def temporal_actual
         temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
       end

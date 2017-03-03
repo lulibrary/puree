@@ -1,4 +1,5 @@
 # Pur&#233;e
+
 Metadata extraction from the Pure Research Information System.
 
 ## Status
@@ -57,7 +58,7 @@ dataset.persons_internal[0].name
 #<Puree::Model::PersonName:0x9add67c @first="Foo", @last="Bar">
 ```
 
-Choose a formatting style for a person's name.
+Select a formatting style for a person's name.
 
 ```ruby
 dataset.persons_internal[0].name.last_initial
@@ -87,6 +88,24 @@ Fetch a random resource from the entire collection.
 
 ```ruby
 random_dataset = collection_extractor.random_resource
+# =>
+#<Puree::Model::Dataset:0x97998bc>
 ```
 
+## Performance
 
+Figures indicate how long it takes for a collection to be fetched from Pure, processed and made available as Ruby models.
+
+|System|Version|
+|---|---:|---:|
+|Pur&#233;e|1.0.0|
+|Pure|5.6.2|
+
+|Resource|Qty|Time (secs)|
+|---|---:|---:|
+|Dataset|100|7.181|
+|Event|100|4.665|
+|Organisation|100|4.463|
+|Person|100|7.02|
+|Project|100|82.049|
+|Publication|100|13.211|

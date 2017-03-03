@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A structure
+    # A structure.
     #
     class Structure
 

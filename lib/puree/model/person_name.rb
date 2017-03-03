@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # The name of a person
+    # The name of a person.
     #
     class PersonName < Puree::Model::Structure
 

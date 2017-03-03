@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Publisher extractor
+    # Publisher extractor.
     #
     class Publisher < Puree::Extractor::Resource
 

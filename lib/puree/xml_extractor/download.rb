@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Download XML extractor
+    # Download XML extractor.
     #
     class Download < Puree::XMLExtractor::Base
 
@@ -13,16 +13,16 @@ module Puree
 
       # Statistic
       #
-      # @return [Array<Hash>]
-      def statistic
+      # @return [Array<Puree::Model::DownloadHeader>]
+      def statistics
         path = "#{service_response_name}/downloadCount"
         xpath_result = @doc.xpath(path)
         data_arr = []
         xpath_result.each { |i|
-          data = {}
-          data['uuid'] = i.attr('uuid').strip
-          data['download'] = i.attr('downloads').strip.to_i
-          data_arr << data
+          model = Puree::Model::DownloadHeader.new
+          model.uuid = i.attr('uuid').strip
+          model.count = i.attr('downloads').strip.to_i
+          data_arr << model
         }
         data_arr.uniq
       end
@@ -32,7 +32,7 @@ module Puree
       # @return [Boolean]
       def get_data?
         # TO DO Inefficient!
-        statistic.size ? true : false
+        statistics.size ? true : false
       end
 
     end

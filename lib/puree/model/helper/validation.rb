@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # Model validation
+    # Model validation.
     #
     module Validation
       def enforce_class(v, klass)

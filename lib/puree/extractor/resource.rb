@@ -24,11 +24,11 @@ module Puree
                             password: password
       end
 
-      # Get
+      # Get a resource.
       #
       # @param uuid [String]
       # @param id [String]
-      # @return [Struct] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass] Resource metadata e.g. Puree::Model::Dataset
       def get(uuid: nil, id: nil, rendering: :xml_long)
         @response = @request.get uuid:           uuid,
                                  id:             id,
@@ -38,8 +38,9 @@ module Puree
         set_content @response.body
       end
 
-      # Set content from XML. In order for metadata extraction to work, the XML must have
-      # been retrieved using the .current version of the Pure API endpoints
+      # Set content from XML.
+      # In order for metadata extraction to work, the XML must have
+      # been retrieved using the .current version of the Pure API endpoints.
       #
       # @param xml [String]
       def set_content(xml)
@@ -49,6 +50,10 @@ module Puree
         end
       end
 
+      # Set content from XML in a file.
+      # In order for metadata extraction to work, the XML must have
+      # been retrieved using the .current version of the Pure API endpoints.
+      #
       # @param path [String]
       def from_file(path)
         set_content File.read path

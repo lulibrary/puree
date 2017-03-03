@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Publication extractor
+    # Publication extractor.
     #
     class Publication < Puree::Extractor::Resource
 

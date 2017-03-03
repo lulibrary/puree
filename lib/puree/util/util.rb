@@ -1,6 +1,6 @@
 module Puree
 
-  # Utilities
+  # Utilities.
   module Util
 
   end

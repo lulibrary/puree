@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Base XML extractor
+    # Base XML extractor.
     #
     class Base
 
@@ -11,12 +11,16 @@ module Puree
         make_doc xml
       end
 
+      # XPath search for a single value, at a given path.
+      #
       # @return [String, nil]
       def xpath_query_for_single_value(path)
         xpath_result = xpath_query(path).text.strip
         xpath_result.empty? ? nil : xpath_result
       end
 
+      # XPath search for multiple values, at a given path.
+      #
       # @return [Array<String>]
       def xpath_query_for_multi_value(path)
         xpath_result = xpath_query path

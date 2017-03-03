@@ -6,6 +6,8 @@ module Puree
     #
     module Date
 
+      # Converts a date with variable components present (year, month, day) to Time format.
+      #
       # @param data [Hash]
       # @return [Time]
       def self.hash_to_time(data)
@@ -25,7 +27,7 @@ module Puree
         nil
       end
 
-      # Converts a date with three components (year, month, day) to ISO 8601 date format
+      # Converts a date with three components (year, month, day) to ISO 8601 date format.
       #
       # @param data [Hash]
       # @return [String]
@@ -58,7 +60,7 @@ module Puree
         iso_date
       end
 
-      # Forces a date to have three components (year, month, day)
+      # Forces a date to have three components (year, month, day).
       #
       # @param data [Hash]
       # @return [Hash]

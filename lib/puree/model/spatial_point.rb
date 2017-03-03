@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A geographical point
+    # A geographical point.
     #
     class SpatialPoint < Puree::Model::Structure
 

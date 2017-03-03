@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # Description of a file
+    # Description of a file.
     #
     class File < Puree::Model::Structure
 

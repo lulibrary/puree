@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # An organised event
+    # An organised event.
     #
     class Event < Resource
 

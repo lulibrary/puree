@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Event extractor
+    # Event extractor.
     #
     class Event < Puree::Extractor::Resource
 

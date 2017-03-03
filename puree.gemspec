@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["a.albin-clark@lancaster.ac.uk"]
   spec.summary       = %q{Metadata extraction from the Pure Research Information System.}
   spec.description   = %q{Metadata extraction from the Pure Research Information System.}
-  spec.homepage      = "https://aalbinclark.gitbooks.io/puree"
+  spec.homepage      = "https://github.com/lulibrary/puree"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

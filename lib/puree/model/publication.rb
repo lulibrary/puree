@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A publication
+    # A publication.
     #
     class Publication < Resource
 
@@ -14,7 +14,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :doi
 
-      # @return [Puree::Model::EventHeader]
+      # @return [Puree::Model::EventHeader, nil]
       attr_accessor :event
 
       # @return [Array<Puree::Model::File>]

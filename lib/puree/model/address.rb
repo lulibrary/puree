@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # Address where something is located
+    # Address where something is located.
     #
     class Address < Puree::Model::Structure
 

@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A legal condition
+    # A legal condition.
     #
     class LegalCondition < Puree::Model::Structure
 

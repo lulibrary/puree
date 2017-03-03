@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A minimal representation of an Event
+    # A minimal representation of an Event.
     #
     class EventHeader < Puree::Model::Structure
 

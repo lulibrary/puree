@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Server XML extractor
+    # Server XML extractor.
     #
     class Server < Puree::XMLExtractor::Base
 
@@ -22,7 +22,7 @@ module Puree
       # @return [Boolean]
       def get_data?
         # n.b. arbitrary element existence check
-        version.size ? true : false
+        version.empty? ? false : true
       end
 
     end

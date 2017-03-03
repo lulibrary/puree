@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Journal XML extractor
+    # Journal XML extractor.
     #
     class Journal < Puree::XMLExtractor::Resource
 

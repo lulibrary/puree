@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Dataset XML extractor
+    # Dataset XML extractor.s
     #
     class Dataset < Puree::XMLExtractor::Resource
 
@@ -111,7 +111,7 @@ module Puree
         Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
-      # @return [Puree::Model::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader, nil]
       def owner
         xpath_result = xpath_query '/managedBy'
         Puree::XMLExtractor::Shared.organisation_header xpath_result

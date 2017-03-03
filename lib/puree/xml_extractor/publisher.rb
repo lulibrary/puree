@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Publisher XML extractor
+    # Publisher XML extractor.
     #
     class Publisher < Puree::XMLExtractor::Resource
 

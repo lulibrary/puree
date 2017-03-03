@@ -1,5 +1,5 @@
 module Puree
-  # A model is a data structure
+  # A model is a data structure.
   #
   module Model
 

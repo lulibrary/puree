@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # An organisational unit as defined by the institution
+    # An organisational unit as defined by the institution.
     #
     class Organisation < Resource
 
