@@ -81,7 +81,7 @@ module Puree
             query['pureInternalIds.id'] = @id
           end
         end
-        query['rendering'] = @rendering
+        query['rendering'] = @rendering unless @resource_type === :server # Server does not work if this is present
         query['window.size'] = @limit if @limit > 0 unless @resource_type === :server # Server does not work if this is present
         query['window.offset'] = @offset if @limit > 0
 

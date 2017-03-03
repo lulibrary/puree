@@ -59,13 +59,14 @@ module Puree
 
       # Gets a random resource of type specified in constructor.
       #
-      # @return [Puree::Model::Resource subclass] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
       def random_resource
         @response = @request.get rendering:        :system,
                                  limit:            1,
                                  offset:           rand(0..count-1),
                                  resource_type:    @resource_type
-        set_content(response.body)[0]
+        content = set_content @response.body
+        content[0] if content
       end
 
 
@@ -125,7 +126,7 @@ module Puree
       def set_content(xml)
         if xml
           make_xml_extractor
-          combine_metadata if @extractor.get_data?
+          @extractor.get_data? ? combine_metadata : nil
         end
       end
 

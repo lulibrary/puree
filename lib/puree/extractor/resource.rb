@@ -28,7 +28,7 @@ module Puree
       #
       # @param uuid [String]
       # @param id [String]
-      # @return [Puree::Model::Resource subclass] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
       def get(uuid: nil, id: nil, rendering: :xml_long)
         @response = @request.get uuid:           uuid,
                                  id:             id,
@@ -46,7 +46,7 @@ module Puree
       def set_content(xml)
         if xml
           make_xml_extractor xml
-          @extractor.get_data? ? combine_metadata : {}
+          @extractor.get_data? ? combine_metadata : nil
         end
       end
 
