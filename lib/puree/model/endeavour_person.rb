@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A person involved in an endeavour
+    # A person involved in an endeavour.
     #
     class EndeavourPerson < Puree::Model::Structure
 

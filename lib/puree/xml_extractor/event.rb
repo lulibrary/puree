@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Event XML extractor
+    # Event XML extractor.
     #
     class Event < Puree::XMLExtractor::Resource
 

@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A minimal representation of related content
+    # A minimal representation of related content.
     #
     class RelatedContentHeader < Puree::Model::Structure
 

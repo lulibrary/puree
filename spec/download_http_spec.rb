@@ -17,7 +17,7 @@ describe 'Download' do
     end
 
     it '#find' do
-      expect(@metadata).to be_a(Array)
+      expect(@metadata).to all( be_a Puree::Model::DownloadHeader )
     end
 
     it '#find' do

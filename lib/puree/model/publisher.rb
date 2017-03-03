@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A publisher
+    # A publisher.
     #
     class Publisher < Resource
 

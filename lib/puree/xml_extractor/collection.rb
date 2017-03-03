@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Collection XML extractor
+    # Collection XML extractor.
     #
     class Collection < Puree::XMLExtractor::Base
 
@@ -10,13 +10,13 @@ module Puree
         super
       end
 
-      # Records available in collection
+      # Records available in collection.
       #
       def count
         @doc.xpath('//count').text.strip.to_i
       end
 
-      # Resource UUIDs in collection response
+      # Resource UUIDs in collection response.
       def uuids
         arr = []
         xpath_result = @doc.xpath '//renderedItem/@renderedContentUUID'

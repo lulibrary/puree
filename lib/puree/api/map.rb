@@ -2,7 +2,7 @@ module Puree
 
   module API
 
-    # Pure endpoints and corresponding XML root element in response
+    # Pure endpoints and corresponding XML root element in response.
     #
     class Map
 
@@ -39,14 +39,14 @@ module Puree
         # add_family
       end
 
-      # Gets endpoints with their corresponding XML response names
+      # Gets endpoints with their corresponding XML response names.
       #
       # @return [Hash]
       def get
         @api_map
       end
 
-      # Endpoint for resource type
+      # Endpoint for resource type.
       #
       # @param resource_type [Symbol]
       def service_name(resource_type)

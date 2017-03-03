@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Dataset extractor
+    # Dataset extractor.
     #
     class Dataset < Puree::Extractor::Resource
 

@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Resource XML extractor
+    # Resource XML extractor.
     #
     class Resource < Puree::XMLExtractor::Base
 

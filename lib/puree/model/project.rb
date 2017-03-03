@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A project
+    # A project.
     #
     class Project < Resource
 
@@ -14,7 +14,7 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
-      # @return [Puree::Model::OrganisationHeader]
+      # @return [Puree::Model::OrganisationHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -29,10 +29,10 @@ module Puree
       # @return [String, nil]
       attr_accessor :status
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :temporal_actual
 
-      # @return [Puree::Model::TemporalRange]
+      # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :temporal_expected
 
       # @return [String, nil]

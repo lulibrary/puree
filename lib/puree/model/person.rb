@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A person
+    # A person.
     #
     class Person < Resource
 

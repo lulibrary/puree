@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # Pure host information
+    # Pure host information.
     #
     class Server
 

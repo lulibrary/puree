@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Person extractor
+    # Person extractor.
     #
     class Person < Puree::Extractor::Resource
 

@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A minimal representation of an Organisation
+    # A minimal representation of an Organisation.
     #
     class OrganisationHeader < Puree::Model::Structure
 

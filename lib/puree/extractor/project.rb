@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Project extractor
+    # Project extractor.
     #
     class Project < Puree::Extractor::Resource
 

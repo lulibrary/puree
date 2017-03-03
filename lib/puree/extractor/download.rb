@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Download extractor
+    # Download extractor.
     #
     class Download
 
@@ -13,7 +13,6 @@ module Puree
         @resource_type = :download
         @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get # Workararound to provide access to service_family
-        @metadata = {}
       end
 
       # Provide credentials if necessary
@@ -25,13 +24,13 @@ module Puree
                             password: password
       end
 
-      # Get
+      # Get download statistics. Only for Datasets.
       #
-      # @param limit [Integer]
-      # @param offset [Integer]
+      # @param limit [Fixnum]
+      # @param offset [Fixnum]
       # @param resource [Symbol] The resource being reported
       # @return [Array<Hash>]
-      def get(limit: 20,
+      def get(limit: 0,
               offset: 0,
               resource:)
         @response = @request.get rendering:      :system,
@@ -42,18 +41,10 @@ module Puree
         set_content @response.body
       end
 
-      # All metadata
-      #
-      # @return [Array<Hash>]
-      def metadata
-        @metadata
-      end
-
-
       private
 
       def combine_metadata
-        @metadata = @extractor.statistic
+        @extractor.statistics
       end
 
       # Set content from XML. In order for metadata extraction to work, the XML must have
@@ -63,7 +54,7 @@ module Puree
       def set_content(xml)
         if xml
           make_extractor
-          @extractor.get_data? ? combine_metadata : {}
+          @extractor.get_data? ? combine_metadata : nil
         end
       end
 

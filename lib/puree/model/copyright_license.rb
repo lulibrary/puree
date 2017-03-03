@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A copyright license
+    # A copyright license.
     #
     class CopyrightLicense < Puree::Model::Structure
 

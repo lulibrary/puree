@@ -27,6 +27,7 @@ require 'puree/model/structure'
 
 require 'puree/model/resource'
 require 'puree/model/dataset'
+require 'puree/model/download_header'
 require 'puree/model/event'
 require 'puree/model/event'
 require 'puree/model/journal'

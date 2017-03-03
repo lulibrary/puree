@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Person XML extractor
+    # Person XML extractor.
     #
     class Person < Puree::XMLExtractor::Resource
 

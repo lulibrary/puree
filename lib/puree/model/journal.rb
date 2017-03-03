@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A journal
+    # A journal.
     #
     class Journal < Resource
 

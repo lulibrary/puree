@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Shared XML extractor
+    # Shared XML extractor.
     #
     module Shared
 
