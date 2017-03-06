@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Publication' do
 
   it '#new' do
-    p = Puree::Extractor::Publication.new url: ENV['PURE_URL']
+    p = Puree::Extractor::Publication.new config
     expect(p).to be_a Puree::Extractor::Publication
   end
 

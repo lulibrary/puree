@@ -28,20 +28,34 @@ Or install it yourself as:
 ## Usage
 The following examples are for the Dataset resource type.
 
+### Configuration
+
+Create a hash for passing in to an extractor.
+
+```ruby
+# Pure host with authentication.
+config = {
+  url:      ENV['PURE_URL'],
+  username: ENV['PURE_USERNAME'],
+  password: ENV['PURE_PASSWORD']
+}
+```
+
+```ruby
+# Pure host without authentication.
+config = {
+  url: ENV['PURE_URL']
+}
+```
+
 ### Single resource
 
 Configure a resource extractor to get data from a Pure host.
 
 ```ruby
-dataset_extractor = Puree::Extractor::Dataset.new url: ENV['PURE_URL']
+dataset_extractor = Puree::Extractor::Dataset.new config
 ```
 
-Provide authentication details if needed.
-
-```ruby
-dataset_extractor.basic_auth username: ENV['PURE_USERNAME'],
-                             password: ENV['PURE_PASSWORD']
-```
 Fetch the metadata.
 
 ```ruby
@@ -71,7 +85,7 @@ dataset.persons_internal[0].name.last_initial
 Configure a collection extractor to get data from a Pure host.
 
 ```ruby
-collection_extractor = Puree::Extractor::Collection.new url: ENV['PURE_URL'],
+collection_extractor = Puree::Extractor::Collection.new config:   config,
                                                         resource: :dataset
 ```
 
@@ -91,21 +105,3 @@ random_dataset = collection_extractor.random_resource
 # =>
 #<Puree::Model::Dataset:0x97998bc>
 ```
-
-## Performance
-
-Figures indicate how long it takes for a collection to be fetched from Pure, processed and made available as Ruby models.
-
-|System|Version|
-|---|---:|---:|
-|Pur&#233;e|1.0.0|
-|Pure|5.6.2|
-
-|Resource|Qty|Time (secs)|
-|---|---:|---:|
-|Dataset|100|7.181|
-|Event|100|4.665|
-|Organisation|100|4.463|
-|Person|100|7.02|
-|Project|100|82.049|
-|Publication|100|13.211|

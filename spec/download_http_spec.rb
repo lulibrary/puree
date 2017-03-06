@@ -2,16 +2,18 @@ require 'spec_helper'
 
 describe 'Download' do
 
+  before(:all) do
+
+  end
+
   it '#new' do
-    p = Puree::Extractor::Download.new url: ENV['PURE_URL']
+    p = Puree::Extractor::Download.new config
     expect(p).to be_a Puree::Extractor::Download
   end
 
   describe 'data retrieval' do
     before(:all) do
-      @p = Puree::Extractor::Download.new(url: ENV['PURE_URL'])
-      @p.basic_auth username: ENV['PURE_USERNAME'],
-                    password: ENV['PURE_PASSWORD']
+      @p = Puree::Extractor::Download.new config
       @metadata = @p.find resource: :dataset,
                           limit:    10
     end

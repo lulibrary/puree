@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Person' do
 
   it '#new' do
-    p = Puree::Extractor::Person.new url: ENV['PURE_URL']
+    p = Puree::Extractor::Person.new config
     expect(p).to be_a Puree::Extractor::Person
   end
 

@@ -8,30 +8,37 @@ module Puree
 
       attr_reader :response
 
-      # @param url [String]
-      def initialize(url:)
+      # @option (see Puree::Extractor::Resource#initialize)
+      def initialize(config)
         @resource_type = :server
-        @request = Puree::API::Request.new url: url
-      end
-
-      # Provide credentials if necessary.
-      #
-      # @param username [String]
-      # @param password [String]
-      def basic_auth(username:, password:)
-        @request.basic_auth username: username,
-                            password: password
+        configure_api config
       end
 
       # Get server information.
       #
       # @return [Puree::Model::Server, nil]
       def get
-        @response = @request.get resource_type:  @resource_type
+        raise 'Cannot perform a request without a configuration' if @config.nil?
+        @response = @request.get resource_type: @resource_type
         set_content @response.body
       end
 
       private
+
+      # Configure a Pure host for API access.
+      #
+      # @param config [Hash]
+      def configure_api(config)
+        @config = Puree::API::Configuration.new url: config[:url]
+        @config.basic_auth username: config[:username],
+                           password: config[:password]
+
+        @request = Puree::API::Request.new url: @config.url
+        if @config.basic_auth?
+          @request.basic_auth username: @config.username,
+                              password: @config.password
+        end
+      end
 
       def combine_metadata
         model = Puree::Model::Server.new

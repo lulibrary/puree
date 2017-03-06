@@ -8,20 +8,14 @@ module Puree
 
       attr_reader :response
 
-      # @param url [String]
+      # @param config [Hash]
+      # @option config [String] :url The URL of the Pure host.
+      # @option config [String] :username The username of the Pure host account.
+      # @option config [String] :password The password of the Pure host account.
       # @param bleeding [Boolean]
-      def initialize(url:, bleeding: true)
+      def initialize(config, bleeding: true)
         @latest_api = bleeding
-        @request = Puree::API::Request.new url: url
-      end
-
-      # Provide credentials if necessary
-      #
-      # @param username [String]
-      # @param password [String]
-      def basic_auth(username:, password:)
-        @request.basic_auth username: username,
-                            password: password
+        configure_api config
       end
 
       # Get a resource.
@@ -30,6 +24,7 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
       def get(uuid: nil, id: nil, rendering: :xml_long)
+        raise 'Cannot perform a request without a configuration' if @config.nil?
         @response = @request.get uuid:           uuid,
                                  id:             id,
                                  rendering:      rendering,
@@ -39,8 +34,9 @@ module Puree
       end
 
       # Set content from XML.
-      # In order for metadata extraction to work, the XML must have
-      # been retrieved using the .current version of the Pure API endpoints.
+      # In order for metadata extraction to work, with the exception of Project,
+      # the XML must have been retrieved using the .current version of the Pure
+      # API endpoints.
       #
       # @param xml [String]
       def set_content(xml)
@@ -51,8 +47,9 @@ module Puree
       end
 
       # Set content from XML in a file.
-      # In order for metadata extraction to work, the XML must have
-      # been retrieved using the .current version of the Pure API endpoints.
+      # In order for metadata extraction to work, with the exception of Project,
+      # the XML must have been retrieved using the .current version of the Pure
+      # API endpoints.
       #
       # @param path [String]
       def from_file(path)
@@ -60,6 +57,24 @@ module Puree
       end
 
       private
+
+      # Configure a Pure host for API access.
+      #
+      # @param config [Hash]
+      def configure_api(config)
+        @config = Puree::API::Configuration.new url: config[:url]
+        @config.basic_auth username: config[:username],
+                           password: config[:password]
+
+        @request = Puree::API::Request.new url: @config.url
+        if @config.basic_auth?
+          @request.basic_auth username: @config.username,
+                              password: @config.password
+        end
+      end
+
+      def setup_request
+      end
 
       def setup(resource)
         @resource_type = resource

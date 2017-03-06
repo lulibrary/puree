@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Dataset' do
 
   it '#new' do
-    p = Puree::Extractor::Dataset.new url: ENV['PURE_URL']
+    p = Puree::Extractor::Dataset.new config
     expect(p).to be_a Puree::Extractor::Dataset
   end
 

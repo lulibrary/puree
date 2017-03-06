@@ -2,7 +2,7 @@ module Puree
 
   module XMLExtractor
 
-    # Dataset XML extractor.s
+    # Dataset XML extractor.
     #
     class Dataset < Puree::XMLExtractor::Resource
 

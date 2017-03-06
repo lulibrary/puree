@@ -6,8 +6,8 @@ module Puree
     #
     class Publisher < Puree::Extractor::Resource
 
-      # @param url [String]
-      def initialize(url:)
+      # @option (see Puree::Extractor::Resource#initialize)
+      def initialize(config)
         super
         setup :publisher
       end
