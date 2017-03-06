@@ -8,25 +8,12 @@ module Puree
 
       attr_reader :response
 
-      # @param url [String]
+      # @option (see Puree::Extractor::Resource#initialize)
       # @param resource [Symbol]
-      def initialize(url:, resource:)
-        @url = url
+      def initialize(config:, resource:)
         @resource_type = resource
-        @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get
-      end
-
-      # Provide credentials if necessary.
-      #
-      # @param username [String]
-      # @param password [String]
-      def basic_auth(username:, password:)
-        @request.basic_auth username: username,
-                            password: password
-        @username = username
-        @password = password
-        @basic_auth = true
+        configure_api config
       end
 
       # Gets an array of objects of resource type specified in constructor.
@@ -79,6 +66,21 @@ module Puree
 
       private
 
+      # Configure a Pure host for API access.
+      #
+      # @param config [Hash]
+      def configure_api(config)
+        @config = Puree::API::Configuration.new url: config[:url]
+        @config.basic_auth username: config[:username],
+                           password: config[:password]
+
+        @request = Puree::API::Request.new url: @config.url
+        if @config.basic_auth?
+          @request.basic_auth username: @config.username,
+                              password: @config.password
+        end
+      end
+
       # Array of UUIDs (from system response)
       #
       # @return [Array<String>]
@@ -92,7 +94,8 @@ module Puree
 
       def get_count
         @response = @request.get resource_type: @resource_type,
-                                 rendering: :system
+                                 rendering: :system,
+                                 limit: 0
         make_xml_extractor
         @extractor.count
       end
@@ -103,12 +106,14 @@ module Puree
 
         # whitelist symbol
         if @api_map[:resource_type].has_key?(@resource_type)
+          config = {
+            url: @config.url,
+            username: @config.username,
+            password: @config.password
+          }
+
           uuids.each do |u|
-            r = Object.const_get(resource_class).new url: @url
-            if @basic_auth === true
-              r.basic_auth username: @username,
-                           password: @password
-            end
+            r = Object.const_get(resource_class).new config
             record = r.find uuid: u,
                             rendering: :xml_long
             data << record

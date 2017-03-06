@@ -6,8 +6,8 @@ module Puree
     #
     class Project < Puree::Extractor::Resource
 
-      # @param url [String]
-      def initialize(url:)
+      # @option (see Puree::Extractor::Resource#initialize)
+      def initialize(config)
         super
         @latest_api = false # stable API does not return person roles
         setup :project

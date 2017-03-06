@@ -8,20 +8,11 @@ module Puree
 
       attr_reader :response
 
-      # @param url [String]
-      def initialize(url:)
+      # @option (see Puree::Extractor::Resource#initialize)
+      def initialize(config)
         @resource_type = :download
-        @request = Puree::API::Request.new url: url
         @api_map = Puree::API::Map.new.get # Workararound to provide access to service_family
-      end
-
-      # Provide credentials if necessary
-      #
-      # @param username [String]
-      # @param password [String]
-      def basic_auth(username:, password:)
-        @request.basic_auth username: username,
-                            password: password
+        configure_api config
       end
 
       # Get download statistics. Only for Datasets.
@@ -29,10 +20,11 @@ module Puree
       # @param limit [Fixnum]
       # @param offset [Fixnum]
       # @param resource [Symbol] The resource being reported
-      # @return [Array<Hash>]
+      # @return [Array<Puree::Model::DownloadHeader>]
       def get(limit: 0,
               offset: 0,
               resource:)
+        raise 'Cannot perform a request without a configuration' if @config.nil?
         @response = @request.get rendering:      :system,
                                  limit:          limit,
                                  offset:         offset,
@@ -42,6 +34,21 @@ module Puree
       end
 
       private
+
+      # Configure a Pure host for API access.
+      #
+      # @param config [Hash]
+      def configure_api(config)
+        @config = Puree::API::Configuration.new url: config[:url]
+        @config.basic_auth username: config[:username],
+                           password: config[:password]
+
+        @request = Puree::API::Request.new url: @config.url
+        if @config.basic_auth?
+          @request.basic_auth username: @config.username,
+                              password: @config.password
+        end
+      end
 
       def combine_metadata
         @extractor.statistics

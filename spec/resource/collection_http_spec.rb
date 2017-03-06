@@ -4,14 +4,11 @@ describe 'Collection of datasets' do
 
   def new
     @p = Puree::Extractor::Collection.new resource: :dataset,
-                               url: ENV['PURE_URL']
+                                          config:   config
   end
 
   def setup
     new
-    @p.basic_auth username: ENV['PURE_USERNAME'],
-                  password: ENV['PURE_PASSWORD']
-
   end
 
   it '#new' do

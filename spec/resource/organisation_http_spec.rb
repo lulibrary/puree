@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Organisation' do
 
   it '#new' do
-    p = Puree::Extractor::Organisation.new url: ENV['PURE_URL']
+    p = Puree::Extractor::Organisation.new config
     expect(p).to be_a Puree::Extractor::Organisation
   end
 

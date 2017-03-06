@@ -22,6 +22,7 @@ require 'puree/xml_extractor/server'
 
 require 'puree/api/map'
 require 'puree/api/request'
+require 'puree/api/configuration'
 
 require 'puree/model/structure'
 
@@ -65,17 +66,29 @@ require 'puree/extractor/collection'
 require 'puree/extractor/download'
 require 'puree/extractor/server'
 
+def config
+  {
+    url:      ENV['PURE_URL'],
+    username: ENV['PURE_USERNAME'],
+    password: ENV['PURE_PASSWORD']
+  }
+end
+
+def config_open
+  {
+      url: ENV['PURE_URL_OPEN']
+  }
+end
+
 def request(resource)
-  @extractor = Puree::Extractor::Collection.new resource: resource,
-                                                url: ENV['PURE_URL']
-  @extractor.basic_auth username: ENV['PURE_USERNAME'],
-                        password: ENV['PURE_PASSWORD']
+  @extractor = Puree::Extractor::Collection.new config: config,
+                                                resource: resource
   @p = @extractor.random_resource
 end
 
 def request_open(resource)
   @extractor = Puree::Extractor::Collection.new resource: resource,
-                                                url: ENV['PURE_URL_OPEN']
+                                                config: config_open
   @p = @extractor.random_resource
 end
 

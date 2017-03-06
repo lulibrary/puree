@@ -3,16 +3,13 @@ require 'spec_helper'
 describe 'Server' do
 
   it '#new' do
-    extractor = Puree::Extractor::Server.new url: ENV['PURE_URL']
+    extractor = Puree::Extractor::Server.new config
     expect(extractor).to be_a Puree::Extractor::Server
   end
 
   describe 'data retrieval' do
     before(:all) do
-      @extractor = Puree::Extractor::Server.new(url: ENV['PURE_URL'])
-      @extractor.basic_auth username: ENV['PURE_USERNAME'],
-                            password: ENV['PURE_PASSWORD']
-
+      @extractor = Puree::Extractor::Server.new config
       @p = @extractor.find
     end
 
