@@ -5,13 +5,11 @@ module Puree
     # Resource extractor
     #
     class Resource
+      include Puree::API::Authentication
 
       attr_reader :response
 
-      # @param config [Hash]
-      # @option config [String] :url The URL of the Pure host.
-      # @option config [String] :username The username of the Pure host account.
-      # @option config [String] :password The password of the Pure host account.
+      # @option (see Puree::API::Authentication#configure_api)
       # @param bleeding [Boolean]
       def initialize(config, bleeding: true)
         @latest_api = bleeding
@@ -57,23 +55,20 @@ module Puree
 
       private
 
-      # Configure a Pure host for API access.
+      # # Configure a Pure host for API access.
+      # #
+      # # @param config [Hash]
+      # def configure_api(config)
+      #   @config = Puree::API::Configuration.new url: config[:url]
+      #   @config.basic_auth username: config[:username],
+      #                      password: config[:password]
       #
-      # @param config [Hash]
-      def configure_api(config)
-        @config = Puree::API::Configuration.new url: config[:url]
-        @config.basic_auth username: config[:username],
-                           password: config[:password]
-
-        @request = Puree::API::Request.new url: @config.url
-        if @config.basic_auth?
-          @request.basic_auth username: @config.username,
-                              password: @config.password
-        end
-      end
-
-      def setup_request
-      end
+      #   @request = Puree::API::Request.new url: @config.url
+      #   if @config.basic_auth?
+      #     @request.basic_auth username: @config.username,
+      #                         password: @config.password
+      #   end
+      # end
 
       def setup(resource)
         @resource_type = resource
