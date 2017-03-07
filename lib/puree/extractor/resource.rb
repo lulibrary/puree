@@ -5,13 +5,9 @@ module Puree
     # Resource extractor
     #
     class Resource
+      include Puree::API::Authentication
 
-      attr_reader :response
-
-      # @param config [Hash]
-      # @option config [String] :url The URL of the Pure host.
-      # @option config [String] :username The username of the Pure host account.
-      # @option config [String] :password The password of the Pure host account.
+      # @option (see Puree::API::Authentication#configure_api)
       # @param bleeding [Boolean]
       def initialize(config, bleeding: true)
         @latest_api = bleeding
@@ -23,20 +19,18 @@ module Puree
       # @param uuid [String]
       # @param id [String]
       # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
-      def get(uuid: nil, id: nil, rendering: :xml_long)
+      def get(uuid: nil, id: nil)
         raise 'Cannot perform a request without a configuration' if @config.nil?
         @response = @request.get uuid:           uuid,
                                  id:             id,
-                                 rendering:      rendering,
                                  latest_api:     @latest_api,
                                  resource_type:  @resource_type
         set_content @response.body
       end
 
+      private
+
       # Set content from XML.
-      # In order for metadata extraction to work, with the exception of Project,
-      # the XML must have been retrieved using the .current version of the Pure
-      # API endpoints.
       #
       # @param xml [String]
       def set_content(xml)
@@ -44,36 +38,6 @@ module Puree
           make_xml_extractor xml
           @extractor.get_data? ? combine_metadata : nil
         end
-      end
-
-      # Set content from XML in a file.
-      # In order for metadata extraction to work, with the exception of Project,
-      # the XML must have been retrieved using the .current version of the Pure
-      # API endpoints.
-      #
-      # @param path [String]
-      def from_file(path)
-        set_content File.read path
-      end
-
-      private
-
-      # Configure a Pure host for API access.
-      #
-      # @param config [Hash]
-      def configure_api(config)
-        @config = Puree::API::Configuration.new url: config[:url]
-        @config.basic_auth username: config[:username],
-                           password: config[:password]
-
-        @request = Puree::API::Request.new url: @config.url
-        if @config.basic_auth?
-          @request.basic_auth username: @config.username,
-                              password: @config.password
-        end
-      end
-
-      def setup_request
       end
 
       def setup(resource)

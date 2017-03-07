@@ -5,10 +5,9 @@ module Puree
     # Server extractor.
     #
     class Server
+      include Puree::API::Authentication
 
-      attr_reader :response
-
-      # @option (see Puree::Extractor::Resource#initialize)
+      # @option (see Puree::API::Authentication#configure_api)
       def initialize(config)
         @resource_type = :server
         configure_api config
@@ -24,21 +23,6 @@ module Puree
       end
 
       private
-
-      # Configure a Pure host for API access.
-      #
-      # @param config [Hash]
-      def configure_api(config)
-        @config = Puree::API::Configuration.new url: config[:url]
-        @config.basic_auth username: config[:username],
-                           password: config[:password]
-
-        @request = Puree::API::Request.new url: @config.url
-        if @config.basic_auth?
-          @request.basic_auth username: @config.username,
-                              password: @config.password
-        end
-      end
 
       def combine_metadata
         model = Puree::Model::Server.new

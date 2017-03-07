@@ -5,10 +5,9 @@ module Puree
     # A collection extractor can retrieve any number of resources of the same type.
     #
     class Collection
+      include Puree::API::Authentication
 
-      attr_reader :response
-
-      # @option (see Puree::Extractor::Resource#initialize)
+      # @option (see Puree::API::Authentication#configure_api)
       # @param resource [Symbol]
       def initialize(config:, resource:)
         @resource_type = resource
@@ -24,7 +23,7 @@ module Puree
       # @param created_end [String]
       # @param modified_start [String]
       # @param modified_end [String]
-      # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset.
       def get(
               limit:            0,
               offset:           0,
@@ -46,7 +45,7 @@ module Puree
 
       # Gets a random resource of type specified in constructor.
       #
-      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset.
       def random_resource
         @response = @request.get rendering:        :system,
                                  limit:            1,
@@ -66,22 +65,7 @@ module Puree
 
       private
 
-      # Configure a Pure host for API access.
-      #
-      # @param config [Hash]
-      def configure_api(config)
-        @config = Puree::API::Configuration.new url: config[:url]
-        @config.basic_auth username: config[:username],
-                           password: config[:password]
-
-        @request = Puree::API::Request.new url: @config.url
-        if @config.basic_auth?
-          @request.basic_auth username: @config.username,
-                              password: @config.password
-        end
-      end
-
-      # Array of UUIDs (from system response)
+      # Array of UUIDs (from system response).
       #
       # @return [Array<String>]
       def uuids
@@ -114,8 +98,7 @@ module Puree
 
           uuids.each do |u|
             r = Object.const_get(resource_class).new config
-            record = r.find uuid: u,
-                            rendering: :xml_long
+            record = r.find uuid: u
             data << record
           end
           data
