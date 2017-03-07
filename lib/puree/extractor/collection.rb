@@ -7,8 +7,6 @@ module Puree
     class Collection
       include Puree::API::Authentication
 
-      attr_reader :response
-
       # @option (see Puree::API::Authentication#configure_api)
       # @param resource [Symbol]
       def initialize(config:, resource:)

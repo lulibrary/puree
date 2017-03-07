@@ -7,8 +7,6 @@ module Puree
     class Server
       include Puree::API::Authentication
 
-      attr_reader :response
-
       # @option (see Puree::API::Authentication#configure_api)
       def initialize(config)
         @resource_type = :server

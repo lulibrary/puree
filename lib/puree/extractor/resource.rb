@@ -7,8 +7,6 @@ module Puree
     class Resource
       include Puree::API::Authentication
 
-      attr_reader :response
-
       # @option (see Puree::API::Authentication#configure_api)
       # @param bleeding [Boolean]
       def initialize(config, bleeding: true)
