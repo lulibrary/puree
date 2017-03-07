@@ -23,11 +23,10 @@ module Puree
       # @param uuid [String]
       # @param id [String]
       # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
-      def get(uuid: nil, id: nil, rendering: :xml_long)
+      def get(uuid: nil, id: nil)
         raise 'Cannot perform a request without a configuration' if @config.nil?
         @response = @request.get uuid:           uuid,
                                  id:             id,
-                                 rendering:      rendering,
                                  latest_api:     @latest_api,
                                  resource_type:  @resource_type
         set_content @response.body

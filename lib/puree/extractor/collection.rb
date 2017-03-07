@@ -114,8 +114,7 @@ module Puree
 
           uuids.each do |u|
             r = Object.const_get(resource_class).new config
-            record = r.find uuid: u,
-                            rendering: :xml_long
+            record = r.find uuid: u
             data << record
           end
           data
