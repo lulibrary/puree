@@ -5,13 +5,13 @@ module Puree
     #
     class EndeavourPerson < Puree::Model::Structure
 
-      # @return [String, Nil]
+      # @return [String, nil]
       attr_reader :uuid
 
-      # @return [String, Nil]
+      # @return [String, nil]
       attr_reader :name
 
-      # @return [String, Nil]
+      # @return [String, nil]
       attr_reader :role
 
       # @param v [String]
