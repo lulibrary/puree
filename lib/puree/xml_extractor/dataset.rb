@@ -12,7 +12,7 @@ module Puree
       end
 
       # Open access permission
-      # @return [String, Nil]
+      # @return [String, nil]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
       end
@@ -33,18 +33,18 @@ module Puree
       end
 
       # Date made available
-      # @return [Time, Nil]
+      # @return [Time, nil]
       def available
         Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
       end
 
-      # @return [String, Nil]
+      # @return [String, nil]
       def description
         xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
       end
 
       # Digital Object Identifier
-      # @return [String, Nil]
+      # @return [String, nil]
       def doi
         xpath_query_for_single_value '/doi'
       end
@@ -133,7 +133,7 @@ module Puree
       end
 
       # Date of data production
-      # @return [Puree::Model::TemporalRange, Nil]
+      # @return [Puree::Model::TemporalRange, nil]
       def production
         temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
       end
@@ -154,7 +154,7 @@ module Puree
         data_arr.uniq
       end
 
-      # @return [String, Nil]
+      # @return [String, nil]
       def publisher
         xpath_query_for_single_value '/publisher/name'
       end
@@ -171,7 +171,7 @@ module Puree
       end
 
       # Spatial coverage point
-      # @return [Puree::Model::SpatialPoint, Nil]
+      # @return [Puree::Model::SpatialPoint, nil]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
         point = Puree::Model::SpatialPoint.new
@@ -190,12 +190,12 @@ module Puree
       # end
 
       # Temporal coverage
-      # @return [Puree::Model::TemporalRange, Nil]
+      # @return [Puree::Model::TemporalRange, nil]
       def temporal
         temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
       end
 
-      # @return [String, Nil]
+      # @return [String, nil]
       def title
         xpath_query_for_single_value '/title/localizedString'
       end

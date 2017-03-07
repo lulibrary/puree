@@ -30,7 +30,7 @@ The following examples are for the Dataset resource type.
 
 ### Configuration
 
-Create a hash for passing in to an extractor.
+Create a hash for passing to an extractor.
 
 ```ruby
 # Pure host with authentication.
@@ -48,15 +48,15 @@ config = {
 }
 ```
 
-### Single resource
+### Resource
 
-Configure a resource extractor to get data from a Pure host.
+Configure an extractor to retrieve data from a Pure host.
 
 ```ruby
 dataset_extractor = Puree::Extractor::Dataset.new config
 ```
 
-Fetch the metadata.
+Fetch the metadata for a resource with a particular identifier.
 
 ```ruby
 dataset = dataset_extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -82,7 +82,7 @@ dataset.persons_internal[0].name.last_initial
 
 ### Collection
 
-Configure a collection extractor to get data from a Pure host.
+Configure a collection extractor to retrieve data from a Pure host.
 
 ```ruby
 collection_extractor = Puree::Extractor::Collection.new config:   config,

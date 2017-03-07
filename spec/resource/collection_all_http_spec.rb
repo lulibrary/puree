@@ -2,18 +2,12 @@ require 'spec_helper'
 
 def new
   @p = Puree::Extractor::Collection.new resource: @resource_type,
-                                        url: ENV['PURE_URL']
-end
-
-def auth
-  @p.basic_auth username: ENV['PURE_USERNAME'],
-                password: ENV['PURE_PASSWORD']
+                                        config: config
 end
 
 def go resource_type
   @resource_type = resource_type
   new
-  auth
   fetch
 end
 
