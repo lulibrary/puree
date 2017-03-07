@@ -25,7 +25,7 @@ module Puree
       # @param created_end [String]
       # @param modified_start [String]
       # @param modified_end [String]
-      # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset.
       def get(
               limit:            0,
               offset:           0,
@@ -47,7 +47,7 @@ module Puree
 
       # Gets a random resource of type specified in constructor.
       #
-      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
+      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset.
       def random_resource
         @response = @request.get rendering:        :system,
                                  limit:            1,
@@ -67,7 +67,7 @@ module Puree
 
       private
 
-      # Array of UUIDs (from system response)
+      # Array of UUIDs (from system response).
       #
       # @return [Array<String>]
       def uuids

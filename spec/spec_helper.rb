@@ -93,29 +93,6 @@ def request_open(resource)
   @p = @extractor.random_resource
 end
 
-def from_file(resource)
-  before(:all) do
-    request resource
-    resource_class = 'Puree::Extractor::' + resource.to_s.capitalize
-    resource_extractor = Object.const_get(resource_class).new url: ENV['PURE_URL']
-    resource_extractor.basic_auth username: ENV['PURE_USERNAME'],
-                                  password: ENV['PURE_PASSWORD']
-    res = resource_extractor.find uuid: @p.uuid
-    @filename = "#{ENV['PURE_FILE_PATH']}#{resource.to_s}.#{res.uuid}.xml"
-    xml = resource_extractor.response.body
-    File.write(@filename, xml)
-    resource_class = "Puree::Extractor::#{resource.to_s.capitalize}"
-    resource_extractor = Object.const_get(resource_class).new url: nil
-    @p = resource_extractor.from_file @filename
-  end
-
-  resource_header
-
-  after(:all) do
-    # File.delete @filename if File.exists? @filename
-  end
-end
-
 def resource_header
   it '#uuid' do
     expect(@p.uuid).to be_a String if @p.uuid
