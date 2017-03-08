@@ -4,16 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
-- Factory to make resource objects?
 
-## 1.0.0 - 2017-03-06
+## 1.0.0 - 2017-03-08
 ### Added
 - Dataset - legal conditions.
-- Random resource from collection.
+- Collection - random resource.
 
 ### Changed
 - Simplified authentication.
-- Resource types returned as a model instance.
 - Hash data structures converted to model classes.
 - All dates in Time format.
 
