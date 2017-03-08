@@ -56,40 +56,70 @@ Ingesting research data management data from the Current Research Information Sy
 #VSLIDE
 
 - Consumes the Pure API.
-- Metadata available in simple data structures. <!-- .element: class="fragment" -->
+- Metadata available as Ruby data models. <!-- .element: class="fragment" -->
 - No XML processing needed in any code. <!-- .element: class="fragment" -->
 
 #VSLIDE
 
-## Single resource
-Tell Pur&#233;e what you are looking for...
+## Resource
+
+Configure an extractor to retrieve data from a Pure host.
 
 ```ruby
-d = Puree::Model::Dataset.new
-metadata = d.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-```
-...and get the data from a hash...
-
-```ruby
-metadata['doi']
+dataset_extractor = Puree::Extractor::Dataset.new config
 ```
 
-...or using a method...
+Fetch the metadata for a resource with a particular identifier.
 
 ```ruby
-d.doi
+dataset = dataset_extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+# =>
+#<Puree::Model::Dataset:0x987f7a4>
+```
+
+Access specific metadata e.g. an internal person's name.
+
+```ruby
+dataset.persons_internal[0].name
+# =>
+#<Puree::Model::PersonName:0x9add67c @first="Foo", @last="Bar">
+```
+
+Select a formatting style for a person's name.
+
+```ruby
+dataset.persons_internal[0].name.last_initial
+# =>
+# "Bar, F."
 ```
 
 #VSLIDE
 
-## Collection of resources
-Tell Pur&#233;e what you are looking for...
+## Collection
+
+Configure a collection extractor to retrieve data from a Pure host.
 
 ```ruby
-c = Puree::Collection.new resource: :dataset
-metadata = c.find limit: 50
+collection_extractor = Puree::Extractor::Collection.new config:   config,
+                                                        resource: :dataset
 ```
-...and get the data from an array of hashes or from an array of instances.
+
+Fetch a bunch of resources.
+
+```ruby
+dataset_collection = collection_extractor.find limit: 2
+# =>
+#<Puree::Model::Dataset:0xa62fd90>
+#<Puree::Model::Dataset:0xa5e8c24>
+```
+
+Fetch a random resource from the entire collection.
+
+```ruby
+random_dataset = collection_extractor.random_resource
+# =>
+#<Puree::Model::Dataset:0x97998bc>
+```
 
 #VSLIDE
 
@@ -98,11 +128,3 @@ metadata = c.find limit: 50
 <a href="https://rubygems.org/gems/puree" target="_blank">RubyGems</a>
 
 <a href="https://github.com/lulibrary/puree" target="_blank">GitHub</a>
-
-#VSLIDE
-
-## Documentation
-
-<a href="http://www.rubydoc.info/gems/puree" target="_blank">API in YARD</a>
-
-<a href="https://aalbinclark.gitbooks.io/puree" target="_blank">Detailed usage in GitBook</a>
