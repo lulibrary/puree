@@ -66,8 +66,8 @@ module Puree
           document_license = d.xpath('documentLicense')
           if !document_license.empty?
             license = Puree::Model::CopyrightLicense.new
-            license.name = document_license.xpath('/term/localizedString').text.strip
-            license.url = document_license.xpath('/description/localizedString').text.strip
+            license.name = document_license.xpath('term/localizedString').text.strip
+            license.url = document_license.xpath('description/localizedString').text.strip
             doc.license = license if license.data?
           end
           docs << doc
