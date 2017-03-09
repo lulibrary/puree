@@ -112,7 +112,7 @@ module Puree
             arr << person if person.data?
           end
         end
-        arr
+        arr.uniq { |d| d.uuid }
       end
 
       # @return [Puree::Model::TemporalRange, nil]

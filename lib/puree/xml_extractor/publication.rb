@@ -50,7 +50,7 @@ module Puree
           model.url = d.xpath('url').text.strip
           docs << model
         end
-        docs.uniq
+        docs.uniq { |d| d.url }
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
@@ -96,7 +96,7 @@ module Puree
 
           data << s
         end
-        data
+        data.uniq { |d| d.stage }
       end
 
       # @return [String, nil]
@@ -148,7 +148,7 @@ module Puree
             arr << person if person.data?
           end
         end
-        arr
+        arr.uniq { |d| d.uuid }
       end
 
       def roles

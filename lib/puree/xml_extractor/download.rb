@@ -24,7 +24,7 @@ module Puree
           model.count = i.attr('downloads').strip.to_i
           data_arr << model
         }
-        data_arr.uniq
+        data_arr.uniq { |d| d.uuid }
       end
 
       # Is there any data after get?

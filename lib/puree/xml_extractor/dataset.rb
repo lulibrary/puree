@@ -29,7 +29,7 @@ module Puree
           related.uuid = i.attr('uuid').strip
           data_arr << related
         }
-        data_arr.uniq
+        data_arr.uniq { |d| d.uuid }
       end
 
       # Date made available
@@ -63,13 +63,16 @@ module Puree
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
-          license = Puree::Model::CopyrightLicense.new
-          license.name = d.xpath('documentLicense/term/localizedString').text.strip
-          license.url = d.xpath('documentLicense/description/localizedString').text.strip
-          doc.license = license if license.data?
+          document_license = d.xpath('documentLicense')
+          if !document_license.empty?
+            license = Puree::Model::CopyrightLicense.new
+            license.name = document_license.xpath('term/localizedString').text.strip
+            license.url = document_license.xpath('description/localizedString').text.strip
+            doc.license = license if license.data?
+          end
           docs << doc
         end
-        docs.uniq
+        docs.uniq { |d| d.url }
       end
 
       # @return [Array<String>]
@@ -89,7 +92,7 @@ module Puree
           model.description = i.xpath('description').text.strip
           data << model
         }
-        data.uniq
+        data.uniq { |d| d.name }
       end
 
       # @return [Array<Puree::Model::Link>]
@@ -102,7 +105,7 @@ module Puree
           model.url = i.xpath('url').text.strip
           data << model
         }
-        data.uniq
+        data.uniq { |d| d.url }
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
@@ -151,7 +154,7 @@ module Puree
             data_arr << i
           end
         end
-        data_arr.uniq
+        data_arr
       end
 
       # @return [String, nil]
@@ -167,7 +170,7 @@ module Puree
         xpath_result.each do |i|
           data << i.text.strip
         end
-        data
+        data.uniq
       end
 
       # Spatial coverage point
@@ -248,7 +251,7 @@ module Puree
             arr << person if person.data?
           end
         end
-        arr
+        arr.uniq { |d| d.uuid }
       end
 
       # Temporal range

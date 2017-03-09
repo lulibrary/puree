@@ -6,7 +6,7 @@ module Puree
     class Structure
 
       def data?
-        instance_variables.each { |i| return true if !i.nil? }
+        instance_variables.each { |i| return true if i }
       end
 
     end
