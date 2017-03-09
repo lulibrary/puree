@@ -21,7 +21,7 @@ module Puree
         nokogiri_xml_nodeset.each do |i|
           data << organisation_header(i)
         end
-        data.uniq
+        data.uniq { |d| d.uuid }
       end
 
     end
