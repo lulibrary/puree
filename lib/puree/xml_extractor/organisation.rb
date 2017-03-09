@@ -29,7 +29,7 @@ module Puree
           a.country = country unless country.empty?
           data << a
         end
-        data.uniq
+        data.uniq { |d| d.street }
       end
 
       # @return [Array<String>]
