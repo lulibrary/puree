@@ -9,6 +9,7 @@ module Puree
       attr_reader :url, :username, :password
 
       def initialize(url:)
+        raise 'Missing URL in configuration' if !url
         @url = url
       end
 
@@ -19,6 +20,9 @@ module Puree
       def basic_auth(username:, password:)
         @username = username
         @password = password
+        msg = 'Credentials incomplete in configuration'
+        raise msg if username && !password
+        raise msg if password && !username
       end
 
       def basic_auth?
