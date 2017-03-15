@@ -49,6 +49,7 @@ module Puree
       # Endpoint for resource type.
       #
       # @param resource_type [Symbol]
+      # @return [String, nil]
       def service_name(resource_type)
         @api_map[:resource_type][resource_type][:service]
       end

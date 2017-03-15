@@ -2,7 +2,7 @@ module Puree
 
   module API
 
-    # Handles requests to Pure
+    # Handles requests to Pure.
     #
     class Request
 
@@ -35,6 +35,7 @@ module Puree
       # @param modified_start [String]
       # @param modified_end [String]
       # @param content_type [String]
+      # @return [HTTP::Response]
       def get(uuid: nil,
               id: nil,
               rendering: :xml_long,

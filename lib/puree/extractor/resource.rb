@@ -2,7 +2,7 @@ module Puree
 
   module Extractor
 
-    # Resource extractor
+    # Resource extractor.
     #
     class Resource
       include Puree::API::Authentication
