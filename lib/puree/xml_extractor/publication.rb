@@ -86,6 +86,11 @@ module Puree
         persons 'other'
       end
 
+      # @return [String, nil]
+      def publisher
+        xpath_query_for_single_value '/associatedPublisher/publisher/name'
+      end
+
       # @return [Array<Puree::Model::PublicationStatus>]
       def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'

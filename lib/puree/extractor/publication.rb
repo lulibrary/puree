@@ -27,6 +27,7 @@ module Puree
         @model.persons_internal = @extractor.persons_internal
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other
+        @model.publisher = @extractor.publisher
         @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle
         @model.title = @extractor.title

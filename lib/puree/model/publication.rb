@@ -38,6 +38,9 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [String, nil]
+      attr_accessor :publisher
+
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :statuses
 

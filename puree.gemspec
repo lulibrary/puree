@@ -9,8 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = 'Adrian Albin-Clark'
   spec.email         = 'a.albin-clark@lancaster.ac.uk'
   spec.summary       = %q{Metadata extraction from the Pure Research Information System.}
-  spec.description   = %q{Fetches metadata from the Pure Research Information System and
-                          extracts it into Ruby data models.}
   spec.homepage      = 'https://github.com/lulibrary/puree'
   spec.license       = 'MIT'
   spec.files         = `git ls-files -z`.split("\x0")
