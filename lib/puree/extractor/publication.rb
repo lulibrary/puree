@@ -21,6 +21,7 @@ module Puree
         @model.doi = @extractor.doi
         @model.event = @extractor.event
         @model.files = @extractor.files
+        @model.keywords = @extractor.keywords
         @model.organisations = @extractor.organisations
         @model.pages = @extractor.pages
         @model.persons_internal = @extractor.persons_internal

@@ -20,6 +20,9 @@ module Puree
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 
+      # @return [Array<String>]
+      attr_accessor :keywords
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 

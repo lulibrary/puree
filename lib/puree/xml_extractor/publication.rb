@@ -53,6 +53,13 @@ module Puree
         docs.uniq { |d| d.url }
       end
 
+      # @return [Array<String>]
+      def keywords
+        xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+        data_arr = xpath_result.map { |i| i.text.strip }
+        data_arr.uniq
+      end
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
