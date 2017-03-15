@@ -6,7 +6,14 @@ module Puree
     #
     class Configuration
 
-      attr_reader :url, :username, :password
+      # @return [String]
+      attr_reader :url
+
+      # @return [String, nil]
+      attr_reader :username
+
+      # @return [String, nil]
+      attr_reader :password
 
       def initialize(url:)
         raise 'Missing URL in configuration' if !url

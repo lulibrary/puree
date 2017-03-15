@@ -1,6 +1,6 @@
 module Puree
 
-  # Pure specific details concerning requests and responses.
+  # Pure-specific details concerning requests and responses.
   #
   module API
 

@@ -12,11 +12,14 @@ module Puree
 
       # Records available in collection.
       #
+      # @return [Fixnum]
       def count
         @doc.xpath('//count').text.strip.to_i
       end
 
       # Resource UUIDs in collection response.
+      #
+      # @return [Array<String>]
       def uuids
         arr = []
         xpath_result = @doc.xpath '//renderedItem/@renderedContentUUID'
