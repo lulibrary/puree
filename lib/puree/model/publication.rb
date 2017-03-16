@@ -20,6 +20,9 @@ module Puree
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 
+      # @return [Array<String>]
+      attr_accessor :keywords
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
@@ -34,6 +37,9 @@ module Puree
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
+
+      # @return [String, nil]
+      attr_accessor :publisher
 
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :statuses
