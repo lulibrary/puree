@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.1.0 - 2017-03-24
+### Added
+- Publication - additional metadata.
+
 ## 1.0.0 - 2017-03-15
 ### Added
 - Dataset - legal conditions.
