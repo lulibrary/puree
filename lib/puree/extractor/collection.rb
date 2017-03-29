@@ -19,10 +19,10 @@ module Puree
       #
       # @param limit [Fixnum]
       # @param offset [Fixnum]
-      # @param created_start [String]
-      # @param created_end [String]
-      # @param modified_start [String]
-      # @param modified_end [String]
+      # @param created_start [String] using format YYYY-MM-DD
+      # @param created_end [String] using format YYYY-MM-DD
+      # @param modified_start [String] using format YYYY-MM-DD
+      # @param modified_end [String] using format YYYY-MM-DD
       # @return [Array<Puree::Model::Resource subclass>] Resource metadata e.g. Puree::Model::Dataset.
       def get(
               limit:            0,
