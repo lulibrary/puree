@@ -4,6 +4,7 @@ require 'nokogiri'
 require 'puree/version'
 
 require 'puree/util/date'
+require 'puree/util/string'
 
 require 'puree/xml_extractor/shared'
 require 'puree/xml_extractor/base'

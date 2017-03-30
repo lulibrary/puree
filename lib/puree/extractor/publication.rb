@@ -16,6 +16,7 @@ module Puree
 
       def combine_metadata
         super
+
         @model.category = @extractor.category
         @model.description = @extractor.description
         @model.doi = @extractor.doi
