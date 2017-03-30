@@ -26,6 +26,9 @@ module Puree
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
+      # @return [Puree::Model::OrganisationHeader, nil]
+      attr_accessor :owner
+
       # @return [Fixnum, nil]
       attr_accessor :pages
 
