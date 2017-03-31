@@ -50,6 +50,11 @@ module Puree
         data_arr.uniq
       end
 
+      # @return [String, nil]
+      def language
+        xpath_query_for_single_value '/language/term/localizedString'
+      end
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
@@ -110,6 +115,16 @@ module Puree
       # @return [String, nil]
       def title
         xpath_query_for_single_value '/title'
+      end
+
+      # @return [String, nil]
+      def translated_subtitle
+        xpath_query_for_single_value '/translatedSubtitle/localizedString'
+      end
+
+      # @return [String, nil]
+      def  translated_title
+        xpath_query_for_single_value '/translatedTitle/localizedString'
       end
 
       # @return [String, nil]

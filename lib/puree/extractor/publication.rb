@@ -21,6 +21,7 @@ module Puree
         @model.description = @extractor.description
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
+        @model.language = @extractor.language
         @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
         @model.persons_internal = @extractor.persons_internal
@@ -30,6 +31,8 @@ module Puree
         @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle
         @model.title = @extractor.title
+        @model.translated_subtitle = @extractor.translated_subtitle
+        @model.translated_title = @extractor.translated_title
         @model.type = @extractor.type
         @model
       end

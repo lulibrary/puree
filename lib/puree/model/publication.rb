@@ -11,26 +11,20 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
-      # @return [String, nil]
-      # attr_accessor :doi
-
-      # @return [Puree::Model::EventHeader, nil]
-      # attr_accessor :event
-
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 
       # @return [Array<String>]
       attr_accessor :keywords
 
+      # @return [String, nil]
+      attr_accessor :language
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
       # @return [Puree::Model::OrganisationHeader, nil]
       attr_accessor :owner
-
-      # @return [Fixnum, nil]
-      # attr_accessor :pages
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_internal
@@ -52,6 +46,12 @@ module Puree
 
       # @return [String, nil]
       attr_accessor :title
+
+      # @return [String, nil]
+      attr_accessor :translated_subtitle
+
+      # @return [String, nil]
+      attr_accessor :translated_title
 
       # @return [String, nil]
       attr_accessor :type

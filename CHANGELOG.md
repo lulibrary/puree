@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.2.0 - 2017-03-31
 ### Added
-- Publication - owner.
+- Publication - language, owner, translated_title, translated_subtitle.
 - Publication types - Doctoral Thesis and Master's Thesis.
 
 ### Changed
