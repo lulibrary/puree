@@ -28,7 +28,7 @@ module Puree
         types = {
             '/dk/atira/pure/thesis/qualification/mphil' => 'MPhil',
             '/dk/atira/pure/thesis/qualification/phd' => 'PhD',
-            '/dk/atira/pure/thesis/qualification/mastersbyresearch' => 'Masters by Research'
+            '/dk/atira/pure/thesis/qualification/masters_by_research' => 'Masters by Research'
         }
         xpath_result = xpath_query_for_single_value '/qualification/uri'
         types[xpath_result]
