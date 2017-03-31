@@ -16,6 +16,8 @@ module Puree
         super
         @model.award_date = @extractor.award_date
         @model.awarding_institution = @extractor.awarding_institution
+        @model.doi = @extractor.doi
+        @model.pages = @extractor.pages
         @model.qualification = @extractor.qualification
         @model.sponsors = @extractor.sponsors
         @model

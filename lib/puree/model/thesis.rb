@@ -12,6 +12,12 @@ module Puree
       attr_accessor :awarding_institution
 
       # @return [String, nil]
+      attr_accessor :doi
+
+      # # @return [Fixnum, nil]
+      attr_accessor :pages
+
+      # @return [String, nil]
       attr_accessor :qualification
 
       # @return [Array<String>, nil]

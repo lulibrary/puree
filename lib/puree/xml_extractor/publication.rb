@@ -26,17 +26,17 @@ module Puree
       #   xpath_query_for_single_value '//doi'
       # end
 
-      # @return [Puree::Model::EventHeader, nil]
-      def event
-        xpath_result = xpath_query '/event'
-        if !xpath_result.empty?
-          header = Puree::Model::EventHeader.new
-          header.uuid = xpath_result.xpath('@uuid').text.strip
-          header.title = xpath_result.xpath('title/localizedString').text.strip
-          return header if header.data?
-        end
-        nil
-      end
+      # # @return [Puree::Model::EventHeader, nil]
+      # def event
+      #   xpath_result = xpath_query '/event'
+      #   if !xpath_result.empty?
+      #     header = Puree::Model::EventHeader.new
+      #     header.uuid = xpath_result.xpath('@uuid').text.strip
+      #     header.title = xpath_result.xpath('title/localizedString').text.strip
+      #     return header if header.data?
+      #   end
+      #   nil
+      # end
 
       # @return [Array<Puree::Model::File>]
       def files
@@ -79,11 +79,11 @@ module Puree
         Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
-      # @return [Fixnum, nil]
-      def pages
-        xpath_result = xpath_query_for_single_value('/numberOfPages')
-        xpath_result ? xpath_result.to_i : nil
-      end
+      # # @return [Fixnum, nil]
+      # def pages
+      #   xpath_result = xpath_query_for_single_value('/numberOfPages')
+      #   xpath_result ? xpath_result.to_i : nil
+      # end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal

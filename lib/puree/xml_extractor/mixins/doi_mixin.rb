@@ -4,7 +4,7 @@ module Puree
 
     # DOI extractor mixin.
     #
-    module Doi
+    module DoiMixin
 
       # @return [String, nil]
       def doi
