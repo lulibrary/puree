@@ -30,6 +30,11 @@ module Puree
 
       private
 
+      # For specialised extraction such as Publication subtypes e.g. doctoral_thesis
+      def set_model_type(type)
+        @model_type = type
+      end
+
       # Set content from XML.
       #
       # @param xml [String]
@@ -42,12 +47,20 @@ module Puree
 
       def setup(resource)
         @resource_type = resource
-        resource_class = "Puree::Model::#{resource.to_s.capitalize}"
+        if @model_type
+          resource_class = "Puree::Model::#{Puree::Util::String.titleize(@model_type.to_s)}"
+        else
+          resource_class = "Puree::Model::#{resource.to_s.capitalize}"
+        end
         @model = Object.const_get(resource_class).new
       end
 
       def make_xml_extractor xml
-        resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
+        if @model_type
+          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@model_type.to_s)}"
+        else
+          resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
+        end
         @extractor = Object.const_get(resource_class).new xml: xml
       end
 
