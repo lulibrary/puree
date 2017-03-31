@@ -22,9 +22,9 @@ module Puree
       end
 
       # @return [String, nil]
-      def doi
-        xpath_query_for_single_value '//doi'
-      end
+      # def doi
+      #   xpath_query_for_single_value '//doi'
+      # end
 
       # @return [Puree::Model::EventHeader, nil]
       def event

@@ -4,6 +4,7 @@ module Puree
     # Thesis XML extractor.
     #
     class Thesis < Puree::XMLExtractor::Publication
+      include Puree::XMLExtractor::Doi
 
       def initialize(xml:)
         super
