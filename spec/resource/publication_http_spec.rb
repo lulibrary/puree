@@ -25,14 +25,6 @@ describe 'Publication' do
       expect(@p.description).to be_a String if @p.description
     end
 
-    it '#doi' do
-      expect(@p.doi).to be_a String if @p.doi
-    end
-
-    it '#event' do
-      expect(@p.event).to be_a Puree::Model::EventHeader if @p.event
-    end
-
     it '#files' do
       expect(@p.files).to all( be_a Puree::Model::File )
     end
@@ -41,8 +33,8 @@ describe 'Publication' do
       expect(@p.organisations).to all( be_a Puree::Model::OrganisationHeader )
     end
 
-    it '#pages' do
-      expect(@p.pages).to be_a Fixnum if @p.pages
+    it '#owner' do
+      expect(@p.owner).to be_a Puree::Model::OrganisationHeader if @p.owner
     end
 
     it '#persons_internal' do
@@ -67,6 +59,14 @@ describe 'Publication' do
 
     it '#title' do
       expect(@p.title).to be_a String if @p.title
+    end
+
+    it '#translated_title' do
+      expect(@p.translated_title).to be_a String if @p.translated_title
+    end
+
+    it '#translated_subtitle' do
+      expect(@p.translated_subtitle).to be_a String if @p.translated_subtitle
     end
 
     it '#type' do

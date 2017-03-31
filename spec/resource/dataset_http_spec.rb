@@ -55,6 +55,10 @@ describe 'Dataset' do
       expect(@p.links).to all( be_a Puree::Model::Link )
     end
 
+    it '#owner' do
+      expect(@p.owner).to be_a Puree::Model::OrganisationHeader if @p.owner
+    end
+
     it '#persons_internal' do
       expect(@p.persons_internal).to all( be_a Puree::Model::EndeavourPerson )
     end
