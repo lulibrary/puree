@@ -19,13 +19,10 @@ module Puree
 
         @model.category = @extractor.category
         @model.description = @extractor.description
-        # @model.doi = @extractor.doi
-        # @model.event = @extractor.event
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
         @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
-        # @model.pages = @extractor.pages
         @model.persons_internal = @extractor.persons_internal
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other

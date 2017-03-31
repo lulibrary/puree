@@ -21,23 +21,6 @@ module Puree
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
-      # @return [String, nil]
-      # def doi
-      #   xpath_query_for_single_value '//doi'
-      # end
-
-      # # @return [Puree::Model::EventHeader, nil]
-      # def event
-      #   xpath_result = xpath_query '/event'
-      #   if !xpath_result.empty?
-      #     header = Puree::Model::EventHeader.new
-      #     header.uuid = xpath_result.xpath('@uuid').text.strip
-      #     header.title = xpath_result.xpath('title/localizedString').text.strip
-      #     return header if header.data?
-      #   end
-      #   nil
-      # end
-
       # @return [Array<Puree::Model::File>]
       def files
         xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation'
@@ -78,12 +61,6 @@ module Puree
         xpath_result = xpath_query '/owner'
         Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
-
-      # # @return [Fixnum, nil]
-      # def pages
-      #   xpath_result = xpath_query_for_single_value('/numberOfPages')
-      #   xpath_result ? xpath_result.to_i : nil
-      # end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
@@ -193,7 +170,11 @@ module Puree
             # Author
             # Illustrator
             # Editor
-            # Translator
+            # Translator      # # @return [Fixnum, nil]
+      # def pages
+      #   xpath_result = xpath_query_for_single_value('/numberOfPages')
+      #   xpath_result ? xpath_result.to_i : nil
+      # end
             # Publisher
 
             # ... many, many more research output types ...

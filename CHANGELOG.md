@@ -5,10 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
-## 1.2.0 - 2017-03-30
+## 1.2.0 - 2017-03-31
 ### Added
 - Publication - owner.
-- Publication - theses subtypes.
+- Publication types - Doctoral Thesis and Master's Thesis.
+
+### Changed
+- Publication - common attribute set established. doi, event, pages become mixins
+for publication types.
 
 ## 1.1.0 - 2017-03-24
 ### Added
