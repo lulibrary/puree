@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Publication types - Doctoral Thesis and Master's Thesis.
 
 ### Changed
-- Publication - common attribute set established. doi, event, pages become mixins
+- Publication - common attributes established. doi, event, pages become mixins
 for publication types.
 
 ## 1.1.0 - 2017-03-24
