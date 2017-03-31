@@ -34,6 +34,7 @@ module Puree
         types[xpath_result]
       end
 
+      # @return [Array<String>]
       def sponsors
         xpath_query_for_multi_value '/sponsors/externalOrganisation/name'
       end
