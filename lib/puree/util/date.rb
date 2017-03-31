@@ -1,8 +1,7 @@
 module Puree
-
   module Util
 
-    # Date transformations
+    # Date transformations.
     #
     module Date
 
@@ -82,5 +81,4 @@ module Puree
     end
 
   end
-
 end
