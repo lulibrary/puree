@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 1.2.0 - 2017-03-30
 ### Added
 - Publication - owner.
+- Publication - theses subtypes.
 
 ## 1.1.0 - 2017-03-24
 ### Added

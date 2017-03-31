@@ -11,6 +11,13 @@ module Puree
         super
       end
 
+      private
+
+      def combine_metadata
+        super
+        @model.type === 'Doctoral Thesis' ? @model : nil
+      end
+
     end
 
   end
