@@ -4,8 +4,10 @@ module Puree
     # Journal article XML extractor.
     #
     class JournalArticle < Puree::XMLExtractor::Publication
+      include Puree::XMLExtractor::BibliographicalNoteMixin
       include Puree::XMLExtractor::PagesMixin
       include Puree::XMLExtractor::PageRangeMixin
+      include Puree::XMLExtractor::PeerReviewedMixin
 
       def initialize(xml:)
         super
@@ -14,11 +16,6 @@ module Puree
       # @return [Fixnum, nil]
       def article_number
         xpath_query_for_single_value('/articleNumber')
-      end
-
-      # @return [String, nil]
-      def bibliographical_note
-        xpath_query_for_single_value('/bibliographicalNote')
       end
 
       # @return [Fixnum, nil]
@@ -38,14 +35,6 @@ module Puree
           header.uuid = journal.attr('uuid').text.strip
           return header
         end
-        nil
-      end
-
-      # @return [Boolean, nil]
-      def peer_reviewed
-        xpath_result = xpath_query_for_single_value('/peerReview/peerReviewed')
-        return true if xpath_result === 'true'
-        return false if xpath_result === 'false'
         nil
       end
 
