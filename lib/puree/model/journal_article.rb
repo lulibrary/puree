@@ -17,7 +17,7 @@ module Puree
       # @return [Fixnum, nil]
       attr_accessor :issue
 
-      # # @return [Fixnum, nil]
+      # @return [Fixnum, nil]
       attr_accessor :pages
 
       # @return [String, nil]

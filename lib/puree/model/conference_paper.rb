@@ -8,7 +8,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :bibliographical_note
 
-      # # @return [Fixnum, nil]
+      # @return [Fixnum, nil]
       attr_accessor :pages
 
       # @return [String, nil]
