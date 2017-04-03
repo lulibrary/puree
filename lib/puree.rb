@@ -43,6 +43,7 @@ require 'puree/api/authentication'
 require 'puree/model/helper/validation'
 require 'puree/model/structure'
 
+require 'puree/model/mixins/keywords_mixin'
 require 'puree/model/resource'
 require 'puree/model/dataset'
 require 'puree/model/download_header'
