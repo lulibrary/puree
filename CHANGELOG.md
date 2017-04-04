@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.3.0 - 2017-04-03
 ### Added
-- Publication type - JournalArticle
+- Publication type - JournalArticle, Paper, ConferencePaper.
 
 ## 1.2.0 - 2017-03-31
 ### Added
