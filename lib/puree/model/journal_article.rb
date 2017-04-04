@@ -11,6 +11,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :bibliographical_note
 
+      # @return [Array<String>, nil]
+      attr_accessor :dois
+
       # @return [Puree::Model::JournalHeader, nil]
       attr_accessor :journal
 

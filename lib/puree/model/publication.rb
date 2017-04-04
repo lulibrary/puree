@@ -11,6 +11,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
+      # @return [Array<String>]
+      attr_accessor :dois
+
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 
@@ -19,6 +22,9 @@ module Puree
 
       # @return [String, nil]
       attr_accessor :language
+
+      # @return [Array<String>]
+      attr_accessor :links
 
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
