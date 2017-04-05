@@ -99,12 +99,18 @@ module Puree
 
       # @return [String, nil]
       def publication_place
-        xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
+        # handles variations in path
+        xpath_result = xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
+        xpath_result = xpath_query_for_single_value '/associatedPublishers/placeOfPublication' if !xpath_result
+        xpath_result
       end
 
       # @return [String, nil]
       def publisher
-        xpath_query_for_single_value '/associatedPublisher/publisher/name'
+        # handles variations in path
+        xpath_result = xpath_query_for_single_value '/associatedPublisher/publisher/name'
+        xpath_result = xpath_query_for_single_value '/associatedPublishers/publisher/name' if !xpath_result
+        xpath_result
       end
 
       # @return [Array<Puree::Model::PublicationStatus>]
