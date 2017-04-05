@@ -1,13 +1,13 @@
 module Puree
   module Extractor
 
-    # Conference paper extractor.
+    # Paper base extractor.
+    # Do not use directly.
     #
-    class ConferencePaper < Puree::Extractor::PaperBase
+    class PaperBase < Puree::Extractor::Publication
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
-        set_model_type 'conference_paper'
         super
       end
 
@@ -16,7 +16,9 @@ module Puree
       def combine_metadata
         super
 
-        @model.event = @extractor.event
+        @model.pages = @extractor.pages
+        @model.page_range = @extractor.page_range
+        @model.peer_reviewed = @extractor.peer_reviewed
         @model
       end
 

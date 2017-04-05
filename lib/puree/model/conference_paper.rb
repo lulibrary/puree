@@ -3,16 +3,10 @@ module Puree
 
     # A conference paper.
     #
-    class ConferencePaper < Puree::Model::Publication
+    class ConferencePaper < Puree::Model::PaperBase
 
-      # @return [Fixnum, nil]
-      attr_accessor :pages
-
-      # @return [String, nil]
-      attr_accessor :page_range
-
-      # @return [Boolean, nil]
-      attr_accessor :peer_reviewed
+      # @return [Puree::Model::EventHeader, nil]
+      attr_accessor :event
 
     end
   end
