@@ -8,9 +8,6 @@ module Puree
       # @return [Fixnum, nil]
       attr_accessor :article_number
 
-      # @return [String, nil]
-      attr_accessor :bibliographical_note
-
       # @return [Puree::Model::JournalHeader, nil]
       attr_accessor :journal
 

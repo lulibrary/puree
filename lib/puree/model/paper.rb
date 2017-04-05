@@ -5,9 +5,6 @@ module Puree
     #
     class Paper < Puree::Model::Publication
 
-      # @return [String, nil]
-      attr_accessor :bibliographical_note
-
       # @return [Fixnum, nil]
       attr_accessor :pages
 

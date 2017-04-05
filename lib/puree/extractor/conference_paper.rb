@@ -16,7 +16,6 @@ module Puree
       def combine_metadata
         super
 
-        @model.bibliographical_note = @extractor.bibliographical_note
         @model.pages = @extractor.pages
         @model.page_range = @extractor.page_range
         @model.peer_reviewed = @extractor.peer_reviewed

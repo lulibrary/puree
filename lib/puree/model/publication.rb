@@ -6,6 +6,9 @@ module Puree
     class Publication < Resource
 
       # @return [String, nil]
+      attr_accessor :bibliographical_note
+
+      # @return [String, nil]
       attr_accessor :category
 
       # @return [String, nil]
@@ -40,6 +43,9 @@ module Puree
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
+
+      # @return [String, nil]
+      attr_accessor :publication_place
 
       # @return [String, nil]
       attr_accessor :publisher
