@@ -17,7 +17,6 @@ module Puree
         super
 
         @model.article_number = @extractor.article_number
-        @model.bibliographical_note = @extractor.bibliographical_note
         @model.issue = @extractor.issue
         @model.journal = @extractor.journal
         @model.pages = @extractor.pages

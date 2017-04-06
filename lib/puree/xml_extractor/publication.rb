@@ -5,11 +5,15 @@ module Puree
     # Publication XML extractor.
     #
     class Publication < Puree::XMLExtractor::Resource
-      include Puree::XMLExtractor::ElectronicVersionMixin
 
       def initialize(xml:)
         @resource_type = :publication
         super
+      end
+
+      # @return [String, nil]
+      def bibliographical_note
+        xpath_query_for_single_value('/bibliographicalNote')
       end
 
       # @return [String, nil]
@@ -22,6 +26,33 @@ module Puree
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
+      # @return [Array<String>, nil]
+      def dois
+        xpath_query_for_multi_value '/electronicVersionAssociations/electronicVersionDOIAssociations/electronicVersionDOIAssociation/doi'
+      end
+
+      # @return [Array<Puree::Model::File>]
+      def files
+        xpath_result = xpath_query '/electronicVersionAssociations/electronicVersionFileAssociations/electronicVersionFileAssociation'
+        docs = []
+        xpath_result.each do |d|
+          model = Puree::Model::File.new
+          model.name = d.xpath('file/fileName').text.strip
+          model.mime = d.xpath('file/mimeType').text.strip
+          model.size = d.xpath('file/size').text.strip.to_i
+          model.url = d.xpath('file/url').text.strip
+          document_license = d.xpath('licenseType')
+          if !document_license.empty?
+            license = Puree::Model::CopyrightLicense.new
+            license.name = document_license.xpath('term/localizedString').text.strip
+            license.url = document_license.xpath('description/localizedString').text.strip
+            model.license = license if license.data?
+          end
+          docs << model
+        end
+        docs.uniq { |d| d.url }
+      end
+
       # @return [Array<String>]
       def keywords
         xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
@@ -32,6 +63,11 @@ module Puree
       # @return [String, nil]
       def language
         xpath_query_for_single_value '/language/term/localizedString'
+      end
+
+      # @return [Array<String>, nil]
+      def links
+        xpath_query_for_multi_value '/electronicVersionAssociations/electronicVersionLinkAssociations/electronicVersionLinkAssociation/link'
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
@@ -62,8 +98,19 @@ module Puree
       end
 
       # @return [String, nil]
+      def publication_place
+        # handles variations in path
+        xpath_result = xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
+        xpath_result = xpath_query_for_single_value '/associatedPublishers/placeOfPublication' if !xpath_result
+        xpath_result
+      end
+
+      # @return [String, nil]
       def publisher
-        xpath_query_for_single_value '/associatedPublisher/publisher/name'
+        # handles variations in path
+        xpath_result = xpath_query_for_single_value '/associatedPublisher/publisher/name'
+        xpath_result = xpath_query_for_single_value '/associatedPublishers/publisher/name' if !xpath_result
+        xpath_result
       end
 
       # @return [Array<Puree::Model::PublicationStatus>]

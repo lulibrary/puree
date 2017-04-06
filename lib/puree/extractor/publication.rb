@@ -17,6 +17,7 @@ module Puree
       def combine_metadata
         super
 
+        @model.bibliographical_note = @extractor.bibliographical_note
         @model.category = @extractor.category
         @model.description = @extractor.description
         @model.dois = @extractor.dois
@@ -29,6 +30,7 @@ module Puree
         @model.persons_internal = @extractor.persons_internal
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other
+        @model.publication_place = @extractor.publication_place
         @model.publisher = @extractor.publisher
         @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle

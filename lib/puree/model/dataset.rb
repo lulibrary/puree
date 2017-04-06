@@ -4,7 +4,6 @@ module Puree
     # A dataset produced during some research.
     #
     class Dataset < Resource
-      include Puree::Model::KeywordsMixin
 
       # Open access permission.
       # @return [String, nil]
@@ -30,7 +29,7 @@ module Puree
       attr_accessor :files
 
       # @return [Array<String>]
-      # attr_accessor :keywords
+      attr_accessor :keywords
 
       # @return [Array<Puree::Model::LegalCondition>]
       attr_accessor :legal_conditions

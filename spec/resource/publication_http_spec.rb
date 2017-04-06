@@ -17,6 +17,10 @@ describe 'Publication' do
       expect(@p).to be_a Puree::Model::Publication
     end
 
+    it '#bibliographical_note' do
+      expect(@p.bibliographical_note).to be_a String if @p.bibliographical_note
+    end
+
     it '#category' do
       expect(@p.category).to be_a String if @p.category
     end
@@ -25,8 +29,24 @@ describe 'Publication' do
       expect(@p.description).to be_a String if @p.description
     end
 
+    it '#dois' do
+      expect(@p.dois).to all( be_a String )
+    end
+
     it '#files' do
       expect(@p.files).to all( be_a Puree::Model::File )
+    end
+
+    it '#keywords' do
+      expect(@p.keywords).to all( be_a String )
+    end
+
+    it '#language' do
+      expect(@p.language).to be_a String if @p.language
+    end
+
+    it '#links' do
+      expect(@p.links).to all( be_a String )
     end
 
     it '#organisations' do
@@ -49,6 +69,14 @@ describe 'Publication' do
       expect(@p.persons_other).to all( be_a Puree::Model::EndeavourPerson )
     end
 
+    it '#publication_place' do
+      expect(@p.publication_place).to be_a String if @p.publication_place
+    end
+
+    it '#publisher' do
+      expect(@p.publisher).to be_a String if @p.publisher
+    end
+
     it '#statuses' do
       expect(@p.statuses).to all( be_a Puree::Model::PublicationStatus )
     end
@@ -61,12 +89,12 @@ describe 'Publication' do
       expect(@p.title).to be_a String if @p.title
     end
 
-    it '#translated_title' do
-      expect(@p.translated_title).to be_a String if @p.translated_title
-    end
-
     it '#translated_subtitle' do
       expect(@p.translated_subtitle).to be_a String if @p.translated_subtitle
+    end
+
+    it '#translated_title' do
+      expect(@p.translated_title).to be_a String if @p.translated_title
     end
 
     it '#type' do

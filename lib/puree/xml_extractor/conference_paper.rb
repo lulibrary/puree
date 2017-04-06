@@ -3,11 +3,8 @@ module Puree
 
     # Conference paper XML extractor.
     #
-    class ConferencePaper < Puree::XMLExtractor::Publication
-      include Puree::XMLExtractor::BibliographicalNoteMixin
-      include Puree::XMLExtractor::PagesMixin
-      include Puree::XMLExtractor::PageRangeMixin
-      include Puree::XMLExtractor::PeerReviewedMixin
+    class ConferencePaper < Puree::XMLExtractor::PaperBase
+      include Puree::XMLExtractor::EventMixin
 
       def initialize(xml:)
         super

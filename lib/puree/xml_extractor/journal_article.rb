@@ -4,7 +4,6 @@ module Puree
     # Journal article XML extractor.
     #
     class JournalArticle < Puree::XMLExtractor::Publication
-      include Puree::XMLExtractor::BibliographicalNoteMixin
       include Puree::XMLExtractor::PagesMixin
       include Puree::XMLExtractor::PageRangeMixin
       include Puree::XMLExtractor::PeerReviewedMixin
