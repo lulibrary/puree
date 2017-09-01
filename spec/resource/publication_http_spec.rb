@@ -17,6 +17,10 @@ describe 'Publication' do
       expect(@p).to be_a Puree::Model::Publication
     end
 
+    it '#associated' do
+      expect(@p.associated).to all( be_a Puree::Model::RelatedContentHeader )
+    end
+
     it '#bibliographical_note' do
       expect(@p.bibliographical_note).to be_a String if @p.bibliographical_note
     end
@@ -31,6 +35,10 @@ describe 'Publication' do
 
     it '#dois' do
       expect(@p.dois).to all( be_a String )
+    end
+
+    it '#external_organisations' do
+      expect(@p.external_organisations).to all( be_a Puree::Model::ExternalOrganisationHeader )
     end
 
     it '#files' do

@@ -17,10 +17,12 @@ module Puree
       def combine_metadata
         super
 
+        @model.associated = @extractor.associated
         @model.bibliographical_note = @extractor.bibliographical_note
         @model.category = @extractor.category
         @model.description = @extractor.description
         @model.dois = @extractor.dois
+        @model.external_organisations = @extractor.external_organisations
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
         @model.language = @extractor.language

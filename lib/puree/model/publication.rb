@@ -5,6 +5,9 @@ module Puree
     #
     class Publication < Resource
 
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :associated
+
       # @return [String, nil]
       attr_accessor :bibliographical_note
 
@@ -16,6 +19,9 @@ module Puree
 
       # @return [Array<String>]
       attr_accessor :dois
+
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
+      attr_accessor :external_organisations
 
       # @return [Array<Puree::Model::File>]
       attr_accessor :files

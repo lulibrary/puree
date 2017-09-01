@@ -5,6 +5,8 @@ module Puree
     # Project XML extractor.
     #
     class Project < Puree::XMLExtractor::Resource
+      # include Puree::XMLExtractor::AssociatedMixin # not present in stable API
+      include Puree::XMLExtractor::ExternalOrganisationsMixin
 
       def initialize(xml:)
         super
@@ -19,6 +21,13 @@ module Puree
       # @return [String, nil]
       def description
         xpath_query_for_single_value '/description/localizedString'
+      end
+
+      # @return [Boolean]
+      def funded?
+        xpath_result = xpath_query_for_single_value '/type'
+        return false if xpath_result.downcase.include? 'nonfunded'
+        true
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]

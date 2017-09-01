@@ -23,8 +23,21 @@ describe 'Project' do
       expect(@p.acronym).to be_a String if @p.acronym
     end
 
+    # not present in stable API
+    # it '#associated' do
+    #   expect(@p.associated).to all( be_a Puree::Model::RelatedContentHeader )
+    # end
+
     it '#description' do
       expect(@p.description).to be_a String if @p.description
+    end
+
+    it '#external_organisations' do
+      expect(@p.external_organisations).to all( be_a Puree::Model::ExternalOrganisationHeader )
+    end
+
+    it '#funded' do
+      expect(@p.funded).to be(true).or be(false)
     end
 
     it '#organisations' do

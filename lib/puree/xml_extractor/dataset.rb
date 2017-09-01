@@ -5,6 +5,7 @@ module Puree
     # Dataset XML extractor.
     #
     class Dataset < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::AssociatedMixin
 
       def initialize(xml:)
         super
@@ -15,21 +16,6 @@ module Puree
       # @return [String, nil]
       def access
         xpath_query_for_single_value '/openAccessPermission/term/localizedString'
-      end
-
-      # Combines projects and publications
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      def associated
-        xpath_result = xpath_query '/associatedContent/relatedContent'
-        data_arr = []
-        xpath_result.each { |i|
-          related = Puree::Model::RelatedContentHeader.new
-          related.type = i.xpath('typeClassification').text.strip
-          related.title = i.xpath('title').text.strip
-          related.uuid = i.attr('uuid').strip
-          data_arr << related
-        }
-        data_arr.uniq { |d| d.uuid }
       end
 
       # Date made available
