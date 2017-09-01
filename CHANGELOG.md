@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.4.0 - 2017-08-31
+- Project - external_organisations, funded.
+
 ## 1.3.0 - 2017-04-03
 ### Added
 - Publication type - JournalArticle, Paper, ConferencePaper.

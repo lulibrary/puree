@@ -19,6 +19,8 @@ module Puree
         super
         @model.acronym = @extractor.acronym
         @model.description = @extractor.description
+        @model.external_organisations = @extractor.external_organisations
+        @model.funded = @extractor.funded?
         @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
         @model.persons_internal = @extractor.persons_internal

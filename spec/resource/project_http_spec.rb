@@ -27,6 +27,14 @@ describe 'Project' do
       expect(@p.description).to be_a String if @p.description
     end
 
+    it '#external_organisations' do
+      expect(@p.external_organisations).to all( be_a Puree::Model::ExternalOrganisationHeader )
+    end
+
+    it '#funded' do
+      expect(@p.funded).to be(true).or be(false)
+    end
+
     it '#organisations' do
       expect(@p.organisations).to all( be_a Puree::Model::OrganisationHeader )
     end

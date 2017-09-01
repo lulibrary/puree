@@ -11,6 +11,12 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
+      attr_accessor :external_organisations
+
+      # @return [Boolean]
+      attr_accessor :funded
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 

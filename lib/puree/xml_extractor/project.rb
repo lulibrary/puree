@@ -21,6 +21,19 @@ module Puree
         xpath_query_for_single_value '/description/localizedString'
       end
 
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
+      def external_organisations
+        xpath_result = xpath_query '/associatedExternalOrganisations/externalOrganisation'
+        Puree::XMLExtractor::Shared.external_organisation_multi_header xpath_result
+      end
+
+      # @return [Boolean]
+      def funded?
+        xpath_result = xpath_query_for_single_value '/type'
+        return false if xpath_result.downcase.include? 'nonfunded'
+        true
+      end
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
         xpath_result = xpath_query '/organisations/association/organisation'
