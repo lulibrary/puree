@@ -5,6 +5,7 @@ module Puree
     # Project XML extractor.
     #
     class Project < Puree::XMLExtractor::Resource
+      # include Puree::XMLExtractor::AssociatedMixin # not present in stable API
       include Puree::XMLExtractor::ExternalOrganisationsMixin
 
       def initialize(xml:)
