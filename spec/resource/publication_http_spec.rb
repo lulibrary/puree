@@ -37,6 +37,10 @@ describe 'Publication' do
       expect(@p.dois).to all( be_a String )
     end
 
+    it '#external_organisations' do
+      expect(@p.external_organisations).to all( be_a Puree::Model::ExternalOrganisationHeader )
+    end
+
     it '#files' do
       expect(@p.files).to all( be_a Puree::Model::File )
     end

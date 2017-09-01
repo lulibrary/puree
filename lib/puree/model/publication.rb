@@ -20,6 +20,9 @@ module Puree
       # @return [Array<String>]
       attr_accessor :dois
 
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
+      attr_accessor :external_organisations
+
       # @return [Array<Puree::Model::File>]
       attr_accessor :files
 

@@ -22,6 +22,7 @@ module Puree
         @model.category = @extractor.category
         @model.description = @extractor.description
         @model.dois = @extractor.dois
+        @model.external_organisations = @extractor.external_organisations
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
         @model.language = @extractor.language

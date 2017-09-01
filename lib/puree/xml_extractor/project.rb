@@ -5,6 +5,7 @@ module Puree
     # Project XML extractor.
     #
     class Project < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::ExternalOrganisationsMixin
 
       def initialize(xml:)
         super
@@ -19,12 +20,6 @@ module Puree
       # @return [String, nil]
       def description
         xpath_query_for_single_value '/description/localizedString'
-      end
-
-      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
-      def external_organisations
-        xpath_result = xpath_query '/associatedExternalOrganisations/externalOrganisation'
-        Puree::XMLExtractor::Shared.external_organisation_multi_header xpath_result
       end
 
       # @return [Boolean]
