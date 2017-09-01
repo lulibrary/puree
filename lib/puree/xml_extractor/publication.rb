@@ -5,6 +5,7 @@ module Puree
     # Publication XML extractor.
     #
     class Publication < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::AssociatedMixin
 
       def initialize(xml:)
         @resource_type = :publication
