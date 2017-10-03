@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.5.0 - 2017-10-03
+### Added
+- Dataset, Publication - workflow_state.
+
 ## 1.4.0 - 2017-09-01
 - Project - external_organisations, funded.
 - Publication - associated, external_organisations.

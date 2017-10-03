@@ -103,6 +103,10 @@ describe 'Dataset' do
       expect(@p.title).to be_a String if @p.title
     end
 
+    it '#workflow_state' do
+      expect(@p.workflow_state).to be_a String if @p.workflow_state
+    end
+
   end
 
 end

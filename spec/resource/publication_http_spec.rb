@@ -109,6 +109,10 @@ describe 'Publication' do
       expect(@p.type).to be_a String if @p.type
     end
 
+    it '#workflow_state' do
+      expect(@p.workflow_state).to be_a String if @p.workflow_state
+    end
+
   end
 
 end

@@ -6,6 +6,7 @@ module Puree
     #
     class Dataset < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
+      include Puree::XMLExtractor::WorkflowStateMixin
 
       def initialize(xml:)
         super
@@ -172,11 +173,6 @@ module Puree
         end
         nil
       end
-
-      # def state
-      #   # useful?
-      #   /startedWorkflow/state
-      # end
 
       # Temporal coverage
       # @return [Puree::Model::TemporalRange, nil]
