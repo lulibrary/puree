@@ -38,6 +38,7 @@ module Puree
         @model.spatial_point = @extractor.spatial_point
         @model.temporal = @extractor.temporal
         @model.title = @extractor.title
+        @model.workflow_state = @extractor.workflow_state
         @model
       end
 

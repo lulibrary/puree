@@ -79,6 +79,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :title
 
+      # @return [String, nil]
+      attr_accessor :workflow_state
+
     end
   end
 end

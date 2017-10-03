@@ -40,6 +40,7 @@ module Puree
         @model.translated_subtitle = @extractor.translated_subtitle
         @model.translated_title = @extractor.translated_title
         @model.type = @extractor.type
+        @model.workflow_state = @extractor.workflow_state
         @model
       end
 
