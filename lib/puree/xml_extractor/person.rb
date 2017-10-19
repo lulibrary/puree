@@ -22,6 +22,18 @@ module Puree
         xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
       end
 
+      # @return [String, nil]
+      def employee_id
+        xpath_result = xpath_query '/sources/classificationDefinedStringFieldExtension'
+        if xpath_result
+          xpath_result.each do |i|
+            if i.xpath('classification/uri').text.strip === '/dk/atira/pure/person/personsources/employee'
+              return i.xpath('value').text.strip
+            end
+          end
+        end
+      end
+
       # @return [Array<String>]
       def image_urls
         xpath_query_for_multi_value '/photos/file/url'

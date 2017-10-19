@@ -18,6 +18,7 @@ module Puree
         super
         @model.affiliations = @extractor.affiliations
         @model.email_addresses = @extractor.email_addresses
+        @model.employee_id = @extractor.employee_id
         @model.image_urls = @extractor.image_urls
         @model.keywords = @extractor.keywords
         @model.name = @extractor.name

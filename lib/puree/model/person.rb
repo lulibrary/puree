@@ -11,6 +11,9 @@ module Puree
       # @return [Array<String>]
       attr_accessor :email_addresses
 
+      # @return [String, nil]
+      attr_accessor :employee_id
+
       # @return [Array<String>]
       attr_accessor :image_urls
 

@@ -27,6 +27,10 @@ describe 'Person' do
       expect(@p.email_addresses).to all( be_a String )
     end
 
+    it '#employee_id' do
+      expect(@p.employee_id).to be_a String if @p.employee_id
+    end
+
     it '#image_urls' do
       expect(@p.image_urls).to all( be_a String )
     end
