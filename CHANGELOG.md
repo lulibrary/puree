@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Person - employee_id.
 - Query class for pulling data together from several places to answer important questions.
-- Query - Publication - funders.
+- Query - Publication, Project - funders.
 
 ## 1.5.0 - 2017-10-03
 ### Added

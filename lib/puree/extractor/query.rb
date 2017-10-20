@@ -50,6 +50,25 @@ module Puree
       # set_content @response.body
     end
 
+    # Project funders
+    # @param uuid [String] Project UUID.
+    # @return [Array<String>] List of funder names which have funded this project.
+    def project_funders(uuid:)
+      funders = []
+      project_extractor = Puree::Extractor::Project.new @config
+      project = project_extractor.find uuid: uuid
+      if project
+        if project.funded
+          project.external_organisations.each do |org|
+            external_organisation_extractor = Puree::Extractor::ExternalOrganisation.new @config
+            external_organisation = external_organisation_extractor.find uuid: org.uuid
+            funders << external_organisation.name if external_organisation.type == '/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/researchFundingBody'
+          end
+        end
+      end
+      funders.uniq
+    end
+
     # Publication funders
     # @param uuid [String] Publication UUID.
     # @return [Array<String>] List of funder names which have funded this publication via a project.
@@ -60,15 +79,8 @@ module Puree
       if publication
         publication.associated.each do |associated|
           if associated.type == 'Research'
-            project_extractor = Puree::Extractor::Project.new @config
-            project = project_extractor.find uuid: associated.uuid
-            if project.funded
-              project.external_organisations.each do |org|
-                external_organisation_extractor = Puree::Extractor::ExternalOrganisation.new @config
-                external_organisation = external_organisation_extractor.find uuid: org.uuid
-                funders << external_organisation.name if external_organisation.type == '/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/researchFundingBody'
-              end
-            end
+            single_project_funders = project_funders uuid: associated.uuid
+            funders += single_project_funders
           end
         end
       end
