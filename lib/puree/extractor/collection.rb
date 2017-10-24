@@ -86,7 +86,7 @@ module Puree
 
       def collect_resources
         data = []
-        resource_class = "Puree::Extractor::#{@resource_type.to_s.capitalize}"
+        resource_class = "Puree::Extractor::#{Puree::Util::String.titleize(@resource_type)}"
 
         # whitelist symbol
         if @api_map[:resource_type].has_key?(@resource_type)

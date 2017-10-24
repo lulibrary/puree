@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.6.0 - 2017-10-24
+### Added
+- ExternalOrganisation.
+- Person - employee_id.
+- Query - Person - publication_count, publications.
+- Query - Funding - project_funders, publication_funders.
+
 ## 1.5.0 - 2017-10-03
 ### Added
 - Dataset, Publication - workflow_state.

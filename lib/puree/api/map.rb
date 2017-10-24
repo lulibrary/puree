@@ -31,6 +31,10 @@ module Puree
             server: {
               service: 'servermeta',
               response: 'GetServerMetaResponse'
+            },
+            external_organisation: {
+              service: 'externalOrganisation',
+              response: 'GetExternalOrganisationResponse'
             }
           }
         }

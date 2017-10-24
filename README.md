@@ -1,4 +1,4 @@
-# Pur&#233;e
+     # Pur&#233;e
 
 Metadata extraction from the Pure Research Information System.
 
@@ -92,7 +92,7 @@ collection_extractor = Puree::Extractor::Collection.new config:   config,
 Fetch a bunch of resources.
 
 ```ruby
-dataset_collection = collection_extractor.find limit: 2
+collection_extractor.find limit: 2
 # =>
 #<Puree::Model::Dataset:0xa62fd90>
 #<Puree::Model::Dataset:0xa5e8c24>
@@ -101,7 +101,53 @@ dataset_collection = collection_extractor.find limit: 2
 Fetch a random resource from the entire collection.
 
 ```ruby
-random_dataset = collection_extractor.random_resource
+collection_extractor.random_resource
 # =>
 #<Puree::Model::Dataset:0x97998bc>
+```
+
+### Query
+
+Get answers to important questions.
+
+#### Funding
+
+Configure a funding query to retrieve data from a Pure host.
+
+```ruby
+funding_query = Puree::Query::Funding.new config
+```
+
+Who are the funders (if any) for a project?
+
+```ruby
+funding_query.project_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+# =>
+#<Puree::Model::ExternalOrganisation:0x98986f0>
+```
+
+Who are the funders (if any) for a publication, via a project?
+
+```ruby
+funding_query.publication_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+```
+
+#### Person
+
+Configure a person query to retrieve data from a Pure host.
+
+```ruby
+person_query = Puree::Query::Person.new config
+```
+
+Get at most ten publications published by a person during the first six months of 2017.
+
+```ruby
+person_query.publications uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+                          limit: 10,
+                          published_start: '2017-01-01',
+                          published_end: '2017-06-30'
+# =>
+#<Puree::Model::Publication:0x9d2c004>
+#<Puree::Model::Publication:0xa285028>
 ```

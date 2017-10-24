@@ -48,18 +48,18 @@ module Puree
       def setup(resource)
         @resource_type = resource
         if @model_type
-          resource_class = "Puree::Model::#{Puree::Util::String.titleize(@model_type.to_s)}"
+          resource_class = "Puree::Model::#{Puree::Util::String.titleize(@model_type)}"
         else
-          resource_class = "Puree::Model::#{resource.to_s.capitalize}"
+          resource_class = "Puree::Model::#{Puree::Util::String.titleize(resource)}"
         end
         @model = Object.const_get(resource_class).new
       end
 
       def make_xml_extractor xml
         if @model_type
-          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@model_type.to_s)}"
+          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@model_type)}"
         else
-          resource_class = "Puree::XMLExtractor::#{@resource_type.to_s.capitalize}"
+          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@resource_type)}"
         end
         @extractor = Object.const_get(resource_class).new xml: xml
       end
