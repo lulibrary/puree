@@ -1,4 +1,4 @@
-     # Pur&#233;e
+# Pur&#233;e
 
 Metadata extraction from the Pure Research Information System.
 
