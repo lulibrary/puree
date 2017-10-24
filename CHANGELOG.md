@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - ExternalOrganisation.
 - Person - employee_id.
 - Query - Person - publication_count, publications.
-- Query - Funding - publication_funders, project_funders.
+- Query - Funding - project_funders, publication_funders.
 
 ## 1.5.0 - 2017-10-03
 ### Added
