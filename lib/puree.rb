@@ -110,7 +110,8 @@ require 'puree/extractor/collection'
 require 'puree/extractor/download'
 require 'puree/extractor/server'
 
-require 'puree/extractor/query'
+require 'puree/query/funding'
+require 'puree/query/person'
 
 # Metadata extraction from the Pure Research Information System.
 #
