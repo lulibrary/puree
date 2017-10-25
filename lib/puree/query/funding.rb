@@ -26,7 +26,7 @@ module Puree
             end
           end
         end
-        deduplicate_funders funders
+        funders.uniq { |i| i.uuid }
       end
 
       # Publication funders
@@ -44,22 +44,7 @@ module Puree
             end
           end
         end
-        deduplicate_funders funders
-      end
-
-      private
-
-      def deduplicate_funders(funders)
-        uuids_in_list = []
-        funder_list = []
-        funders.each do |funder|
-          uuid = funder.uuid
-          unless uuids_in_list.include? uuid
-            funder_list << funder
-            uuids_in_list << uuid
-          end
-        end
-        funder_list
+        funders.uniq { |i| i.uuid }
       end
 
     end
