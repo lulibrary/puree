@@ -14,6 +14,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :employee_id
 
+      # @return [String, nil]
+      attr_accessor :hesa_id
+
       # @return [Array<String>]
       attr_accessor :image_urls
 
@@ -25,6 +28,9 @@ module Puree
 
       # @return [String, nil]
       attr_accessor :orcid
+
+      # @return [String, nil]
+      attr_accessor :scopus_id
 
     end
   end

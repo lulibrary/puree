@@ -42,6 +42,18 @@ module Puree
         @model
       end
 
+      def configure_api(config)
+        @config = Puree::API::Configuration.new url: config[:url]
+        @config.basic_auth username: config[:username],
+                           password: config[:password]
+
+        @request = Puree::API::PersonRequest.new url: @config.url
+        if @config.basic_auth?
+          @request.basic_auth username: @config.username,
+                              password: @config.password
+        end
+      end
+
     end
 
   end

@@ -25,6 +25,7 @@ module Puree
       #
       # @param uuid [String]
       # @param id [String]
+      # @param params [Hash]
       # @param rendering [String]
       # @param latest_api [Boolean]
       # @param resource_type [String]
@@ -38,6 +39,7 @@ module Puree
       # @return [HTTP::Response]
       def get(uuid: nil,
               id: nil,
+              params: {},
               rendering: :xml_long,
               latest_api: true,
               resource_type:,
@@ -53,6 +55,7 @@ module Puree
             @rendering =      rendering
             @uuid =           uuid
             @id =             id
+            @params =         params
             @limit =          limit
             @offset =         offset
             @created_start =  created_start
@@ -68,12 +71,12 @@ module Puree
         if @headers['Authorization']
           @req = @req.auth @headers['Authorization']
         end
-        @req.get(build_url, params: params)
+        @req.get(build_url, params: parameters)
       end
 
       private
 
-      def params
+      def parameters
         query = {}
         if @uuid
           query['uuids.uuid'] = @uuid

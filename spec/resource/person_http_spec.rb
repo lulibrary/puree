@@ -31,6 +31,10 @@ describe 'Person' do
       expect(@p.employee_id).to be_a String if @p.employee_id
     end
 
+    it '#hesa_id' do
+      expect(@p.hesa_id).to be_a String if @p.hesa_id
+    end
+
     it '#image_urls' do
       expect(@p.image_urls).to all( be_a String )
     end
@@ -45,6 +49,10 @@ describe 'Person' do
 
     it '#orcid' do
       expect(@p.orcid).to be_a String if @p.orcid
+    end
+
+    it '#scopus_id' do
+      expect(@p.scopus_id).to be_a String if @p.scopus_id
     end
 
   end

@@ -42,6 +42,7 @@ require 'puree/xml_extractor/server'
 
 require 'puree/api/map'
 require 'puree/api/request'
+require 'puree/api/person_request'
 require 'puree/api/configuration'
 require 'puree/api/authentication'
 
