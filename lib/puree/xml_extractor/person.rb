@@ -24,14 +24,12 @@ module Puree
 
       # @return [String, nil]
       def employee_id
-        xpath_result = xpath_query '/sources/classificationDefinedStringFieldExtension'
-        if xpath_result
-          xpath_result.each do |i|
-            if i.xpath('classification/uri').text.strip === '/dk/atira/pure/person/personsources/employee'
-              return i.xpath('value').text.strip
-            end
-          end
-        end
+        id '/dk/atira/pure/person/personsources/employee'
+      end
+
+      # @return [String, nil]
+      def hesa_id
+        id '/dk/atira/pure/person/personsources/hesastaff'
       end
 
       # @return [Array<String>]
@@ -60,6 +58,26 @@ module Puree
       # @return [String, nil]
       def orcid
         xpath_query_for_single_value '/orcid'
+      end
+
+      # @return [String, nil]
+      def scopus_id
+        id '/dk/atira/pure/person/personsources/scopusauthor'
+      end
+
+      private
+
+      # @return [String, nil]
+      def id(uri)
+        xpath_result = xpath_query '/sources/classificationDefinedStringFieldExtension'
+        if xpath_result
+          xpath_result.each do |i|
+            if i.xpath('classification/uri').text.strip === uri
+              return i.xpath('value').text.strip
+            end
+          end
+        end
+        nil
       end
 
     end

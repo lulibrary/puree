@@ -126,7 +126,7 @@ funding_query.project_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #<Puree::Model::ExternalOrganisation:0x98986f0>
 ```
 
-Who are the funders (if any) for a publication, via a project?
+Who are the funders (if any) for a publication?
 
 ```ruby
 funding_query.publication_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
