@@ -28,21 +28,23 @@ module Puree
         set_content @response.body
       end
 
+
+      # Set content from XML.
+      #
+      # @param xml [String]
+      def transform(xml)
+        if xml
+          make_xml_extractor xml
+          combine_metadata
+          # @extractor.get_data? ? combine_metadata : nil
+        end
+      end
+
       private
 
       # For specialised extraction such as Publication subtypes e.g. doctoral_thesis
       def set_model_type(type)
         @model_type = type
-      end
-
-      # Set content from XML.
-      #
-      # @param xml [String]
-      def set_content(xml)
-        if xml
-          make_xml_extractor xml
-          @extractor.get_data? ? combine_metadata : nil
-        end
       end
 
       def setup(resource)
@@ -68,8 +70,10 @@ module Puree
       # @return [Hash]
       def combine_metadata
         @model.uuid = @extractor.uuid
-        @model.created = @extractor.created
-        @model.modified = @extractor.modified
+        @model.created_by = @extractor.created_by
+        @model.created_date = @extractor.created_date
+        @model.modified_by = @extractor.modified_by
+        @model.modified_date = @extractor.modified_date
         @model.locale = @extractor.locale
       end
 

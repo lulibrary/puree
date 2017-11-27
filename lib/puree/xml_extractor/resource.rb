@@ -12,7 +12,8 @@ module Puree
 
       # content based
       def xpath_query(path)
-        path_from_root = service_xpath path
+        # path_from_root = service_xpath path
+        path_from_root = File.join '/', xpath_root, path
         @doc.xpath path_from_root
       end
 
@@ -24,14 +25,24 @@ module Puree
         xpath_result.text.strip === '1' ? true : false
       end
 
-      # @return [Time, nil]
-      def created
-        Time.parse xpath_query_for_single_value('/created')
+      # @return [String, nil]
+      def created_by
+        xpath_query_for_single_value('/info/createdBy')
       end
 
       # @return [Time, nil]
-      def modified
-        Time.parse xpath_query_for_single_value('/modified')
+      def created_date
+        Time.parse xpath_query_for_single_value('/info/createdDate')
+      end
+
+      # @return [String, nil]
+      def modified_by
+        xpath_query_for_single_value('/info/modifiedBy')
+      end
+
+      # @return [Time, nil]
+      def modified_date
+        Time.parse xpath_query_for_single_value('/info/modifiedDate')
       end
 
       # @return [String, nil]

@@ -9,7 +9,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :access
 
-      # Combines projects and publications.
+      # Related research outputs.
       # @return [Array<Puree::Model::RelatedContentHeader>]
       attr_accessor :associated
 

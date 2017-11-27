@@ -6,15 +6,15 @@ module Puree
     #
     module AssociatedMixin
 
-      # Combines projects and publications
+      # Related research outputs
       # @return [Array<Puree::Model::RelatedContentHeader>]
       def associated
-        xpath_result = xpath_query '/associatedContent/relatedContent'
+        xpath_result = xpath_query '/relatedResearchOutputs/relatedResearchOutput'
         data_arr = []
         xpath_result.each { |i|
           related = Puree::Model::RelatedContentHeader.new
-          related.type = i.xpath('typeClassification').text.strip
-          related.title = i.xpath('title').text.strip
+          related.type = i.xpath('type').text.strip
+          related.title = i.xpath('name').text.strip
           related.uuid = i.attr('uuid').strip
           data_arr << related
         }

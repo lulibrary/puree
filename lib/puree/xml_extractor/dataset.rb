@@ -22,12 +22,12 @@ module Puree
       # Date made available
       # @return [Time, nil]
       def available
-        Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
+        Puree::Util::Date.hash_to_time temporal_date('publicationDate')
       end
 
       # @return [String, nil]
       def description
-        xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
+        xpath_query_for_single_value '/description'
       end
 
       # Digital Object Identifier
@@ -64,7 +64,7 @@ module Puree
 
       # @return [Array<String>]
       def keywords
-        xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+        xpath_result =  xpath_query '/keywordGroups/keywordGroup[@logicalName="User-Defined Keywords"]/keywords/keyword'
         data_arr = xpath_result.map { |i| i.text.strip }
         data_arr.uniq
       end
@@ -103,7 +103,7 @@ module Puree
 
       # @return [Puree::Model::OrganisationHeader, nil]
       def owner
-        xpath_result = xpath_query '/managedBy'
+        xpath_result = xpath_query '/managingOrganisationalUnit/name'
         Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
@@ -182,7 +182,7 @@ module Puree
 
       # @return [String, nil]
       def title
-        xpath_query_for_single_value '/title/localizedString'
+        xpath_query_for_single_value '/title'
       end
 
       private
@@ -278,6 +278,10 @@ module Puree
             '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
             '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
         }
+      end
+
+      def xpath_root
+        'dataSet'
       end
 
     end

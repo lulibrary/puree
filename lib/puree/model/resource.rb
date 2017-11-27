@@ -8,11 +8,17 @@ module Puree
       # @return [String, nil]
       attr_reader :uuid
 
-      # @return [Time, nil]
-      attr_reader :created
+      # @return [String, nil]
+      attr_reader :created_by
 
       # @return [Time, nil]
-      attr_reader :modified
+      attr_reader :created_date
+
+      # @return [String, nil]
+      attr_reader :modified_by
+
+      # @return [Time, nil]
+      attr_reader :modified_date
 
       # @return [String, nil]
       attr_reader :locale
@@ -22,14 +28,24 @@ module Puree
         @uuid = v if v && !v.empty?
       end
 
-      # @param v [Time]
-      def created=(v)
-        @created = v
+      # @param v [String]
+      def created_by=(v)
+        @created_by = v
       end
 
       # @param v [Time]
-      def modified=(v)
-        @modified = v
+      def created_date=(v)
+        @created_date = v
+      end
+
+      # @param v [String]
+      def modified_by=(v)
+        @modified_by = v
+      end
+
+      # @param v [Time]
+      def modified_date=(v)
+        @modified_date = v
       end
 
       # @param v [String]
