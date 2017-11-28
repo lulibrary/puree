@@ -27,7 +27,7 @@ module Puree
 
       # @return [String, nil]
       def category
-        xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
+        xpath_query_for_single_value '/category'
       end
 
       # @return [Array<String>, nil]
@@ -59,7 +59,7 @@ module Puree
 
       # @return [String, nil]
       def language
-        xpath_query_for_single_value '/language/term/localizedString'
+        xpath_query_for_single_value '/language'
       end
 
       # @return [Array<String>, nil]
@@ -82,20 +82,18 @@ module Puree
         persons 'other'
       end
 
+      # Pure deprecated
       # @return [String, nil]
-      def publication_place
-        # handles variations in path
-        xpath_result = xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
-        xpath_result = xpath_query_for_single_value '/associatedPublishers/placeOfPublication' if !xpath_result
-        xpath_result
-      end
+      # def publication_place
+      #   # handles variations in path
+      #   xpath_result = xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
+      #   xpath_result = xpath_query_for_single_value '/associatedPublishers/placeOfPublication' if !xpath_result
+      #   xpath_result
+      # end
 
       # @return [String, nil]
       def publisher
-        # handles variations in path
-        xpath_result = xpath_query_for_single_value '/associatedPublisher/publisher/name'
-        xpath_result = xpath_query_for_single_value '/associatedPublishers/publisher/name' if !xpath_result
-        xpath_result
+        xpath_query_for_single_value '/publisher'
       end
 
       # @return [Array<Puree::Model::PublicationStatus>]
@@ -104,7 +102,7 @@ module Puree
         data = []
         xpath_result.each do |i|
           s = Puree::Model::PublicationStatus.new
-          s.stage = i.xpath('publicationStatus/term/localizedString').text.strip
+          s.stage = i.xpath('publicationStatus').text.strip
 
           ymd = {}
           ymd['year'] = i.xpath('publicationDate/year').text.strip

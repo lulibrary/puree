@@ -51,7 +51,7 @@ module Puree
       attr_accessor :persons_other
 
       # @return [String, nil]
-      attr_accessor :publication_place
+      # attr_accessor :publication_place
 
       # @return [String, nil]
       attr_accessor :publisher
