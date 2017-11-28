@@ -6,8 +6,14 @@ module Puree
     #
     class Publication < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
+      include Puree::XMLExtractor::AbstractMixin
       include Puree::XMLExtractor::ExternalOrganisationsMixin
+      include Puree::XMLExtractor::KeywordMixin
+      include Puree::XMLExtractor::OrganisationMixin
+      include Puree::XMLExtractor::OwnerMixin
+      include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::WorkflowStateMixin
+      include Puree::XMLExtractor::TitleMixin
 
       def initialize(xml:)
         @resource_type = :publication
@@ -22,11 +28,6 @@ module Puree
       # @return [String, nil]
       def category
         xpath_query_for_single_value '/publicationCategory/publicationCategory/term/localizedString'
-      end
-
-      # @return [String, nil]
-      def description
-        xpath_query_for_single_value '/abstract/localizedString'
       end
 
       # @return [Array<String>, nil]
@@ -56,13 +57,6 @@ module Puree
         docs.uniq { |d| d.url }
       end
 
-      # @return [Array<String>]
-      def keywords
-        xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-        data_arr = xpath_result.map { |i| i.text.strip }
-        data_arr.uniq
-      end
-
       # @return [String, nil]
       def language
         xpath_query_for_single_value '/language/term/localizedString'
@@ -71,18 +65,6 @@ module Puree
       # @return [Array<String>, nil]
       def links
         xpath_query_for_multi_value '/electronicVersionAssociations/electronicVersionLinkAssociations/electronicVersionLinkAssociation/link'
-      end
-
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      def organisations
-        xpath_result = xpath_query '/organisations/association/organisation'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
-      end
-
-      # @return [Puree::Model::OrganisationHeader, nil]
-      def owner
-        xpath_result = xpath_query '/owner'
-        Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -142,61 +124,21 @@ module Puree
       end
 
       # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title'
-      end
-
-      # @return [String, nil]
       def translated_subtitle
-        xpath_query_for_single_value '/translatedSubtitle/localizedString'
+        xpath_query_for_single_value '/translatedSubtitle'
       end
 
       # @return [String, nil]
-      def  translated_title
-        xpath_query_for_single_value '/translatedTitle/localizedString'
+      def translated_title
+        xpath_query_for_single_value '/translatedTitle'
       end
 
       # @return [String, nil]
       def type
-        xpath_query_for_single_value '/typeClassification/term/localizedString'
+        xpath_query_for_single_value '/type'
       end
 
       private
-
-      # @return [Array<Endeavour::Person>]
-      def persons(type)
-        xpath_result = xpath_query '/persons/personAssociation'
-        arr = []
-        xpath_result.each do |i|
-          uuid_internal = i.at_xpath('person/@uuid')
-          uuid_external = i.at_xpath('externalPerson/@uuid')
-          if uuid_internal
-            person_type = 'internal'
-            uuid = uuid_internal.text.strip
-          elsif uuid_external
-            person_type = 'external'
-            uuid = uuid_external.text.strip
-          else
-            person_type = 'other'
-            uuid = ''
-          end
-          if person_type === type
-            person = Puree::Model::EndeavourPerson.new
-            person.uuid = uuid
-
-            name = Puree::Model::PersonName.new
-            name.first = i.xpath('name/firstName').text.strip
-            name.last = i.xpath('name/lastName').text.strip
-            person.name = name
-
-            role_uri = i.xpath('personRole/uri').text.strip
-            person.role = roles[role_uri]
-
-            arr << person if person.data?
-          end
-        end
-        arr.uniq { |d| d.uuid }
-      end
 
       def roles
         {

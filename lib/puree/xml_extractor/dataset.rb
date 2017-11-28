@@ -6,7 +6,13 @@ module Puree
     #
     class Dataset < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
+      include Puree::XMLExtractor::DescriptionMixin
+      include Puree::XMLExtractor::KeywordMixin
+      include Puree::XMLExtractor::OrganisationMixin
+      include Puree::XMLExtractor::OwnerMixin
+      include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::WorkflowStateMixin
+      include Puree::XMLExtractor::TitleMixin
 
       def initialize(xml:)
         super
@@ -23,11 +29,6 @@ module Puree
       # @return [Time, nil]
       def available
         Puree::Util::Date.hash_to_time temporal_date('publicationDate')
-      end
-
-      # @return [String, nil]
-      def description
-        xpath_query_for_single_value '/description'
       end
 
       # Digital Object Identifier
@@ -63,13 +64,6 @@ module Puree
         docs.uniq { |d| d.url }
       end
 
-      # @return [Array<String>]
-      def keywords
-        xpath_result =  xpath_query '/keywordGroups/keywordGroup[@logicalName="User-Defined Keywords"]/keywords/keyword'
-        data_arr = xpath_result.map { |i| i.text.strip }
-        data_arr.uniq
-      end
-
       # @return [Array<Puree::Model::LegalCondition>]
       # def legal_conditions
       #   xpath_result = xpath_query '/legalConditions/legalCondition'
@@ -96,17 +90,9 @@ module Puree
       #   data.uniq { |d| d.url }
       # end
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      def organisations
-        xpath_result = xpath_query '/organisationalUnits/organisationalUnit'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
-      end
 
-      # @return [Puree::Model::OrganisationHeader, nil]
-      def owner
-        xpath_result = xpath_query '/managingOrganisationalUnit'
-        Puree::XMLExtractor::Shared.organisation_header xpath_result
-      end
+
+
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
@@ -200,43 +186,6 @@ module Puree
           end
         end
         data_arr.uniq
-      end
-
-      # @return [Array<Endeavour::Person>]
-      def persons(type)
-        xpath_result = xpath_query '/personAssociations/personAssociation'
-        arr = []
-        xpath_result.each do |i|
-          uuid_internal = i.at_xpath('person/@uuid')
-          uuid_external = i.at_xpath('externalPerson/@uuid')
-          if uuid_internal
-            person_type = 'internal'
-            uuid = uuid_internal.text.strip
-          elsif uuid_external
-            person_type = 'external'
-            uuid = uuid_external.text.strip
-          else
-            person_type = 'other'
-            uuid = ''
-          end
-          if person_type === type
-            person = Puree::Model::EndeavourPerson.new
-            person.uuid = uuid
-
-            name = Puree::Model::PersonName.new
-            name.first = i.xpath('name/firstName').text.strip
-            name.last = i.xpath('name/lastName').text.strip
-            person.name = name
-
-            # role_uri = i.xpath('personRole/uri').text.strip
-            # person.role = roles[role_uri]
-            person.role = i.xpath('personRole').text.strip
-
-            arr << person if person.data?
-          end
-        end
-        # does not work properly using uuid as some people don't have one
-        arr.uniq { |d| "#{d.name.last}#{d.name.first}#{d.role}" }
       end
 
       # Temporal range
