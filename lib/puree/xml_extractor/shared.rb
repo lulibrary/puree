@@ -27,8 +27,8 @@ module Puree
       def self.organisation_header(nokogiri_xml_element)
         h = Puree::Model::OrganisationHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
-        h.name = nokogiri_xml_element.xpath('name/localizedString').text.strip
-        h.type = nokogiri_xml_element.xpath('typeClassification/term/localizedString').text.strip
+        h.name = nokogiri_xml_element.xpath('name').text.strip
+        h.type = nokogiri_xml_element.xpath('type').text.strip
         h
       end
 

@@ -32,7 +32,7 @@ module Puree
       # Set content from XML.
       #
       # @param xml [String]
-      def transform(xml)
+      def extract(xml)
         if xml
           make_xml_extractor xml
           combine_metadata
@@ -71,10 +71,10 @@ module Puree
       def combine_metadata
         @model.uuid = @extractor.uuid
         @model.created_by = @extractor.created_by
-        @model.created_date = @extractor.created_date
+        @model.created_at = @extractor.created_at
         @model.modified_by = @extractor.modified_by
-        @model.modified_date = @extractor.modified_date
-        @model.locale = @extractor.locale
+        @model.modified_at = @extractor.modified_at
+        # @model.locale = @extractor.locale
       end
 
       alias :find :get

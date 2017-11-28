@@ -7,7 +7,7 @@ module Puree
 
       # Open access permission.
       # @return [String, nil]
-      attr_accessor :access
+      # attr_accessor :access
 
       # Related research outputs.
       # @return [Array<Puree::Model::RelatedContentHeader>]
@@ -32,10 +32,10 @@ module Puree
       attr_accessor :keywords
 
       # @return [Array<Puree::Model::LegalCondition>]
-      attr_accessor :legal_conditions
+      # attr_accessor :legal_conditions
 
       # @return [Array<Puree::Model::Link>]
-      attr_accessor :links
+      # attr_accessor :links
 
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
@@ -57,7 +57,7 @@ module Puree
       attr_accessor :production
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :projects
+      # attr_accessor :projects
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
       attr_accessor :publications

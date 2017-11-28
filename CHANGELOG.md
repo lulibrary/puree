@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+
+## 2.0.0 - 2017-11-28
+### Added
+- Resource subclasses - created_by, modified_by
+
+
 ## 1.7.0 - 2017-11-03
 ### Added
 - Person extractor - find by identifier.

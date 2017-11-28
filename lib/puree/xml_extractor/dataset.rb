@@ -43,9 +43,9 @@ module Puree
         docs = []
         xpath_result.each do |d|
           doc = Puree::Model::File.new
-          doc.name = d.xpath('fileName').text.strip
-          doc.mime = d.xpath('mimeType').text.strip
-          doc.size = d.xpath('size').text.strip.to_i
+          doc.name = d.xpath('title').text.strip
+          # doc.mime = d.xpath('mimeType').text.strip
+          # doc.size = d.xpath('size').text.strip.to_i
           doc.url = d.xpath('url').text.strip
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
@@ -53,8 +53,9 @@ module Puree
           document_license = d.xpath('documentLicense')
           if !document_license.empty?
             license = Puree::Model::CopyrightLicense.new
-            license.name = document_license.xpath('term/localizedString').text.strip
-            license.url = document_license.xpath('description/localizedString').text.strip
+            license.name = document_license.text.strip
+            # license.name = document_license.xpath('term/localizedString').text.strip
+            # license.url = document_license.xpath('description/localizedString').text.strip
             doc.license = license if license.data?
           end
           docs << doc
@@ -97,13 +98,13 @@ module Puree
 
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
-        xpath_result = xpath_query '/organisations/organisation'
+        xpath_result = xpath_query '/organisationalUnits/organisationalUnit'
         Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end
 
       # @return [Puree::Model::OrganisationHeader, nil]
       def owner
-        xpath_result = xpath_query '/managingOrganisationalUnit/name'
+        xpath_result = xpath_query '/managingOrganisationalUnit'
         Puree::XMLExtractor::Shared.organisation_header xpath_result
       end
 
@@ -125,7 +126,7 @@ module Puree
       # Date of data production
       # @return [Puree::Model::TemporalRange, nil]
       def production
-        temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
+        temporal_range 'dataProductionPeriod/startDate', 'dataProductionPeriod/endDate'
       end
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
@@ -152,7 +153,7 @@ module Puree
       # @return [Array<String>]
       def spatial_places
         # Data from free-form text box
-        xpath_result = xpath_query '/geographicalCoverage/localizedString'
+        xpath_result = xpath_query '/geographicalCoverage'
         data = []
         xpath_result.each do |i|
           data << i.text.strip
@@ -177,7 +178,7 @@ module Puree
       # Temporal coverage
       # @return [Puree::Model::TemporalRange, nil]
       def temporal
-        temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
+        temporal_range 'temporalCoveragePeriod/startDate', 'temporalCoveragePeriod/endDate'
       end
 
       # @return [String, nil]
@@ -203,7 +204,7 @@ module Puree
 
       # @return [Array<Endeavour::Person>]
       def persons(type)
-        xpath_result = xpath_query '/persons/dataSetPersonAssociation'
+        xpath_result = xpath_query '/personAssociations/personAssociation'
         arr = []
         xpath_result.each do |i|
           uuid_internal = i.at_xpath('person/@uuid')
@@ -227,13 +228,15 @@ module Puree
             name.last = i.xpath('name/lastName').text.strip
             person.name = name
 
-            role_uri = i.xpath('personRole/uri').text.strip
-            person.role = roles[role_uri]
+            # role_uri = i.xpath('personRole/uri').text.strip
+            # person.role = roles[role_uri]
+            person.role = i.xpath('personRole').text.strip
 
             arr << person if person.data?
           end
         end
-        arr.uniq { |d| d.uuid }
+        # does not work properly using uuid as some people don't have one
+        arr.uniq { |d| "#{d.name.last}#{d.name.first}#{d.role}" }
       end
 
       # Temporal range
@@ -281,7 +284,7 @@ module Puree
       end
 
       def xpath_root
-        'dataSet'
+        '/dataSet'
       end
 
     end
