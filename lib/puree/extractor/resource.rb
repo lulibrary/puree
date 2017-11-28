@@ -28,16 +28,12 @@ module Puree
         set_content @response.body
       end
 
-
-      # Set content from XML.
+      # Extract a single metadata record from XML.
       #
       # @param xml [String]
       def extract(xml)
-        if xml
-          make_xml_extractor xml
-          combine_metadata
-          # @extractor.get_data? ? combine_metadata : nil
-        end
+        make_xml_extractor xml
+        combine_metadata
       end
 
       private

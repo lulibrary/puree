@@ -43,6 +43,10 @@ module Puree
         xpath_result ? xpath_result.to_i : nil
       end
 
+      def xpath_root
+        '/contributionToJournal'
+      end
+
     end
   end
 end

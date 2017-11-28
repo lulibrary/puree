@@ -15,9 +15,9 @@ module Puree
 
       # Open access permission
       # @return [String, nil]
-      def access
-        xpath_query_for_single_value '/openAccessPermission/term/localizedString'
-      end
+      # def access
+      #   xpath_query_for_single_value '/openAccessPermission/term/localizedString'
+      # end
 
       # Date made available
       # @return [Time, nil]
@@ -71,30 +71,30 @@ module Puree
       end
 
       # @return [Array<Puree::Model::LegalCondition>]
-      def legal_conditions
-        xpath_result = xpath_query '/legalConditions/legalCondition'
-        data = []
-        xpath_result.each { |i|
-          model =  Puree::Model::LegalCondition.new
-          model.name = i.xpath('typeClassification/term/localizedString').text.strip
-          model.description = i.xpath('description').text.strip
-          data << model
-        }
-        data.uniq { |d| d.name }
-      end
+      # def legal_conditions
+      #   xpath_result = xpath_query '/legalConditions/legalCondition'
+      #   data = []
+      #   xpath_result.each { |i|
+      #     model =  Puree::Model::LegalCondition.new
+      #     model.name = i.xpath('typeClassification/term/localizedString').text.strip
+      #     model.description = i.xpath('description').text.strip
+      #     data << model
+      #   }
+      #   data.uniq { |d| d.name }
+      # end
 
       # @return [Array<Puree::Model::Link>]
-      def links
-        xpath_result = xpath_query '/links/link'
-        data = []
-        xpath_result.each { |i|
-          model =  Puree::Model::Link.new
-          model.description = i.xpath('description').text.strip
-          model.url = i.xpath('url').text.strip
-          data << model
-        }
-        data.uniq { |d| d.url }
-      end
+      # def links
+      #   xpath_result = xpath_query '/links/link'
+      #   data = []
+      #   xpath_result.each { |i|
+      #     model =  Puree::Model::Link.new
+      #     model.description = i.xpath('description').text.strip
+      #     model.url = i.xpath('url').text.strip
+      #     data << model
+      #   }
+      #   data.uniq { |d| d.url }
+      # end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
       def organisations
@@ -130,9 +130,9 @@ module Puree
       end
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
-      def projects
-        associated_type('Research').uniq
-      end
+      # def projects
+      #   associated_type('Research').uniq
+      # end
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
       def publications
