@@ -17,8 +17,8 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
-      # @return [Array<String>]
-      attr_accessor :dois
+      # @return [String, nil]
+      attr_accessor :doi
 
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :external_organisations
@@ -54,7 +54,7 @@ module Puree
       # attr_accessor :publication_place
 
       # @return [String, nil]
-      attr_accessor :publisher
+      # attr_accessor :publisher
 
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :statuses

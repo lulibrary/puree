@@ -21,7 +21,7 @@ module Puree
         @model.bibliographical_note = @extractor.bibliographical_note
         @model.category = @extractor.category
         @model.description = @extractor.description
-        @model.dois = @extractor.dois
+        @model.doi = @extractor.doi
         @model.external_organisations = @extractor.external_organisations
         @model.files = @extractor.files
         @model.keywords = @extractor.keywords
@@ -33,7 +33,7 @@ module Puree
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other
         # @model.publication_place = @extractor.publication_place
-        @model.publisher = @extractor.publisher
+        # @model.publisher = @extractor.publisher
         @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle
         @model.title = @extractor.title
