@@ -39,6 +39,12 @@ module Puree
         xpath_query_for_multi_value '/sponsors/externalOrganisation/name'
       end
 
+      private
+
+      def xpath_root
+        '/thesis'
+      end
+
     end
   end
 end

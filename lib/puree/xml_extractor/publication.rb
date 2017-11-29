@@ -7,8 +7,6 @@ module Puree
     class Publication < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
       include Puree::XMLExtractor::AbstractMixin
-      include Puree::XMLExtractor::ExternalOrganisationsMixin
-      include Puree::XMLExtractor::KeywordMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
@@ -56,6 +54,13 @@ module Puree
           docs << model
         end
         docs.uniq { |d| d.url }
+      end
+
+      # @return [Array<String>]
+      def keywords
+        xpath_result =  xpath_query '/keywordGroups/keywordGroup[@logicalName="keywordContainers"]/keywords/keyword'
+        data_arr = xpath_result.map { |i| i.text.strip }
+        data_arr.uniq
       end
 
       # @return [String, nil]
@@ -120,12 +125,12 @@ module Puree
 
       # @return [String, nil]
       def subtitle
-        xpath_query_for_single_value '/subtitle'
+        xpath_query_for_single_value '/subTitle'
       end
 
       # @return [String, nil]
       def translated_subtitle
-        xpath_query_for_single_value '/translatedSubtitle'
+        xpath_query_for_single_value '/translatedSubTitle'
       end
 
       # @return [String, nil]
