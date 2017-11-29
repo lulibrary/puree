@@ -18,7 +18,13 @@ module Puree
 
       # @return [String, nil]
       def type
-        xpath_query_for_single_value '/typeClassification/uri'
+        xpath_query_for_single_value '/type'
+      end
+
+      private
+
+      def xpath_root
+        '/externalOrganisation'
       end
 
     end

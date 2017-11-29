@@ -21,6 +21,12 @@ module Puree
       #   xpath_query_for_single_value '/typeClassification/term/localizedString'
       # end
 
+      private
+
+      def xpath_root
+        '/publisher'
+      end
+
     end
 
   end
