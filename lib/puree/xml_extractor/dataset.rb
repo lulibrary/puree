@@ -151,14 +151,13 @@ module Puree
       # @return [Puree::Model::SpatialPoint, nil]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
-        point = Puree::Model::SpatialPoint.new
-        if !xpath_result[0].nil?
+        if xpath_result
+          point = Puree::Model::SpatialPoint.new
           arr = xpath_result.text.split(',')
           point.latitude = arr[0].strip.to_f
           point.longitude = arr[1].strip.to_f
           point
         end
-        nil
       end
 
       # Temporal coverage
