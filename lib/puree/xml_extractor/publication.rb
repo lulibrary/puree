@@ -7,6 +7,7 @@ module Puree
     class Publication < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
       include Puree::XMLExtractor::AbstractMixin
+      include Puree::XMLExtractor::KeywordMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
@@ -58,9 +59,7 @@ module Puree
 
       # @return [Array<String>]
       def keywords
-        xpath_result =  xpath_query '/keywordGroups/keywordGroup[@logicalName="keywordContainers"]/keywords/keyword'
-        data_arr = xpath_result.map { |i| i.text.strip }
-        data_arr.uniq
+        keyword_group 'keywordContainers'
       end
 
       # @return [String, nil]

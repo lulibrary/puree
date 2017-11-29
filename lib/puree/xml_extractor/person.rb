@@ -5,6 +5,7 @@ module Puree
     # Person XML extractor.
     #
     class Person < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::KeywordMixin
 
       def initialize(xml:)
         super
@@ -13,33 +14,33 @@ module Puree
 
       # @return [Array<Puree::Model::OrganisationHeader>]
       def affiliations
-        xpath_result = xpath_query '//organisation'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
+        xpath_result = xpath_query '/staffOrganisationAssociations/staffOrganisationAssociation/organisationalUnit'
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result if xpath_result
       end
 
       # @return [Array<String>]
       def email_addresses
-        xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
+        xpath_query_for_multi_value '/staffOrganisationAssociations/staffOrganisationAssociation/emails/email'
       end
 
       # @return [String, nil]
       def employee_id
-        id '/dk/atira/pure/person/personsources/employee'
+        xpath_query_for_single_value '/ids/id[@type="Employee ID"]'
       end
 
       # @return [String, nil]
       def hesa_id
-        id '/dk/atira/pure/person/personsources/hesastaff'
+        xpath_query_for_single_value '/ids/id[@type="HESA staff ID"]'
       end
 
       # @return [Array<String>]
       def image_urls
-        xpath_query_for_multi_value '/photos/file/url'
+        xpath_query_for_multi_value '/profilePhotos/profilePhoto[@url]'
       end
 
       # @return [Array<String>]
       def keywords
-        xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+        keyword_group 'userDefinedKeywordContainers'
       end
 
       # @return [Puree::Model::PersonName, nil]
@@ -62,22 +63,13 @@ module Puree
 
       # @return [String, nil]
       def scopus_id
-        id '/dk/atira/pure/person/personsources/scopusauthor'
+        xpath_query_for_single_value '/ids/id[@type="Scopus author ID"]'
       end
 
       private
 
-      # @return [String, nil]
-      def id(uri)
-        xpath_result = xpath_query '/sources/classificationDefinedStringFieldExtension'
-        if xpath_result
-          xpath_result.each do |i|
-            if i.xpath('classification/uri').text.strip === uri
-              return i.xpath('value').text.strip
-            end
-          end
-        end
-        nil
+      def xpath_root
+        '/person'
       end
 
     end

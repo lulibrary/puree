@@ -90,9 +90,10 @@ module Puree
       #   data.uniq { |d| d.url }
       # end
 
-
-
-
+      # @return [Array<String>]
+      def keywords
+        keyword_group 'User-Defined Keywords'
+      end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
