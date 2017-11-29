@@ -26,15 +26,14 @@ module Puree
       # @return [Puree::Model::JournalHeader, nil]
       def journal
         xpath_result = xpath_query '/journalAssociation'
-        if !xpath_result.empty?
+        if xpath_result
           header = Puree::Model::JournalHeader.new
           header.title = xpath_result.xpath('title').text.strip
           journal = xpath_result.xpath('journal')
           header.type = journal.xpath('type').text.strip
           header.uuid = journal.attr('uuid').text.strip
-          return header
+          header
         end
-        nil
       end
 
       # @return [Fixnum, nil]
