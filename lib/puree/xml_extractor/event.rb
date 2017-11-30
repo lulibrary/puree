@@ -16,14 +16,15 @@ module Puree
         xpath_query_for_single_value '/city'
       end
 
+      # Pure Deprecated
       # @return [String, nil]
-      def country
-        xpath_query_for_single_value '/country/term/localizedString'
-      end
+      # def country
+      #   xpath_query_for_single_value '/country/term/localizedString'
+      # end
 
       # @return [Puree::Model::TemporalRange, nil]
       def date
-        xpath_result = xpath_query '/dateRange'
+        xpath_result = xpath_query '/period'
         range_start_str = xpath_result.xpath('startDate').text.strip
         range_end_str = xpath_result.xpath('endDate').text.strip
         if !range_start_str.empty?
@@ -41,19 +42,26 @@ module Puree
         xpath_query_for_single_value '/description'
       end
 
+      # Pure Deprecated
       # @return [String, nil]
       def location
-        xpath_query_for_single_value '/location'
+        # xpath_query_for_single_value '/location'
       end
 
       # @return [String, nil]
       def title
-        xpath_query_for_single_value '/title/localizedString'
+        xpath_query_for_single_value '/title'
       end
 
       # @return [String, nil]
       def type
-        xpath_query_for_single_value '//typeClassification/term/localizedString'
+        xpath_query_for_single_value '/type'
+      end
+
+      private
+
+      def xpath_root
+        '/event'
       end
 
     end
