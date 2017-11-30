@@ -74,17 +74,17 @@ module Puree
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
-        persons 'internal'
+        persons 'internal', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
-        persons 'external'
+        persons 'external', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
-        persons 'other'
+        persons 'other', '/personAssociations/personAssociation'
       end
 
       # Pure deprecated

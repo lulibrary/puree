@@ -36,7 +36,8 @@ module Puree
       def self.organisation_multi_header(nokogiri_xml_nodeset)
         data = []
         nokogiri_xml_nodeset.each do |i|
-          data << organisation_header(i)
+          header = organisation_header(i)
+          data << header if header.data?
         end
         data.uniq { |d| d.uuid }
       end

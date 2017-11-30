@@ -91,13 +91,63 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_equal true, x.persons_other.first.data?
   end
 
-  def test_persons_spatial_point
+  def test_spatial_point
     # Influenza C in Lancaster, winter 2014-2015
     id = 'a762a8a2-a9ed-4abb-ba91-a67752b1c54d'
     x = xml_extractor_from_id id
 
     assert_instance_of Puree::Model::SpatialPoint, x.spatial_point
     assert_equal true, x.spatial_point.data?
+  end
+
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Dataset.new xml: xml
+
+    assert_instance_of Array, x.associated
+    assert_empty x.associated
+
+    assert_nil x.available
+    assert_nil x.description
+    assert_nil x.doi
+
+    assert_instance_of Array, x.files
+    assert_empty x.associated
+
+    assert_instance_of Array, x.files
+    assert_empty x.files
+
+    assert_instance_of Array, x.keywords
+    assert_empty x.keywords
+
+    assert_instance_of Array, x.organisations
+    assert_empty x.organisations
+
+    assert_nil x.owner
+
+    assert_instance_of Array, x.persons_internal
+    assert_empty x.persons_internal
+
+    assert_instance_of Array, x.persons_external
+    assert_empty x.persons_external
+
+    assert_instance_of Array, x.persons_other
+    assert_empty x.persons_other
+
+    assert_nil x.production
+
+    assert_instance_of Array, x.publications
+    assert_empty x.publications
+
+    assert_nil x.publisher
+
+    assert_instance_of Array, x.spatial_places
+    assert_empty x.spatial_places
+
+    assert_nil x.spatial_point
+    assert_nil x.temporal
+    assert_nil x.title
+    assert_nil x.workflow_state
   end
 
 end

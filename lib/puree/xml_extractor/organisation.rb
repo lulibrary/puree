@@ -5,7 +5,6 @@ module Puree
     # Organisation XML extractor.
     #
     class Organisation < Puree::XMLExtractor::Resource
-      include Puree::XMLExtractor::OwnerMixin
 
       def initialize(xml:)
         super

@@ -63,6 +63,8 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
     assert_equal true, x.persons_external.first.data?
 
+    # persons_other, see Dataset test
+
     assert_instance_of Array, x.statuses
     assert_instance_of Puree::Model::PublicationStatus, x.statuses.first
     assert_equal true, x.statuses.first.data?

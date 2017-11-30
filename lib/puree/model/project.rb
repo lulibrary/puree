@@ -18,9 +18,6 @@ module Puree
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :external_organisations
 
-      # @return [Boolean]
-      attr_accessor :funded
-
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 
@@ -43,7 +40,7 @@ module Puree
       attr_accessor :temporal_actual
 
       # @return [Puree::Model::TemporalRange, nil]
-      attr_accessor :temporal_expected
+      # attr_accessor :temporal_expected
 
       # @return [String, nil]
       attr_accessor :title

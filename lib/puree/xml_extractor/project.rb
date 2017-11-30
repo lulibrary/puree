@@ -5,8 +5,9 @@ module Puree
     # Project XML extractor.
     #
     class Project < Puree::XMLExtractor::Resource
-      # include Puree::XMLExtractor::AssociatedMixin # not present in stable API
-      include Puree::XMLExtractor::ExternalOrganisationsMixin
+      include Puree::XMLExtractor::ExternalOrganisationMixin
+      include Puree::XMLExtractor::OrganisationMixin
+      include Puree::XMLExtractor::PersonMixin
 
       def initialize(xml:)
         super
@@ -20,20 +21,7 @@ module Puree
 
       # @return [String, nil]
       def description
-        xpath_query_for_single_value '/description/localizedString'
-      end
-
-      # @return [Boolean]
-      def funded?
-        xpath_result = xpath_query_for_single_value '/type'
-        return false if xpath_result.downcase.include? 'nonfunded'
-        true
-      end
-
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      def organisations
-        xpath_result = xpath_query '/organisations/association/organisation'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
+        xpath_query_for_single_value '/descriptions/description'
       end
 
       # @return [Puree::Model::OrganisationHeader, nil]
@@ -44,84 +32,54 @@ module Puree
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
-        persons 'internal'
+        persons 'internal', '/participants/participant'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
-        persons 'external'
+        persons 'external', '/participants/participant'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
-        persons 'other'
+        persons 'other', '/participants/participant'
       end
 
       # @return [String, nil]
       def status
-        xpath_query_for_single_value '/status/term/localizedString'
+        xpath_query_for_single_value '/status'
       end
 
+      # Pure deprecated
       # @return [Puree::Model::TemporalRange, nil]
-      def temporal_expected
-        temporal_range '/expectedStartDate', '/expectedEndDate'
-      end
+      # def temporal_expected
+      #   temporal_range '/expectedStartDate', '/expectedEndDate'
+      # end
 
       # @return [Puree::Model::TemporalRange, nil]
       def temporal_actual
-        temporal_range '/startFinishDate/startDate', '/startFinishDate/endDate'
+        temporal_range '/period/startDate', '/foobar'
       end
 
       # @return [String, nil]
       def title
-        xpath_query_for_single_value '/title/localizedString'
+        xpath_query_for_single_value '/title'
       end
 
       # @return [String, nil]
       def type
-        xpath_query_for_single_value '/typeClassification/term/localizedString'
+        xpath_query_for_single_value '/type'
       end
 
       # @return [String, nil]
       def url
-        xpath_query_for_single_value '/projectURL'
+        xpath_query_for_single_value '/links/link/url'
       end
 
       private
 
-      # @return [Array<Endeavour::Person>]
-      def persons(type)
-        xpath_result = xpath_query '/persons/participantAssociation'
-        arr = []
-        xpath_result.each do |i|
-          uuid_internal = i.at_xpath('person/@uuid')
-          uuid_external = i.at_xpath('externalPerson/@uuid')
-          if uuid_internal
-            person_type = 'internal'
-            uuid = uuid_internal.text.strip
-          elsif uuid_external
-            person_type = 'external'
-            uuid = uuid_external.text.strip
-          else
-            person_type = 'other'
-            uuid = ''
-          end
-          if person_type === type
-            person = Puree::Model::EndeavourPerson.new
-            person.uuid = uuid
-
-            name = Puree::Model::PersonName.new
-            name.first = i.xpath('person/name/firstName').text.strip
-            name.last = i.xpath('person/name/lastName').text.strip
-            person.name = name
-
-            role = i.xpath('personRole/term/localizedString').text.strip
-            person.role = role
-
-            arr << person if person.data?
-          end
-        end
-        arr.uniq { |d| d.uuid }
+      def xpath_root
+        '/project'
       end
 
       # @return [Puree::Model::TemporalRange, nil]

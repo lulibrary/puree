@@ -9,8 +9,8 @@ module Puree
       private
 
       # @return [Array<Endeavour::Person>]
-      def persons(type)
-        xpath_result = xpath_query '/personAssociations/personAssociation'
+      def persons(type, xpath_query_path)
+        xpath_result = xpath_query xpath_query_path
         arr = []
         xpath_result.each do |i|
           uuid_internal = i.at_xpath('person/@uuid')

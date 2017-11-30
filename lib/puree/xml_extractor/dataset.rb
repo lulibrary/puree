@@ -97,17 +97,17 @@ module Puree
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
-        persons 'internal'
+        persons 'internal', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
-        persons 'external'
+        persons 'external', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
-        persons 'other'
+        persons 'other', '/personAssociations/personAssociation'
       end
 
       # Date of data production
@@ -152,11 +152,11 @@ module Puree
       # @return [Puree::Model::SpatialPoint, nil]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
-        if xpath_result
+        if !xpath_result.empty?
           point = Puree::Model::SpatialPoint.new
-          arr = xpath_result.text.split(',')
-          point.latitude = arr[0].strip.to_f
-          point.longitude = arr[1].strip.to_f
+          arr = xpath_result.text.strip.split(',')
+          point.latitude = arr[0].to_f
+          point.longitude = arr[1].to_f
           point
         end
       end
