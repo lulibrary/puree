@@ -26,4 +26,11 @@ class TestXMLExtractorExternalPublisher < Minitest::Test
     refute_empty x.name
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Publisher.new xml: xml
+
+    assert_nil x.name
+  end
+
 end

@@ -10,9 +10,9 @@ class TestXMLExtractorDataset < Minitest::Test
 
   def test_initialize
     xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::Dataset.new xml: xml
+    x = Puree::XMLExtractor::Dataset.new xml: xml
 
-    assert_instance_of Puree::XMLExtractor::Dataset, xml_extractor
+    assert_instance_of Puree::XMLExtractor::Dataset, x
   end
 
   def test_core
@@ -44,7 +44,7 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of Array, x.organisations
     assert_instance_of Puree::Model::OrganisationHeader, x.organisations.first
-    assert_equal true,x.organisations.first.data?
+    assert_equal true, x.organisations.first.data?
 
     assert_instance_of Puree::Model::OrganisationHeader, x.owner
     assert_equal true, x.owner.data?
@@ -108,7 +108,9 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_empty x.associated
 
     assert_nil x.available
+
     assert_nil x.description
+
     assert_nil x.doi
 
     assert_instance_of Array, x.files
@@ -145,8 +147,11 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_empty x.spatial_places
 
     assert_nil x.spatial_point
+
     assert_nil x.temporal
+
     assert_nil x.title
+
     assert_nil x.workflow_state
   end
 

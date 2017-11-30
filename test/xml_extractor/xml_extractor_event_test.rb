@@ -35,4 +35,17 @@ class TestXMLEventJournal < Minitest::Test
     refute_empty x.type
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Event.new xml: xml
+
+    assert_nil x.city
+
+    assert_nil x.date
+
+    assert_nil x.title
+
+    assert_nil x.type
+  end
+
 end

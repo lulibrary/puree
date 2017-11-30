@@ -14,7 +14,7 @@ module Puree
       # @return [Puree::Model::Address]
       def address
         xpath_result = xpath_query '/addresses/address'
-        if xpath_result
+        if !xpath_result.empty?
           a = Puree::Model::Address.new
           street = xpath_result.xpath('street').text.strip
           a.street = street unless street.empty?

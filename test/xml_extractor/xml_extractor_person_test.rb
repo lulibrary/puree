@@ -60,4 +60,31 @@ class TestXMLExtractorPerson < Minitest::Test
     refute_empty x.scopus_id
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Person.new xml: xml
+
+    assert_instance_of Array, x.affiliations
+    assert_empty x.affiliations
+
+    assert_instance_of Array, x.email_addresses
+    assert_empty x.email_addresses
+
+    assert_nil x.employee_id
+
+    assert_nil x.hesa_id
+
+    assert_instance_of Array, x.image_urls
+    assert_empty x.image_urls
+
+    assert_instance_of Array, x.keywords
+    assert_empty x.keywords
+
+    assert_nil x.name
+
+    assert_nil x.orcid
+
+    assert_nil x.scopus_id
+  end
+
 end

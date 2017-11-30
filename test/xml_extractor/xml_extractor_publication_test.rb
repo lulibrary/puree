@@ -22,7 +22,7 @@ class TestXMLExtractorPublication < Minitest::Test
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
     x = xml_extractor_from_id id
 
-    asserts_resource x # Resource methods
+    asserts_resource x
 
     assert_instance_of Array, x.associated
     assert_instance_of Puree::Model::RelatedContentHeader, x.associated.first
@@ -53,7 +53,7 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_equal true, x.organisations.first.data?
 
     assert_instance_of Puree::Model::OrganisationHeader, x.owner
-    assert_equal true,  x.owner.data?
+    assert_equal true, x.owner.data?
 
     assert_instance_of Array, x.persons_internal
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
@@ -117,5 +117,56 @@ class TestXMLExtractorPublication < Minitest::Test
     refute_empty x.translated_title
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::JournalArticle.new xml: xml
+
+    assert_instance_of Array, x.associated
+    assert_empty x.associated
+
+    assert_nil x.bibliographical_note
+
+    assert_nil x.category
+
+    assert_nil x.description
+
+    assert_nil x.doi
+
+    assert_instance_of Array, x.files
+    assert_empty x.files
+
+    assert_instance_of Array, x.keywords
+    assert_empty x.keywords
+
+    assert_nil x.language
+
+    assert_instance_of Array, x.links
+    assert_empty x.links
+
+    assert_instance_of Array, x.organisations
+    assert_empty x.organisations
+
+    assert_nil x.owner
+
+    assert_instance_of Array, x.persons_internal
+    assert_empty x.persons_internal
+
+    assert_instance_of Array, x.persons_external
+    assert_empty x.persons_external
+
+    assert_instance_of Array, x.persons_other
+    assert_empty x.persons_other
+
+    assert_instance_of Array, x.statuses
+    assert_empty x.statuses
+
+    assert_nil x.subtitle
+
+    assert_nil x.translated_subtitle
+
+    assert_nil x.translated_title
+
+    assert_nil x.workflow_state
+  end
 
 end

@@ -47,4 +47,16 @@ class TestXMLExtractorThesis < Minitest::Test
     refute_empty x.qualification
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Thesis.new xml: xml
+
+    assert_nil x.awarding_institution
+
+    assert_instance_of Array, x.sponsors
+    assert_empty x.sponsors
+
+    assert_nil x.qualification
+  end
+
 end

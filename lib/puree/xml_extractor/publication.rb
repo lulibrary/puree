@@ -3,6 +3,7 @@ module Puree
   module XMLExtractor
 
     # Publication XML extractor.
+    # Do not use directly.
     #
     class Publication < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin

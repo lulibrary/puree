@@ -47,4 +47,26 @@ class TestXMLExtractorOrganisation < Minitest::Test
     refute_empty x.urls.first
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Organisation.new xml: xml
+
+    assert_nil x.address
+
+    assert_instance_of Array, x.email_addresses
+    assert_empty x.email_addresses
+
+    assert_nil x.name
+
+    assert_nil x.parent
+
+    assert_instance_of Array, x.phone_numbers
+    assert_empty x.phone_numbers
+
+    assert_nil x.type
+
+    assert_instance_of Array, x.urls
+    assert_empty x.urls
+  end
+
 end

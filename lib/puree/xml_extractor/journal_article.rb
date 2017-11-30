@@ -26,7 +26,7 @@ module Puree
       # @return [Puree::Model::JournalHeader, nil]
       def journal
         xpath_result = xpath_query '/journalAssociation'
-        if xpath_result
+        if !xpath_result.empty?
           header = Puree::Model::JournalHeader.new
           header.title = xpath_result.xpath('title').text.strip
           journal = xpath_result.xpath('journal')

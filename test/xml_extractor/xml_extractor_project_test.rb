@@ -78,4 +78,38 @@ class TestXMLExtractorProject < Minitest::Test
     assert_equal true, x.persons_external.first.data?
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Project.new xml: xml
+
+    assert_nil x.acronym
+
+    assert_nil x.description
+
+    assert_instance_of Array, x.external_organisations
+    assert_empty x.external_organisations
+
+    assert_instance_of Array, x.organisations
+    assert_empty x.organisations
+
+    assert_nil x.status
+
+    assert_nil x.title
+
+    assert_nil x.type
+
+    assert_instance_of Array, x.persons_internal
+    assert_empty x.persons_internal
+
+    assert_instance_of Array, x.persons_external
+    assert_empty x.persons_external
+
+    assert_instance_of Array, x.persons_other
+    assert_empty x.persons_other
+
+    assert_nil x.temporal_actual
+
+    assert_nil x.url
+  end
+
 end

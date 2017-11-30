@@ -29,4 +29,13 @@ class TestXMLExtractorExternalOrganisation < Minitest::Test
     refute_empty x.type
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::ExternalOrganisation.new xml: xml
+
+    assert_nil x.name
+
+    assert_nil x.type
+  end
+
 end

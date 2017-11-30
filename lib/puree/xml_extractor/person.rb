@@ -51,7 +51,7 @@ module Puree
       # @return [Puree::Model::PersonName, nil]
       def name
         xpath_result = xpath_query '/name'
-        if xpath_result
+        if !xpath_result.empty?
           first = xpath_result.xpath('firstName').text.strip
           last = xpath_result.xpath('lastName').text.strip
           model = Puree::Model::PersonName.new

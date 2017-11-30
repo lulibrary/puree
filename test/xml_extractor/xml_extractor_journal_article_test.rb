@@ -37,4 +37,21 @@ class TestXMLExtractorJournalArticle < Minitest::Test
     assert_instance_of Fixnum, x.volume
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::JournalArticle.new xml: xml
+
+    assert_nil x.issue
+
+    assert_nil x.journal
+
+    assert_nil x.page_range
+
+    assert_nil x.pages
+
+    assert_nil x.peer_reviewed
+
+    assert_nil x.volume
+  end
+
 end

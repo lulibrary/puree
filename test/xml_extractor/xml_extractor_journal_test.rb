@@ -32,4 +32,15 @@ class TestXMLExtractorJournal < Minitest::Test
     refute_empty x.title
   end
 
+  def test_absence
+    xml = '<foo/>'
+    x = Puree::XMLExtractor::Journal.new xml: xml
+
+    assert_nil x.issn
+
+    assert_nil x.publisher
+
+    assert_nil x.title
+  end
+
 end
