@@ -5,7 +5,7 @@ module Puree
     #
     class Organisation < Resource
 
-      # @return [Array<Puree::Model::Address>]
+      # @return [Puree::Model::Address]
       attr_accessor :address
 
       # @return [Array<String>]
@@ -15,7 +15,7 @@ module Puree
       attr_accessor :name
 
       # @return [Array<Puree::Model::OrganisationHeader>]
-      attr_accessor :organisations
+      # attr_accessor :organisations
 
       # @return [Puree::Model::OrganisationHeader, nil]
       attr_accessor :parent
