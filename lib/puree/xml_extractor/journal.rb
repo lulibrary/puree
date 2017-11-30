@@ -13,7 +13,7 @@ module Puree
 
       # @return [String, nil]
       def issn
-        xpath_query_for_single_value '/issns/issn/string'
+        xpath_query_for_single_value '/issns/issn'
       end
 
       # @return [String, nil]
@@ -23,7 +23,13 @@ module Puree
 
       # @return [String, nil]
       def title
-        xpath_query_for_single_value '/titles/title/string'
+        xpath_query_for_single_value '/titles/title'
+      end
+
+      private
+
+      def xpath_root
+        '/journal'
       end
 
     end

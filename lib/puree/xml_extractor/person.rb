@@ -35,7 +35,12 @@ module Puree
 
       # @return [Array<String>]
       def image_urls
-        xpath_query_for_multi_value '/profilePhotos/profilePhoto[@url]'
+        xpath_result = xpath_query '/profilePhotos/profilePhoto'
+        arr = []
+        xpath_result.each do |i|
+          arr << i.attr('url').strip
+        end
+        arr.uniq
       end
 
       # @return [Array<String>]

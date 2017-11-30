@@ -20,7 +20,10 @@ class TestXMLExtractorExternalPublisher < Minitest::Test
     id = '46065866-5e59-4761-a982-55b382579fdf'
     x = xml_extractor_from_id id
 
+    asserts_resource x
+
     assert_instance_of String, x.name
+    refute_empty x.name
   end
 
 end

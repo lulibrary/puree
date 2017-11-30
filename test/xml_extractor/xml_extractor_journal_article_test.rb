@@ -20,11 +20,20 @@ class TestXMLExtractorJournalArticle < Minitest::Test
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
     x = xml_extractor_from_id id
 
+    asserts_resource x
+
     assert_instance_of Fixnum, x.issue
+
     assert_instance_of Puree::Model::JournalHeader, x.journal
+    assert_equal true, x.journal.data?
+
     assert_instance_of String, x.page_range
+    refute_empty x.page_range
+
     assert_instance_of Fixnum, x.pages
+
     assert_includes [true, false], x.peer_reviewed
+
     assert_instance_of Fixnum, x.volume
   end
 

@@ -25,37 +25,50 @@ class TestXMLExtractorPublication < Minitest::Test
     asserts_resource x # Resource methods
 
     assert_instance_of Array, x.associated
-    assert_instance_of Puree::Model::RelatedContentHeader, x.associated[0]
+    assert_instance_of Puree::Model::RelatedContentHeader, x.associated.first
+    assert_equal true, x.associated.first.data?
 
     assert_instance_of String, x.category
+    refute_empty x.category
 
     assert_instance_of String, x.description
+    refute_empty x.description
 
     assert_instance_of String, x.doi
+    refute_empty x.doi
 
     assert_instance_of Array, x.files
-    assert_instance_of Puree::Model::File, x.files[0]
+    assert_instance_of Puree::Model::File, x.files.first
+    assert_equal true, x.files.first.data?
 
     assert_instance_of String, x.language
+    refute_empty x.language
 
     assert_instance_of Array, x.links
-    assert_instance_of String, x.links[0]
+    assert_instance_of String, x.links.first
+    refute_empty x.links.first
 
     assert_instance_of Array, x.organisations
-    assert_instance_of Puree::Model::OrganisationHeader, x.organisations[0]
+    assert_instance_of Puree::Model::OrganisationHeader, x.organisations.first
+    assert_equal true, x.organisations.first.data?
 
     assert_instance_of Puree::Model::OrganisationHeader, x.owner
+    assert_equal true,  x.owner.data?
 
     assert_instance_of Array, x.persons_internal
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal[0]
+    assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
+    assert_equal true, x.persons_internal.first.data?
 
     assert_instance_of Array, x.persons_external
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_external[0]
+    assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
+    assert_equal true, x.persons_external.first.data?
 
     assert_instance_of Array, x.statuses
-    assert_instance_of Puree::Model::PublicationStatus, x.statuses[0]
+    assert_instance_of Puree::Model::PublicationStatus, x.statuses.first
+    assert_equal true, x.statuses.first.data?
 
     assert_instance_of String, x.workflow_state
+    refute_empty x.workflow_state
   end
 
   def test_bibliographical_note
@@ -63,7 +76,8 @@ class TestXMLExtractorPublication < Minitest::Test
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
     x = xml_extractor_from_id id
 
-    assert_instance_of String, x.workflow_state
+    assert_instance_of String, x.bibliographical_note
+    refute_empty x.bibliographical_note
   end
 
   def test_keywords
@@ -72,7 +86,8 @@ class TestXMLExtractorPublication < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.keywords
-    assert_instance_of String, x.keywords[0]
+    assert_instance_of String, x.keywords.first
+    refute_empty x.keywords.first
   end
 
   def test_subtitle
@@ -81,6 +96,7 @@ class TestXMLExtractorPublication < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of String, x.subtitle
+    refute_empty x.subtitle
   end
 
   def test_translated_titles
@@ -91,8 +107,12 @@ class TestXMLExtractorPublication < Minitest::Test
     x = Puree::XMLExtractor::Thesis.new xml: response.to_s
 
     # assert_instance_of String, x.subtitle  # also has sub
+
     assert_instance_of String, x.translated_subtitle
+    refute_empty x.translated_subtitle
+
     assert_instance_of String, x.translated_title
+    refute_empty x.translated_title
   end
 
 
