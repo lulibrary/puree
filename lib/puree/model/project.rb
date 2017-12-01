@@ -37,7 +37,7 @@ module Puree
       attr_accessor :status
 
       # @return [Puree::Model::TemporalRange, nil]
-      attr_accessor :temporal_actual
+      attr_accessor :temporal
 
       # @return [Puree::Model::TemporalRange, nil]
       # attr_accessor :temporal_expected

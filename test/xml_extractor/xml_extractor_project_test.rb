@@ -46,8 +46,8 @@ class TestXMLExtractorProject < Minitest::Test
 
     # persons_other, see Dataset test
 
-    assert_instance_of Puree::Model::TemporalRange, x.temporal_actual
-    assert_equal true, x.temporal_actual.data?
+    assert_instance_of Puree::Model::TemporalRange, x.temporal
+    assert_equal true, x.temporal.data?
   end
 
   def test_description
@@ -92,12 +92,6 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Array, x.organisations
     assert_empty x.organisations
 
-    assert_nil x.status
-
-    assert_nil x.title
-
-    assert_nil x.type
-
     assert_instance_of Array, x.persons_internal
     assert_empty x.persons_internal
 
@@ -107,7 +101,13 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
 
-    assert_nil x.temporal_actual
+    assert_nil x.status
+
+    assert_nil x.temporal
+
+    assert_nil x.title
+
+    assert_nil x.type
 
     assert_nil x.url
   end

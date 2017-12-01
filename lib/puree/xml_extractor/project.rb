@@ -57,8 +57,8 @@ module Puree
       # end
 
       # @return [Puree::Model::TemporalRange, nil]
-      def temporal_actual
-        temporal_range '/period/startDate', '/foobar'
+      def temporal
+        temporal_range '/period/startDate', '/period/endDate'
       end
 
       # @return [String, nil]

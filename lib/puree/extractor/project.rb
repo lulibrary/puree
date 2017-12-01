@@ -21,15 +21,14 @@ module Puree
         # @model.associated = @extractor.associated # not present in stable API
         @model.description = @extractor.description
         @model.external_organisations = @extractor.external_organisations
-        @model.funded = @extractor.funded?
         @model.organisations = @extractor.organisations
         @model.owner = @extractor.owner
         @model.persons_internal = @extractor.persons_internal
         @model.persons_external = @extractor.persons_external
         @model.persons_other = @extractor.persons_other
         @model.status = @extractor.status
-        @model.temporal_actual = @extractor.temporal_actual
-        @model.temporal_expected = @extractor.temporal_expected
+        # @model.temporal_actual = @extractor.temporal_actual
+        @model.temporal = @extractor.temporal
         @model.title = @extractor.title
         @model.type = @extractor.type
         @model.url = @extractor.url
