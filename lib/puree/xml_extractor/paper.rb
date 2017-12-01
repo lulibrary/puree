@@ -9,6 +9,12 @@ module Puree
         super
       end
 
+      private
+
+      def xpath_root
+        '/contributionToConference'
+      end
+
     end
   end
 end

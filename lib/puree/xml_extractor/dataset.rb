@@ -232,6 +232,8 @@ module Puree
         }
       end
 
+      private
+
       def xpath_root
         '/dataSet'
       end

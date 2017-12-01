@@ -28,21 +28,15 @@ module Puree
           if person_type === type
             person = Puree::Model::EndeavourPerson.new
             person.uuid = uuid
-
             name = Puree::Model::PersonName.new
             name.first = i.xpath('name/firstName').text.strip
             name.last = i.xpath('name/lastName').text.strip
-            person.name = name
-
-            # role_uri = i.xpath('personRole/uri').text.strip
-            # person.role = roles[role_uri]
+            person.name = name if name.data?
             person.role = i.xpath('personRole').text.strip
-
             arr << person if person.data?
           end
         end
-        # does not work properly using uuid as some people don't have one
-        arr.uniq { |d| "#{d.name.last}#{d.name.first}#{d.role}" }
+        arr
       end
 
     end

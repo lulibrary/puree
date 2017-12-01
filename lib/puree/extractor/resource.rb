@@ -31,6 +31,7 @@ module Puree
       # Extract a single metadata record from XML.
       #
       # @param xml [String]
+      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
       def extract(xml)
         make_xml_extractor xml
         combine_metadata

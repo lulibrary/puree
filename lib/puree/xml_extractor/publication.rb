@@ -3,7 +3,6 @@ module Puree
   module XMLExtractor
 
     # Publication XML extractor.
-    # Do not use directly.
     #
     class Publication < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AssociatedMixin
@@ -143,7 +142,56 @@ module Puree
         xpath_query_for_single_value '/type'
       end
 
+      # Get models from any multi-record XML response
+      #
+      # @param xml [String]
+      # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
+      def classify(xml)
+        path_from_root = File.join 'result', xpath_root
+        doc = Nokogiri::XML xml
+        doc.remove_namespaces!
+        xpath_result = doc.xpath path_from_root
+        outputs = {
+          journal_article: [],
+          paper: [],
+          thesis: [],
+          other: []
+        }
+        xpath_result.each do |research_output|
+          type = research_output.xpath('type').text.strip
+          unless type.empty?
+            case type
+              when 'Journal article'
+                extractor = Puree::Extractor::JournalArticle.new config
+                model = extractor.extract research_output.to_s
+                outputs[:journal_article] << model
+              when 'Conference paper'
+                extractor = Puree::Extractor::Paper.new config
+                model = extractor.extract research_output.to_s
+                outputs[:paper] << model
+              when 'Doctoral Thesis'
+                extractor = Puree::Extractor::Thesis.new config
+                model = extractor.extract research_output.to_s
+                outputs[:thesis] << model
+              when "Master's Thesis"
+                extractor = Puree::Extractor::Thesis.new config
+                model = extractor.extract research_output.to_s
+                outputs[:thesis] << model
+              else
+                extractor = Puree::Extractor::Publication.new config
+                model = extractor.extract research_output.to_s
+                outputs[:other] << model
+            end
+          end
+        end
+        outputs
+      end
+
       private
+
+      def xpath_root
+        '/*'
+      end
 
       def roles
         {
