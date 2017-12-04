@@ -1,5 +1,3 @@
-require 'happymapper'
-
 module Puree
   module Mapper
     class Header
@@ -9,10 +7,10 @@ module Puree
       attribute :uuid, String
 
       # @return [String, nil]
-      element :name, String
+      has_one :name, String
 
       # @return [String, nil]
-      element :type, String
+      has_one :type, String
     end
   end
 end

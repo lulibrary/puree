@@ -3,8 +3,10 @@ require 'puree/happy_mapper/xml_mapper_managing_organisational_unit'
 
 module Puree
   module Mapper
-    class Dataset
+    class Dataset < Puree::Mapper::Resource
       include HappyMapper
+
+      include Puree::Mapper::RelatedResearchOutputMixin
 
       tag 'dataSet'
       # include Puree::ModelFoo::System
@@ -15,12 +17,15 @@ module Puree
       # # @return [Time, nil]
       # element :available
       #
-      # # @return [String, nil]
-      element :description, String
+
+      # @return [String]
+      has_one :description, String
+
+
       #
-      # # Digital Object Identifier.
-      # # @return [String, nil]
-      element :doi, String
+      # Digital Object Identifier.
+      # @return [String]
+      has_one :doi, String
       #
       # # Supporting files.
       # # @return [Array<Puree::Model::File>]
@@ -31,17 +36,13 @@ module Puree
       #          class: Puree::ModelFoo::UserDefinedKeywords, with: {
       #     logicalName:"User-Defined Keywords"
       # }
+
+      # @return [Array<Puree::Mapper::OrganisationalUnitHeader>]
+      has_many :organisational_units, Puree::Mapper::OrganisationalUnitHeader, xpath: 'organisationalUnits'
       #
-      # element :info, class: Puree::ModelFoo::Info
-      #
-      # # @return [Array<Puree::Model::OrganisationHeader>]
-      # elements :organisationalUnit, as: :organisations, class: Puree::ModelFoo::OrganisationHeader
-      #
-      # # @return [Puree::Model::ManagingOrganisationalUnitHeader, nil]
+      # @return [Puree::Mapper::ManagingOrganisationalUnitHeader]
       has_one :managing_organisational_unit, Puree::Mapper::ManagingOrganisationalUnitHeader
 
-      # has_one :managingOrganisationalUnit, Puree::Mapper::OrganisationHeader
-      #
       # # @return [Array<Puree::Model::EndeavourPerson>]
       # element :persons_internal
       #
@@ -57,15 +58,19 @@ module Puree
       #
       # # @return [Array<Puree::Model::RelatedContentHeader>]
       # # element :projects
-      #
-      # # @return [Array<Puree::Model::RelatedContentHeader>]
-      # element :publications
-      #
-      # # @return [String, nil]
-      # element :publisher
-      #
+
+      # # @return [Array<Puree::Mapper::RelatedResearchOutputHeader>]
+      # element :related_research_outputs, Puree::Mapper::RelatedResearchOutputHeader
+
+      # @return [Puree::Mapper::PublisherHeader]
+      has_one :publisher, Puree::Mapper::PublisherHeader
+
       # # @return [Array<String>]
-      # element :spatial_places
+      # element :spatial_places,
+
+      # element :geographicalCoverage, String
+
+      # element :keywordGroups, Array
       #
       # # Spatial coverage point.
       # # @return [Puree::Model::SpatialPoint, nil]
@@ -74,12 +79,12 @@ module Puree
       # # Temporal coverage.
       # # @return [Puree::Model::TemporalRange, nil]
       # element :temporalCoveragePeriod, as: :temporal, class: Puree::ModelFoo::TemporalRange
-      #
-      # # @return [String, nil]
-      element :title, String
 
-      # # @return [String, nil]
-      element :workflow, String
+      # @return [String]
+      has_one :title, String
+
+      # @return [String]
+      has_one :workflow, String
 
 
     end

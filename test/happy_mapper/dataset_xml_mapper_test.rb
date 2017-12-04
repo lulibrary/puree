@@ -40,9 +40,6 @@ class TestXMLMapperDataset < Minitest::Test
     x = xml_extractor_from_id id
 
     puts x.inspect
-    puts x.managing_organisational_unit.uuid
-    puts x.managing_organisational_unit.name
-    puts x.managing_organisational_unit.type
 
     return
 
