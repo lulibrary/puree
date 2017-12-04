@@ -33,8 +33,29 @@ module Puree
       # @param xml [String]
       # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
       def extract(xml)
-        make_xml_extractor xml
-        combine_metadata
+        # do initial xpath, find out if needed to iterate...
+        doc = Nokogiri::XML xml
+        doc.remove_namespaces!
+        xpath_result = doc.xpath File.join('/result')
+
+        if !xpath_result.empty?
+          # multiple
+          puts 'multiple'
+          data = []
+          xpath_result = doc.xpath File.join('/result/dataSet') # cheat for now!
+          xpath_result.each do |i|
+            puts i.xpath('title')
+            puts
+            # make_xml_extractor i
+            # data << combine_metadata
+          end
+          return data
+        else
+          # single
+          puts 'single'
+          make_xml_extractor xml
+          combine_metadata
+        end
       end
 
       private

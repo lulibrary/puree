@@ -142,7 +142,7 @@ module Puree
         xpath_query_for_single_value '/type'
       end
 
-      # Get models from any multi-record XML response
+      # Get models from any multi-record Research Output XML response
       #
       # @param xml [String]
       # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]

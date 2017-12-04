@@ -100,7 +100,7 @@ module Puree
         persons 'internal', '/personAssociations/personAssociation'
       end
 
-      # @return [Array<Puree::Model::EndeavourPerson>]
+      # @return [Array<Pu      # $0 => "datasets"ree::Model::EndeavourPerson>]
       def persons_external
         persons 'external', '/personAssociations/personAssociation'
       end

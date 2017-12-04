@@ -1,10 +1,24 @@
 require 'http'
 require 'nokogiri'
-
 require 'puree/version'
 
 require 'puree/util/date'
 require 'puree/util/string'
+
+
+require 'puree/happy_mapper/xml_mapper_header'
+require 'puree/happy_mapper/xml_mapper_dataset'
+
+# require 'puree/xml_mapper/xml_mapper_keyword_group'
+# require 'puree/xml_mapper/xml_mapper_info'
+#
+
+#
+# require 'puree/xml_mapper/xml_mapper_date'
+# require 'puree/xml_mapper/xml_mapper_temporal_range'
+#
+# require 'puree/xml_mapper/xml_mapper_dataset'
+# require 'puree/xml_mapper/xml_mapper_dataset_result'
 
 require 'puree/xml_extractor/mixins/associated_mixin'
 require 'puree/xml_extractor/mixins/abstract_mixin'
