@@ -14,6 +14,7 @@ require 'puree/happy_mapper/xml_mapper_header'
 
 require 'puree/happy_mapper/xml_mapper_person_name'
 
+require 'puree/happy_mapper/xml_mapper_internal_person_association'
 require 'puree/happy_mapper/xml_mapper_organisational_unit_header'
 require 'puree/happy_mapper/xml_mapper_person_header'
 require 'puree/happy_mapper/xml_mapper_publisher_header'

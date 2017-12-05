@@ -41,7 +41,7 @@ module Purifier
     has_one :managing_organisational_unit, Purifier::ManagingOrganisationalUnitHeader
 
     # @return [Array<Purifier::PersonHeader>]
-    has_many :person_associations, Purifier::PersonHeader, tag: 'personAssociation'
+    has_many :internal_person_associations, Purifier::InternalPersonAssociation, tag: 'personAssociation'
 
     # # @return [Array<Puree::Model::EndeavourPerson>]
     # element :persons_external
@@ -65,7 +65,7 @@ module Purifier
     # # @return [Array<String>]
     # element :spatial_places,
 
-    # element :geographicalCoverage, String
+    has_many :geographical_coverage, String, tag: 'geographicalCoverage'
 
     # element :keywordGroups, Array
     #

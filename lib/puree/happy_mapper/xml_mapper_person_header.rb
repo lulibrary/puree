@@ -8,6 +8,6 @@ module Purifier
     attribute :uuid, String
 
     # @return [String]
-    has_one :name, String, xpath: '.'
+    # has_one :name, String
   end
 end

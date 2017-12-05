@@ -34,6 +34,9 @@ class TestXMLMapperDataset < Minitest::Test
   #   assert_instance_of Puree::XMLExtractor::Dataset, x
   # end
 
+
+
+
   def test_core
     # The 2014 Ebola virus disease outbreak in West Africa
     id = 'b050f4b5-e272-4914-8cac-3bdc1e673c58'
