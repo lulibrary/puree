@@ -155,4 +155,12 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_nil x.workflow_state
   end
 
+  def test_model
+    # The 2014 Ebola virus disease outbreak in West Africa
+    id = 'b050f4b5-e272-4914-8cac-3bdc1e673c58'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Dataset, x.model
+  end
+
 end

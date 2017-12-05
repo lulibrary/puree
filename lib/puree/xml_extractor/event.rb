@@ -64,6 +64,16 @@ module Puree
         '/event'
       end
 
+      def combine_metadata
+        @model = Puree::Model::Event.new
+        super
+        @model.city = city
+        @model.date = date
+        @model.title = title
+        @model.type = type
+        @model
+      end      
+
     end
 
   end

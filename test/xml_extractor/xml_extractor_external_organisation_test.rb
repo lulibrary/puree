@@ -38,4 +38,12 @@ class TestXMLExtractorExternalOrganisation < Minitest::Test
     assert_nil x.type
   end
 
+  def test_model
+    # STFC
+    id = '2ea6bbc4-c957-4a07-a1e7-604a2d944c20'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::ExternalOrganisation, x.model
+  end
+
 end

@@ -48,4 +48,11 @@ class TestXMLEventJournal < Minitest::Test
     assert_nil x.type
   end
 
+  def test_model
+    # 31st Annual European Meeting on Atmospheric Studies by Optical Methods and 1st International Riometer Workshop
+    id = 'cd2bf302-4629-4f71-9c02-2dfe50a384bf'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Event, x.model
+  end
 end

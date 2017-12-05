@@ -16,7 +16,6 @@ module Puree
 
       def initialize(xml:)
         super
-        @resource_type = :dataset
       end
 
       # Open access permission
@@ -232,10 +231,37 @@ module Puree
         }
       end
 
-      private
-
       def xpath_root
         '/dataSet'
+      end
+
+      def combine_metadata
+        @model = Puree::Model::Dataset.new
+        super
+        # @model.access = access
+        @model.associated = associated
+        @model.available = available
+        @model.description = description
+        @model.doi = doi
+        @model.files = files
+        @model.keywords = keywords
+        # @model.links = links
+        # @model.legal_conditions = legal_conditions
+        @model.organisations = organisations
+        @model.owner = owner
+        @model.persons_internal = persons_internal
+        @model.persons_external = persons_external
+        @model.persons_other = persons_other
+        # @model.projects = projects
+        @model.production = production
+        @model.publications = publications
+        @model.publisher = publisher
+        @model.spatial_places = spatial_places
+        @model.spatial_point = spatial_point
+        @model.temporal = temporal
+        @model.title = title
+        @model.workflow_state = workflow_state
+        @model
       end
 
     end

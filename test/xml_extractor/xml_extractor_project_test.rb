@@ -112,4 +112,12 @@ class TestXMLExtractorProject < Minitest::Test
     assert_nil x.url
   end
 
+  def test_model
+    # The Channel Scheme - Preston
+    id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Project, x.model
+  end
+
 end

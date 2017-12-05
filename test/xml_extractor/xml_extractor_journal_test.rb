@@ -43,4 +43,11 @@ class TestXMLExtractorJournal < Minitest::Test
     assert_nil x.title
   end
 
+  def test_model
+    # Chemical Geology
+    id = '95e40a10-1799-4e74-9a70-8b03f27d9acb'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Journal, x.model
+  end
 end

@@ -169,4 +169,11 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_nil x.workflow_state
   end
 
+  def test_model
+    # A theoretical framework for estimation of AUCs in complete and incomplete sampling designs
+    id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Publication, x.model
+  end
 end

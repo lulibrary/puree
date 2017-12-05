@@ -57,7 +57,22 @@ module Puree
         str.tr('_','-') if str
       end
 
+      def model
+        combine_metadata
+      end
+
       private
+
+      # All metadata
+      # @return [Hash]
+      def combine_metadata
+        raise 'No model to populate' if !@model
+        @model.uuid = uuid
+        @model.created_by = created_by
+        @model.created_at = created_at
+        @model.modified_by = modified_by
+        @model.modified_at = modified_at
+      end
 
       def service_response_name
         @api_map[:resource_type][@resource_type][:response]

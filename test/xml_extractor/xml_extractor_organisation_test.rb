@@ -69,4 +69,12 @@ class TestXMLExtractorOrganisation < Minitest::Test
     assert_empty x.urls
   end
 
+  def test_model
+    # Faculty of Health and Medicine
+    id = '8a58c4ad-2d5a-463a-841a-38839ff73a63'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Organisation, x.model
+  end
+
 end

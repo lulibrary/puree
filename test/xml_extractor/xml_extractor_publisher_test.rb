@@ -33,4 +33,12 @@ class TestXMLExtractorExternalPublisher < Minitest::Test
     assert_nil x.name
   end
 
+  def test_model
+    # Cambridge University Press
+    id = '46065866-5e59-4761-a982-55b382579fdf'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Publisher, x.model
+  end
+
 end

@@ -59,4 +59,12 @@ class TestXMLExtractorThesis < Minitest::Test
     assert_nil x.qualification
   end
 
+  def test_core
+    # Multimodalita e 'city branding'
+    id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Puree::Model::Thesis, x.model
+  end
+
 end
