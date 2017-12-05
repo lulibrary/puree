@@ -11,7 +11,11 @@ require 'puree/happy_mapper/mixins/xml_mapper_related_research_output_mixin'
 
 require 'puree/happy_mapper/xml_mapper_resource'
 require 'puree/happy_mapper/xml_mapper_header'
+
+require 'puree/happy_mapper/xml_mapper_person_name'
+
 require 'puree/happy_mapper/xml_mapper_organisational_unit_header'
+require 'puree/happy_mapper/xml_mapper_person_header'
 require 'puree/happy_mapper/xml_mapper_publisher_header'
 require 'puree/happy_mapper/xml_mapper_related_research_output_header'
 require 'puree/happy_mapper/xml_mapper_dataset'

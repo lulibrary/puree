@@ -1,9 +1,7 @@
-module Puree
-  module Mapper
-    class ManagingOrganisationalUnitHeader < Puree::Mapper::Header
-      include HappyMapper
+module Purifier
+  class ManagingOrganisationalUnitHeader < Purifier::Header
+    include HappyMapper
 
-      tag 'managingOrganisationalUnit'
-    end
+    tag 'managingOrganisationalUnit'
   end
 end

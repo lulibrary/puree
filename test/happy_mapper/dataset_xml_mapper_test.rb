@@ -6,7 +6,7 @@ class TestXMLMapperDataset < Minitest::Test
     client = Purification::Client.new config
     response = client.datasets.find id: id
     # response = client.datasets.all params: { size: 2 }
-    Puree::Mapper::Dataset.parse response.to_s
+    Purifier::Dataset.parse response.to_s
   end
 
   # def test_core

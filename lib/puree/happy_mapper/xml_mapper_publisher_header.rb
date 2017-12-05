@@ -1,9 +1,7 @@
-module Puree
-  module Mapper
-    class PublisherHeader < Puree::Mapper::Header
-      include HappyMapper
+module Purifier
+  class PublisherHeader < Purifier::Header
+    include HappyMapper
 
-      tag 'publisher'
-    end
+    tag 'publisher'
   end
 end

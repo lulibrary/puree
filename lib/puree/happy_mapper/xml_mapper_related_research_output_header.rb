@@ -1,9 +1,7 @@
-module Puree
-  module Mapper
-    class RelatedResearchOutputHeader < Puree::Mapper::Header
+module Purifier
+    class RelatedResearchOutputHeader < Purifier::Header
       include HappyMapper
 
       tag 'relatedResearchOutput'
     end
-  end
 end
