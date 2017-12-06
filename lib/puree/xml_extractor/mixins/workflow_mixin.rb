@@ -2,13 +2,12 @@ module Puree
 
   module XMLExtractor
 
-    # Workflow state extractor mixin.
+    # Workflow extractor mixin.
     #
-    module WorkflowStateMixin
+    module WorkflowMixin
 
-      # Workflow state
       # @return [String, nil]
-      def workflow_state
+      def workflow
         xpath_query_for_single_value '/workflow'
       end
 

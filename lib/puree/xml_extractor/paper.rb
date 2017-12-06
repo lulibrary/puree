@@ -1,19 +1,27 @@
 module Puree
   module XMLExtractor
 
-    # Paper XML extractor.
+    # Paper base XML extractor.
     #
-    class Paper < Puree::XMLExtractor::PaperBase
+    class Paper < Puree::XMLExtractor::Publication
+      include Puree::XMLExtractor::PagesMixin
+      include Puree::XMLExtractor::PageRangeMixin
+      include Puree::XMLExtractor::PeerReviewedMixin
 
       def initialize(xml:)
         super
+        setup_model :paper
       end
 
       private
 
-      def xpath_root
-        '/contributionToConference'
-      end
+      def combine_metadata
+        super
+        @model.pages = pages
+        @model.page_range = page_range
+        @model.peer_reviewed = peer_reviewed
+        @model
+      end      
 
     end
   end

@@ -11,7 +11,7 @@ module Puree
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
-      include Puree::XMLExtractor::WorkflowStateMixin
+      include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
 
       def initialize(xml:)
@@ -255,7 +255,7 @@ module Puree
         @model.spatial_point = spatial_point
         @model.temporal = temporal
         @model.title = title
-        @model.workflow_state = workflow_state
+        @model.workflow = workflow
         @model
       end
 

@@ -7,8 +7,8 @@ module Puree
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
-        set_model_type 'paper'
         super
+        setup_model 'paper'
       end
 
       private

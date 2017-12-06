@@ -11,7 +11,7 @@ module Puree
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
-      include Puree::XMLExtractor::WorkflowStateMixin
+      include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
       include Puree::XMLExtractor::TypeMixin
 
@@ -211,7 +211,7 @@ module Puree
         @model.translated_subtitle = translated_subtitle
         @model.translated_title = translated_title
         @model.type = type
-        @model.workflow_state = workflow_state
+        @model.workflow = workflow
         @model
       end
 

@@ -6,7 +6,7 @@ module Puree
     #
     module TypeMixin
 
-      # @return [String]
+      # @return [String, nil]
       def type
         xpath_query_for_single_value '/type'
       end

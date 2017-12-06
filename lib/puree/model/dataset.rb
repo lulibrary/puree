@@ -80,7 +80,7 @@ module Puree
       attr_accessor :title
 
       # @return [String, nil]
-      attr_accessor :workflow_state
+      attr_accessor :workflow
 
     end
   end

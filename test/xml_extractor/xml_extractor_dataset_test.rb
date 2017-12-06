@@ -77,8 +77,8 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of String, x.title
     refute_empty x.title
 
-    assert_instance_of String, x.workflow_state
-    refute_empty x.workflow_state
+    assert_instance_of String, x.workflow
+    refute_empty x.workflow
   end
 
   def test_persons_other
@@ -152,7 +152,7 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_nil x.title
 
-    assert_nil x.workflow_state
+    assert_nil x.workflow
   end
 
   def test_model

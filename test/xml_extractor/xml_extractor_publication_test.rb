@@ -69,8 +69,8 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_instance_of Puree::Model::PublicationStatus, x.statuses.first
     assert_equal true, x.statuses.first.data?
 
-    assert_instance_of String, x.workflow_state
-    refute_empty x.workflow_state
+    assert_instance_of String, x.workflow
+    refute_empty x.workflow
   end
 
   def test_bibliographical_note
@@ -166,7 +166,7 @@ class TestXMLExtractorPublication < Minitest::Test
 
     assert_nil x.translated_title
 
-    assert_nil x.workflow_state
+    assert_nil x.workflow
   end
 
   def test_model

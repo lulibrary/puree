@@ -3,7 +3,7 @@ module Puree
 
     # A conference paper.
     #
-    class ConferencePaper < Puree::Model::PaperBase
+    class ConferencePaper < Puree::Model::Paper
 
       # @return [Puree::Model::EventHeader, nil]
       attr_accessor :event
