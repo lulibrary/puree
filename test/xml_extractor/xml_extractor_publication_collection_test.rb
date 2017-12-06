@@ -17,10 +17,10 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
 
   def test_classify
     client = Purification::Client.new config
-    response = client.research_outputs.all
+    response = client.research_outputs.all params: { size: 100 }
     classification = Puree::XMLExtractor::PublicationCollection.classify xml: response.to_s
 
-    puts classification
+    # puts classification
 
     assert_instance_of Hash, classification
 
@@ -28,9 +28,9 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
     assert_instance_of Array, journal_articles
     assert_instance_of Puree::Model::JournalArticle, journal_articles.first if !journal_articles.empty?
 
-    papers = classification[:paper]
-    assert_instance_of Array, papers
-    assert_instance_of Puree::Model::Paper, papers.first if !papers.empty?
+    conference_papers = classification[:conference_paper]
+    assert_instance_of Array, conference_papers
+    assert_instance_of Puree::Model::ConferencePaper, conference_papers.first if !conference_papers.empty?
 
     theses = classification[:thesis]
     assert_instance_of Array, theses
@@ -51,9 +51,9 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
     assert_instance_of Array, journal_articles
     assert_empty journal_articles
 
-    papers = classification[:paper]
-    assert_instance_of Array, papers
-    assert_empty papers
+    conference_papers = classification[:conference_paper]
+    assert_instance_of Array, conference_papers
+    assert_empty conference_papers
 
     theses = classification[:thesis]
     assert_instance_of Array, theses

@@ -17,7 +17,7 @@ module Puree
         xpath_result = doc.xpath path_from_root
         outputs = {
           journal_article: [],
-          paper: [],
+          conference_paper: [],
           thesis: [],
           other: []
         }
@@ -29,8 +29,8 @@ module Puree
                 extractor = Puree::XMLExtractor::JournalArticle.new xml: research_output.to_s
                 outputs[:journal_article] << extractor.model
               when 'Conference paper'
-                extractor = Puree::XMLExtractor::Paper.new xml: research_output.to_s
-                outputs[:paper] << extractor.model
+                extractor = Puree::XMLExtractor::ConferencePaper.new xml: research_output.to_s
+                outputs[:conference_paper] << extractor.model
               when 'Doctoral Thesis'
                 extractor = Puree::XMLExtractor::Thesis.new xml: research_output.to_s
                 outputs[:thesis] << extractor.model

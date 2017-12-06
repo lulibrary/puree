@@ -11,7 +11,7 @@ class TestXMLExtractorResearchOutputTypeIdentification < Minitest::Test
     res = x.classify xml
 
     puts res[:journal_article].size
-    puts res[:paper].size
+    puts res[:conference_paper].size
     puts res[:thesis].size
     puts res[:other].size
 
