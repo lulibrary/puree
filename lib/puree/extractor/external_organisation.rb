@@ -14,12 +14,12 @@ module Puree
 
       private
 
-      def combine_metadata
-        super
-        @model.name = @extractor.name
-        @model.type = @extractor.type
-        @model
-      end
+      # def combine_metadata
+      #   super
+      #   @model.name = @extractor.name
+      #   @model.type = @extractor.type
+      #   @model
+      # end
 
     end
 

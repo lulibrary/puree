@@ -5,9 +5,6 @@ module Puree
     #
     class JournalArticle < Puree::Model::Publication
 
-      # @return [Fixnum, nil]
-      attr_accessor :article_number
-
       # @return [Puree::Model::JournalHeader, nil]
       attr_accessor :journal
 

@@ -5,10 +5,11 @@ module Puree
     # Organisation XML extractor.
     #
     class Organisation < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml:)
         super
-        @resource_type = :organisation
+        setup_model :organisation
       end
 
       # @return [Puree::Model::Address]
@@ -59,11 +60,6 @@ module Puree
         xpath_query_for_multi_value '/phoneNumbers/phoneNumber'
       end
 
-      # @return [String, nil]
-      def type
-        xpath_query_for_single_value '/type'
-      end
-
       # @return [Array<String>]
       def urls
         xpath_query_for_multi_value '/webAddresses/webAddress'
@@ -74,6 +70,18 @@ module Puree
       def xpath_root
         '/organisationalUnit'
       end
+
+      def combine_metadata
+        super
+        @model.address = address
+        @model.email_addresses = email_addresses
+        @model.name = name
+        @model.parent = parent
+        @model.phone_numbers = phone_numbers
+        @model.type = type
+        @model.urls = urls
+        @model
+      end      
 
     end
 

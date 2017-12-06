@@ -31,6 +31,11 @@ module Puree
 
       private
 
+      def setup_model(resource)
+        resource_class = "Puree::Model::#{Puree::Util::String.titleize(resource)}"
+        @model = Object.const_get(resource_class).new
+      end
+
       def make_doc(xml)
         @doc = Nokogiri::XML xml
         @doc.remove_namespaces!

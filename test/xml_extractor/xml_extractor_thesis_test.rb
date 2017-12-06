@@ -26,6 +26,9 @@ class TestXMLExtractorThesis < Minitest::Test
 
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.awarding_institution
     assert_equal true,  x.awarding_institution.data?
+
+    assert_instance_of String, x.type
+    refute_empty x.type
   end
 
   def test_sponsors
@@ -57,9 +60,11 @@ class TestXMLExtractorThesis < Minitest::Test
     assert_empty x.sponsors
 
     assert_nil x.qualification
+
+    assert_nil x.type
   end
 
-  def test_core
+  def test_model
     # Multimodalita e 'city branding'
     id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
     x = xml_extractor_from_id id

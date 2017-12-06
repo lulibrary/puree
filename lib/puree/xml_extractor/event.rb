@@ -5,22 +5,18 @@ module Puree
     # Event XML extractor.
     #
     class Event < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::TitleMixin
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml:)
         super
-        @resource_type = :event
+        setup_model :event
       end
 
       # @return [String, nil]
       def city
         xpath_query_for_single_value '/city'
       end
-
-      # Pure Deprecated
-      # @return [String, nil]
-      # def country
-      #   xpath_query_for_single_value '/country/term/localizedString'
-      # end
 
       # @return [Puree::Model::TemporalRange, nil]
       def date
@@ -42,22 +38,6 @@ module Puree
         xpath_query_for_single_value '/description'
       end
 
-      # Pure Deprecated
-      # @return [String, nil]
-      def location
-        # xpath_query_for_single_value '/location'
-      end
-
-      # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title'
-      end
-
-      # @return [String, nil]
-      def type
-        xpath_query_for_single_value '/type'
-      end
-
       private
 
       def xpath_root
@@ -65,7 +45,6 @@ module Puree
       end
 
       def combine_metadata
-        @model = Puree::Model::Event.new
         super
         @model.city = city
         @model.date = date

@@ -10,11 +10,7 @@ module Puree
 
       def initialize(xml:)
         super
-      end
-
-      # @return [Fixnum, nil]
-      def article_number
-        xpath_query_for_single_value('/articleNumber')
+        setup_model :journal_article
       end
 
       # @return [Fixnum, nil]
@@ -48,6 +44,17 @@ module Puree
       def xpath_root
         '/contributionToJournal'
       end
+
+      def combine_metadata
+        super
+        @model.issue = issue
+        @model.journal = journal
+        @model.pages = pages
+        @model.page_range = page_range
+        @model.peer_reviewed = peer_reviewed
+        @model.volume = volume
+        @model
+      end      
 
     end
   end

@@ -8,10 +8,12 @@ module Puree
       include Puree::XMLExtractor::ExternalOrganisationMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::TitleMixin
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml:)
         super
-        @resource_type = :project
+        setup_model :project
       end
 
       # @return [String, nil]
@@ -62,16 +64,6 @@ module Puree
       end
 
       # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title'
-      end
-
-      # @return [String, nil]
-      def type
-        xpath_query_for_single_value '/type'
-      end
-
-      # @return [String, nil]
       def url
         xpath_query_for_single_value '/links/link/url'
       end
@@ -81,6 +73,24 @@ module Puree
       def xpath_root
         '/project'
       end
+
+      def combine_metadata
+        super
+        @model.acronym = acronym
+        @model.description = description
+        @model.external_organisations = external_organisations
+        @model.organisations = organisations
+        @model.owner = owner
+        @model.persons_internal = persons_internal
+        @model.persons_external = persons_external
+        @model.persons_other = persons_other
+        @model.status = status
+        @model.temporal = temporal
+        @model.title = title
+        @model.type = type
+        @model.url = url
+        @model
+      end      
 
       # @return [Puree::Model::TemporalRange, nil]
       def temporal_range(start_path, end_path)

@@ -16,6 +16,7 @@ module Puree
 
       def initialize(xml:)
         super
+        setup_model :dataset
       end
 
       # Open access permission
@@ -166,11 +167,6 @@ module Puree
         temporal_range 'temporalCoveragePeriod/startDate', 'temporalCoveragePeriod/endDate'
       end
 
-      # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title'
-      end
-
       private
 
       def associated_type(type)
@@ -236,7 +232,6 @@ module Puree
       end
 
       def combine_metadata
-        @model = Puree::Model::Dataset.new
         super
         # @model.access = access
         @model.associated = associated

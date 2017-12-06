@@ -8,7 +8,7 @@ module Puree
 
       def initialize(xml:)
         super
-        @resource_type = :journal
+        setup_model :journal
       end
 
       # @return [String, nil]
@@ -27,6 +27,14 @@ module Puree
       end
 
       private
+
+      def combine_metadata
+        super
+        @model.issn = issn
+        @model.publisher = publisher
+        @model.title = title
+        @model
+      end
 
       def xpath_root
         '/journal'

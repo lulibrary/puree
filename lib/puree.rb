@@ -47,6 +47,7 @@ require 'puree/xml_extractor/mixins/page_range_mixin'
 require 'puree/xml_extractor/mixins/peer_reviewed_mixin'
 require 'puree/xml_extractor/mixins/workflow_state_mixin'
 require 'puree/xml_extractor/mixins/title_mixin'
+require 'puree/xml_extractor/mixins/type_mixin'
 
 require 'puree/xml_extractor/shared'
 require 'puree/xml_extractor/base'

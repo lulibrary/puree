@@ -14,13 +14,13 @@ module Puree
 
       private
 
-      def combine_metadata
-        super
-        @model.issn = @extractor.issn
-        @model.publisher = @extractor.publisher
-        @model.title = @extractor.title
-        @model
-      end
+      # def combine_metadata
+      #   super
+      #   @model.issn = @extractor.issn
+      #   @model.publisher = @extractor.publisher
+      #   @model.title = @extractor.title
+      #   @model
+      # end
 
     end
 

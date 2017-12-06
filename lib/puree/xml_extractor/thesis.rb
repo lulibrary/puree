@@ -9,6 +9,7 @@ module Puree
 
       def initialize(xml:)
         super
+        setup_model :thesis
       end
 
       # @return [Time, nil]
@@ -39,6 +40,16 @@ module Puree
         '/thesis'
       end
 
+      def combine_metadata
+        super
+        @model.award_date = award_date
+        @model.awarding_institution = awarding_institution
+        @model.doi = doi
+        @model.pages = pages
+        @model.qualification = qualification
+        @model.sponsors = sponsors
+        @model      
+      end
     end
   end
 end

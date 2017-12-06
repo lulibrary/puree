@@ -13,10 +13,11 @@ module Puree
       include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::WorkflowStateMixin
       include Puree::XMLExtractor::TitleMixin
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml:)
-        @resource_type = :publication
         super
+        setup_model :publication
       end
 
       # @return [String, nil]
@@ -137,11 +138,6 @@ module Puree
         xpath_query_for_single_value '/translatedTitle'
       end
 
-      # @return [String, nil]
-      def type
-        xpath_query_for_single_value '/type'
-      end
-
       # Get models from any multi-record Research Output XML response
       #
       # @param xml [String]
@@ -194,14 +190,12 @@ module Puree
       end
 
       def combine_metadata
-        @model = Puree::Model::Publication.new
         super
         @model.associated = associated
         @model.bibliographical_note = bibliographical_note
         @model.category = category
         @model.description = description
         @model.doi = doi
-        # @model.external_organisations = external_organisations
         @model.files = files
         @model.keywords = keywords
         @model.language = language
@@ -211,8 +205,6 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
-        # @model.publication_place = publication_place
-        # @model.publisher = publisher
         @model.statuses = statuses
         @model.subtitle = subtitle
         @model.title = title

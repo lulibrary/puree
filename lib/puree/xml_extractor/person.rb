@@ -9,7 +9,7 @@ module Puree
 
       def initialize(xml:)
         super
-        @resource_type = :person
+        setup_model :person
       end
 
       # @return [Array<Puree::Model::OrganisationHeader>]
@@ -76,6 +76,20 @@ module Puree
       def xpath_root
         '/person'
       end
+
+      def combine_metadata
+        super
+        @model.affiliations = affiliations
+        @model.email_addresses = email_addresses
+        @model.employee_id = employee_id
+        @model.hesa_id = hesa_id
+        @model.image_urls = image_urls
+        @model.keywords = keywords
+        @model.name = name
+        @model.orcid = orcid
+        @model.scopus_id = scopus_id
+        @model
+      end      
 
     end
 

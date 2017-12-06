@@ -8,7 +8,7 @@ module Puree
 
       def initialize(xml:)
         super
-        @resource_type = :publisher
+        setup_model :publisher
       end
 
       # @return [String, nil]
@@ -25,6 +25,12 @@ module Puree
 
       def xpath_root
         '/publisher'
+      end
+
+      def combine_metadata
+        super
+        @model.name = name
+        @model
       end
 
     end

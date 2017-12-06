@@ -5,10 +5,11 @@ module Puree
     # External organisation XML extractor.
     #
     class ExternalOrganisation < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml:)
         super
-        @resource_type = :external_organisation
+        setup_model :external_organisation
       end
 
       # @return [String, nil]
@@ -16,15 +17,17 @@ module Puree
         xpath_query_for_single_value '/name'
       end
 
-      # @return [String, nil]
-      def type
-        xpath_query_for_single_value '/type'
-      end
-
       private
 
       def xpath_root
         '/externalOrganisation'
+      end
+
+      def combine_metadata
+        super
+        @model.name = name
+        @model.type = type
+        @model
       end
 
     end
