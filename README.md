@@ -27,34 +27,130 @@ Or install it yourself as:
 
 ## Usage
 
+### Configuration
 ```ruby
-# Create an extractor.
+# Used by classes in the Puree::API and Puree::Extractor namespaces.
 config = {
   url:      'https://YOUR_HOST/ws/api/59',
   username: 'YOUR_USERNAME',
   password: 'YOUR_PASSWORD',
   api_key:  'YOUR_API_KEY'
 }
-dataset_extractor = Puree::Extractor::Dataset.new config
+```
+
+### Find a resource by ID and get a usable Ruby object
+
+```ruby
+# Create an extractor
+extractor = Puree::Extractor::Dataset.new config
 ```
 
 ```ruby
-# Fetch the metadata for a resource with a particular identifier.
-dataset = dataset_extractor.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+# Fetch the metadata for a resource with a particular identifier
+dataset = extractor.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 # =>
-#<Purification::Model::Dataset:0x987f7a4>
+#<Puree::Model::Dataset:0xCAFEBABE>
 ```
 
 ```ruby
-# Access specific metadata e.g. an internal person's name.
+# Access specific metadata e.g. an internal person's name
 dataset.persons_internal[0].name
 # =>
-#<Purification::Model::PersonName:0x9add67c @first="Foo", @last="Bar">
+#<Puree::Model::PersonName:0xCAFEBABE @first="Foo", @last="Bar">
 ```
 
 ```ruby
-# Select a formatting style for a person's name.
+# Select a formatting style for a person's name
 dataset.persons_internal[0].name.last_initial
 # =>
 # "Bar, F."
+```
+
+### Map XML from API responses to Ruby objects
+
+#### Single resource
+```ruby
+xml = '<project>...</project>'
+```
+
+```ruby
+# Create an XML extractor
+extractor = Puree::XMLExtractor::Project.new xml: xml
+```
+
+```ruby
+# Get a single piece of metadata
+extractor.title
+#=> 'An interesting project title'
+```
+
+```ruby
+# Get all the metadata together
+extractor.model
+#=> #<Puree::Model::Project:0xCAFEBABE>
+```
+
+#### Resource collection
+
+
+#### Classify a heterogeneous collection of research outputs
+```ruby
+xml = '<result>
+        <contributionToJournal> ... </contributionToJournal>
+        <contributionToConference> ... </contributionToConference>
+        ...
+      </result>'
+```
+
+```ruby
+Puree::XMLExtractor::PublicationCollection.classify xml: xml
+#=> {
+#     journal_article: [Puree::Model::JournalArticle:0xCAFEBABE, ...],
+#     conference_paper: [Puree::Model::ConferencePaper:0xCAFEBABE, ...],
+#     thesis: [Puree::Model::Thesis:0xCAFEBABE, ...],
+#     other: [Puree::Model::Publication:0xCAFEBABE, ...]
+#   }
+```
+
+### API wrapper
+
+Get raw HTTP responses.
+
+#### Client
+```ruby
+# Create a client
+client = Puree::API::Client.new config
+```
+
+```ruby
+# Find a person
+client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+```
+
+```ruby
+# Find a person, limit the metadata to ORCID and employee start date
+client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+                               params: {fields: ['orcid', 'employeeStartDate']}
+```
+
+```ruby
+# Find five people, response body as JSON
+client.persons.all params: {size: 5}, accept: :json
+```
+
+```ruby
+# Find research outputs for a person
+client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+```
+
+#### Resource
+
+```ruby
+# Create a resource
+persons = Puree::API::Resource::Person.new config
+```
+
+```ruby
+# Find a person
+persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```
