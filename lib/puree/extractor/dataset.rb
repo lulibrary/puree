@@ -10,6 +10,10 @@ module Puree
       def initialize(config)
         super
         # setup :dataset
+        # @wrapper = Purest::Dataset.new config
+        @wrapper = PureWrapper::Dataset.new config
+        # @mapper = Purification::Mapper::Dataset.new
+        @mapper = PureMapper::Dataset.new
       end
 
       private

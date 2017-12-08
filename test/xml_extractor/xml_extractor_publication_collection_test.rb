@@ -17,7 +17,7 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
 
   def test_classify
     client = Purification::Client.new config
-    response = client.research_outputs.all params: { size: 100 }
+    response = client.research_outputs.all params: { size: 10 }
     classification = Puree::XMLExtractor::PublicationCollection.classify xml: response.to_s
 
     # puts classification
