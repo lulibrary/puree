@@ -71,6 +71,8 @@ require 'puree/xml_extractor/paper'
 require 'puree/xml_extractor/conference_paper'
 
 require 'puree/xml_extractor/publication_collection'
+require 'puree/xml_extractor/dataset_collection'
+require 'puree/xml_extractor/resource_collection'
 
 require 'puree/xml_extractor/publisher'
 require 'puree/xml_extractor/server'

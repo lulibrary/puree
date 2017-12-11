@@ -10,12 +10,12 @@ module Puree
       #
       # @param xml [String]
       # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
-      def self.classify(xml:)
+      def self.classify(xml)
         path_from_root = File.join 'result', xpath_root
         doc = Nokogiri::XML xml
         doc.remove_namespaces!
         xpath_result = doc.xpath path_from_root
-        outputs = {
+        data = {
           journal_article: [],
           conference_paper: [],
           thesis: [],
@@ -27,23 +27,23 @@ module Puree
             case type
               when 'Journal article'
                 extractor = Puree::XMLExtractor::JournalArticle.new xml: research_output.to_s
-                outputs[:journal_article] << extractor.model
+                data[:journal_article] << extractor.model
               when 'Conference paper'
                 extractor = Puree::XMLExtractor::ConferencePaper.new xml: research_output.to_s
-                outputs[:conference_paper] << extractor.model
+                data[:conference_paper] << extractor.model
               when 'Doctoral Thesis'
                 extractor = Puree::XMLExtractor::Thesis.new xml: research_output.to_s
-                outputs[:thesis] << extractor.model
+                data[:thesis] << extractor.model
               when "Master's Thesis"
                 extractor = Puree::XMLExtractor::Thesis.new xml: research_output.to_s
-                outputs[:thesis] << extractor.model
+                data[:thesis] << extractor.model
               else
                 extractor = Puree::XMLExtractor::Publication.new xml: research_output.to_s
-                outputs[:other] << extractor.model
+                data[:other] << extractor.model
             end
           end
         end
-        outputs
+        data
       end
 
       private

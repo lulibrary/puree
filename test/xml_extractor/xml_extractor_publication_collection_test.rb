@@ -2,44 +2,30 @@ require 'test_helper'
 
 class TestXMLExtractorPublicationCollection < Minitest::Test
 
-  def xml_extractor_from_id(id)
-    client = Purification::Client.new config
-    response = client.research_outputs.find id: id
-    Puree::XMLExtractor::JournalArticle.new xml: response.to_s
-  end
-
-  def test_initialize
-    xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::Publication.new xml: xml
-
-    assert_instance_of Puree::XMLExtractor::Publication, xml_extractor
-  end
-
   def test_classify
-    client = Purification::Client.new config
-    response = client.research_outputs.all params: { size: 100 }
-    classification = Puree::XMLExtractor::PublicationCollection.classify xml: response.to_s
+    response = client.research_outputs.all params: { size: collection_size }
+    data = Puree::XMLExtractor::PublicationCollection.classify response.to_s
 
-    # puts classification
+    puts data
 
-    assert_instance_of Hash, classification
+    assert_instance_of Hash, data
 
-    journal_articles = classification[:journal_article]
+    journal_articles = data[:journal_article]
     assert_instance_of Array, journal_articles
     assert_instance_of Puree::Model::JournalArticle, journal_articles.first if !journal_articles.empty?
     assert_equal 'Journal article', journal_articles.first.type if !journal_articles.empty?
 
-    conference_papers = classification[:conference_paper]
+    conference_papers = data[:conference_paper]
     assert_instance_of Array, conference_papers
     assert_instance_of Puree::Model::ConferencePaper, conference_papers.first if !conference_papers.empty?
     assert_equal 'Conference paper', conference_papers.first.type if !conference_papers.empty?
 
-    theses = classification[:thesis]
+    theses = data[:thesis]
     assert_instance_of Array, theses
     assert_instance_of Puree::Model::Thesis, theses.first if !theses.empty?
     assert_equal 'Thesis', theses.first.type if !theses.empty?
 
-    others = classification[:other]
+    others = data[:other]
     assert_instance_of Array, others
     assert_instance_of Puree::Model::Publication, others.first if !others.empty?
 
@@ -47,23 +33,23 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
 
   def test_absence
     xml = '<foo/>'
-    classification = Puree::XMLExtractor::PublicationCollection.classify xml: xml
+    data = Puree::XMLExtractor::PublicationCollection.classify xml
 
-    assert_instance_of Hash, classification
+    assert_instance_of Hash, data
 
-    journal_articles = classification[:journal_article]
+    journal_articles = data[:journal_article]
     assert_instance_of Array, journal_articles
     assert_empty journal_articles
 
-    conference_papers = classification[:conference_paper]
+    conference_papers = data[:conference_paper]
     assert_instance_of Array, conference_papers
     assert_empty conference_papers
 
-    theses = classification[:thesis]
+    theses = data[:thesis]
     assert_instance_of Array, theses
     assert_empty theses
 
-    others = classification[:other]
+    others = data[:other]
     assert_instance_of Array, others
     assert_empty others
   end

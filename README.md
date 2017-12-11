@@ -48,21 +48,21 @@ extractor = Puree::Extractor::Dataset.new config
 ```ruby
 # Fetch the metadata for a resource with a particular identifier
 dataset = extractor.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-# =>
+#=>
 #<Puree::Model::Dataset:0xCAFEBABE>
 ```
 
 ```ruby
 # Access specific metadata e.g. an internal person's name
 dataset.persons_internal[0].name
-# =>
+#=>
 #<Puree::Model::PersonName:0xCAFEBABE @first="Foo", @last="Bar">
 ```
 
 ```ruby
 # Select a formatting style for a person's name
 dataset.persons_internal[0].name.last_initial
-# =>
+#=>
 # "Bar, F."
 ```
 
@@ -70,30 +70,46 @@ dataset.persons_internal[0].name.last_initial
 
 #### Single resource
 ```ruby
-xml = '<project>...</project>'
+xml = '<project> ... </project>'
 ```
 
 ```ruby
 # Create an XML extractor
-extractor = Puree::XMLExtractor::Project.new xml: xml
+xml_extractor = Puree::XMLExtractor::Project.new xml
 ```
 
 ```ruby
 # Get a single piece of metadata
-extractor.title
+xml_extractor.title
 #=> 'An interesting project title'
 ```
 
 ```ruby
 # Get all the metadata together
-extractor.model
+xml_extractor.model
 #=> #<Puree::Model::Project:0xCAFEBABE>
 ```
 
-#### Resource collection
+#### Homogeneous resource collection
+```ruby
+xml = '<result>
+        <dataSet> ... </dataSet>
+        <dataSet> ... </dataSet>
+        ...
+      </result>'
+```
 
+```ruby
+Puree::XMLExtractor::ResourceCollection.datasets xml
+#=> [
+#     Puree::Model::Dataset:0xCAFEBABE,
+#     Puree::Model::Dataset:0xCAFEBABE,
+#     Puree::Model::Dataset:0xCAFEBABE,
+#     ...
+#   ]
+```
 
-#### Classify a heterogeneous collection of research outputs
+#### Heterogeneous resource collection
 ```ruby
 xml = '<result>
         <contributionToJournal> ... </contributionToJournal>
@@ -103,7 +119,7 @@ xml = '<result>
 ```
 
 ```ruby
-Puree::XMLExtractor::PublicationCollection.classify xml: xml
+Puree::XMLExtractor::PublicationCollection.classify xml
 #=> {
 #     journal_article: [Puree::Model::JournalArticle:0xCAFEBABE, ...],
 #     conference_paper: [Puree::Model::ConferencePaper:0xCAFEBABE, ...],
@@ -130,7 +146,7 @@ client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```ruby
 # Find a person, limit the metadata to ORCID and employee start date
 client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
-                               params: {fields: ['orcid', 'employeeStartDate']}
+                    params: {fields: ['orcid', 'employeeStartDate']}
 ```
 
 ```ruby

@@ -28,3 +28,11 @@ def asserts_resource(x)
 
   assert_instance_of String, x.uuid
 end
+
+def client
+  Purification::Client.new config
+end
+
+def collection_size
+  3
+end
