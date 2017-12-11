@@ -6,7 +6,7 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
     response = client.research_outputs.all params: { size: collection_size }
     data = Puree::XMLExtractor::PublicationCollection.classify response.to_s
 
-    puts data
+    # puts data
 
     assert_instance_of Hash, data
 

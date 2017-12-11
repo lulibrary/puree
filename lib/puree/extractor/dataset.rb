@@ -14,6 +14,10 @@ module Puree
         @wrapper = PureWrapper::Dataset.new config
         # @mapper = Purification::Mapper::Dataset.new
         @mapper = PureMapper::Dataset.new
+
+        @wrapper = Purification::API::Resource::Dataset.new config
+        # response = api.find id:
+        @xml_extractor = Puree::XMLExtractor::Dataset.new xml
       end
 
       private
