@@ -1,7 +1,7 @@
 require 'test_helper'
 
 def client
-  Puree::API::APIClient.new config
+  Puree::API::RESTClient.new config
 end
 
 def instance(klass)

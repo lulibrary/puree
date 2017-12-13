@@ -26,19 +26,19 @@ module Puree
           unless type.empty?
             case type
               when 'Journal article'
-                extractor = Puree::XMLExtractor::JournalArticle.new xml: research_output.to_s
+                extractor = Puree::XMLExtractor::JournalArticle.new research_output.to_s
                 data[:journal_article] << extractor.model
               when 'Conference paper'
-                extractor = Puree::XMLExtractor::ConferencePaper.new xml: research_output.to_s
+                extractor = Puree::XMLExtractor::ConferencePaper.new research_output.to_s
                 data[:conference_paper] << extractor.model
               when 'Doctoral Thesis'
-                extractor = Puree::XMLExtractor::Thesis.new xml: research_output.to_s
+                extractor = Puree::XMLExtractor::Thesis.new research_output.to_s
                 data[:thesis] << extractor.model
               when "Master's Thesis"
-                extractor = Puree::XMLExtractor::Thesis.new xml: research_output.to_s
+                extractor = Puree::XMLExtractor::Thesis.new research_output.to_s
                 data[:thesis] << extractor.model
               else
-                extractor = Puree::XMLExtractor::Publication.new xml: research_output.to_s
+                extractor = Puree::XMLExtractor::Publication.new research_output.to_s
                 data[:other] << extractor.model
             end
           end

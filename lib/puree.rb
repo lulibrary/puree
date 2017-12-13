@@ -134,7 +134,7 @@ require 'puree/api/project'
 require 'puree/api/publisher'
 require 'puree/api/research_output'
 
-require 'puree/api/api_client'
+require 'puree/api/rest_client'
 
 
 # Metadata extraction from the Pure Research Information System.

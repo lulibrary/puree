@@ -6,7 +6,7 @@ module Puree
     #
     class Journal < Puree::XMLExtractor::Resource
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :journal
       end

@@ -6,7 +6,7 @@ module Puree
     class ConferencePaper < Puree::XMLExtractor::Paper
       include Puree::XMLExtractor::EventMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :conference_paper
       end

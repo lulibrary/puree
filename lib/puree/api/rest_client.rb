@@ -4,7 +4,7 @@ module Puree
 
     # Requests for all resources
     #
-    class APIClient
+    class RESTClient
 
       # @option (see Puree::API::Base#initialize)
       def initialize(config)

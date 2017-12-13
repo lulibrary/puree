@@ -3,14 +3,14 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorExternalOrganisation < Minitest::Test
 
   def xml_extractor_from_id(id)
-    client = Puree::API::APIClient.new config
+    client = Puree::API::RESTClient.new config
     response = client.external_organisations.find id: id
-    Puree::XMLExtractor::ExternalOrganisation.new xml: response.to_s
+    Puree::XMLExtractor::ExternalOrganisation.new response.to_s
   end
 
   def test_initialize
     xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::ExternalOrganisation.new xml: xml
+    xml_extractor = Puree::XMLExtractor::ExternalOrganisation.new xml
 
     assert_instance_of Puree::XMLExtractor::ExternalOrganisation, xml_extractor
   end
@@ -31,7 +31,7 @@ class TestXMLExtractorExternalOrganisation < Minitest::Test
 
   def test_absence
     xml = '<foo/>'
-    x = Puree::XMLExtractor::ExternalOrganisation.new xml: xml
+    x = Puree::XMLExtractor::ExternalOrganisation.new xml
 
     assert_nil x.name
 

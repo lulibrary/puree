@@ -11,7 +11,7 @@ module Puree
       include Puree::XMLExtractor::TitleMixin
       include Puree::XMLExtractor::TypeMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :project
       end

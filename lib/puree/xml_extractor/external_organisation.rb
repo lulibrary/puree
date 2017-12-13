@@ -7,7 +7,7 @@ module Puree
     class ExternalOrganisation < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::TypeMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :external_organisation
       end

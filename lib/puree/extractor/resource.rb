@@ -35,7 +35,7 @@ module Puree
 
       def make_xml_extractor(xml, resource_type)
         resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(resource_type)}"
-        Object.const_get(resource_class).new xml: xml
+        Object.const_get(resource_class).new xml
       end
 
 

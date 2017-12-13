@@ -7,7 +7,7 @@ module Puree
     class Organisation < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::TypeMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :organisation
       end

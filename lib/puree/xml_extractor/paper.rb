@@ -8,7 +8,7 @@ module Puree
       include Puree::XMLExtractor::PageRangeMixin
       include Puree::XMLExtractor::PeerReviewedMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :paper
       end

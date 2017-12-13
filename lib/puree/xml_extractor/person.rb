@@ -7,7 +7,7 @@ module Puree
     class Person < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::KeywordMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :person
       end

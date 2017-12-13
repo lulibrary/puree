@@ -7,7 +7,7 @@ module Puree
       include Puree::XMLExtractor::DoiMixin
       include Puree::XMLExtractor::PagesMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :thesis
       end

@@ -5,14 +5,14 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorPublication < Minitest::Test
 
   def xml_extractor_from_id(id)
-    client = Puree::API::APIClient.new config
+    client = Puree::API::RESTClient.new config
     response = client.research_outputs.find id: id
-    Puree::XMLExtractor::JournalArticle.new xml: response.to_s
+    Puree::XMLExtractor::JournalArticle.new response.to_s
   end
 
   def test_initialize
     xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::Publication.new xml: xml
+    xml_extractor = Puree::XMLExtractor::Publication.new xml
 
     assert_instance_of Puree::XMLExtractor::Publication, xml_extractor
   end
@@ -104,9 +104,9 @@ class TestXMLExtractorPublication < Minitest::Test
   def test_translated_titles
     # Multimodalita e 'city branding'
     id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
-    client = Puree::API::APIClient.new config
+    client = Puree::API::RESTClient.new config
     response = client.research_outputs.find id: id
-    x = Puree::XMLExtractor::Thesis.new xml: response.to_s
+    x = Puree::XMLExtractor::Thesis.new response.to_s
 
     # assert_instance_of String, x.subtitle  # also has sub
 
@@ -119,7 +119,7 @@ class TestXMLExtractorPublication < Minitest::Test
 
   def test_absence
     xml = '<foo/>'
-    x = Puree::XMLExtractor::JournalArticle.new xml: xml
+    x = Puree::XMLExtractor::JournalArticle.new xml
 
     assert_instance_of Array, x.associated
     assert_empty x.associated
@@ -172,9 +172,9 @@ class TestXMLExtractorPublication < Minitest::Test
   def test_model
     # A theoretical framework for estimation of AUCs in complete and incomplete sampling designs
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
-    client = Puree::API::APIClient.new config
+    client = Puree::API::RESTClient.new config
     response = client.research_outputs.find id: id
-    x = Puree::XMLExtractor::Publication.new xml: response.to_s
+    x = Puree::XMLExtractor::Publication.new response.to_s
 
     assert_instance_of Puree::Model::Publication, x.model
   end

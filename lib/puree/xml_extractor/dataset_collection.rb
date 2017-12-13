@@ -10,7 +10,7 @@ module Puree
       #
       # @param xml [String]
       # @return [Array<Puree::Model::Dataset>]
-      def self.models(xml:)
+      def self.models(xml)
         path_from_root = File.join 'result', xpath_root
         doc = Nokogiri::XML xml
         doc.remove_namespaces!

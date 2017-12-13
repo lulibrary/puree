@@ -6,7 +6,7 @@ module Puree
     #
     class Base
 
-      def initialize(xml:)
+      def initialize(xml)
         make_doc xml
       end
 

@@ -6,7 +6,7 @@ module Puree
     #
     class Publisher < Puree::XMLExtractor::Resource
 
-      def initialize(xml:)
+      def initialize(xml)
         super
         setup_model :publisher
       end

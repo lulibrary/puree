@@ -6,7 +6,7 @@ module Puree
     #
     class Resource < Puree::XMLExtractor::Base
 
-      def initialize(xml:)
+      def initialize(xml)
         super
       end
 
