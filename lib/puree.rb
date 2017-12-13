@@ -92,6 +92,7 @@ require 'puree/model/endeavour_person'
 require 'puree/model/person_name'
 require 'puree/model/project_identifier'
 require 'puree/model/publication_status'
+require 'puree/model/scopus_metric'
 require 'puree/model/server'
 require 'puree/model/temporal_range'
 

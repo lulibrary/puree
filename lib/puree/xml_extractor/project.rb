@@ -36,7 +36,7 @@ module Puree
           identifier.type = d.attr('type').strip
           data << identifier
         end
-        data.uniq { |d| d.type }
+        data.uniq { |d| d.id }
       end
 
       # @return [Puree::Model::OrganisationHeader, nil]

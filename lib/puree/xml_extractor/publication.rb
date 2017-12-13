@@ -109,6 +109,19 @@ module Puree
         xpath_result ? xpath_result.to_i : nil
       end
 
+      # @return [Array<Puree::Model::ScopusMetric>]
+      def scopus_metrics
+        xpath_result = xpath_query '/scopusMetrics/scopusMetric'
+        data = []
+        xpath_result.each do |i|
+          s = Puree::Model::ScopusMetric.new
+          s.value = i.xpath('value').text.strip
+          s.year = i.xpath('year').text.strip
+          data << s
+        end
+        data
+      end
+
       # @return [Array<Puree::Model::PublicationStatus>]
       def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'
