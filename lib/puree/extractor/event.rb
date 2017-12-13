@@ -9,22 +9,14 @@ module Puree
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
         super
-        # setup :event
-      end      
- 
-      private
+      end
 
-      # def combine_metadata
-      #   super
-      #   @model.city = @extractor.city
-      #   @model.country = @extractor.country
-      #   @model.date = @extractor.date
-      #   @model.description = @extractor.description
-      #   @model.location = @extractor.location
-      #   @model.title = @extractor.title
-      #   @model.type = @extractor.type
-      #   @model
-      # end
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :event,
+                         xml_extractor_resource_type: :event
+      end
 
     end
 

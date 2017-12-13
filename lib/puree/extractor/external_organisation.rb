@@ -9,17 +9,14 @@ module Puree
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
         super
-        setup :external_organisation
       end
 
-      private
-
-      # def combine_metadata
-      #   super
-      #   @model.name = @extractor.name
-      #   @model.type = @extractor.type
-      #   @model
-      # end
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :external_organisation,
+                         xml_extractor_resource_type: :external_organisation
+      end
 
     end
 

@@ -7,15 +7,14 @@ module Puree
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
-        set_model_type 'doctoral_thesis'
         super
       end
 
-      private
-
-      def combine_metadata
-        super
-        @model.type === 'Doctoral Thesis' ? @model : nil
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :thesis,
+                         xml_extractor_resource_type: :doctoral_thesis
       end
 
     end

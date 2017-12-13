@@ -9,22 +9,13 @@ module Puree
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
         super
-        setup :organisation
       end
 
-      private
-
-      def combine_metadata
-        super
-        @model.address = @extractor.address
-        @model.email_addresses = @extractor.email_addresses
-        @model.name = @extractor.name
-        # @model.organisations = @extractor.organisations
-        @model.parent = @extractor.parent
-        @model.phone_numbers = @extractor.phone_numbers
-        @model.type = @extractor.type
-        @model.urls = @extractor.urls
-        @model
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :organisational_unit,
+                         xml_extractor_resource_type: :organisation
       end
 
     end

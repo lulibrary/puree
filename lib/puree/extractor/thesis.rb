@@ -7,25 +7,14 @@ module Puree
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
-        set_model_type 'thesis'
         super
       end
 
-      private
-
-      def combine_metadata
-        super
-
-        thesis_types = ["Master's Thesis", 'Doctoral Thesis']
-        return nil if !thesis_types.include? @model.type
-
-        @model.award_date = @extractor.award_date
-        @model.awarding_institution = @extractor.awarding_institution
-        @model.doi = @extractor.doi
-        @model.pages = @extractor.pages
-        @model.qualification = @extractor.qualification
-        @model.sponsors = @extractor.sponsors
-        @model
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :thesis,
+                         xml_extractor_resource_type: :thesis
       end
 
     end

@@ -6,18 +6,11 @@ module Puree
     #
     class Publisher < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-        setup :publisher
-      end
-
-      private
-
-      def combine_metadata
-        super
-        @model.name = @extractor.name
-        @model
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :publisher,
+                         xml_extractor_resource_type: :publisher
       end
 
     end

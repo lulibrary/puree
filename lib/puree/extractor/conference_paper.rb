@@ -3,21 +3,13 @@ module Puree
 
     # Conference paper extractor.
     #
-    class ConferencePaper < Puree::Extractor::PaperBase
+    class ConferencePaper < Puree::Extractor::Paper
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-        setup_model 'conference_paper'
-      end
-
-      private
-
-      def combine_metadata
-        super
-
-        @model.event = event
-        @model
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :research_output,
+                         xml_extractor_resource_type: :conference_paper
       end
 
     end

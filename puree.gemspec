@@ -18,13 +18,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '~> 2.1'
 
-  spec.add_runtime_dependency 'http', '~> 3.0'
-  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
-  # spec.add_runtime_dependency 'sax-machine', '~> 1.3', '>= 1.3.2'
-  # spec.add_runtime_dependency 'happymapper', '~> 0.4'
-  spec.add_runtime_dependency 'nokogiri-happymapper', '~> 0.6'
+  spec.add_runtime_dependency 'purification', '~> 0.3'
+  spec.add_runtime_dependency 'purist', '~> 0.1'
 
-  spec.add_development_dependency 'purification', '~> 0.2'
   spec.add_development_dependency 'minitest-reporters', '~> 1.1'
-  spec.add_development_dependency 'rspec'
 end
