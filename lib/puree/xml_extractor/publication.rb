@@ -103,6 +103,12 @@ module Puree
       #   xpath_query_for_single_value '/publisher'
       # end
 
+      # @return [Fixnum, nil]
+      def scopus_citations_count
+        xpath_result = xpath_query_for_single_value '/totalScopusCitations'
+        xpath_result ? xpath_result.to_i : nil
+      end
+
       # @return [Array<Puree::Model::PublicationStatus>]
       def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'
@@ -205,6 +211,7 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
+        @model.scopus_citations_count = scopus_citations_count
         @model.statuses = statuses
         @model.subtitle = subtitle
         @model.title = title
