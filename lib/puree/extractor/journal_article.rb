@@ -13,7 +13,7 @@ module Puree
       # @param id [String]
       def find(id)
         find_and_extract id: id,
-                         api_resource_type: :journal_article,
+                         api_resource_type: :research_output,
                          xml_extractor_resource_type: :journal_article
       end
 

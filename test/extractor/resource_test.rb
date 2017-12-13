@@ -8,7 +8,7 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::ConferencePaper.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::ConferencePaper, model
+    assert_instance_of Puree::Model::ConferencePaper, model
   end
 
   def test_dataset
@@ -17,34 +17,34 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::Dataset.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Dataset, model
+    assert_instance_of Puree::Model::Dataset, model
   end
 
   def test_event
-    # Multimodalita e 'city branding'
-    id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
-    extractor = Puree::Extractor::Thesis.new config
+    # 31st Annual European Meeting on Atmospheric Studies by Optical Methods and 1st International Riometer Workshop
+    id = 'cd2bf302-4629-4f71-9c02-2dfe50a384bf'
+    extractor = Puree::Extractor::Event.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Thesis, model
+    assert_instance_of Puree::Model::Event, model
   end
 
   def test_external_organisation
-    # Chemical Geology
-    id = '95e40a10-1799-4e74-9a70-8b03f27d9acb'
+    # STFC
+    id = '2ea6bbc4-c957-4a07-a1e7-604a2d944c20'
     extractor = Puree::Extractor::ExternalOrganisation.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::ExternalOrganisation, model
+    assert_instance_of Puree::Model::ExternalOrganisation, model
   end
 
   def test_journal
-    # STFC
-    id = '2ea6bbc4-c957-4a07-a1e7-604a2d944c20'
+    # Chemical Geology
+    id = '95e40a10-1799-4e74-9a70-8b03f27d9acb'
     extractor = Puree::Extractor::Journal.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Journal, model
+    assert_instance_of Puree::Model::Journal, model
   end
 
   def test_journal_article
@@ -53,7 +53,7 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::JournalArticle.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::JournalArticle, model
+    assert_instance_of Puree::Model::JournalArticle, model
   end
 
   def test_organisation
@@ -62,7 +62,7 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::Organisation.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Organisation, model
+    assert_instance_of Puree::Model::Organisation, model
   end
 
   def test_person
@@ -71,7 +71,7 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::Person.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Person, model
+    assert_instance_of Puree::Model::Person, model
   end
 
   def test_project
@@ -80,7 +80,7 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::Project.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Project, model
+    assert_instance_of Puree::Model::Project, model
   end
 
   def test_publication
@@ -89,16 +89,15 @@ class TestResourceFind < Minitest::Test
     extractor = Puree::Extractor::Publication.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Publication, model
+    assert_instance_of Puree::Model::Publication, model
   end
 
   def test_thesis
-    # 31st Annual European Meeting on Atmospheric Studies by Optical Methods and 1st International Riometer Workshop
-    id = 'cd2bf302-4629-4f71-9c02-2dfe50a384bf'
-    extractor = Puree::Extractor::Event.new config
+    # Multimodalita e 'city branding'
+    id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
+    extractor = Puree::Extractor::Thesis.new config
     model = extractor.find id
 
-    assert_instance_of Purification::Model::Event, model
+    assert_instance_of Puree::Model::Thesis, model
   end
-
 end

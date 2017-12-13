@@ -29,12 +29,12 @@ module Puree
       end
 
       def make_api_resource(resource_type)
-        resource_class = "Purist::Resource::#{Puree::Util::String.titleize(resource_type)}"
+        resource_class = "Puree::API::#{Puree::Util::String.titleize(resource_type)}"
         Object.const_get(resource_class).new @config
       end
 
       def make_xml_extractor(xml, resource_type)
-        resource_class = "Purification::XMLExtractor::#{Puree::Util::String.titleize(resource_type)}"
+        resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(resource_type)}"
         Object.const_get(resource_class).new xml: xml
       end
 

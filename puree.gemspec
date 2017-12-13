@@ -18,8 +18,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '~> 2.1'
 
-  spec.add_runtime_dependency 'purification', '~> 0.3'
-  spec.add_runtime_dependency 'purist', '~> 0.1'
+  spec.add_runtime_dependency 'http', '~> 3.0'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
 
   spec.add_development_dependency 'minitest-reporters', '~> 1.1'
 end

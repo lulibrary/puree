@@ -48,14 +48,14 @@ extractor = Puree::Extractor::Dataset.new config
 # Fetch the metadata for a resource with a particular identifier
 dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=>
-#<Purification::Model::Dataset:0xCAFEBABE>
+#<Puree::Model::Dataset:0xCAFEBABE>
 ```
 
 ```ruby
 # Access specific metadata e.g. an internal person's name
 dataset.persons_internal[0].name
 #=>
-#<Purification::Model::PersonName:0xCAFEBABE @first="Foo", @last="Bar">
+#<Puree::Model::PersonName:0xCAFEBABE @first="Foo", @last="Bar">
 ```
 
 ```ruby
