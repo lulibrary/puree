@@ -33,6 +33,9 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [Array<Model::ProjectIdentifier>]
+      attr_accessor :identifiers
+
       # @return [String, nil]
       attr_accessor :status
 

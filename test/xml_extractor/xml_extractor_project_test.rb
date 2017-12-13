@@ -59,6 +59,16 @@ class TestXMLExtractorProject < Minitest::Test
     refute_empty x.description
   end
 
+  def test_identifiers
+    # Blackburn Parenting and Intensive Family Support Project
+    id = '1b15fa94-39f0-4809-976a-a04b53592004'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Array, x.identifiers
+    assert_instance_of Puree::Model::ProjectIdentifier, x.identifiers.first
+    assert_equal true, x.identifiers.first.data?
+  end
+
   def test_url
     # Designing an inclusive curriculum in higher education
     id = '926f34e9-e461-406a-a2b8-3f831456ada0'

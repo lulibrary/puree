@@ -26,6 +26,19 @@ module Puree
         xpath_query_for_single_value '/descriptions/description'
       end
 
+      # @return [Array<Model::ProjectIdentifier>]
+      def identifiers
+        xpath_result = xpath_query '/ids/id'
+        data = []
+        xpath_result.each do |d|
+          identifier = Puree::Model::ProjectIdentifier.new
+          identifier.id = d.text.strip
+          identifier.type = d.attr('type').strip
+          data << identifier
+        end
+        data.uniq { |d| d.type }
+      end
+
       # @return [Puree::Model::OrganisationHeader, nil]
       def owner
         xpath_result = xpath_query '/owner'
@@ -79,6 +92,7 @@ module Puree
         @model.acronym = acronym
         @model.description = description
         @model.external_organisations = external_organisations
+        @model.identifiers = identifiers
         @model.organisations = organisations
         @model.owner = owner
         @model.persons_internal = persons_internal

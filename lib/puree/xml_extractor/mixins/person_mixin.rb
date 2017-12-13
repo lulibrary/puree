@@ -8,7 +8,7 @@ module Puree
 
       private
 
-      # @return [Array<Endeavour::Person>]
+      # @return [Array<Puree::Model::EndeavourPerson>]
       def persons(type, xpath_query_path)
         xpath_result = xpath_query xpath_query_path
         arr = []
