@@ -175,6 +175,11 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.research_outputs
     assert_empty x.research_outputs
 
+    assert_nil x.scopus_citations_count
+
+    assert_instance_of Array, x.scopus_metrics
+    assert_empty x.scopus_metrics
+
     assert_instance_of Array, x.statuses
     assert_empty x.statuses
 

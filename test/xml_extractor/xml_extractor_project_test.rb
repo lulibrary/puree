@@ -99,6 +99,9 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Array, x.external_organisations
     assert_empty x.external_organisations
 
+    assert_instance_of Array, x.identifiers
+    assert_empty x.identifiers
+
     assert_instance_of Array, x.organisations
     assert_empty x.organisations
 
