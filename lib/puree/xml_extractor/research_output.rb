@@ -2,22 +2,22 @@ module Puree
 
   module XMLExtractor
 
-    # Publication XML extractor.
+    # Research output XML extractor.
     #
-    class Publication < Puree::XMLExtractor::Resource
-      include Puree::XMLExtractor::AssociatedMixin
+    class ResearchOutput < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::AbstractMixin
       include Puree::XMLExtractor::KeywordMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
       include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml)
         super
-        setup_model :publication
+        setup_model :research_output
       end
 
       # @return [String, nil]
@@ -157,50 +157,50 @@ module Puree
         xpath_query_for_single_value '/translatedTitle'
       end
 
-      # Get models from any multi-record Research Output XML response
-      #
-      # @param xml [String]
-      # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
-      def classify(xml)
-        path_from_root = File.join 'result', xpath_root
-        doc = Nokogiri::XML xml
-        doc.remove_namespaces!
-        xpath_result = doc.xpath path_from_root
-        outputs = {
-          journal_article: [],
-          paper: [],
-          thesis: [],
-          other: []
-        }
-        xpath_result.each do |research_output|
-          type = research_output.xpath('type').text.strip
-          unless type.empty?
-            case type
-              when 'Journal article'
-                extractor = Puree::Extractor::JournalArticle.new config
-                model = extractor.extract research_output.to_s
-                outputs[:journal_article] << model
-              when 'Conference paper'
-                extractor = Puree::Extractor::Paper.new config
-                model = extractor.extract research_output.to_s
-                outputs[:paper] << model
-              when 'Doctoral Thesis'
-                extractor = Puree::Extractor::Thesis.new config
-                model = extractor.extract research_output.to_s
-                outputs[:thesis] << model
-              when "Master's Thesis"
-                extractor = Puree::Extractor::Thesis.new config
-                model = extractor.extract research_output.to_s
-                outputs[:thesis] << model
-              else
-                extractor = Puree::Extractor::Publication.new config
-                model = extractor.extract research_output.to_s
-                outputs[:other] << model
-            end
-          end
-        end
-        outputs
-      end
+      # # Get models from any multi-record Research Output XML response
+      # #
+      # # @param xml [String]
+      # # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
+      # def classify(xml)
+      #   path_from_root = File.join 'result', xpath_root
+      #   doc = Nokogiri::XML xml
+      #   doc.remove_namespaces!
+      #   xpath_result = doc.xpath path_from_root
+      #   outputs = {
+      #     journal_article: [],
+      #     paper: [],
+      #     thesis: [],
+      #     other: []
+      #   }
+      #   xpath_result.each do |research_output|
+      #     type = research_output.xpath('type').text.strip
+      #     unless type.empty?
+      #       case type
+      #         when 'Journal article'
+      #           extractor = Puree::Extractor::JournalArticle.new config
+      #           model = extractor.extract research_output.to_s
+      #           outputs[:journal_article] << model
+      #         when 'Conference paper'
+      #           extractor = Puree::Extractor::Paper.new config
+      #           model = extractor.extract research_output.to_s
+      #           outputs[:paper] << model
+      #         when 'Doctoral Thesis'
+      #           extractor = Puree::Extractor::Thesis.new config
+      #           model = extractor.extract research_output.to_s
+      #           outputs[:thesis] << model
+      #         when "Master's Thesis"
+      #           extractor = Puree::Extractor::Thesis.new config
+      #           model = extractor.extract research_output.to_s
+      #           outputs[:thesis] << model
+      #         else
+      #           extractor = Puree::Extractor::ResearchOutput.new config
+      #           model = extractor.extract research_output.to_s
+      #           outputs[:other] << model
+      #       end
+      #     end
+      #   end
+      #   outputs
+      # end
 
       private
 
@@ -210,7 +210,6 @@ module Puree
 
       def combine_metadata
         super
-        @model.associated = associated
         @model.bibliographical_note = bibliographical_note
         @model.category = category
         @model.description = description
@@ -224,6 +223,7 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
+        @model.research_outputs = research_outputs
         @model.scopus_citations_count = scopus_citations_count
         @model.statuses = statuses
         @model.subtitle = subtitle

@@ -3,7 +3,7 @@ module Puree
 
     # Paper base XML extractor.
     #
-    class Paper < Puree::XMLExtractor::Publication
+    class Paper < Puree::XMLExtractor::ResearchOutput
       include Puree::XMLExtractor::PagesMixin
       include Puree::XMLExtractor::PageRangeMixin
       include Puree::XMLExtractor::PeerReviewedMixin

@@ -9,11 +9,7 @@ module Puree
       # @return [String, nil]
       # attr_accessor :access
 
-      # Related research outputs.
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :associated
-
-      # Date made available.
+     # Date made available.
       # @return [Time, nil]
       attr_accessor :available
 
@@ -59,11 +55,11 @@ module Puree
       # @return [Array<Puree::Model::RelatedContentHeader>]
       # attr_accessor :projects
 
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :publications
-
       # @return [String, nil]
       attr_accessor :publisher
+
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :research_outputs
 
       # @return [Array<String>]
       attr_accessor :spatial_places

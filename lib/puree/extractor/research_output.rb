@@ -2,15 +2,15 @@ module Puree
 
   module Extractor
 
-    # Publication extractor.
+    # Research output extractor.
     #
-    class Publication < Puree::Extractor::Resource
+    class ResearchOutput < Puree::Extractor::Resource
 
       # @param id [String]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :research_output,
-                         xml_extractor_resource_type: :publication
+                         xml_extractor_resource_type: :research_output
       end
 
     end

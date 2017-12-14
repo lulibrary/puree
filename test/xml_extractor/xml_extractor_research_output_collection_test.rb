@@ -1,11 +1,11 @@
 require 'test_xml_extractor_helper'
 
-class TestXMLExtractorPublicationCollection < Minitest::Test
+class TestXMLExtractorResearchOutputCollection < Minitest::Test
 
   def test_classify
     client = Puree::API::RESTClient.new config
     response = client.research_outputs.all params: { size: collection_size }
-    data = Puree::XMLExtractor::PublicationCollection.classify response.to_s
+    data = Puree::XMLExtractor::ResearchOutputCollection.classify response.to_s
 
     # puts data
 
@@ -28,13 +28,13 @@ class TestXMLExtractorPublicationCollection < Minitest::Test
 
     others = data[:other]
     assert_instance_of Array, others
-    assert_instance_of Puree::Model::Publication, others.first if !others.empty?
+    assert_instance_of Puree::Model::ResearchOutput, others.first if !others.empty?
 
   end
 
   def test_absence
     xml = '<foo/>'
-    data = Puree::XMLExtractor::PublicationCollection.classify xml
+    data = Puree::XMLExtractor::ResearchOutputCollection.classify xml
 
     assert_instance_of Hash, data
 

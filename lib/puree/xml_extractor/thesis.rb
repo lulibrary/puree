@@ -3,7 +3,7 @@ module Puree
 
     # Thesis XML extractor.
     #
-    class Thesis < Puree::XMLExtractor::Publication
+    class Thesis < Puree::XMLExtractor::ResearchOutput
       include Puree::XMLExtractor::DoiMixin
       include Puree::XMLExtractor::PagesMixin
 

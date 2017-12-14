@@ -1,12 +1,9 @@
 module Puree
   module Model
 
-    # A publication.
+    # A Research output.
     #
-    class Publication < Resource
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :associated
+    class ResearchOutput < Resource
 
       # @return [String, nil]
       attr_accessor :bibliographical_note
@@ -55,6 +52,10 @@ module Puree
 
       # @return [String, nil]
       # attr_accessor :publisher
+
+      # Related research outputs.
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :research_outputs
 
       # @return [Fixnum, nil]
       attr_accessor :scopus_citations_count

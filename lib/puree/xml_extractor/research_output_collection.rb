@@ -2,9 +2,9 @@ module Puree
 
   module XMLExtractor
 
-    # Publication collection XML extractor.
+    # Research output collection XML extractor.
     #
-    module PublicationCollection
+    module ResearchOutputCollection
 
       # Get models from any multi-record Research Output XML response
       #
@@ -38,7 +38,7 @@ module Puree
                 extractor = Puree::XMLExtractor::Thesis.new research_output.to_s
                 data[:thesis] << extractor.model
               else
-                extractor = Puree::XMLExtractor::Publication.new research_output.to_s
+                extractor = Puree::XMLExtractor::ResearchOutput.new research_output.to_s
                 data[:other] << extractor.model
             end
           end

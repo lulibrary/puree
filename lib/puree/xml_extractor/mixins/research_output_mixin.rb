@@ -2,13 +2,13 @@ module Puree
 
   module XMLExtractor
 
-    # Associated extractor mixin.
+    # Research output extractor mixin.
     #
-    module AssociatedMixin
+    module ResearchOutputMixin
 
       # Related research outputs
       # @return [Array<Puree::Model::RelatedContentHeader>]
-      def associated
+      def research_outputs
         xpath_result = xpath_query '/relatedResearchOutputs/relatedResearchOutput'
         data_arr = []
         xpath_result.each { |i|

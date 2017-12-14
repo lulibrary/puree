@@ -3,7 +3,7 @@ module Puree
 
     # A paper.
     #
-    class Paper < Puree::Model::Publication
+    class Paper < Puree::Model::ResearchOutput
 
       # @return [Fixnum, nil]
       attr_accessor :pages

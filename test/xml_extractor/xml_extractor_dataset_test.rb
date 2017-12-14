@@ -22,10 +22,6 @@ class TestXMLExtractorDataset < Minitest::Test
 
     asserts_resource x
 
-    assert_instance_of Array, x.associated
-    assert_instance_of Puree::Model::RelatedContentHeader, x.associated.first
-    assert_equal true, x.associated.first.data?
-
     assert_instance_of Time, x.available
 
     assert_instance_of String, x.description
@@ -60,9 +56,9 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of Puree::Model::TemporalRange, x.production
     assert_equal true, x.production.data?
 
-    assert_instance_of Array, x.publications
-    assert_instance_of Puree::Model::RelatedContentHeader, x.publications.first
-    assert_equal true, x.publications.first.data?
+    assert_instance_of Array, x.research_outputs
+    assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
+    assert_equal true, x.research_outputs.first.data?
 
     assert_instance_of String, x.publisher
     refute_empty x.publisher
@@ -104,17 +100,11 @@ class TestXMLExtractorDataset < Minitest::Test
     xml = '<foo/>'
     x = Puree::XMLExtractor::Dataset.new xml
 
-    assert_instance_of Array, x.associated
-    assert_empty x.associated
-
     assert_nil x.available
 
     assert_nil x.description
 
     assert_nil x.doi
-
-    assert_instance_of Array, x.files
-    assert_empty x.associated
 
     assert_instance_of Array, x.files
     assert_empty x.files
@@ -138,8 +128,8 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_nil x.production
 
-    assert_instance_of Array, x.publications
-    assert_empty x.publications
+    assert_instance_of Array, x.research_outputs
+    assert_empty x.research_outputs
 
     assert_nil x.publisher
 

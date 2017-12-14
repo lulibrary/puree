@@ -2,7 +2,7 @@ require 'test_xml_extractor_helper'
 
 # Tests Resource methods, via a JournalArticle
 # Unless otherwise stated, tests Publication methods via a JournalArticle
-class TestXMLExtractorPublication < Minitest::Test
+class TestXMLExtractorResearchOutput < Minitest::Test
 
   def xml_extractor_from_id(id)
     client = Puree::API::RESTClient.new config
@@ -12,9 +12,9 @@ class TestXMLExtractorPublication < Minitest::Test
 
   def test_initialize
     xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::Publication.new xml
+    xml_extractor = Puree::XMLExtractor::ResearchOutput.new xml
 
-    assert_instance_of Puree::XMLExtractor::Publication, xml_extractor
+    assert_instance_of Puree::XMLExtractor::ResearchOutput, xml_extractor
   end
 
   def test_core
@@ -23,10 +23,6 @@ class TestXMLExtractorPublication < Minitest::Test
     x = xml_extractor_from_id id
 
     asserts_resource x
-
-    assert_instance_of Array, x.associated
-    assert_instance_of Puree::Model::RelatedContentHeader, x.associated.first
-    assert_equal true, x.associated.first.data?
 
     assert_instance_of String, x.category
     refute_empty x.category
@@ -64,6 +60,10 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_equal true, x.persons_external.first.data?
 
     # persons_other, see Dataset test
+
+    assert_instance_of Array, x.research_outputs
+    assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
+    assert_equal true, x.research_outputs.first.data?
 
     assert_instance_of Array, x.statuses
     assert_instance_of Puree::Model::PublicationStatus, x.statuses.first
@@ -139,9 +139,6 @@ class TestXMLExtractorPublication < Minitest::Test
     xml = '<foo/>'
     x = Puree::XMLExtractor::JournalArticle.new xml
 
-    assert_instance_of Array, x.associated
-    assert_empty x.associated
-
     assert_nil x.bibliographical_note
 
     assert_nil x.category
@@ -175,6 +172,9 @@ class TestXMLExtractorPublication < Minitest::Test
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
 
+    assert_instance_of Array, x.research_outputs
+    assert_empty x.research_outputs
+
     assert_instance_of Array, x.statuses
     assert_empty x.statuses
 
@@ -192,8 +192,8 @@ class TestXMLExtractorPublication < Minitest::Test
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
     client = Puree::API::RESTClient.new config
     response = client.research_outputs.find id: id
-    x = Puree::XMLExtractor::Publication.new response.to_s
+    x = Puree::XMLExtractor::ResearchOutput.new response.to_s
 
-    assert_instance_of Puree::Model::Publication, x.model
+    assert_instance_of Puree::Model::ResearchOutput, x.model
   end
 end

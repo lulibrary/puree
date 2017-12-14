@@ -3,7 +3,7 @@ module Puree
 
     # A thesis.
     #
-    class Thesis < Puree::Model::Publication
+    class Thesis < Puree::Model::ResearchOutput
 
       # @return [Time, nil]
       attr_accessor :award_date

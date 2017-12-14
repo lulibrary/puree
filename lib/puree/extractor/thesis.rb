@@ -3,7 +3,7 @@ module Puree
 
     # Thesis extractor.
     #
-    class Thesis < Puree::Extractor::Publication
+    class Thesis < Puree::Extractor::ResearchOutput
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)

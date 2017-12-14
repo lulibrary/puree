@@ -3,7 +3,7 @@ module Puree
 
     # Paper extractor.
     #
-    class Paper < Puree::Extractor::Publication
+    class Paper < Puree::Extractor::ResearchOutput
 
       # @param id [String]
       def find(id)

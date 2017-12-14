@@ -83,13 +83,13 @@ class TestResourceFind < Minitest::Test
     assert_instance_of Puree::Model::Project, model
   end
 
-  def test_publication
+  def test_research_output
     # A theoretical framework for estimation of AUCs in complete and incomplete sampling designs
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
-    extractor = Puree::Extractor::Publication.new config
+    extractor = Puree::Extractor::ResearchOutput.new config
     model = extractor.find id
 
-    assert_instance_of Puree::Model::Publication, model
+    assert_instance_of Puree::Model::ResearchOutput, model
   end
 
   def test_thesis

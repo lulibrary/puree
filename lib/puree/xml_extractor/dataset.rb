@@ -5,12 +5,12 @@ module Puree
     # Dataset XML extractor.
     #
     class Dataset < Puree::XMLExtractor::Resource
-      include Puree::XMLExtractor::AssociatedMixin
       include Puree::XMLExtractor::DescriptionMixin
       include Puree::XMLExtractor::KeywordMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
 
@@ -121,17 +121,6 @@ module Puree
       #   associated_type('Research').uniq
       # end
 
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      def publications
-        data_arr = []
-        associated.each do |i|
-          if i.type != 'Research'
-            data_arr << i
-          end
-        end
-        data_arr
-      end
-
       # @return [String, nil]
       def publisher
         xpath_query_for_single_value '/publisher/name'
@@ -169,19 +158,19 @@ module Puree
 
       private
 
-      def associated_type(type)
-        data_arr = []
-        associated.each do |i|
-          if i.type === type
-            related = Puree::Model::RelatedContentHeader.new
-            related.type = i.type
-            related.title = i.title
-            related.uuid = i.uuid
-            data_arr << related
-          end
-        end
-        data_arr.uniq
-      end
+      # def associated_type(type)
+      #   data_arr = []
+      #   associated.each do |i|
+      #     if i.type === type
+      #       related = Puree::Model::RelatedContentHeader.new
+      #       related.type = i.type
+      #       related.title = i.title
+      #       related.uuid = i.uuid
+      #       data_arr << related
+      #     end
+      #   end
+      #   data_arr.uniq
+      # end
 
       # Temporal range
       # @return [Puree::Model::TemporalRange, nil]
@@ -234,7 +223,6 @@ module Puree
       def combine_metadata
         super
         # @model.access = access
-        @model.associated = associated
         @model.available = available
         @model.description = description
         @model.doi = doi
@@ -249,7 +237,7 @@ module Puree
         @model.persons_other = persons_other
         # @model.projects = projects
         @model.production = production
-        @model.publications = publications
+        @model.research_outputs = research_outputs
         @model.publisher = publisher
         @model.spatial_places = spatial_places
         @model.spatial_point = spatial_point
