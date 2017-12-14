@@ -35,7 +35,8 @@ config = {
 }
 ```
 
-## Find by ID with automatic extraction from XML response
+## Puree::Extractor
+Find
 
 ```ruby
 # Create an extractor
@@ -60,7 +61,8 @@ dataset.persons_internal[0].name.last_initial
 #=> # "Bar, F."
 ```
 
-## Extract from XML
+## Puree::XMLExtractor
+Get Ruby objects from the XML obtained from Pure.
 
 ### Single resource
 ```ruby
@@ -94,7 +96,7 @@ xml = '<result>
 ```
 
 ```ruby
-Puree::XMLExtractor::ResourceCollection.datasets xml
+Puree::XMLExtractor::Collection.datasets xml
 #=> [
 #     Puree::Model::Dataset:0xCAFEBABE,
 #     Puree::Model::Dataset:0xCAFEBABE,
@@ -113,16 +115,17 @@ xml = '<result>
 ```
 
 ```ruby
-Puree::XMLExtractor::PublicationCollection.classify xml
+Puree::XMLExtractor::Collection.research_outputs xml
 #=> {
-#     journal_article: [Puree::Model::JournalArticle:0xCAFEBABE, ...],
-#     conference_paper: [Puree::Model::ConferencePaper:0xCAFEBABE, ...],
-#     thesis: [Puree::Model::Thesis:0xCAFEBABE, ...],
+#     journal_articles: [Puree::Model::JournalArticle:0xCAFEBABE, ...],
+#     conference_papers: [Puree::Model::ConferencePaper:0xCAFEBABE, ...],
+#     theses: [Puree::Model::Thesis:0xCAFEBABE, ...],
 #     other: [Puree::Model::Publication:0xCAFEBABE, ...]
 #   }
 ```
 
-## REST
+## REST module
+Use the REST API and work with the HTTP responses.
 
 ### Client
 ```ruby
@@ -165,4 +168,28 @@ persons = Puree::REST::Person.new config
 # Find a person
 persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=> #<HTTP::Response:0xCAFEBABE>
+```
+
+## Using Puree::REST and Puree::XMLExtractor together
+TO DO Brief blurb
+
+```ruby
+# Create a client
+client = Puree::REST::Client.new config
+```
+
+```ruby
+# Find projects for a person
+response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+```
+
+```ruby
+# Extract metadata from XML
+Puree::XMLExtractor::Collection.projects response.body
+#=> [
+#     Puree::Model::Project:0xCAFEBABE,
+#     Puree::Model::Project:0xCAFEBABE,
+#     Puree::Model::Project:0xCAFEBABE,
+#     ...
+#   ]
 ```

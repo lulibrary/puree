@@ -16,9 +16,9 @@ module Puree
         doc.remove_namespaces!
         xpath_result = doc.xpath path_from_root
         data = {
-          journal_article: [],
-          conference_paper: [],
-          thesis: [],
+          journal_articles: [],
+          conference_papers: [],
+          theses: [],
           other: []
         }
         xpath_result.each do |research_output|
@@ -27,16 +27,16 @@ module Puree
             case type
               when 'Journal article'
                 extractor = Puree::XMLExtractor::JournalArticle.new research_output.to_s
-                data[:journal_article] << extractor.model
+                data[:journal_articles] << extractor.model
               when 'Conference paper'
                 extractor = Puree::XMLExtractor::ConferencePaper.new research_output.to_s
-                data[:conference_paper] << extractor.model
+                data[:conference_papers] << extractor.model
               when 'Doctoral Thesis'
                 extractor = Puree::XMLExtractor::Thesis.new research_output.to_s
-                data[:thesis] << extractor.model
+                data[:theses] << extractor.model
               when "Master's Thesis"
                 extractor = Puree::XMLExtractor::Thesis.new research_output.to_s
-                data[:thesis] << extractor.model
+                data[:theses] << extractor.model
               else
                 extractor = Puree::XMLExtractor::ResearchOutput.new research_output.to_s
                 data[:other] << extractor.model
