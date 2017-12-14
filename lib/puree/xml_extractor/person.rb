@@ -5,6 +5,7 @@ module Puree
     # Person XML extractor.
     #
     class Person < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::IdentifierMixin
       include Puree::XMLExtractor::KeywordMixin
 
       def initialize(xml)
@@ -21,16 +22,6 @@ module Puree
       # @return [Array<String>]
       def email_addresses
         xpath_query_for_multi_value '/staffOrganisationAssociations/staffOrganisationAssociation/emails/email'
-      end
-
-      # @return [String, nil]
-      def employee_id
-        xpath_query_for_single_value '/ids/id[@type="Employee ID"]'
-      end
-
-      # @return [String, nil]
-      def hesa_id
-        xpath_query_for_single_value '/ids/id[@type="HESA staff ID"]'
       end
 
       # @return [Array<String>]
@@ -66,11 +57,6 @@ module Puree
         xpath_query_for_single_value '/orcid'
       end
 
-      # @return [String, nil]
-      def scopus_id
-        xpath_query_for_single_value '/ids/id[@type="Scopus author ID"]'
-      end
-
       private
 
       def xpath_root
@@ -81,13 +67,11 @@ module Puree
         super
         @model.affiliations = affiliations
         @model.email_addresses = email_addresses
-        @model.employee_id = employee_id
-        @model.hesa_id = hesa_id
+        @model.identifiers = identifiers
         @model.image_urls = image_urls
         @model.keywords = keywords
         @model.name = name
         @model.orcid = orcid
-        @model.scopus_id = scopus_id
         @model
       end      
 

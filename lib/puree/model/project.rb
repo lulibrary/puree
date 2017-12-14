@@ -33,7 +33,7 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
-      # @return [Array<Model::ProjectIdentifier>]
+      # @return [Array<Model::Identifier>]
       attr_accessor :identifiers
 
       # @return [String, nil]

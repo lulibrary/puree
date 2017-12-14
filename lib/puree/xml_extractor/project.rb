@@ -6,6 +6,7 @@ module Puree
     #
     class Project < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::ExternalOrganisationMixin
+      include Puree::XMLExtractor::IdentifierMixin
       include Puree::XMLExtractor::OrganisationMixin
       include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::TitleMixin
@@ -24,19 +25,6 @@ module Puree
       # @return [String, nil]
       def description
         xpath_query_for_single_value '/descriptions/description'
-      end
-
-      # @return [Array<Model::ProjectIdentifier>]
-      def identifiers
-        xpath_result = xpath_query '/ids/id'
-        data = []
-        xpath_result.each do |d|
-          identifier = Puree::Model::ProjectIdentifier.new
-          identifier.id = d.text.strip
-          identifier.type = d.attr('type').strip
-          data << identifier
-        end
-        data.uniq { |d| d.id }
       end
 
       # @return [Puree::Model::OrganisationHeader, nil]

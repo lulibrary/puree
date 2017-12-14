@@ -1,9 +1,9 @@
 module Puree
   module Model
 
-    # An identifier associated with a project.
+    # An identifier.
     #
-    class ProjectIdentifier < Puree::Model::Structure
+    class Identifier < Puree::Model::Structure
 
       # @return [String, nil]
       attr_reader :id

@@ -65,7 +65,7 @@ class TestXMLExtractorProject < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.identifiers
-    assert_instance_of Puree::Model::ProjectIdentifier, x.identifiers.first
+    assert_instance_of Puree::Model::Identifier, x.identifiers.first
     assert_equal true, x.identifiers.first.data?
   end
 
