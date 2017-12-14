@@ -6,7 +6,7 @@ module Puree
     #
     module OwnerMixin
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       def owner
         xpath_result = xpath_query '/managingOrganisationalUnit'
         Puree::XMLExtractor::Shared.organisation_header xpath_result

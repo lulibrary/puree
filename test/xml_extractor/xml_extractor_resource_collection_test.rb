@@ -41,10 +41,10 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   def test_organisations
     client = Puree::API::RESTClient.new config
     response = client.organisational_units.all params: { size: collection_size }
-    data = Puree::XMLExtractor::ResourceCollection.organisations response.to_s
+    data = Puree::XMLExtractor::ResourceCollection.organisational_units response.to_s
     # puts data
     assert_instance_of Array, data
-    assert_instance_of Puree::Model::Organisation, data.first if !data.empty?
+    assert_instance_of Puree::Model::OrganisationalUnit, data.first if !data.empty?
   end
 
   def test_persons

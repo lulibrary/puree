@@ -59,10 +59,10 @@ class TestResourceFind < Minitest::Test
   def test_organisation
     # Faculty of Health and Medicine
     id = '8a58c4ad-2d5a-463a-841a-38839ff73a63'
-    extractor = Puree::Extractor::Organisation.new config
+    extractor = Puree::Extractor::OrganisationalUnit.new config
     model = extractor.find id
 
-    assert_instance_of Puree::Model::Organisation, model
+    assert_instance_of Puree::Model::OrganisationalUnit, model
   end
 
   def test_person

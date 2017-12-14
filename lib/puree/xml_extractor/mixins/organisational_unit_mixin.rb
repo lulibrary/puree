@@ -2,12 +2,12 @@ module Puree
 
   module XMLExtractor
 
-    # Organisation mixin.
+    # Organisational unit mixin.
     #
-    module OrganisationMixin
+    module OrganisationalUnitMixin
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      def organisations
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
+      def organisational_units
         xpath_result = xpath_query '/organisationalUnits/organisationalUnit'
         Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       end

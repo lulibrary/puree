@@ -7,7 +7,7 @@ module Puree
     class Project < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::ExternalOrganisationMixin
       include Puree::XMLExtractor::IdentifierMixin
-      include Puree::XMLExtractor::OrganisationMixin
+      include Puree::XMLExtractor::OrganisationalUnitMixin
       include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::TitleMixin
       include Puree::XMLExtractor::TypeMixin
@@ -27,7 +27,7 @@ module Puree
         xpath_query_for_single_value '/descriptions/description'
       end
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       def owner
         xpath_result = xpath_query '/owner'
         Puree::XMLExtractor::Shared.organisation_header xpath_result
@@ -81,7 +81,7 @@ module Puree
         @model.description = description
         @model.external_organisations = external_organisations
         @model.identifiers = identifiers
-        @model.organisations = organisations
+        @model.organisational_units = organisational_units
         @model.owner = owner
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external

@@ -23,7 +23,7 @@ class TestXMLExtractorPerson < Minitest::Test
     asserts_resource x
 
     assert_instance_of Array, x.affiliations
-    assert_instance_of Puree::Model::OrganisationHeader, x.affiliations.first
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.affiliations.first
     assert_equal true, x.affiliations.first.data?
 
     assert_instance_of Array, x.email_addresses

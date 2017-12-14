@@ -7,7 +7,7 @@ module Puree
     class Dataset < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::DescriptionMixin
       include Puree::XMLExtractor::KeywordMixin
-      include Puree::XMLExtractor::OrganisationMixin
+      include Puree::XMLExtractor::OrganisationalUnitMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
       include Puree::XMLExtractor::ResearchOutputMixin
@@ -230,7 +230,7 @@ module Puree
         @model.keywords = keywords
         # @model.links = links
         # @model.legal_conditions = legal_conditions
-        @model.organisations = organisations
+        @model.organisational_units = organisational_units
         @model.owner = owner
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external

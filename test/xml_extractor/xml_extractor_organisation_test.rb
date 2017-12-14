@@ -5,14 +5,14 @@ class TestXMLExtractorOrganisation < Minitest::Test
   def xml_extractor_from_id(id)
     client = Puree::API::RESTClient.new config
     response = client.organisational_units.find id: id
-    Puree::XMLExtractor::Organisation.new response.to_s
+    Puree::XMLExtractor::OrganisationalUnit.new response.to_s
   end
 
   def test_initialize
     xml = '<foo/>'
-    xml_extractor = Puree::XMLExtractor::Organisation.new xml
+    xml_extractor = Puree::XMLExtractor::OrganisationalUnit.new xml
 
-    assert_instance_of Puree::XMLExtractor::Organisation, xml_extractor
+    assert_instance_of Puree::XMLExtractor::OrganisationalUnit, xml_extractor
   end
 
   def test_core
@@ -32,7 +32,7 @@ class TestXMLExtractorOrganisation < Minitest::Test
     assert_instance_of String, x.name
     refute_empty x.name
 
-    assert_instance_of Puree::Model::OrganisationHeader, x.parent
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.parent
     assert_equal true, x.parent.data?
 
     assert_instance_of Array, x.phone_numbers
@@ -49,7 +49,7 @@ class TestXMLExtractorOrganisation < Minitest::Test
 
   def test_absence
     xml = '<foo/>'
-    x = Puree::XMLExtractor::Organisation.new xml
+    x = Puree::XMLExtractor::OrganisationalUnit.new xml
 
     assert_nil x.address
 
@@ -74,7 +74,7 @@ class TestXMLExtractorOrganisation < Minitest::Test
     id = '8a58c4ad-2d5a-463a-841a-38839ff73a63'
     x = xml_extractor_from_id id
 
-    assert_instance_of Puree::Model::Organisation, x.model
+    assert_instance_of Puree::Model::OrganisationalUnit, x.model
   end
 
 end

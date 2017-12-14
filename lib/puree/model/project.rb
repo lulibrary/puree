@@ -18,10 +18,10 @@ module Puree
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :external_organisations
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      attr_accessor :organisations
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
+      attr_accessor :organisational_units
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]

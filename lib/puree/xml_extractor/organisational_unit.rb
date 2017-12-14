@@ -2,14 +2,14 @@ module Puree
 
   module XMLExtractor
 
-    # Organisation XML extractor.
+    # Organisational unit XML extractor.
     #
-    class Organisation < Puree::XMLExtractor::Resource
+    class OrganisationalUnit < Puree::XMLExtractor::Resource
       include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml)
         super
-        setup_model :organisation
+        setup_model :organisational_unit
       end
 
       # @return [Puree::Model::Address]
@@ -42,14 +42,14 @@ module Puree
       end
 
       # Pure deprecated
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       # def organisations
       #   xpath_result = xpath_query '/organisations/organisation'
       #   Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
       # end
 
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       def parent
         xpath_result = xpath_query '/parents/parent'
         Puree::XMLExtractor::Shared.organisation_header xpath_result

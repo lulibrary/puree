@@ -27,9 +27,9 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.external_organisations.first
     assert_equal true, x.external_organisations.first.data?
 
-    assert_instance_of Array, x.organisations
-    assert_instance_of Puree::Model::OrganisationHeader, x.organisations.first
-    assert_equal true, x.organisations.first.data?
+    assert_instance_of Array, x.organisational_units
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
+    assert_equal true, x.organisational_units.first.data?
 
     assert_instance_of String, x.status
     refute_empty x.status
@@ -102,8 +102,8 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Array, x.identifiers
     assert_empty x.identifiers
 
-    assert_instance_of Array, x.organisations
-    assert_empty x.organisations
+    assert_instance_of Array, x.organisational_units
+    assert_empty x.organisational_units
 
     assert_instance_of Array, x.persons_internal
     assert_empty x.persons_internal

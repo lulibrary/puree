@@ -3,7 +3,7 @@ module Puree
 
     # An organisational unit as defined by the institution.
     #
-    class Organisation < Resource
+    class OrganisationalUnit < Resource
 
       # @return [Puree::Model::Address]
       attr_accessor :address

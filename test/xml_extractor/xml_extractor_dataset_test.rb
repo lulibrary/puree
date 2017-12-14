@@ -38,11 +38,11 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of String, x.keywords.first
     refute_empty x.keywords.first
 
-    assert_instance_of Array, x.organisations
-    assert_instance_of Puree::Model::OrganisationHeader, x.organisations.first
-    assert_equal true, x.organisations.first.data?
+    assert_instance_of Array, x.organisational_units
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
+    assert_equal true, x.organisational_units.first.data?
 
-    assert_instance_of Puree::Model::OrganisationHeader, x.owner
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.owner
     assert_equal true, x.owner.data?
 
     assert_instance_of Array, x.persons_internal
@@ -112,8 +112,8 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of Array, x.keywords
     assert_empty x.keywords
 
-    assert_instance_of Array, x.organisations
-    assert_empty x.organisations
+    assert_instance_of Array, x.organisational_units
+    assert_empty x.organisational_units
 
     assert_nil x.owner
 

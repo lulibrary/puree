@@ -41,9 +41,9 @@ module Puree
       # Get models from any multi-record organisation XML response
       #
       # @param xml [String]
-      # @return [Array<Puree::Model::Organisation>]
-      def self.organisations(xml)
-        models :organisation, xml, '/organisationalUnit'
+      # @return [Array<Puree::Model::OrganisationalUnit>]
+      def self.organisational_units(xml)
+        models :organisational_unit, xml, '/organisationalUnit'
       end
 
       # Get models from any multi-record project XML response

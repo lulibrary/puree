@@ -2,9 +2,9 @@ module Puree
 
   module Extractor
 
-    # Organisation extractor.
+    # Organisational unit extractor.
     #
-    class Organisation < Puree::Extractor::Resource
+    class OrganisationalUnit < Puree::Extractor::Resource
 
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
@@ -15,7 +15,7 @@ module Puree
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :organisational_unit,
-                         xml_extractor_resource_type: :organisation
+                         xml_extractor_resource_type: :organisational_unit
       end
 
     end

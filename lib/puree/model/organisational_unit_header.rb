@@ -1,9 +1,9 @@
 module Puree
   module Model
 
-    # A minimal representation of an Organisation.
+    # A minimal representation of an Organisational unit.
     #
-    class OrganisationHeader < Puree::Model::Structure
+    class OrganisationalUnitHeader < Puree::Model::Structure
 
       # @return [String, nil]
       attr_reader :uuid

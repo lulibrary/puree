@@ -13,7 +13,7 @@ module Puree
         setup_model :person
       end
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       def affiliations
         xpath_result = xpath_query '/staffOrganisationAssociations/staffOrganisationAssociation/organisationalUnit'
         Puree::XMLExtractor::Shared.organisation_multi_header xpath_result if xpath_result
