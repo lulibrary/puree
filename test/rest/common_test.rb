@@ -1,4 +1,4 @@
-require 'api_test_helper'
+require 'test_rest_helper'
 
 class TestResourceCommon < Minitest::Test
 

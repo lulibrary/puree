@@ -1,4 +1,5 @@
 require 'puree/rest/mixins/active_mixin'
+
 module Puree
 
   module REST

@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A minimal representation of an ExternalOrganisation.
+    # A minimal representation of an external organisation.
     #
     class ExternalOrganisationHeader < Puree::Model::Structure
 

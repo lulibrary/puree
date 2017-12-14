@@ -50,12 +50,6 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
-      # @return [String, nil]
-      # attr_accessor :publication_place
-
-      # @return [String, nil]
-      # attr_accessor :publisher
-
       # Related research outputs.
       # @return [Array<Puree::Model::RelatedContentHeader>]
       attr_accessor :research_outputs

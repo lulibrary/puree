@@ -1,7 +1,7 @@
 require 'test_xml_extractor_helper'
 
 # Tests Resource methods, via a JournalArticle
-# Unless otherwise stated, tests Publication methods via a JournalArticle
+# Unless otherwise stated, tests ResearchOutput methods via a JournalArticle
 class TestXMLExtractorResearchOutput < Minitest::Test
 
   def xml_extractor_from_id(id)

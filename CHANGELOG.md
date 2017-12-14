@@ -2,14 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
-- Metadata: activity?, clipping?, externalPerson?
-
-
-## 2.0.0 - 2017-11-28
+## 2.0.0 - 2017-12-14
 ### Added
-- Resource subclasses - created_by, modified_by
-
+- Independent modules: REST, Extractor, XMLExtractor
+- Testing against known live data.
 
 ## 1.7.0 - 2017-11-03
 ### Added

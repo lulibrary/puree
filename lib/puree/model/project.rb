@@ -8,10 +8,6 @@ module Puree
       # @return [String, nil]
       attr_accessor :acronym
 
-      # not present in stable API
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      # attr_accessor :associated
-
       # @return [String, nil]
       attr_accessor :description
 
@@ -41,9 +37,6 @@ module Puree
 
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :temporal
-
-      # @return [Puree::Model::TemporalRange, nil]
-      # attr_accessor :temporal_expected
 
       # @return [String, nil]
       attr_accessor :title

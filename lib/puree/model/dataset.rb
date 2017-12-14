@@ -5,10 +5,6 @@ module Puree
     #
     class Dataset < Resource
 
-      # Open access permission.
-      # @return [String, nil]
-      # attr_accessor :access
-
      # Date made available.
       # @return [Time, nil]
       attr_accessor :available
@@ -26,12 +22,6 @@ module Puree
 
       # @return [Array<String>]
       attr_accessor :keywords
-
-      # @return [Array<Puree::Model::LegalCondition>]
-      # attr_accessor :legal_conditions
-
-      # @return [Array<Puree::Model::Link>]
-      # attr_accessor :links
 
       # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       attr_accessor :organisational_units
@@ -51,9 +41,6 @@ module Puree
       # Date of data production.
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :production
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      # attr_accessor :projects
 
       # @return [String, nil]
       attr_accessor :publisher

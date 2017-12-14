@@ -20,9 +20,6 @@ module Puree
       # @return [Time, nil]
       attr_reader :modified_at
 
-      # @return [String, nil]
-      # attr_reader :locale
-
       # @param v [String]
       def uuid=(v)
         @uuid = v if v && !v.empty?
@@ -47,11 +44,6 @@ module Puree
       def modified_at=(v)
         @modified_at = v
       end
-
-      # @param v [String]
-      # def locale=(v)
-      #   @locale = v if v && !v.empty?
-      # end
 
     end
   end

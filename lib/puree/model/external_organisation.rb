@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # An external organisational unit as defined by the institution.
+    # An external organisation as defined by the institution.
     #
     class ExternalOrganisation < Resource
 

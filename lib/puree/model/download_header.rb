@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # A minimal representation of a Download.
+    # A minimal representation of a download.
     #
     class DownloadHeader < Puree::Model::Structure
 
