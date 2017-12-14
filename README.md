@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ## Configuration
 ```ruby
-# For Puree::REST and Puree::Extractor namespaces.
+# For Puree::Extractor and Puree::REST modules.
 config = {
   url:      'https://YOUR_HOST/ws/api/59',
   username: 'YOUR_USERNAME',
@@ -35,8 +35,9 @@ config = {
 }
 ```
 
-## Puree::Extractor
-Find
+## Extractor module
+Find a resource by identifer and have the metadata automatically extracted
+into Ruby objects.
 
 ```ruby
 # Create an extractor
@@ -61,7 +62,7 @@ dataset.persons_internal[0].name.last_initial
 #=> # "Bar, F."
 ```
 
-## Puree::XMLExtractor
+## XMLExtractor module
 Get Ruby objects from the XML obtained from Pure.
 
 ### Single resource
@@ -170,8 +171,8 @@ persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=> #<HTTP::Response:0xCAFEBABE>
 ```
 
-## Using Puree::REST and Puree::XMLExtractor together
-TO DO Brief blurb
+## REST module with XMLExtractor module
+Use the REST API and get Ruby objects from the XML.
 
 ```ruby
 # Create a client

@@ -13,5 +13,5 @@ def asserts_resource(x)
 end
 
 def collection_size
-  1
+  3
 end

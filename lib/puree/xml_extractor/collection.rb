@@ -65,7 +65,7 @@ module Puree
       # Get models from any multi-record Research output XML response
       #
       # @param xml [String]
-      # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
+      # @return [Hash{Symbol => Array<Puree::Model::ResearchOutput class/subclass>}]
       def self.research_outputs(xml)
         path_from_root = File.join 'result', '/*'
         doc = Nokogiri::XML xml

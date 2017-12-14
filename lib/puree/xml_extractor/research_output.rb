@@ -73,6 +73,11 @@ module Puree
         xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionLinkAssociation"]/link'
       end
 
+      # @return [String, nil]
+      def open_access_permission
+        xpath_query_for_single_value '/openAccessPermission'
+      end
+
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
         persons 'internal', '/personAssociations/personAssociation'
@@ -218,6 +223,7 @@ module Puree
         @model.keywords = keywords
         @model.language = language
         @model.links = links
+        @model.open_access_permission = open_access_permission
         @model.organisations = organisational_units
         @model.owner = owner
         @model.persons_internal = persons_internal

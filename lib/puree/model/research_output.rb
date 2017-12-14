@@ -32,6 +32,9 @@ module Puree
       # @return [Array<String>]
       attr_accessor :links
 
+      # @return [String, nil]
+      attr_accessor :open_access_permission
+
       # @return [Array<Puree::Model::OrganisationHeader>]
       attr_accessor :organisations
 

@@ -44,6 +44,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of String, x.links.first
     refute_empty x.links.first
 
+    assert_instance_of String, x.open_access_permission
+    refute_empty x.open_access_permission
+
     assert_instance_of Array, x.organisational_units
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
     assert_equal true, x.organisational_units.first.data?
@@ -157,6 +160,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     assert_instance_of Array, x.links
     assert_empty x.links
+
+    assert_nil x.open_access_permission
 
     assert_instance_of Array, x.organisational_units
     assert_empty x.organisational_units
