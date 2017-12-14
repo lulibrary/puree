@@ -3,8 +3,8 @@ require 'api_test_helper'
 class TestResourceBase < Minitest::Test
 
   def test_instance
-    base = Puree::API::Base.new config
-    assert_instance_of Puree::API::Base, base
+    base = Puree::REST::Base.new config
+    assert_instance_of Puree::REST::Base, base
   end
 
   # Private get_request_X methods (used by all resources) tested via Client

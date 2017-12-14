@@ -3,7 +3,7 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorPerson < Minitest::Test
 
   def xml_extractor_from_id(id)
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.persons.find id: id
     Puree::XMLExtractor::Person.new response.to_s
   end

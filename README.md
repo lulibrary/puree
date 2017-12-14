@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ## Configuration
 ```ruby
-# For Puree::API and Puree::Extractor namespaces.
+# For Puree::REST and Puree::Extractor namespaces.
 config = {
   url:      'https://YOUR_HOST/ws/api/59',
   username: 'YOUR_USERNAME',
@@ -122,12 +122,12 @@ Puree::XMLExtractor::PublicationCollection.classify xml
 #   }
 ```
 
-## API queries
+## REST
 
 ### Client
 ```ruby
 # Create a client
-client = Puree::API::RESTClient.new config
+client = Puree::REST::Client.new config
 ```
 
 ```ruby
@@ -158,7 +158,7 @@ client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ### Resource
 ```ruby
 # Create a resource
-persons = Puree::API::Person.new config
+persons = Puree::REST::Person.new config
 ```
 
 ```ruby

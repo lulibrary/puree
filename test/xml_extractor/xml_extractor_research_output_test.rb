@@ -5,7 +5,7 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorResearchOutput < Minitest::Test
 
   def xml_extractor_from_id(id)
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.research_outputs.find id: id
     Puree::XMLExtractor::JournalArticle.new response.to_s
   end
@@ -122,7 +122,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
   def test_translated_titles
     # Multimodalita e 'city branding'
     id = '376173c0-fd7a-4d63-93d3-3f2e58e8dc01'
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.research_outputs.find id: id
     x = Puree::XMLExtractor::Thesis.new response.to_s
 
@@ -195,7 +195,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
   def test_model
     # A theoretical framework for estimation of AUCs in complete and incomplete sampling designs
     id = 'a7c104d0-e243-463e-a2a4-b4e07bcfde3f'
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.research_outputs.find id: id
     x = Puree::XMLExtractor::ResearchOutput.new response.to_s
 

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 def client
-  Puree::API::RESTClient.new config
+  Puree::REST::Client.new config
 end
 
 def instance(klass)
@@ -9,7 +9,7 @@ def instance(klass)
 end
 
 def resource_klass(resource)
-  "Puree::API::#{titleize(resource)}"
+  "Puree::REST::#{titleize(resource)}"
 end
 
 def resource_instance(resource)

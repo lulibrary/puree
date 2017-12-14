@@ -3,7 +3,7 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorResourceCollection < Minitest::Test
 
   def test_datasets
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.datasets.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.datasets response.to_s
     # puts data
@@ -12,7 +12,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_events
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.events.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.events response.to_s
     # puts data
@@ -21,7 +21,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_external_organisations
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.external_organisations.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.external_organisations response.to_s
     # puts data
@@ -30,7 +30,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_journals
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.journals.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.journals response.to_s
     # puts data
@@ -39,7 +39,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_organisations
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.organisational_units.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.organisational_units response.to_s
     # puts data
@@ -48,7 +48,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_persons
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.persons.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.persons response.to_s
     # puts data
@@ -57,7 +57,7 @@ class TestXMLExtractorResourceCollection < Minitest::Test
   end
 
   def test_projects
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.projects.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResourceCollection.projects response.to_s
     # puts data

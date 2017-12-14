@@ -3,7 +3,7 @@ require 'test_xml_extractor_helper'
 class TestXMLExtractorResearchOutputCollection < Minitest::Test
 
   def test_classify
-    client = Puree::API::RESTClient.new config
+    client = Puree::REST::Client.new config
     response = client.research_outputs.all params: { size: collection_size }
     data = Puree::XMLExtractor::ResearchOutputCollection.classify response.to_s
 
