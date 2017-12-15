@@ -6,7 +6,7 @@ module Puree
     #
     class Client
 
-      # @option (see Puree::REST::Base#initialize)
+      # (see Puree::REST::Base#initialize)
       def initialize(config)
         @config = config
       end

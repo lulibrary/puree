@@ -6,7 +6,7 @@ module Puree
     #
     class Publisher < Puree::REST::Base
 
-      # @option (see Puree::REST::Base#initialize)
+      # (see Puree::REST::Base#initialize)
       def initialize(config)
         super
       end

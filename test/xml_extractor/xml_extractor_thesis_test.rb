@@ -37,8 +37,8 @@ class TestXMLExtractorThesis < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.sponsors
-    assert_instance_of String, x.sponsors.first
-    refute_empty x.sponsors.first
+    assert_instance_of Puree::Model::ExternalOrganisationHeader, x.sponsors.first
+    assert_equal true,  x.sponsors.first.data?
   end
 
   def test_qualification

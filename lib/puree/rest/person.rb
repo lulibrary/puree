@@ -32,7 +32,7 @@ module Puree
       include Puree::REST::ResearchOutputMixin
       include Puree::REST::StudentThesisMixin
 
-      # @option (see Puree::REST::Base#initialize)
+      # (see Puree::REST::Base#initialize)
       def initialize(config)
         super
       end

@@ -29,9 +29,10 @@ module Puree
         xpath_query_for_single_value '/qualification'
       end
 
-      # @return [Array<String>]
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       def sponsors
-        xpath_query_for_multi_value '/sponsors/sponsor/name'
+        xpath_result = xpath_query '/sponsors/sponsor'
+        Puree::XMLExtractor::Shared.external_organisation_multi_header xpath_result if xpath_result
       end
 
       private

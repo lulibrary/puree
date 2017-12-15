@@ -9,7 +9,7 @@ module Puree
     class Project < Puree::REST::Base
       include Puree::REST::ActiveMixin
 
-      # @option (see Puree::REST::Base#initialize)
+      # (see Puree::REST::Base#initialize)
       def initialize(config)
         super
       end

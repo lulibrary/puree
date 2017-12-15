@@ -20,7 +20,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :qualification
 
-      # @return [Array<String>, nil]
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :sponsors
 
     end

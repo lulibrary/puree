@@ -23,7 +23,7 @@ require 'puree/rest/research_output'
 require 'puree/rest/client'
 
 module Puree
-  # Use the REST API and work with the HTTP responses
+  # Query the Pure REST API.
   #
   module REST
   end
