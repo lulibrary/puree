@@ -10,9 +10,9 @@ module Puree
         super
       end
 
-      def xpath_query(path)
-        path_from_root = File.join xpath_root, path
-        @doc.xpath path_from_root
+      # @return [Puree::Model::Resource subclass]
+      def model
+        combine_metadata
       end
 
       # @return [String, nil]
@@ -40,11 +40,12 @@ module Puree
         xpath_query_for_single_value '/@uuid'
       end
 
-      def model
-        combine_metadata
-      end
-
       private
+
+      def xpath_query(path)
+        path_from_root = File.join xpath_root, path
+        @doc.xpath path_from_root
+      end
 
       # All metadata
       # @return [Hash]
