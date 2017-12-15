@@ -46,13 +46,13 @@ extractor = Puree::Extractor::Dataset.new config
 ```ruby
 # Fetch the metadata for a resource with a particular identifier
 dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<Puree::Model::Dataset:0x00coffee>
+#=> #<Puree::Model::Dataset:0x00c0ffee>
 ```
 
 ```ruby
 # Access specific metadata e.g. an internal person's name
 dataset.persons_internal[0].name
-#=> #<Puree::Model::PersonName:0x00coffee @first="Foo", @last="Bar">
+#=> #<Puree::Model::PersonName:0x00c0ffee @first="Foo", @last="Bar">
 ```
 
 ```ruby
@@ -83,7 +83,7 @@ xml_extractor.title
 ```ruby
 # Get all the metadata together
 xml_extractor.model
-#=> #<Puree::Model::Project:0x00coffee>
+#=> #<Puree::Model::Project:0x00c0ffee>
 ```
 
 ### Homogeneous resource collection
@@ -98,7 +98,7 @@ xml = '<result>
 ```ruby
 # Get an array of datasets
 Puree::XMLExtractor::Collection.datasets xml
-#=> [#<Puree::Model::Dataset:0x00coffee>, ...]
+#=> [#<Puree::Model::Dataset:0x00c0ffee>, ...]
 ```
 
 ### Heterogeneous resource collection
@@ -114,10 +114,10 @@ xml = '<result>
 # Get a hash of research outputs
 Puree::XMLExtractor::Collection.research_outputs xml
 #=> {
-#     journal_articles: [#<Puree::Model::JournalArticle:0x00coffee>, ...],
-#     conference_papers: [#<Puree::Model::ConferencePaper:0x00coffee>, ...],
-#     theses: [#<Puree::Model::Thesis:0x00coffee>, ...],
-#     other: [#<Puree::Model::ResearchOutput:0x00coffee>, ...]
+#     journal_articles: [#<Puree::Model::JournalArticle:0x00c0ffee>, ...],
+#     conference_papers: [#<Puree::Model::ConferencePaper:0x00c0ffee>, ...],
+#     theses: [#<Puree::Model::Thesis:0x00c0ffee>, ...],
+#     other: [#<Puree::Model::ResearchOutput:0x00c0ffee>, ...]
 #   }
 ```
 
@@ -133,26 +133,26 @@ client = Puree::REST::Client.new config
 ```ruby
 # Find a person
 client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0x00coffee>
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ```ruby
 # Find a person, limit the metadata to ORCID and employee start date
 client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
                     params: {fields: ['orcid', 'employeeStartDate']}
-#=> #<HTTP::Response:0x00coffee>
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ```ruby
 # Find five people, response body as JSON
 client.persons.all params: {size: 5}, accept: :json
-#=> #<HTTP::Response:0x00coffee>
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ```ruby
 # Find research outputs for a person
 client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0x00coffee>
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ### Resource
@@ -164,7 +164,7 @@ persons = Puree::REST::Person.new config
 ```ruby
 # Find a person
 persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0x00coffee>
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ## REST module with XMLExtractor module
@@ -183,5 +183,5 @@ response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```ruby
 # Extract metadata from XML
 Puree::XMLExtractor::Collection.projects response.body
-#=> [#<Puree::Model::Project:0x00coffee>, ...]
+#=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```
