@@ -25,8 +25,8 @@ class TestXMLExtractorJournal < Minitest::Test
     assert_instance_of String, x.issn
     refute_empty x.issn
 
-    assert_instance_of String, x.publisher
-    refute_empty x.publisher
+    assert_instance_of Puree::Model::PublisherHeader, x.publisher
+    assert_equal true, x.publisher.data?
 
     assert_instance_of String, x.title
     refute_empty x.title

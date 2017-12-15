@@ -10,6 +10,7 @@ module Puree
       include Puree::XMLExtractor::OrganisationalUnitMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::PublisherMixin
       include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
@@ -82,16 +83,6 @@ module Puree
       # @return [Puree::Model::TemporalRange, nil]
       def production
         temporal_range 'dataProductionPeriod/startDate', 'dataProductionPeriod/endDate'
-      end
-
-      # @return [Puree::Model::PublisherHeader, nil]
-      def publisher
-        xpath_result = xpath_query '/publisher'
-        h = Puree::Model::PublisherHeader.new
-        h.uuid = xpath_result.xpath('@uuid').text.strip
-        h.name = xpath_result.xpath('name').text.strip
-        h.type = xpath_result.xpath('type').text.strip
-        h.data? ? h : nil
       end
 
       # @return [Array<String>]

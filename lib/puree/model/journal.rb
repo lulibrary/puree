@@ -8,7 +8,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :issn
 
-      # @return [String, nil]
+      # @return [Puree::Model::PublisherHeader, nil]
       attr_accessor :publisher
 
       # @return [String, nil]

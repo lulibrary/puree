@@ -5,6 +5,7 @@ module Puree
     # Journal XML extractor.
     #
     class Journal < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::PublisherMixin
 
       def initialize(xml)
         super
@@ -14,11 +15,6 @@ module Puree
       # @return [String, nil]
       def issn
         xpath_query_for_single_value '/issns/issn'
-      end
-
-      # @return [String, nil]
-      def publisher
-        xpath_query_for_single_value '/publisher/name'
       end
 
       # @return [String, nil]
