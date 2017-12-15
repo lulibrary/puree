@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ## Configuration
 ```ruby
-# For Puree::Extractor and Puree::REST modules.
+# For Extractor and REST modules.
 config = {
   url:      'https://YOUR_HOST/ws/api/59',
   username: 'YOUR_USERNAME',
@@ -36,34 +36,33 @@ config = {
 ```
 
 ## Extractor module
-Find a resource by identifer and have the metadata automatically extracted
-into Ruby objects.
+Find a resource by identifier and get Ruby objects.
 
 ```ruby
-# Create an extractor
+# Configure an extractor
 extractor = Puree::Extractor::Dataset.new config
 ```
 
 ```ruby
 # Fetch the metadata for a resource with a particular identifier
 dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<Puree::Model::Dataset:0xCAFEBABE>
+#=> #<Puree::Model::Dataset:0x00coffee>
 ```
 
 ```ruby
 # Access specific metadata e.g. an internal person's name
 dataset.persons_internal[0].name
-#=> #<Puree::Model::PersonName:0xCAFEBABE @first="Foo", @last="Bar">
+#=> #<Puree::Model::PersonName:0x00coffee @first="Foo", @last="Bar">
 ```
 
 ```ruby
 # Select a formatting style for a person's name
 dataset.persons_internal[0].name.last_initial
-#=> # "Bar, F."
+#=> "Bar, F."
 ```
 
 ## XMLExtractor module
-Get Ruby objects from the XML obtained from Pure.
+Get Ruby objects from Pure XML.
 
 ### Single resource
 ```ruby
@@ -71,20 +70,20 @@ xml = '<project> ... </project>'
 ```
 
 ```ruby
-# Create an XML extractor
+# Configure an XML extractor
 xml_extractor = Puree::XMLExtractor::Project.new xml
 ```
 
 ```ruby
 # Get a single piece of metadata
 xml_extractor.title
-#=> 'An interesting project title'
+#=> "An interesting project title"
 ```
 
 ```ruby
 # Get all the metadata together
 xml_extractor.model
-#=> #<Puree::Model::Project:0xCAFEBABE>
+#=> #<Puree::Model::Project:0x00coffee>
 ```
 
 ### Homogeneous resource collection
@@ -97,13 +96,9 @@ xml = '<result>
 ```
 
 ```ruby
+# Get an array of datasets
 Puree::XMLExtractor::Collection.datasets xml
-#=> [
-#     Puree::Model::Dataset:0xCAFEBABE,
-#     Puree::Model::Dataset:0xCAFEBABE,
-#     Puree::Model::Dataset:0xCAFEBABE,
-#     ...
-#   ]
+#=> [#<Puree::Model::Dataset:0x00coffee>, ...]
 ```
 
 ### Heterogeneous resource collection
@@ -116,66 +111,67 @@ xml = '<result>
 ```
 
 ```ruby
+# Get a hash of research outputs
 Puree::XMLExtractor::Collection.research_outputs xml
 #=> {
-#     journal_articles: [Puree::Model::JournalArticle:0xCAFEBABE, ...],
-#     conference_papers: [Puree::Model::ConferencePaper:0xCAFEBABE, ...],
-#     theses: [Puree::Model::Thesis:0xCAFEBABE, ...],
-#     other: [Puree::Model::Publication:0xCAFEBABE, ...]
+#     journal_articles: [#<Puree::Model::JournalArticle:0x00coffee>, ...],
+#     conference_papers: [#<Puree::Model::ConferencePaper:0x00coffee>, ...],
+#     theses: [#<Puree::Model::Thesis:0x00coffee>, ...],
+#     other: [#<Puree::Model::ResearchOutput:0x00coffee>, ...]
 #   }
 ```
 
 ## REST module
-Use the REST API and work with the HTTP responses.
+Query the Pure REST API.
 
 ### Client
 ```ruby
-# Create a client
+# Configure a client
 client = Puree::REST::Client.new config
 ```
 
 ```ruby
 # Find a person
 client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0xCAFEBABE>
+#=> #<HTTP::Response:0x00coffee>
 ```
 
 ```ruby
 # Find a person, limit the metadata to ORCID and employee start date
 client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
                     params: {fields: ['orcid', 'employeeStartDate']}
-#=> #<HTTP::Response:0xCAFEBABE>
+#=> #<HTTP::Response:0x00coffee>
 ```
 
 ```ruby
 # Find five people, response body as JSON
 client.persons.all params: {size: 5}, accept: :json
-#=> #<HTTP::Response:0xCAFEBABE>
+#=> #<HTTP::Response:0x00coffee>
 ```
 
 ```ruby
 # Find research outputs for a person
 client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0xCAFEBABE>
+#=> #<HTTP::Response:0x00coffee>
 ```
 
 ### Resource
 ```ruby
-# Create a resource
+# Configure a resource
 persons = Puree::REST::Person.new config
 ```
 
 ```ruby
 # Find a person
 persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-#=> #<HTTP::Response:0xCAFEBABE>
+#=> #<HTTP::Response:0x00coffee>
 ```
 
 ## REST module with XMLExtractor module
-Use the REST API and get Ruby objects from the XML.
+Query the Pure REST API and get Ruby objects from Pure XML.
 
 ```ruby
-# Create a client
+# Configure a client
 client = Puree::REST::Client.new config
 ```
 
@@ -187,10 +183,5 @@ response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```ruby
 # Extract metadata from XML
 Puree::XMLExtractor::Collection.projects response.body
-#=> [
-#     Puree::Model::Project:0xCAFEBABE,
-#     Puree::Model::Project:0xCAFEBABE,
-#     Puree::Model::Project:0xCAFEBABE,
-#     ...
-#   ]
+#=> [#<Puree::Model::Project:0x00coffee>, ...]
 ```
