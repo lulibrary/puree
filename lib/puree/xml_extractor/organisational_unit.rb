@@ -41,14 +41,6 @@ module Puree
         xpath_query_for_single_value '/name'
       end
 
-      # Pure deprecated
-      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
-      # def organisations
-      #   xpath_result = xpath_query '/organisations/organisation'
-      #   Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
-      # end
-
-
       # @return [Puree::Model::OrganisationalUnitHeader, nil]
       def parent
         xpath_result = xpath_query '/parents/parent'

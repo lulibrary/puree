@@ -40,10 +40,6 @@ module Puree
         @doc.remove_namespaces!
       end
 
-      def service_response_name
-        @api_map[:resource_type][@resource_type][:response]
-      end
-
     end
 
   end

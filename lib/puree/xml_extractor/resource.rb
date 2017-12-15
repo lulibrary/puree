@@ -10,19 +10,9 @@ module Puree
         super
       end
 
-      # content based
       def xpath_query(path)
-        # path_from_root = service_xpath path
         path_from_root = File.join xpath_root, path
         @doc.xpath path_from_root
-      end
-
-      # Is there any data after get? For a response that provides a count of the results.
-      # @return [Boolean]
-      def get_data?
-        path = service_xpath_count
-        xpath_result = @doc.xpath path
-        xpath_result.text.strip === '1' ? true : false
       end
 
       # @return [String, nil]
@@ -50,13 +40,6 @@ module Puree
         xpath_query_for_single_value '/@uuid'
       end
 
-      # Locale (e.g. en-GB)
-      # @return [String, nil]
-      def locale
-        str = xpath_query_for_single_value '/@locale'
-        str.tr('_','-') if str
-      end
-
       def model
         combine_metadata
       end
@@ -72,22 +55,6 @@ module Puree
         @model.created_at = created_at
         @model.modified_by = modified_by
         @model.modified_at = modified_at
-      end
-
-      def service_response_name
-        @api_map[:resource_type][@resource_type][:response]
-      end
-
-      def service_xpath_base
-        service_response_name + '/result/content'
-      end
-
-      def service_xpath_count
-        service_response_name + '/count'
-      end
-
-      def service_xpath(str_to_find)
-        service_xpath_base + str_to_find
       end
 
     end

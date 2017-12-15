@@ -1,7 +1,7 @@
 module Puree
   module Model
 
-    # Status of a publication.
+    # Publication status of a research output.
     #
     class PublicationStatus < Puree::Model::Structure
 

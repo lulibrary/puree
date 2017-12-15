@@ -93,21 +93,6 @@ module Puree
         persons 'other', '/personAssociations/personAssociation'
       end
 
-      # Pure deprecated
-      # @return [String, nil]
-      # def publication_place
-      #   # handles variations in path
-      #   xpath_result = xpath_query_for_single_value '/associatedPublisher/placeOfPublication'
-      #   xpath_result = xpath_query_for_single_value '/associatedPublishers/placeOfPublication' if !xpath_result
-      #   xpath_result
-      # end
-
-      # Pure deprecated
-      # @return [String, nil]
-      # def publisher
-      #   xpath_query_for_single_value '/publisher'
-      # end
-
       # @return [Fixnum, nil]
       def scopus_citations_count
         xpath_result = xpath_query_for_single_value '/totalScopusCitations'
@@ -162,51 +147,6 @@ module Puree
         xpath_query_for_single_value '/translatedTitle'
       end
 
-      # # Get models from any multi-record Research Output XML response
-      # #
-      # # @param xml [String]
-      # # @return [Hash{Symbol => Array<Puree::Model::Publication class/subclass>}]
-      # def classify(xml)
-      #   path_from_root = File.join 'result', xpath_root
-      #   doc = Nokogiri::XML xml
-      #   doc.remove_namespaces!
-      #   xpath_result = doc.xpath path_from_root
-      #   outputs = {
-      #     journal_article: [],
-      #     paper: [],
-      #     thesis: [],
-      #     other: []
-      #   }
-      #   xpath_result.each do |research_output|
-      #     type = research_output.xpath('type').text.strip
-      #     unless type.empty?
-      #       case type
-      #         when 'Journal article'
-      #           extractor = Puree::Extractor::JournalArticle.new config
-      #           model = extractor.extract research_output.to_s
-      #           outputs[:journal_article] << model
-      #         when 'Conference paper'
-      #           extractor = Puree::Extractor::Paper.new config
-      #           model = extractor.extract research_output.to_s
-      #           outputs[:paper] << model
-      #         when 'Doctoral Thesis'
-      #           extractor = Puree::Extractor::Thesis.new config
-      #           model = extractor.extract research_output.to_s
-      #           outputs[:thesis] << model
-      #         when "Master's Thesis"
-      #           extractor = Puree::Extractor::Thesis.new config
-      #           model = extractor.extract research_output.to_s
-      #           outputs[:thesis] << model
-      #         else
-      #           extractor = Puree::Extractor::ResearchOutput.new config
-      #           model = extractor.extract research_output.to_s
-      #           outputs[:other] << model
-      #       end
-      #     end
-      #   end
-      #   outputs
-      # end
-
       private
 
       def xpath_root
@@ -239,41 +179,6 @@ module Puree
         @model.type = type
         @model.workflow = workflow
         @model
-      end
-
-      def roles
-        {
-            # Should build using '/dk/atira/pure/researchoutput/roles/' as prefix, with parameter
-
-            ## Article
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/author'          => 'Author',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/illustrator'     => 'Illustrator',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/editor'          => 'Editor',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/translator'      => 'Translator',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/publisher'       => 'Publisher',
-            '/dk/atira/pure/researchoutput/roles/contributiontojournal/guesteditor'     => 'Guest Editor',
-
-            ## Chapter
-            # Author
-            # Illustrator
-            # Editor
-            # Translator      # # @return [Fixnum, nil]
-      # def pages
-      #   xpath_result = xpath_query_for_single_value('/numberOfPages')
-      #   xpath_result ? xpath_result.to_i : nil
-      # end
-            # Publisher
-
-            # ... many, many more research output types ...
-
-            # Examples of others
-            '/dk/atira/pure/researchoutput/roles/bookanthology/author'                   => 'Author',
-            '/dk/atira/pure/researchoutput/roles/othercontribution/author'               => 'Author',
-            '/dk/atira/pure/researchoutput/roles/thesis/author'                          => 'Author',
-            '/dk/atira/pure/researchoutput/roles/workingpaper/author'                    => 'Author',
-            '/dk/atira/pure/researchoutput/roles/internalexternal/thesis/supervisor'     => 'Supervisor',
-            '/dk/atira/pure/researchoutput/roles/nontextual/artist'                      => 'Artist'
-        }
       end
 
     end

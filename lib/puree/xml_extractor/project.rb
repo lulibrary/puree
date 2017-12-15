@@ -53,12 +53,6 @@ module Puree
         xpath_query_for_single_value '/status'
       end
 
-      # Pure deprecated
-      # @return [Puree::Model::TemporalRange, nil]
-      # def temporal_expected
-      #   temporal_range '/expectedStartDate', '/expectedEndDate'
-      # end
-
       # @return [Puree::Model::TemporalRange, nil]
       def temporal
         temporal_range '/period/startDate', '/period/endDate'

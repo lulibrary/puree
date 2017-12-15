@@ -19,12 +19,6 @@ module Puree
         setup_model :dataset
       end
 
-      # Open access permission
-      # @return [String, nil]
-      # def access
-      #   xpath_query_for_single_value '/openAccessPermission/term/localizedString'
-      # end
-
       # Date made available
       # @return [Time, nil]
       def available
@@ -64,32 +58,6 @@ module Puree
         docs.uniq { |d| d.url }
       end
 
-      # @return [Array<Puree::Model::LegalCondition>]
-      # def legal_conditions
-      #   xpath_result = xpath_query '/legalConditions/legalCondition'
-      #   data = []
-      #   xpath_result.each { |i|
-      #     model =  Puree::Model::LegalCondition.new
-      #     model.name = i.xpath('typeClassification/term/localizedString').text.strip
-      #     model.description = i.xpath('description').text.strip
-      #     data << model
-      #   }
-      #   data.uniq { |d| d.name }
-      # end
-
-      # @return [Array<Puree::Model::Link>]
-      # def links
-      #   xpath_result = xpath_query '/links/link'
-      #   data = []
-      #   xpath_result.each { |i|
-      #     model =  Puree::Model::Link.new
-      #     model.description = i.xpath('description').text.strip
-      #     model.url = i.xpath('url').text.strip
-      #     data << model
-      #   }
-      #   data.uniq { |d| d.url }
-      # end
-
       # @return [Array<String>]
       def keywords
         keyword_group 'User-Defined Keywords'
@@ -115,11 +83,6 @@ module Puree
       def production
         temporal_range 'dataProductionPeriod/startDate', 'dataProductionPeriod/endDate'
       end
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      # def projects
-      #   associated_type('Research').uniq
-      # end
 
       # @return [String, nil]
       def publisher
@@ -158,20 +121,6 @@ module Puree
 
       private
 
-      # def associated_type(type)
-      #   data_arr = []
-      #   associated.each do |i|
-      #     if i.type === type
-      #       related = Puree::Model::RelatedContentHeader.new
-      #       related.type = i.type
-      #       related.title = i.title
-      #       related.uuid = i.uuid
-      #       data_arr << related
-      #     end
-      #   end
-      #   data_arr.uniq
-      # end
-
       # Temporal range
       # @return [Puree::Model::TemporalRange, nil]
       def temporal_range(start_path, end_path)
@@ -198,44 +147,22 @@ module Puree
         Puree::Util::Date.normalise o
       end
 
-      def roles
-        {
-            '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
-            '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
-            '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
-            '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
-            '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
-            '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
-            '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
-            '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
-            '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
-            '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
-            '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
-            '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
-            '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
-        }
-      end
-
       def xpath_root
         '/dataSet'
       end
 
       def combine_metadata
         super
-        # @model.access = access
         @model.available = available
         @model.description = description
         @model.doi = doi
         @model.files = files
         @model.keywords = keywords
-        # @model.links = links
-        # @model.legal_conditions = legal_conditions
         @model.organisational_units = organisational_units
         @model.owner = owner
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
-        # @model.projects = projects
         @model.production = production
         @model.research_outputs = research_outputs
         @model.publisher = publisher
