@@ -172,6 +172,7 @@ module Puree
         @model.publication_statuses = publication_statuses
         @model.research_outputs = research_outputs
         @model.scopus_citations_count = scopus_citations_count
+        @model.scopus_metrics = scopus_metrics
         @model.subtitle = subtitle
         @model.title = title
         @model.translated_subtitle = translated_subtitle

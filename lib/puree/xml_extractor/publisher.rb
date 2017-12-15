@@ -5,6 +5,7 @@ module Puree
     # Publisher XML extractor.
     #
     class Publisher < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml)
         super
@@ -25,6 +26,7 @@ module Puree
       def combine_metadata
         super
         @model.name = name
+        @model.type = type
         @model
       end
 

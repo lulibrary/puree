@@ -72,6 +72,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
     assert_equal true, x.research_outputs.first.data?
 
+    assert_instance_of String, x.type
+    refute_empty x.type
+
     assert_instance_of String, x.workflow
     refute_empty x.workflow
   end
@@ -189,6 +192,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_empty x.scopus_metrics
 
     assert_nil x.subtitle
+
+    assert_nil x.type
 
     assert_nil x.translated_subtitle
 

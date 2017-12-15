@@ -24,6 +24,9 @@ class TestXMLExtractorExternalPublisher < Minitest::Test
 
     assert_instance_of String, x.name
     refute_empty x.name
+
+    assert_instance_of String, x.type
+    refute_empty x.type
   end
 
   def test_absence
@@ -31,6 +34,8 @@ class TestXMLExtractorExternalPublisher < Minitest::Test
     x = Puree::XMLExtractor::Publisher.new xml
 
     assert_nil x.name
+
+    assert_nil x.type
   end
 
   def test_model
