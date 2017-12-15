@@ -62,15 +62,15 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
     assert_equal true, x.persons_external.first.data?
 
+    assert_instance_of Array, x.publication_statuses
+    assert_instance_of Puree::Model::PublicationStatus, x.publication_statuses.first
+    assert_equal true, x.publication_statuses.first.data?
+
     # persons_other, see Dataset test
 
     assert_instance_of Array, x.research_outputs
     assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
     assert_equal true, x.research_outputs.first.data?
-
-    assert_instance_of Array, x.statuses
-    assert_instance_of Puree::Model::PublicationStatus, x.statuses.first
-    assert_equal true, x.statuses.first.data?
 
     assert_instance_of String, x.workflow
     refute_empty x.workflow
@@ -177,6 +177,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
 
+    assert_instance_of Array, x.publication_statuses
+    assert_empty x.publication_statuses
+
     assert_instance_of Array, x.research_outputs
     assert_empty x.research_outputs
 
@@ -184,9 +187,6 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     assert_instance_of Array, x.scopus_metrics
     assert_empty x.scopus_metrics
-
-    assert_instance_of Array, x.statuses
-    assert_empty x.statuses
 
     assert_nil x.subtitle
 

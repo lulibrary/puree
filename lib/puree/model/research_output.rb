@@ -50,15 +50,15 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [Array<Puree::Model::PublicationStatus>]
+      attr_accessor :publication_statuses
+
       # Related research outputs.
       # @return [Array<Puree::Model::RelatedContentHeader>]
       attr_accessor :research_outputs
 
       # @return [Fixnum, nil]
       attr_accessor :scopus_citations_count
-
-      # @return [Array<Puree::Model::PublicationStatus>]
-      attr_accessor :statuses
 
       # @return [String, nil]
       attr_accessor :subtitle

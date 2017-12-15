@@ -93,6 +93,26 @@ module Puree
         persons 'other', '/personAssociations/personAssociation'
       end
 
+      # @return [Array<Puree::Model::PublicationStatus>]
+      def publication_statuses
+        xpath_result = xpath_query '/publicationStatuses/publicationStatus'
+        data = []
+        xpath_result.each do |i|
+          s = Puree::Model::PublicationStatus.new
+          s.stage = i.xpath('publicationStatus').text.strip
+
+          ymd = {}
+          ymd['year'] = i.xpath('publicationDate/year').text.strip
+          ymd['month'] = i.xpath('publicationDate/month').text.strip
+          ymd['day'] = i.xpath('publicationDate/day').text.strip
+
+          s.date = Puree::Util::Date.hash_to_time ymd
+
+          data << s
+        end
+        data.uniq { |d| d.stage }
+      end
+
       # @return [Fixnum, nil]
       def scopus_citations_count
         xpath_result = xpath_query_for_single_value '/totalScopusCitations'
@@ -110,26 +130,6 @@ module Puree
           data << s
         end
         data
-      end
-
-      # @return [Array<Puree::Model::PublicationStatus>]
-      def statuses
-        xpath_result = xpath_query '/publicationStatuses/publicationStatus'
-        data = []
-        xpath_result.each do |i|
-          s = Puree::Model::PublicationStatus.new
-          s.stage = i.xpath('publicationStatus').text.strip
-
-          ymd = {}
-          ymd['year'] = i.xpath('publicationDate/year').text.strip
-          ymd['month'] = i.xpath('publicationDate/month').text.strip
-          ymd['day'] = i.xpath('publicationDate/day').text.strip
-
-          s.date = Puree::Util::Date.hash_to_time ymd
-
-          data << s
-        end
-        data.uniq { |d| d.stage }
       end
 
       # @return [String, nil]
@@ -169,9 +169,9 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
+        @model.publication_statuses = publication_statuses
         @model.research_outputs = research_outputs
         @model.scopus_citations_count = scopus_citations_count
-        @model.statuses = statuses
         @model.subtitle = subtitle
         @model.title = title
         @model.translated_subtitle = translated_subtitle
