@@ -75,8 +75,6 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of String, x.workflow
     refute_empty x.workflow
-
-    puts x.model.inspect
   end
 
   def test_persons_other

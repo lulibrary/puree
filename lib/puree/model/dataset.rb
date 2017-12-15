@@ -42,7 +42,7 @@ module Puree
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :production
 
-      # @return [String, nil]
+      # @return [Puree::Model::PublisherHeader, nil]
       attr_accessor :publisher
 
       # @return [Array<Puree::Model::RelatedContentHeader>]
