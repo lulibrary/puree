@@ -11,6 +11,7 @@ module Puree
         h = Puree::Model::ExternalOrganisationHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
         h.name = nokogiri_xml_element.xpath('name').text.strip
+        h.type = nokogiri_xml_element.xpath('type').text.strip
         h.data? ? h : nil
       end
 
