@@ -5,7 +5,7 @@ module Puree
     #
     class Person < Resource
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       attr_accessor :affiliations
 
       # @return [Array<String>]

@@ -35,10 +35,10 @@ module Puree
       # @return [String, nil]
       attr_accessor :open_access_permission
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       attr_accessor :organisations
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]

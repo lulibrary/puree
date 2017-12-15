@@ -35,10 +35,10 @@ require 'puree/model/legal_condition'
 require 'puree/model/organisational_unit_header'
 require 'puree/model/endeavour_person'
 require 'puree/model/person_name'
+require 'puree/model/publisher_header'
 require 'puree/model/identifier'
 require 'puree/model/publication_status'
 require 'puree/model/scopus_metric'
-require 'puree/model/server'
 require 'puree/model/temporal_range'
 
 module Puree

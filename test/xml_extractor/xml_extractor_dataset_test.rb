@@ -60,8 +60,8 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
     assert_equal true, x.research_outputs.first.data?
 
-    assert_instance_of String, x.publisher
-    refute_empty x.publisher
+    assert_instance_of Puree::Model::PublisherHeader, x.publisher
+    assert_equal true, x.publisher.data?
 
     assert_instance_of Array, x.spatial_places
     assert_instance_of String, x.spatial_places.first
@@ -75,6 +75,8 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of String, x.workflow
     refute_empty x.workflow
+
+    puts x.model.inspect
   end
 
   def test_persons_other

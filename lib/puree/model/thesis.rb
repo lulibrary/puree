@@ -8,7 +8,7 @@ module Puree
       # @return [Time, nil]
       attr_accessor :award_date
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :awarding_institution
 
       # @return [String, nil]

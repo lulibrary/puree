@@ -14,10 +14,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :name
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      # attr_accessor :organisations
-
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :parent
 
       # @return [Array<String>]
