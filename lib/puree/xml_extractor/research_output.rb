@@ -119,12 +119,12 @@ module Puree
         xpath_result ? xpath_result.to_i : nil
       end
 
-      # @return [Array<Puree::Model::ScopusMetric>]
+      # @return [Array<Puree::Model::ResearchOutputScopusMetric>]
       def scopus_metrics
         xpath_result = xpath_query '/scopusMetrics/scopusMetric'
         data = []
         xpath_result.each do |i|
-          s = Puree::Model::ScopusMetric.new
+          s = Puree::Model::ResearchOutputScopusMetric.new
           s.value = i.xpath('value').text.strip
           s.year = i.xpath('year').text.strip
           data << s

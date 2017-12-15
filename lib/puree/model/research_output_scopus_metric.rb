@@ -3,7 +3,7 @@ module Puree
 
     # A Scopus metric.
     #
-    class ScopusMetric < Puree::Model::Structure
+    class ResearchOutputScopusMetric < Puree::Model::Structure
 
       # @return [Fixnum, nil]
       attr_reader :value

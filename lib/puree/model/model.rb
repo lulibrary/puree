@@ -38,7 +38,7 @@ require 'puree/model/person_name'
 require 'puree/model/publisher_header'
 require 'puree/model/identifier'
 require 'puree/model/publication_status'
-require 'puree/model/scopus_metric'
+require 'puree/model/research_output_scopus_metric'
 require 'puree/model/temporal_range'
 
 module Puree

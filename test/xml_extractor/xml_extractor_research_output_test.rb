@@ -112,7 +112,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.scopus_metrics
-    assert_instance_of Puree::Model::ScopusMetric, x.scopus_metrics.first
+    assert_instance_of Puree::Model::ResearchOutputScopusMetric, x.scopus_metrics.first
     assert_equal true, x.scopus_metrics.first.data?
   end
 
