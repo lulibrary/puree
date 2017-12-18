@@ -6,6 +6,7 @@ module Puree
     class Thesis < Puree::XMLExtractor::ResearchOutput
       include Puree::XMLExtractor::DoiMixin
       include Puree::XMLExtractor::PagesMixin
+      include Puree::XMLExtractor::PublisherMixin
 
       def initialize(xml)
         super
@@ -47,6 +48,7 @@ module Puree
         @model.awarding_institution = awarding_institution
         @model.doi = doi
         @model.pages = pages
+        @model.publisher = publisher
         @model.qualification = qualification
         @model.sponsors = sponsors
         @model      

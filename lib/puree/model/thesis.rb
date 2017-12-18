@@ -17,6 +17,9 @@ module Puree
       # @return [Fixnum, nil]
       attr_accessor :pages
 
+      # @return [Puree::Model::PublisherHeader, nil]
+      attr_accessor :publisher
+
       # @return [String, nil]
       attr_accessor :qualification
 

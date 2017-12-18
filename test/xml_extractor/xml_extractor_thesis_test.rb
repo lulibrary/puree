@@ -27,6 +27,9 @@ class TestXMLExtractorThesis < Minitest::Test
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.awarding_institution
     assert_equal true,  x.awarding_institution.data?
 
+    assert_instance_of Puree::Model::PublisherHeader, x.publisher
+    assert_equal true, x.publisher.data?
+
     assert_instance_of String, x.type
     refute_empty x.type
   end
@@ -55,6 +58,8 @@ class TestXMLExtractorThesis < Minitest::Test
     x = Puree::XMLExtractor::Thesis.new xml
 
     assert_nil x.awarding_institution
+
+    assert_nil x.publisher
 
     assert_instance_of Array, x.sponsors
     assert_empty x.sponsors

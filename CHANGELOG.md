@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.0 - 2017-12-14
+## 2.0.0 - 2017-12-18
+### Changed
+- For Pure API 59.
+
 ### Added
 - Independent modules: REST, Extractor, XMLExtractor
 - Testing against known live data.
