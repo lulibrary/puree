@@ -182,6 +182,6 @@ response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 
 ```ruby
 # Extract metadata from XML
-Puree::XMLExtractor::Collection.projects response.body
+Puree::XMLExtractor::Collection.projects response.to_s
 #=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```
