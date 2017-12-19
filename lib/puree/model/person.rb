@@ -5,17 +5,14 @@ module Puree
     #
     class Person < Resource
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       attr_accessor :affiliations
 
       # @return [Array<String>]
       attr_accessor :email_addresses
 
-      # @return [String, nil]
-      attr_accessor :employee_id
-
-      # @return [String, nil]
-      attr_accessor :hesa_id
+      # @return [Array<Model::Identifier>]
+      attr_accessor :identifiers
 
       # @return [Array<String>]
       attr_accessor :image_urls
@@ -28,9 +25,6 @@ module Puree
 
       # @return [String, nil]
       attr_accessor :orcid
-
-      # @return [String, nil]
-      attr_accessor :scopus_id
 
     end
   end

@@ -5,29 +5,25 @@ module Puree
     # Dataset XML extractor.
     #
     class Dataset < Puree::XMLExtractor::Resource
-      include Puree::XMLExtractor::AssociatedMixin
-      include Puree::XMLExtractor::WorkflowStateMixin
+      include Puree::XMLExtractor::DescriptionMixin
+      include Puree::XMLExtractor::KeywordMixin
+      include Puree::XMLExtractor::OrganisationalUnitMixin
+      include Puree::XMLExtractor::OwnerMixin
+      include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::PublisherMixin
+      include Puree::XMLExtractor::ResearchOutputMixin
+      include Puree::XMLExtractor::WorkflowMixin
+      include Puree::XMLExtractor::TitleMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
-        @resource_type = :dataset
-      end
-
-      # Open access permission
-      # @return [String, nil]
-      def access
-        xpath_query_for_single_value '/openAccessPermission/term/localizedString'
+        setup_model :dataset
       end
 
       # Date made available
       # @return [Time, nil]
       def available
-        Puree::Util::Date.hash_to_time temporal_date('dateMadeAvailable')
-      end
-
-      # @return [String, nil]
-      def description
-        xpath_query_for_single_value '/descriptions/classificationDefinedField/value/localizedString'
+        Puree::Util::Date.hash_to_time temporal_date('publicationDate')
       end
 
       # Digital Object Identifier
@@ -43,9 +39,9 @@ module Puree
         docs = []
         xpath_result.each do |d|
           doc = Puree::Model::File.new
-          doc.name = d.xpath('fileName').text.strip
-          doc.mime = d.xpath('mimeType').text.strip
-          doc.size = d.xpath('size').text.strip.to_i
+          doc.name = d.xpath('title').text.strip
+          # doc.mime = d.xpath('mimeType').text.strip
+          # doc.size = d.xpath('size').text.strip.to_i
           doc.url = d.xpath('url').text.strip
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
@@ -53,8 +49,9 @@ module Puree
           document_license = d.xpath('documentLicense')
           if !document_license.empty?
             license = Puree::Model::CopyrightLicense.new
-            license.name = document_license.xpath('term/localizedString').text.strip
-            license.url = document_license.xpath('description/localizedString').text.strip
+            license.name = document_license.text.strip
+            # license.name = document_license.xpath('term/localizedString').text.strip
+            # license.url = document_license.xpath('description/localizedString').text.strip
             doc.license = license if license.data?
           end
           docs << doc
@@ -64,95 +61,34 @@ module Puree
 
       # @return [Array<String>]
       def keywords
-        xpath_result =  xpath_query '/keywordGroups/keywordGroup/keyword/userDefinedKeyword/freeKeyword'
-        data_arr = xpath_result.map { |i| i.text.strip }
-        data_arr.uniq
-      end
-
-      # @return [Array<Puree::Model::LegalCondition>]
-      def legal_conditions
-        xpath_result = xpath_query '/legalConditions/legalCondition'
-        data = []
-        xpath_result.each { |i|
-          model =  Puree::Model::LegalCondition.new
-          model.name = i.xpath('typeClassification/term/localizedString').text.strip
-          model.description = i.xpath('description').text.strip
-          data << model
-        }
-        data.uniq { |d| d.name }
-      end
-
-      # @return [Array<Puree::Model::Link>]
-      def links
-        xpath_result = xpath_query '/links/link'
-        data = []
-        xpath_result.each { |i|
-          model =  Puree::Model::Link.new
-          model.description = i.xpath('description').text.strip
-          model.url = i.xpath('url').text.strip
-          data << model
-        }
-        data.uniq { |d| d.url }
-      end
-
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      def organisations
-        xpath_result = xpath_query '/organisations/organisation'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
-      end
-
-      # @return [Puree::Model::OrganisationHeader, nil]
-      def owner
-        xpath_result = xpath_query '/managedBy'
-        Puree::XMLExtractor::Shared.organisation_header xpath_result
+        keyword_group 'User-Defined Keywords'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_internal
-        persons 'internal'
+        persons 'internal', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_external
-        persons 'external'
+        persons 'external', '/personAssociations/personAssociation'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
       def persons_other
-        persons 'other'
+        persons 'other', '/personAssociations/personAssociation'
       end
 
       # Date of data production
       # @return [Puree::Model::TemporalRange, nil]
       def production
-        temporal_range 'dateOfDataProduction', 'endDateOfDataProduction'
-      end
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      def projects
-        associated_type('Research').uniq
-      end
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      def publications
-        data_arr = []
-        associated.each do |i|
-          if i.type != 'Research'
-            data_arr << i
-          end
-        end
-        data_arr
-      end
-
-      # @return [String, nil]
-      def publisher
-        xpath_query_for_single_value '/publisher/name'
+        temporal_range 'dataProductionPeriod/startDate', 'dataProductionPeriod/endDate'
       end
 
       # @return [Array<String>]
       def spatial_places
         # Data from free-form text box
-        xpath_result = xpath_query '/geographicalCoverage/localizedString'
+        xpath_result = xpath_query '/geographicalCoverage'
         data = []
         xpath_result.each do |i|
           data << i.text.strip
@@ -164,77 +100,22 @@ module Puree
       # @return [Puree::Model::SpatialPoint, nil]
       def spatial_point
         xpath_result = xpath_query '/geoLocation/point'
-        point = Puree::Model::SpatialPoint.new
-        if !xpath_result[0].nil?
-          arr = xpath_result.text.split(',')
-          point.latitude = arr[0].strip.to_f
-          point.longitude = arr[1].strip.to_f
+        if !xpath_result.empty?
+          point = Puree::Model::SpatialPoint.new
+          arr = xpath_result.text.strip.split(',')
+          point.latitude = arr[0].to_f
+          point.longitude = arr[1].to_f
           point
         end
-        nil
       end
 
       # Temporal coverage
       # @return [Puree::Model::TemporalRange, nil]
       def temporal
-        temporal_range 'temporalCoverageStartDate', 'temporalCoverageEndDate'
-      end
-
-      # @return [String, nil]
-      def title
-        xpath_query_for_single_value '/title/localizedString'
+        temporal_range 'temporalCoveragePeriod/startDate', 'temporalCoveragePeriod/endDate'
       end
 
       private
-
-      def associated_type(type)
-        data_arr = []
-        associated.each do |i|
-          if i.type === type
-            related = Puree::Model::RelatedContentHeader.new
-            related.type = i.type
-            related.title = i.title
-            related.uuid = i.uuid
-            data_arr << related
-          end
-        end
-        data_arr.uniq
-      end
-
-      # @return [Array<Endeavour::Person>]
-      def persons(type)
-        xpath_result = xpath_query '/persons/dataSetPersonAssociation'
-        arr = []
-        xpath_result.each do |i|
-          uuid_internal = i.at_xpath('person/@uuid')
-          uuid_external = i.at_xpath('externalPerson/@uuid')
-          if uuid_internal
-            person_type = 'internal'
-            uuid = uuid_internal.text.strip
-          elsif uuid_external
-            person_type = 'external'
-            uuid = uuid_external.text.strip
-          else
-            person_type = 'other'
-            uuid = ''
-          end
-          if person_type === type
-            person = Puree::Model::EndeavourPerson.new
-            person.uuid = uuid
-
-            name = Puree::Model::PersonName.new
-            name.first = i.xpath('name/firstName').text.strip
-            name.last = i.xpath('name/lastName').text.strip
-            person.name = name
-
-            role_uri = i.xpath('personRole/uri').text.strip
-            person.role = roles[role_uri]
-
-            arr << person if person.data?
-          end
-        end
-        arr.uniq { |d| d.uuid }
-      end
 
       # Temporal range
       # @return [Puree::Model::TemporalRange, nil]
@@ -262,22 +143,31 @@ module Puree
         Puree::Util::Date.normalise o
       end
 
-      def roles
-        {
-            '/dk/atira/pure/dataset/roles/dataset/contributor'    => 'Contributor',
-            '/dk/atira/pure/dataset/roles/dataset/creator'        => 'Creator',
-            '/dk/atira/pure/dataset/roles/dataset/datacollector'  => 'Data Collector',
-            '/dk/atira/pure/dataset/roles/dataset/datamanager'    => 'Data Manager',
-            '/dk/atira/pure/dataset/roles/dataset/distributor'    => 'Distributor',
-            '/dk/atira/pure/dataset/roles/dataset/editor'         => 'Editor',
-            '/dk/atira/pure/dataset/roles/dataset/funder'         => 'Funder',
-            '/dk/atira/pure/dataset/roles/dataset/owner'          => 'Owner',
-            '/dk/atira/pure/dataset/roles/dataset/other'          => 'Other',
-            '/dk/atira/pure/dataset/roles/dataset/producer'       => 'Producer',
-            '/dk/atira/pure/dataset/roles/dataset/rightsholder'   => 'Rights Holder',
-            '/dk/atira/pure/dataset/roles/dataset/sponsor'        => 'Sponsor',
-            '/dk/atira/pure/dataset/roles/dataset/supervisor'     => 'Supervisor'
-        }
+      def xpath_root
+        '/dataSet'
+      end
+
+      def combine_metadata
+        super
+        @model.available = available
+        @model.description = description
+        @model.doi = doi
+        @model.files = files
+        @model.keywords = keywords
+        @model.organisational_units = organisational_units
+        @model.owner = owner
+        @model.persons_internal = persons_internal
+        @model.persons_external = persons_external
+        @model.persons_other = persons_other
+        @model.production = production
+        @model.research_outputs = research_outputs
+        @model.publisher = publisher
+        @model.spatial_places = spatial_places
+        @model.spatial_point = spatial_point
+        @model.temporal = temporal
+        @model.title = title
+        @model.workflow = workflow
+        @model
       end
 
     end

@@ -8,23 +8,16 @@ module Puree
       # @return [String, nil]
       attr_accessor :acronym
 
-      # not present in stable API
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      # attr_accessor :associated
-
       # @return [String, nil]
       attr_accessor :description
 
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :external_organisations
 
-      # @return [Boolean]
-      attr_accessor :funded
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
+      attr_accessor :organisational_units
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      attr_accessor :organisations
-
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -36,14 +29,14 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [Array<Model::Identifier>]
+      attr_accessor :identifiers
+
       # @return [String, nil]
       attr_accessor :status
 
       # @return [Puree::Model::TemporalRange, nil]
-      attr_accessor :temporal_actual
-
-      # @return [Puree::Model::TemporalRange, nil]
-      attr_accessor :temporal_expected
+      attr_accessor :temporal
 
       # @return [String, nil]
       attr_accessor :title

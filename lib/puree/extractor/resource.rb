@@ -5,75 +5,39 @@ module Puree
     # Resource extractor.
     #
     class Resource
-      include Puree::API::Authentication
 
-      # @option (see Puree::API::Authentication#configure_api)
-      # @param bleeding [Boolean]
-      def initialize(config, bleeding: true)
-        @latest_api = bleeding
-        configure_api config
-      end
-
-      # Get a resource.
-      #
-      # @param uuid [String]
-      # @param id [String]
-      # @return [Puree::Model::Resource subclass, nil] Resource metadata e.g. Puree::Model::Dataset
-      def get(uuid: nil, id: nil)
-        raise 'Cannot perform a request without a configuration' if @config.nil?
-        @response = @request.get uuid:           uuid,
-                                 id:             id,
-                                 latest_api:     @latest_api,
-                                 resource_type:  @resource_type
-        set_content @response.body
+      # @param config [Hash]
+      # @option config [String] :url URL of the Pure host
+      # @option config [String] :username Username of the Pure host account
+      # @option config [String] :password Password of the Pure host account
+      # @option config [String] :api_key API key of the Pure host account
+      def initialize(config)
+        @config = config
       end
 
       private
 
-      # For specialised extraction such as Publication subtypes e.g. doctoral_thesis
-      def set_model_type(type)
-        @model_type = type
+      # @param id [String]
+      # @param api_resource_type [Symbol]
+      # @param xml_extractor_resource_type [Symbol]
+      def find_and_extract(id:, api_resource_type:, xml_extractor_resource_type:)
+        api_resource = make_api_resource api_resource_type
+        response = api_resource.find id: id
+        return unless response.code === 200
+        xml_extractor = make_xml_extractor response.body, xml_extractor_resource_type
+        xml_extractor.model
       end
 
-      # Set content from XML.
-      #
-      # @param xml [String]
-      def set_content(xml)
-        if xml
-          make_xml_extractor xml
-          @extractor.get_data? ? combine_metadata : nil
-        end
+      def make_api_resource(resource_type)
+        resource_class = "Puree::REST::#{Puree::Util::String.titleize(resource_type)}"
+        Object.const_get(resource_class).new @config
       end
 
-      def setup(resource)
-        @resource_type = resource
-        if @model_type
-          resource_class = "Puree::Model::#{Puree::Util::String.titleize(@model_type)}"
-        else
-          resource_class = "Puree::Model::#{Puree::Util::String.titleize(resource)}"
-        end
-        @model = Object.const_get(resource_class).new
+      def make_xml_extractor(xml, resource_type)
+        resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(resource_type)}"
+        Object.const_get(resource_class).new xml
       end
 
-      def make_xml_extractor xml
-        if @model_type
-          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@model_type)}"
-        else
-          resource_class = "Puree::XMLExtractor::#{Puree::Util::String.titleize(@resource_type)}"
-        end
-        @extractor = Object.const_get(resource_class).new xml: xml
-      end
-
-      # All metadata
-      # @return [Hash]
-      def combine_metadata
-        @model.uuid = @extractor.uuid
-        @model.created = @extractor.created
-        @model.modified = @extractor.modified
-        @model.locale = @extractor.locale
-      end
-
-      alias :find :get
 
     end
 

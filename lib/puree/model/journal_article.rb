@@ -3,10 +3,7 @@ module Puree
 
     # A journal article.
     #
-    class JournalArticle < Puree::Model::Publication
-
-      # @return [Fixnum, nil]
-      attr_accessor :article_number
+    class JournalArticle < Puree::Model::ResearchOutput
 
       # @return [Puree::Model::JournalHeader, nil]
       attr_accessor :journal

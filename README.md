@@ -5,10 +5,7 @@ Metadata extraction from the Pure Research Information System.
 ## Status
 
 [![Gem Version](https://badge.fury.io/rb/puree.svg)](https://badge.fury.io/rb/puree)
-[![Build Status](https://semaphoreci.com/api/v1/aalbinclark/puree/branches/master/badge.svg)](https://semaphoreci.com/aalbinclark/puree)
-[![Code Climate](https://codeclimate.com/github/lulibrary/puree/badges/gpa.svg)](https://codeclimate.com/github/lulibrary/puree)
-[![Dependency Status](https://www.versioneye.com/user/projects/5899d253a86053003f389e1f/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5899d253a86053003f389e1f)
-[![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/lulibrary/puree)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0a0a8249dcadb444eb9e/maintainability)](https://codeclimate.com/github/lulibrary/puree/maintainability)
 
 ## Installation
 
@@ -24,130 +21,164 @@ Or install it yourself as:
 
     $ gem install puree
 
-
-## Usage
-The following examples are for the Dataset resource type.
-
-### Configuration
-
-Create a hash for passing to an extractor.
-
+## Configuration
 ```ruby
-# Pure host with authentication.
+# For Extractor and REST modules.
 config = {
-  url:      ENV['PURE_URL'],
-  username: ENV['PURE_USERNAME'],
-  password: ENV['PURE_PASSWORD']
+  url:      'https://YOUR_HOST/ws/api/59',
+  username: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
+  api_key:  'YOUR_API_KEY'
 }
 ```
 
+## Extractor module
+Find a resource by identifier and get Ruby objects.
+
 ```ruby
-# Pure host without authentication.
-config = {
-  url: ENV['PURE_URL']
-}
+# Configure an extractor
+extractor = Puree::Extractor::Dataset.new config
+```
+
+```ruby
+# Fetch the metadata for a resource with a particular identifier
+dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+#=> #<Puree::Model::Dataset:0x00c0ffee>
+```
+
+```ruby
+# Access specific metadata e.g. an internal person's name
+dataset.persons_internal[0].name
+#=> #<Puree::Model::PersonName:0x00c0ffee @first="Foo", @last="Bar">
+```
+
+```ruby
+# Select a formatting style for a person's name
+dataset.persons_internal[0].name.last_initial
+#=> "Bar, F."
+```
+
+## XMLExtractor module
+Get Ruby objects from Pure XML.
+
+### Single resource
+```ruby
+xml = '<project> ... </project>'
+```
+
+```ruby
+# Configure an XML extractor
+xml_extractor = Puree::XMLExtractor::Project.new xml
+```
+
+```ruby
+# Get a single piece of metadata
+xml_extractor.title
+#=> "An interesting project title"
+```
+
+```ruby
+# Get all the metadata together
+xml_extractor.model
+#=> #<Puree::Model::Project:0x00c0ffee>
+```
+
+### Homogeneous resource collection
+```ruby
+xml = '<result>
+        <dataSet> ... </dataSet>
+        <dataSet> ... </dataSet>
+        ...
+      </result>'
+```
+
+```ruby
+# Get an array of datasets
+Puree::XMLExtractor::Collection.datasets xml
+#=> [#<Puree::Model::Dataset:0x00c0ffee>, ...]
+```
+
+### Heterogeneous resource collection
+```ruby
+xml = '<result>
+        <contributionToJournal> ... </contributionToJournal>
+        <contributionToConference> ... </contributionToConference>
+        ...
+      </result>'
+```
+
+```ruby
+# Get a hash of research outputs
+Puree::XMLExtractor::Collection.research_outputs xml
+#=> {
+#     journal_articles: [#<Puree::Model::JournalArticle:0x00c0ffee>, ...],
+#     conference_papers: [#<Puree::Model::ConferencePaper:0x00c0ffee>, ...],
+#     theses: [#<Puree::Model::Thesis:0x00c0ffee>, ...],
+#     other: [#<Puree::Model::ResearchOutput:0x00c0ffee>, ...]
+#   }
+```
+
+## REST module
+Query the Pure REST API.
+
+### Client
+```ruby
+# Configure a client
+client = Puree::REST::Client.new config
+```
+
+```ruby
+# Find a person
+client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+#=> #<HTTP::Response:0x00c0ffee>
+```
+
+```ruby
+# Find a person, limit the metadata to ORCID and employee start date
+client.persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+                    params: {fields: ['orcid', 'employeeStartDate']}
+#=> #<HTTP::Response:0x00c0ffee>
+```
+
+```ruby
+# Find five people, response body as JSON
+client.persons.all params: {size: 5}, accept: :json
+#=> #<HTTP::Response:0x00c0ffee>
+```
+
+```ruby
+# Find research outputs for a person
+client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
 ### Resource
-
-Configure an extractor to retrieve data from a Pure host.
-
 ```ruby
-dataset_extractor = Puree::Extractor::Dataset.new config
+# Configure a resource
+persons = Puree::REST::Person.new config
 ```
 
-Fetch the metadata for a resource with a particular identifier.
-
 ```ruby
-dataset = dataset_extractor.find uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-# =>
-#<Puree::Model::Dataset:0x987f7a4>
+# Find a person
+persons.find id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+#=> #<HTTP::Response:0x00c0ffee>
 ```
 
-Access specific metadata e.g. an internal person's name.
+## REST module with XMLExtractor module
+Query the Pure REST API and get Ruby objects from Pure XML.
 
 ```ruby
-dataset.persons_internal[0].name
-# =>
-#<Puree::Model::PersonName:0x9add67c @first="Foo", @last="Bar">
+# Configure a client
+client = Puree::REST::Client.new config
 ```
 
-Select a formatting style for a person's name.
-
 ```ruby
-dataset.persons_internal[0].name.last_initial
-# =>
-# "Bar, F."
+# Find projects for a person
+response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 ```
 
-### Collection
-
-Configure a collection extractor to retrieve data from a Pure host.
-
 ```ruby
-collection_extractor = Puree::Extractor::Collection.new config:   config,
-                                                        resource: :dataset
-```
-
-Fetch a bunch of resources.
-
-```ruby
-collection_extractor.find limit: 2
-# =>
-#<Puree::Model::Dataset:0xa62fd90>
-#<Puree::Model::Dataset:0xa5e8c24>
-```
-
-Fetch a random resource from the entire collection.
-
-```ruby
-collection_extractor.random_resource
-# =>
-#<Puree::Model::Dataset:0x97998bc>
-```
-
-### Query
-
-Get answers to important questions.
-
-#### Funding
-
-Configure a funding query to retrieve data from a Pure host.
-
-```ruby
-funding_query = Puree::Query::Funding.new config
-```
-
-Who are the funders (if any) for a project?
-
-```ruby
-funding_query.project_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-# =>
-#<Puree::Model::ExternalOrganisation:0x98986f0>
-```
-
-Who are the funders (if any) for a publication?
-
-```ruby
-funding_query.publication_funders uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-```
-
-#### Person
-
-Configure a person query to retrieve data from a Pure host.
-
-```ruby
-person_query = Puree::Query::Person.new config
-```
-
-Get at most ten publications published by a person during the first six months of 2017.
-
-```ruby
-person_query.publications uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
-                          limit: 10,
-                          published_start: '2017-01-01',
-                          published_end: '2017-06-30'
-# =>
-#<Puree::Model::Publication:0x9d2c004>
-#<Puree::Model::Publication:0xa285028>
+# Extract metadata from XML
+Puree::XMLExtractor::Collection.projects response.to_s
+#=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```

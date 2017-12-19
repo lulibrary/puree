@@ -5,47 +5,44 @@ module Puree
     # Person XML extractor.
     #
     class Person < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::IdentifierMixin
+      include Puree::XMLExtractor::KeywordMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
-        @resource_type = :person
+        setup_model :person
       end
 
-      # @return [Array<Puree::Model::OrganisationHeader>]
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
       def affiliations
-        xpath_result = xpath_query '//organisation'
-        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result
+        xpath_result = xpath_query '/staffOrganisationAssociations/staffOrganisationAssociation/organisationalUnit'
+        Puree::XMLExtractor::Shared.organisation_multi_header xpath_result if xpath_result
       end
 
       # @return [Array<String>]
       def email_addresses
-        xpath_query_for_multi_value '//emails/classificationDefinedStringFieldExtension/value'
-      end
-
-      # @return [String, nil]
-      def employee_id
-        id '/dk/atira/pure/person/personsources/employee'
-      end
-
-      # @return [String, nil]
-      def hesa_id
-        id '/dk/atira/pure/person/personsources/hesastaff'
+        xpath_query_for_multi_value '/staffOrganisationAssociations/staffOrganisationAssociation/emails/email'
       end
 
       # @return [Array<String>]
       def image_urls
-        xpath_query_for_multi_value '/photos/file/url'
+        xpath_result = xpath_query '/profilePhotos/profilePhoto'
+        arr = []
+        xpath_result.each do |i|
+          arr << i.attr('url').strip
+        end
+        arr.uniq
       end
 
       # @return [Array<String>]
       def keywords
-        xpath_query_for_multi_value '//keywordGroup/keyword/userDefinedKeyword/freeKeyword'
+        keyword_group 'userDefinedKeywordContainers'
       end
 
       # @return [Puree::Model::PersonName, nil]
       def name
         xpath_result = xpath_query '/name'
-        if xpath_result
+        if !xpath_result.empty?
           first = xpath_result.xpath('firstName').text.strip
           last = xpath_result.xpath('lastName').text.strip
           model = Puree::Model::PersonName.new
@@ -60,25 +57,23 @@ module Puree
         xpath_query_for_single_value '/orcid'
       end
 
-      # @return [String, nil]
-      def scopus_id
-        id '/dk/atira/pure/person/personsources/scopusauthor'
-      end
-
       private
 
-      # @return [String, nil]
-      def id(uri)
-        xpath_result = xpath_query '/sources/classificationDefinedStringFieldExtension'
-        if xpath_result
-          xpath_result.each do |i|
-            if i.xpath('classification/uri').text.strip === uri
-              return i.xpath('value').text.strip
-            end
-          end
-        end
-        nil
+      def xpath_root
+        '/person'
       end
+
+      def combine_metadata
+        super
+        @model.affiliations = affiliations
+        @model.email_addresses = email_addresses
+        @model.identifiers = identifiers
+        @model.image_urls = image_urls
+        @model.keywords = keywords
+        @model.name = name
+        @model.orcid = orcid
+        @model
+      end      
 
     end
 

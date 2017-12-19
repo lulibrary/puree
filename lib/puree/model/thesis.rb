@@ -3,12 +3,12 @@ module Puree
 
     # A thesis.
     #
-    class Thesis < Puree::Model::Publication
+    class Thesis < Puree::Model::ResearchOutput
 
       # @return [Time, nil]
       attr_accessor :award_date
 
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :awarding_institution
 
       # @return [String, nil]
@@ -17,10 +17,13 @@ module Puree
       # @return [Fixnum, nil]
       attr_accessor :pages
 
+      # @return [Puree::Model::PublisherHeader, nil]
+      attr_accessor :publisher
+
       # @return [String, nil]
       attr_accessor :qualification
 
-      # @return [Array<String>, nil]
+      # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :sponsors
 
     end

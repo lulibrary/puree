@@ -5,7 +5,7 @@ module Puree
     #
     class DoctoralThesis < Puree::XMLExtractor::Thesis
 
-      def initialize(xml:)
+      def initialize(xml)
         super
       end
 

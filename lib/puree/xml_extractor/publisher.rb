@@ -5,10 +5,11 @@ module Puree
     # Publisher XML extractor.
     #
     class Publisher < Puree::XMLExtractor::Resource
+      include Puree::XMLExtractor::TypeMixin
 
-      def initialize(xml:)
+      def initialize(xml)
         super
-        @resource_type = :publisher
+        setup_model :publisher
       end
 
       # @return [String, nil]
@@ -16,10 +17,18 @@ module Puree
         xpath_query_for_single_value '/name'
       end
 
-      # Adds no value as value is Publisher
-      # def type
-      #   xpath_query_for_single_value '/typeClassification/term/localizedString'
-      # end
+      private
+
+      def xpath_root
+        '/publisher'
+      end
+
+      def combine_metadata
+        super
+        @model.name = name
+        @model.type = type
+        @model
+      end
 
     end
 

@@ -6,8 +6,7 @@ module Puree
     #
     class Base
 
-      def initialize(xml:)
-        @api_map = Puree::API::Map.new.get
+      def initialize(xml)
         make_doc xml
       end
 
@@ -31,13 +30,14 @@ module Puree
 
       private
 
+      def setup_model(resource)
+        resource_class = "Puree::Model::#{Puree::Util::String.titleize(resource)}"
+        @model = Object.const_get(resource_class).new
+      end
+
       def make_doc(xml)
         @doc = Nokogiri::XML xml
         @doc.remove_namespaces!
-      end
-
-      def service_response_name
-        @api_map[:resource_type][@resource_type][:response]
       end
 
     end

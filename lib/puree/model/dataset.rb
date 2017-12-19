@@ -5,15 +5,7 @@ module Puree
     #
     class Dataset < Resource
 
-      # Open access permission.
-      # @return [String, nil]
-      attr_accessor :access
-
-      # Combines projects and publications.
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :associated
-
-      # Date made available.
+     # Date made available.
       # @return [Time, nil]
       attr_accessor :available
 
@@ -31,16 +23,10 @@ module Puree
       # @return [Array<String>]
       attr_accessor :keywords
 
-      # @return [Array<Puree::Model::LegalCondition>]
-      attr_accessor :legal_conditions
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
+      attr_accessor :organisational_units
 
-      # @return [Array<Puree::Model::Link>]
-      attr_accessor :links
-
-      # @return [Array<Puree::Model::OrganisationHeader>]
-      attr_accessor :organisations
-
-      # @return [Puree::Model::OrganisationHeader, nil]
+      # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :owner
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -56,14 +42,11 @@ module Puree
       # @return [Puree::Model::TemporalRange, nil]
       attr_accessor :production
 
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :projects
-
-      # @return [Array<Puree::Model::RelatedContentHeader>]
-      attr_accessor :publications
-
-      # @return [String, nil]
+      # @return [Puree::Model::PublisherHeader, nil]
       attr_accessor :publisher
+
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :research_outputs
 
       # @return [Array<String>]
       attr_accessor :spatial_places
@@ -80,7 +63,7 @@ module Puree
       attr_accessor :title
 
       # @return [String, nil]
-      attr_accessor :workflow_state
+      attr_accessor :workflow
 
     end
   end

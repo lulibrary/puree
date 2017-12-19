@@ -9,17 +9,13 @@ module Puree
       # @option (see Puree::Extractor::Resource#initialize)
       def initialize(config)
         super
-        setup :journal
       end
 
-      private
-
-      def combine_metadata
-        super
-        @model.issn = @extractor.issn
-        @model.publisher = @extractor.publisher
-        @model.title = @extractor.title
-        @model
+      # @param id [String]
+      def find(id)
+        find_and_extract id: id,
+                         api_resource_type: :journal,
+                         xml_extractor_resource_type: :journal
       end
 
     end

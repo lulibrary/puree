@@ -8,7 +8,7 @@ module Puree
 
       # @return [Boolean, nil]
       def peer_reviewed
-        xpath_result = xpath_query_for_single_value('/peerReview/peerReviewed')
+        xpath_result = xpath_query_for_single_value('/peerReview')
         return true if xpath_result === 'true'
         return false if xpath_result === 'false'
         nil
