@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - For Pure API 59.
 
 ### Added
-- Independent modules: REST, Extractor, XMLExtractor
+- Independent modules: REST, Extractor, XMLExtractor.
 - Testing against known live data.
 
 ## 1.7.0 - 2017-11-03
