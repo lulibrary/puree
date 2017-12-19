@@ -6,7 +6,7 @@ Metadata extraction from the Pure Research Information System.
 
 [![Gem Version](https://badge.fury.io/rb/puree.svg)](https://badge.fury.io/rb/puree)
 [![Build Status](https://semaphoreci.com/api/v1/aalbinclark/puree/branches/master/badge.svg)](https://semaphoreci.com/aalbinclark/puree)
-[![Code Climate](https://codeclimate.com/github/lulibrary/puree/badges/gpa.svg)](https://codeclimate.com/github/lulibrary/puree)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0a0a8249dcadb444eb9e/maintainability)](https://codeclimate.com/github/lulibrary/puree/maintainability)
 [![Dependency Status](https://www.versioneye.com/user/projects/5899d253a86053003f389e1f/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5899d253a86053003f389e1f)
 [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/lulibrary/puree)
 
