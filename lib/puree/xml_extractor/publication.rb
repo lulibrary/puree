@@ -116,6 +116,16 @@ module Puree
         xpath_result
       end
 
+      # @return [String, nil]
+      def scopus_id
+        xpath_result = xpath_query '/external/secondarySource'
+        return if xpath_result.empty?
+        source = xpath_result.xpath('@source')
+        if source && source.text.strip === 'Scopus'
+          return xpath_result.xpath('@source_id').text.strip
+        end
+      end
+
       # @return [Array<Puree::Model::PublicationStatus>]
       def statuses
         xpath_result = xpath_query '/publicationStatuses/publicationStatus'

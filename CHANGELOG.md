@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.8.0 - 2018-03-02
+### Added
+- Publication - Scopus id.
+
 ## 1.7.0 - 2017-11-03
 ### Added
 - Person extractor - find by identifier.
