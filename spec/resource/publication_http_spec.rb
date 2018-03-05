@@ -85,6 +85,10 @@ describe 'Publication' do
       expect(@p.publisher).to be_a String if @p.publisher
     end
 
+    it '#scopus_id' do
+      expect(@p.scopus_id).to be_a String if @p.scopus_id
+    end
+
     it '#statuses' do
       expect(@p.statuses).to all( be_a Puree::Model::PublicationStatus )
     end

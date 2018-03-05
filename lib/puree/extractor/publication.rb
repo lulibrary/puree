@@ -34,6 +34,7 @@ module Puree
         @model.persons_other = @extractor.persons_other
         @model.publication_place = @extractor.publication_place
         @model.publisher = @extractor.publisher
+        @model.scopus_id = @extractor.scopus_id
         @model.statuses = @extractor.statuses
         @model.subtitle = @extractor.subtitle
         @model.title = @extractor.title

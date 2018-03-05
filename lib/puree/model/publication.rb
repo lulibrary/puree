@@ -56,6 +56,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :publisher
 
+      # @return [String, nil]
+      attr_accessor :scopus_id
+
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :statuses
 
