@@ -17,6 +17,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
+      # @return [String]
+      attr_accessor :doi
+
       # @return [Array<String>]
       attr_accessor :dois
 
