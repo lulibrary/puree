@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 - Metadata: activity?, clipping?, externalPerson?
 
+## 1.9.0 - 2018-03-09
+### Added
+- Publication - doi.
+
 ## 1.8.0 - 2018-03-02
 ### Added
 - Publication - Scopus id.

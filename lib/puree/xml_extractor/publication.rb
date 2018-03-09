@@ -29,6 +29,13 @@ module Puree
         xpath_query_for_single_value '/abstract/localizedString'
       end
 
+      # @return [String, nil]
+      def doi
+        multiple_dois = dois
+        multiple_dois.empty? ? nil : multiple_dois.first
+      end
+
+      # @deprecated Please use {#doi} instead
       # @return [Array<String>, nil]
       def dois
         xpath_query_for_multi_value '/electronicVersionAssociations/electronicVersionDOIAssociations/electronicVersionDOIAssociation/doi'

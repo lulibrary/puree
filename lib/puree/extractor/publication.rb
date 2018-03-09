@@ -21,6 +21,7 @@ module Puree
         @model.bibliographical_note = @extractor.bibliographical_note
         @model.category = @extractor.category
         @model.description = @extractor.description
+        @model.doi = @extractor.doi
         @model.dois = @extractor.dois
         @model.external_organisations = @extractor.external_organisations
         @model.files = @extractor.files

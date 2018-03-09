@@ -33,6 +33,10 @@ describe 'Publication' do
       expect(@p.description).to be_a String if @p.description
     end
 
+    it '#doi' do
+      expect(@p.doi).to be_a String if @p.doi
+    end
+
     it '#dois' do
       expect(@p.dois).to all( be_a String )
     end
