@@ -106,6 +106,13 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Fixnum, x.scopus_citations_count
   end
 
+  def test_scopus_id
+    id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
+    x = xml_extractor_from_id id
+
+    assert_instance_of String, x.scopus_id
+  end
+
   def test_scopus_metrics
     # The effect of humic substances on barite precipitation-dissolution behaviour in natural and synthetic lake waters
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'

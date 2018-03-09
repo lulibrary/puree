@@ -60,6 +60,9 @@ module Puree
       # @return [Fixnum, nil]
       attr_accessor :scopus_citations_count
 
+      # @return [String, nil]
+      attr_accessor :scopus_id
+
       # @return [Array<Puree::Model::ResearchOutputScopusMetric>]
       attr_accessor :scopus_metrics
 
