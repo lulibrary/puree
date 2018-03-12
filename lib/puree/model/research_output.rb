@@ -50,6 +50,9 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :projects
+
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :publication_statuses
 
@@ -59,6 +62,9 @@ module Puree
 
       # @return [Fixnum, nil]
       attr_accessor :scopus_citations_count
+
+      # @return [String, nil]
+      attr_accessor :scopus_id
 
       # @return [Array<Puree::Model::ResearchOutputScopusMetric>]
       attr_accessor :scopus_metrics

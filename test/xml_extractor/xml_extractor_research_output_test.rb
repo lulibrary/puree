@@ -98,12 +98,29 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.keywords.first
   end
 
+  def test_projects
+    # Measurements of the Higgs boson production and decay rates and coupling strengths using pp collision data at s√=7s=7 and 8 TeV in the ATLAS experiment
+    id = '24ec62e9-a3cc-4402-9ec9-396067949031'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Array, x.projects
+    assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
+    assert_equal true, x.projects.first.data?
+  end
+
   def test_scopus_citations_count
     # The effect of humic substances on barite precipitation-dissolution behaviour in natural and synthetic lake waters
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
     x = xml_extractor_from_id id
 
     assert_instance_of Fixnum, x.scopus_citations_count
+  end
+
+  def test_scopus_id
+    id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
+    x = xml_extractor_from_id id
+
+    assert_instance_of String, x.scopus_id
   end
 
   def test_scopus_metrics
@@ -180,6 +197,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
 
+    assert_instance_of Array, x.projects
+    assert_empty x.projects
+
     assert_instance_of Array, x.publication_statuses
     assert_empty x.publication_statuses
 
@@ -210,5 +230,25 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = Puree::XMLExtractor::ResearchOutput.new response.to_s
 
     assert_instance_of Puree::Model::ResearchOutput, x.model
+  end
+
+  def test_projects_snippet
+    # Improving the language skills of Pre-Kindergarten students
+    # id = '54ac6efc-1739-4e42-b4c9-bcb1c6dfd664'
+
+    xml =
+    '<contributionToJournal>
+      <relatedProjects>
+        <relatedProject uuid="fe8aebdf-a926-4e7b-adf1-082425e50330">
+          <name>The Language Bases of Reading Comprehension</name>
+	   	    <type uri="/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research">Research</type>
+	 	    </relatedProject>
+	    </relatedProjects>
+    </contributionToJournal>'
+
+    x = Puree::XMLExtractor::JournalArticle.new xml
+    assert_instance_of Array, x.projects
+    assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
+    assert_equal true, x.projects.first.data?
   end
 end
