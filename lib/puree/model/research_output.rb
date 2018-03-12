@@ -50,6 +50,9 @@ module Puree
       # @return [Array<Puree::Model::EndeavourPerson>]
       attr_accessor :persons_other
 
+      # @return [Array<Puree::Model::RelatedContentHeader>]
+      attr_accessor :projects
+
       # @return [Array<Puree::Model::PublicationStatus>]
       attr_accessor :publication_statuses
 

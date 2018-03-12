@@ -10,6 +10,7 @@ module Puree
       include Puree::XMLExtractor::OrganisationalUnitMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::ProjectMixin
       include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
@@ -179,6 +180,7 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
+        @model.projects = projects
         @model.publication_statuses = publication_statuses
         @model.research_outputs = research_outputs
         @model.scopus_citations_count = scopus_citations_count
