@@ -22,7 +22,8 @@ module Puree
 
       # @return [Time, nil]
       def created_at
-        Time.parse xpath_query_for_single_value('/info/createdDate')
+        xpath_result = xpath_query_for_single_value('/info/createdDate')
+        Time.parse xpath_result if xpath_result
       end
 
       # @return [String, nil]
@@ -32,7 +33,8 @@ module Puree
 
       # @return [Time, nil]
       def modified_at
-        Time.parse xpath_query_for_single_value('/info/modifiedDate')
+        xpath_result = xpath_query_for_single_value('/info/modifiedDate')
+        Time.parse xpath_result if xpath_result
       end
 
       # @return [String, nil]
