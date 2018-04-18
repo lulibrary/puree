@@ -26,12 +26,14 @@ module Puree
 
       # @return [Time, nil]
       def created
-        Time.parse xpath_query_for_single_value('/created')
+        xpath_result = xpath_query_for_single_value('/created')
+        Time.parse xpath_result if xpath_result
       end
 
       # @return [Time, nil]
       def modified
-        Time.parse xpath_query_for_single_value('/modified')
+        xpath_result = xpath_query_for_single_value('/modified')
+        Time.parse xpath_result if xpath_result
       end
 
       # @return [String, nil]
