@@ -18,6 +18,10 @@ module Puree
                          xml_extractor_resource_type: :organisational_unit
       end
 
+      def count
+        find_and_count :organisational_unit
+      end
+
     end
 
   end

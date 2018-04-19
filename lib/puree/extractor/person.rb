@@ -13,6 +13,10 @@ module Puree
                          xml_extractor_resource_type: :person
       end
 
+      def count
+        find_and_count :person
+      end
+
     end
 
   end

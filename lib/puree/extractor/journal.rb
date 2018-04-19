@@ -18,6 +18,10 @@ module Puree
                          xml_extractor_resource_type: :journal
       end
 
+      def count
+        find_and_count :journal
+      end
+
     end
 
   end

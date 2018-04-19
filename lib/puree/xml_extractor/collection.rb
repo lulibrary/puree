@@ -102,6 +102,12 @@ module Puree
         data
       end
 
+      def self.count(xml)
+        doc = Nokogiri::XML xml
+        doc.remove_namespaces!
+        doc.xpath('/result/count').text.to_i
+      end
+
       private
 
       # Get models from any multi-record resource XML response

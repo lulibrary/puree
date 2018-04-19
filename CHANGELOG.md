@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0 2018-04-19
+### Added
+- Count for resource extractors.
+
 ## 2.1.1 2018-04-18
 ### Fixed
 - Handle missing created and modified.

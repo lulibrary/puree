@@ -18,6 +18,10 @@ module Puree
                          xml_extractor_resource_type: :dataset
       end
 
+      def count
+        find_and_count :dataset
+      end
+
     end
 
   end

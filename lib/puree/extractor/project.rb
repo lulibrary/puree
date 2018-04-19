@@ -13,6 +13,10 @@ module Puree
                          xml_extractor_resource_type: :project
       end
 
+      def count
+        find_and_count :project
+      end
+
     end
 
   end

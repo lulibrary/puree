@@ -13,6 +13,10 @@ module Puree
                          xml_extractor_resource_type: :publisher
       end
 
+      def count
+        find_and_count :publisher
+      end
+
     end
 
   end

@@ -18,6 +18,10 @@ module Puree
                          xml_extractor_resource_type: :event
       end
 
+      def count
+        find_and_count :event
+      end
+
     end
 
   end
