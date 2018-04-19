@@ -3,12 +3,7 @@ module Puree
 
     # Journal article extractor.
     #
-    class JournalArticle < Puree::Extractor::ResearchOutput
-
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-      end
+    class JournalArticle < Puree::Extractor::Resource
 
       # @param id [String]
       def find(id)

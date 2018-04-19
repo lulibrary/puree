@@ -5,11 +5,6 @@ module Puree
     #
     class DoctoralThesis < Puree::Extractor::Thesis
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-      end
-
       # @param id [String]
       def find(id)
         find_and_extract id: id,

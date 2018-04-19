@@ -3,12 +3,7 @@ module Puree
 
     # Thesis extractor.
     #
-    class Thesis < Puree::Extractor::ResearchOutput
-
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-      end
+    class Thesis < Puree::Extractor::Resource
 
       # @param id [String]
       def find(id)
