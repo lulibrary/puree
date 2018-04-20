@@ -21,9 +21,9 @@ module Puree
         record_count :research_output
       end
 
-      # Random record.
+      # Random record. Includes the metadata from Puree::Model::ResearchOutput as a minimum.
       #
-      # @return [Puree::Model::ResearchOutput or more specific type, nil]
+      # @return [Puree::Model::ResearchOutput or subclass, nil]
       def random
         client = Puree::REST::Client.new @config
         offset = rand(0..count-1)
