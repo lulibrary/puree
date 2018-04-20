@@ -9,16 +9,16 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::Journal, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :journal,
-                         xml_extractor_resource_type: :journal
+        super id: id,
+              api_resource_type: :journal,
+              xml_extractor_resource_type: :journal
       end
 
       # Count of records available.
       #
       # @return [Fixnum]
       def count
-        find_and_extract_count :journal
+        record_count :journal
       end
 
       # Random record.

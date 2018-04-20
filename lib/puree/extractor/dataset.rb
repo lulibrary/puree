@@ -9,16 +9,16 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::Dataset, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :dataset,
-                         xml_extractor_resource_type: :dataset
+        super id: id,
+              api_resource_type: :dataset,
+              xml_extractor_resource_type: :dataset
       end
 
       # Count of records available.
       #
       # @return [Fixnum]
       def count
-        find_and_extract_count :dataset
+        record_count :dataset
       end
 
       # Random record.

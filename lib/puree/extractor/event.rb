@@ -9,16 +9,16 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::Event, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :event,
-                         xml_extractor_resource_type: :event
+        super id: id,
+              api_resource_type: :event,
+              xml_extractor_resource_type: :event
       end
 
       # Count of records available.
       #
       # @return [Fixnum]
       def count
-        find_and_extract_count :event
+        record_count :event
       end
 
       # Random record.

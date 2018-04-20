@@ -9,16 +9,16 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::ResearchOutput, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :research_output,
-                         xml_extractor_resource_type: :research_output
+        super id: id,
+              api_resource_type: :research_output,
+              xml_extractor_resource_type: :research_output
       end
 
       # Count of records available.
       #
       # @return [Fixnum]
       def count
-        find_and_extract_count :research_output
+        record_count :research_output
       end
 
       # Random record.
@@ -33,6 +33,7 @@ module Puree
         research_outputs_hash.each do |k, v|
           research_outputs_array += v
         end
+        return nil if research_outputs_array.empty?
         research_outputs_array[0]
       end
 

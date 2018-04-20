@@ -9,16 +9,16 @@ module Puree
       # @param id [String]
       # @return [Puree::Model::ExternalOrganisation, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :external_organisation,
-                         xml_extractor_resource_type: :external_organisation
+        super id: id,
+              api_resource_type: :external_organisation,
+              xml_extractor_resource_type: :external_organisation
       end
 
       # Count of records available.
       #
       # @return [Fixnum]
       def count
-        find_and_extract_count :external_organisation
+        record_count :external_organisation
       end
 
       # Random record.
