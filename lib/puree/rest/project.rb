@@ -9,11 +9,6 @@ module Puree
     class Project < Puree::REST::Base
       include Puree::REST::ActiveMixin
 
-      # (see Puree::REST::Base#initialize)
-      def initialize(config)
-        super
-      end
-
       private
 
       def collection

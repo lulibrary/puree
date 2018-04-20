@@ -33,11 +33,6 @@ module Puree
       include Puree::REST::ResearchOutputMixin
       include Puree::REST::StudentThesisMixin
 
-      # (see Puree::REST::Base#initialize)
-      def initialize(config)
-        super
-      end
-
       private
 
       def collection
