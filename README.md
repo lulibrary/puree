@@ -45,7 +45,13 @@ extractor.count
 ```
 
 ```ruby
-# Fetch the metadata for a resource with a particular identifier
+# Fetch a random record
+extractor.random
+#=> #<Puree::Model::Dataset:0x00c0ffee>
+```
+
+```ruby
+# Fetch the metadata for a record with a particular identifier
 dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=> #<Puree::Model::Dataset:0x00c0ffee>
 ```
@@ -65,7 +71,7 @@ dataset.persons_internal[0].name.last_initial
 ## XMLExtractor module
 Get Ruby objects from Pure XML.
 
-### Single resource
+### Single record
 ```ruby
 xml = '<project> ... </project>'
 ```
@@ -87,7 +93,7 @@ xml_extractor.model
 #=> #<Puree::Model::Project:0x00c0ffee>
 ```
 
-### Homogeneous resource collection
+### Homogeneous record collection
 ```ruby
 xml = '<result>
         <dataSet> ... </dataSet>
@@ -102,7 +108,7 @@ Puree::XMLExtractor::Collection.datasets xml
 #=> [#<Puree::Model::Dataset:0x00c0ffee>, ...]
 ```
 
-### Heterogeneous resource collection
+### Heterogeneous record collection
 ```ruby
 xml = '<result>
         <contributionToJournal> ... </contributionToJournal>

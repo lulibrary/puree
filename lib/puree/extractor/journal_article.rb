@@ -13,7 +13,7 @@ module Puree
                          xml_extractor_resource_type: :journal_article
       end
 
-      # Random resource.
+      # Random record.
       #
       # @return [Puree::Model::JournalArticle, nil]
       def random

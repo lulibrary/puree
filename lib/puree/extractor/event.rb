@@ -21,7 +21,7 @@ module Puree
         find_and_extract_count :event
       end
 
-      # Random resource.
+      # Random record.
       #
       # @return [Puree::Model::Event, nil]
       def random

@@ -21,7 +21,7 @@ module Puree
         find_and_extract_count :research_output
       end
 
-      # Random resource.
+      # Random record.
       #
       # @return [Puree::Model::ResearchOutput or more specific type, nil]
       def random
