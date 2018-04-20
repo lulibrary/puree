@@ -13,8 +13,11 @@ module Puree
                          xml_extractor_resource_type: :organisational_unit
       end
 
+      # Count of records available.
+      #
+      # @return [Fixnum]
       def count
-        find_and_count :organisational_unit
+        find_and_extract_count :organisational_unit
       end
 
     end

@@ -38,7 +38,7 @@ module Puree
         Object.const_get(resource_class).new xml
       end
 
-      def find_and_count(api_resource_type)
+      def find_and_extract_count(api_resource_type)
         api_resource = make_api_resource api_resource_type
         response = api_resource.all params: {size: 0}
         return unless response.code === 200

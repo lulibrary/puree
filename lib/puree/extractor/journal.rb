@@ -13,8 +13,11 @@ module Puree
                          xml_extractor_resource_type: :journal
       end
 
+      # Count of records available.
+      #
+      # @return [Fixnum]
       def count
-        find_and_count :journal
+        find_and_extract_count :journal
       end
 
     end
