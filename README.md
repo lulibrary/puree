@@ -33,11 +33,15 @@ config = {
 ```
 
 ## Extractor module
-Find a resource by identifier and get Ruby objects.
+```ruby
+# Configure an extractor for a resource
+extractor = Puree::Extractor::Dataset.new config
+```
 
 ```ruby
-# Configure an extractor
-extractor = Puree::Extractor::Dataset.new config
+# Find out how many records are available
+extractor.count
+#=> 1000
 ```
 
 ```ruby
