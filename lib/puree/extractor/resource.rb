@@ -45,6 +45,16 @@ module Puree
         Puree::XMLExtractor::Collection.count response.to_s
       end
 
+      def random(api_resource_type)
+        count = find_and_extract_count api_resource_type
+        offset = rand(0..count-1)
+        api_resource = make_api_resource api_resource_type
+        response = api_resource.all params: {size: 1, offset: offset}
+        # puts response
+        models = Puree::XMLExtractor::Collection.send "#{api_resource_type}s", response.to_s
+        models[0]
+      end
+
     end
 
   end

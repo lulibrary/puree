@@ -21,6 +21,13 @@ module Puree
         find_and_extract_count :dataset
       end
 
+      # Random resource.
+      #
+      # @return [Puree::Model::Dataset, nil]
+      def random
+        super :dataset
+      end
+
     end
 
   end

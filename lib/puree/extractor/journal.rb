@@ -21,6 +21,13 @@ module Puree
         find_and_extract_count :journal
       end
 
+      # Random resource.
+      #
+      # @return [Puree::Model::Journal, nil]
+      def random
+        super :journal
+      end
+
     end
 
   end

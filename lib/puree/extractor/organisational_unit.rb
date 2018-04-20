@@ -21,6 +21,13 @@ module Puree
         find_and_extract_count :organisational_unit
       end
 
+      # Random resource.
+      #
+      # @return [Puree::Model::OrganisationalUnit, nil]
+      def random
+        super :organisational_unit
+      end
+
     end
 
   end

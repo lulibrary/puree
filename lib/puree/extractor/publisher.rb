@@ -21,6 +21,13 @@ module Puree
         find_and_extract_count :publisher
       end
 
+      # Random resource.
+      #
+      # @return [Puree::Model::Publisher, nil]
+      def random
+        super :publisher
+      end
+
     end
 
   end

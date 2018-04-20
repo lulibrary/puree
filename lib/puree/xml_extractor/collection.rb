@@ -62,6 +62,14 @@ module Puree
         models :person, xml, '/person'
       end
 
+      # Get models from any multi-record person XML response
+      #
+      # @param xml [String]
+      # @return [Array<Puree::Model::Publisher>]
+      def self.publishers(xml)
+        models :publisher, xml, '/publisher'
+      end
+
       # Get models from any multi-record Research output XML response
       #
       # @param xml [String]
