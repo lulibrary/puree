@@ -7,6 +7,7 @@ module Puree
     class ExternalOrganisation < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::ExternalOrganisation, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :external_organisation,

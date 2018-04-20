@@ -7,6 +7,7 @@ module Puree
     class Publisher < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::Publisher, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :publisher,

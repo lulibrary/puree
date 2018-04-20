@@ -7,6 +7,7 @@ module Puree
     class Person < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::Person, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :person,

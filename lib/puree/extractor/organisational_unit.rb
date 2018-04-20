@@ -7,6 +7,7 @@ module Puree
     class OrganisationalUnit < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::OrganisationalUnit, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :organisational_unit,

@@ -6,6 +6,7 @@ module Puree
     class MastersThesis < Puree::Extractor::Thesis
 
       # @param id [String]
+      # @return [Puree::Model::MastersThesis, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :research_output,

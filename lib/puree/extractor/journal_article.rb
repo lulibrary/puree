@@ -6,6 +6,7 @@ module Puree
     class JournalArticle < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::JournalArticle, nil]
       def find(id)
         find_and_extract id: id,
                          api_resource_type: :research_output,
