@@ -6,16 +6,26 @@ module Puree
     #
     class Dataset < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
+      # @param id [String]
+      # @return [Puree::Model::Dataset, nil]
+      def find(id)
+        super id: id,
+              api_resource_type: :dataset,
+              xml_extractor_resource_type: :dataset
       end
 
-      # @param id [String]
-      def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :dataset,
-                         xml_extractor_resource_type: :dataset
+      # Count of records available.
+      #
+      # @return [Fixnum]
+      def count
+        record_count :dataset
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::Dataset, nil]
+      def random
+        super :dataset
       end
 
     end

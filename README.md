@@ -33,15 +33,25 @@ config = {
 ```
 
 ## Extractor module
-Find a resource by identifier and get Ruby objects.
-
 ```ruby
-# Configure an extractor
+# Configure an extractor for a resource
 extractor = Puree::Extractor::Dataset.new config
 ```
 
 ```ruby
-# Fetch the metadata for a resource with a particular identifier
+# Find out how many records are available
+extractor.count
+#=> 1000
+```
+
+```ruby
+# Fetch a random record
+extractor.random
+#=> #<Puree::Model::Dataset:0x00c0ffee>
+```
+
+```ruby
+# Fetch the metadata for a record with a particular identifier
 dataset = extractor.find 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=> #<Puree::Model::Dataset:0x00c0ffee>
 ```
@@ -61,7 +71,7 @@ dataset.persons_internal[0].name.last_initial
 ## XMLExtractor module
 Get Ruby objects from Pure XML.
 
-### Single resource
+### Single record
 ```ruby
 xml = '<project> ... </project>'
 ```
@@ -83,7 +93,7 @@ xml_extractor.model
 #=> #<Puree::Model::Project:0x00c0ffee>
 ```
 
-### Homogeneous resource collection
+### Homogeneous record collection
 ```ruby
 xml = '<result>
         <dataSet> ... </dataSet>
@@ -98,7 +108,7 @@ Puree::XMLExtractor::Collection.datasets xml
 #=> [#<Puree::Model::Dataset:0x00c0ffee>, ...]
 ```
 
-### Heterogeneous resource collection
+### Heterogeneous record collection
 ```ruby
 xml = '<result>
         <contributionToJournal> ... </contributionToJournal>

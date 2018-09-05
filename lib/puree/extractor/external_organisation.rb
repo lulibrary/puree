@@ -6,16 +6,26 @@ module Puree
     #
     class ExternalOrganisation < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
+      # @param id [String]
+      # @return [Puree::Model::ExternalOrganisation, nil]
+      def find(id)
+        super id: id,
+              api_resource_type: :external_organisation,
+              xml_extractor_resource_type: :external_organisation
       end
 
-      # @param id [String]
-      def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :external_organisation,
-                         xml_extractor_resource_type: :external_organisation
+      # Count of records available.
+      #
+      # @return [Fixnum]
+      def count
+        record_count :external_organisation
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::ExternalOrganisation, nil]
+      def random
+        super :external_organisation
       end
 
     end

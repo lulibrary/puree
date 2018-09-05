@@ -6,16 +6,26 @@ module Puree
     #
     class OrganisationalUnit < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
+      # @param id [String]
+      # @return [Puree::Model::OrganisationalUnit, nil]
+      def find(id)
+        super id: id,
+              api_resource_type: :organisational_unit,
+              xml_extractor_resource_type: :organisational_unit
       end
 
-      # @param id [String]
-      def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :organisational_unit,
-                         xml_extractor_resource_type: :organisational_unit
+      # Count of records available.
+      #
+      # @return [Fixnum]
+      def count
+        record_count :organisational_unit
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::OrganisationalUnit, nil]
+      def random
+        super :organisational_unit
       end
 
     end

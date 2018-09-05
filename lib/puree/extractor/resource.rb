@@ -20,7 +20,7 @@ module Puree
       # @param id [String]
       # @param api_resource_type [Symbol]
       # @param xml_extractor_resource_type [Symbol]
-      def find_and_extract(id:, api_resource_type:, xml_extractor_resource_type:)
+      def find(id:, api_resource_type:, xml_extractor_resource_type:)
         api_resource = make_api_resource api_resource_type
         response = api_resource.find id: id
         return unless response.code === 200
@@ -38,6 +38,21 @@ module Puree
         Object.const_get(resource_class).new xml
       end
 
+      def record_count(api_resource_type)
+        api_resource = make_api_resource api_resource_type
+        response = api_resource.all params: {size: 0}
+        return unless response.code === 200
+        Puree::XMLExtractor::Collection.count response.to_s
+      end
+
+      def random(api_resource_type)
+        offset = rand(0..record_count(api_resource_type)-1)
+        api_resource = make_api_resource api_resource_type
+        response = api_resource.all params: {size: 1, offset: offset}
+        models = Puree::XMLExtractor::Collection.send "#{api_resource_type}s", response.to_s
+        return nil if models.empty?
+        models[0]
+      end
 
     end
 

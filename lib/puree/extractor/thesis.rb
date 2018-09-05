@@ -3,18 +3,14 @@ module Puree
 
     # Thesis extractor.
     #
-    class Thesis < Puree::Extractor::ResearchOutput
-
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-      end
+    class Thesis < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::Thesis, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :research_output,
-                         xml_extractor_resource_type: :thesis
+        super id: id,
+              api_resource_type: :research_output,
+              xml_extractor_resource_type: :thesis
       end
 
     end

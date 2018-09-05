@@ -62,6 +62,14 @@ module Puree
         models :person, xml, '/person'
       end
 
+      # Get models from any multi-record person XML response
+      #
+      # @param xml [String]
+      # @return [Array<Puree::Model::Publisher>]
+      def self.publishers(xml)
+        models :publisher, xml, '/publisher'
+      end
+
       # Get models from any multi-record Research output XML response
       #
       # @param xml [String]
@@ -100,6 +108,12 @@ module Puree
           end
         end
         data
+      end
+
+      def self.count(xml)
+        doc = Nokogiri::XML xml
+        doc.remove_namespaces!
+        doc.xpath('/result/count').text.to_i
       end
 
       private

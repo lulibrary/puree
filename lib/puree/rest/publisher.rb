@@ -6,11 +6,6 @@ module Puree
     #
     class Publisher < Puree::REST::Base
 
-      # (see Puree::REST::Base#initialize)
-      def initialize(config)
-        super
-      end
-
       # (see Puree::REST::Base#all)
       def approved(params: {}, accept: :xml)
         get_request_collection_subcollection(subcollection: 'approved',

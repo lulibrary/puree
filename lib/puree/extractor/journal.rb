@@ -6,16 +6,26 @@ module Puree
     #
     class Journal < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
+      # @param id [String]
+      # @return [Puree::Model::Journal, nil]
+      def find(id)
+        super id: id,
+              api_resource_type: :journal,
+              xml_extractor_resource_type: :journal
       end
 
-      # @param id [String]
-      def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :journal,
-                         xml_extractor_resource_type: :journal
+      # Count of records available.
+      #
+      # @return [Fixnum]
+      def count
+        record_count :journal
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::Journal, nil]
+      def random
+        super :journal
       end
 
     end

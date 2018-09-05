@@ -32,11 +32,6 @@ module Puree
       include Puree::REST::ResearchOutputMixin
       include Puree::REST::StudentThesisMixin
 
-      # (see Puree::REST::Base#initialize)
-      def initialize(config)
-        super
-      end
-
       # (see Puree::REST::Base#find)
       def curricula_vitae(id:, params: {}, accept: :xml)
         get_request_singleton_subcollection(id: id,

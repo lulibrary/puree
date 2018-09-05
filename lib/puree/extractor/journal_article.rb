@@ -3,18 +3,21 @@ module Puree
 
     # Journal article extractor.
     #
-    class JournalArticle < Puree::Extractor::ResearchOutput
-
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
-      end
+    class JournalArticle < Puree::Extractor::Resource
 
       # @param id [String]
+      # @return [Puree::Model::JournalArticle, nil]
       def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :research_output,
-                         xml_extractor_resource_type: :journal_article
+        super id: id,
+              api_resource_type: :research_output,
+              xml_extractor_resource_type: :journal_article
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::JournalArticle, nil]
+      def random
+        record_count :journal_article
       end
 
     end

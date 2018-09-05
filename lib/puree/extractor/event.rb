@@ -6,16 +6,26 @@ module Puree
     #
     class Event < Puree::Extractor::Resource
 
-      # @option (see Puree::Extractor::Resource#initialize)
-      def initialize(config)
-        super
+      # @param id [String]
+      # @return [Puree::Model::Event, nil]
+      def find(id)
+        super id: id,
+              api_resource_type: :event,
+              xml_extractor_resource_type: :event
       end
 
-      # @param id [String]
-      def find(id)
-        find_and_extract id: id,
-                         api_resource_type: :event,
-                         xml_extractor_resource_type: :event
+      # Count of records available.
+      #
+      # @return [Fixnum]
+      def count
+        record_count :event
+      end
+
+      # Random record.
+      #
+      # @return [Puree::Model::Event, nil]
+      def random
+        super :event
       end
 
     end

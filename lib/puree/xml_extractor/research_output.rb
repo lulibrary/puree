@@ -10,6 +10,7 @@ module Puree
       include Puree::XMLExtractor::OrganisationalUnitMixin
       include Puree::XMLExtractor::OwnerMixin
       include Puree::XMLExtractor::PersonMixin
+      include Puree::XMLExtractor::ProjectMixin
       include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
       include Puree::XMLExtractor::TitleMixin
@@ -119,6 +120,16 @@ module Puree
         xpath_result ? xpath_result.to_i : nil
       end
 
+      # @return [String, nil]
+      def scopus_id
+        xpath_result = xpath_query '/externalableInfo/secondarySources/secondarySource'
+        return if xpath_result.empty?
+        source = xpath_result.xpath('source')
+        if source && source.text.strip.downcase === 'scopus'
+          return xpath_result.xpath('sourceId').text.strip
+        end
+      end
+
       # @return [Array<Puree::Model::ResearchOutputScopusMetric>]
       def scopus_metrics
         xpath_result = xpath_query '/scopusMetrics/scopusMetric'
@@ -169,9 +180,11 @@ module Puree
         @model.persons_internal = persons_internal
         @model.persons_external = persons_external
         @model.persons_other = persons_other
+        @model.projects = projects
         @model.publication_statuses = publication_statuses
         @model.research_outputs = research_outputs
         @model.scopus_citations_count = scopus_citations_count
+        @model.scopus_id = scopus_id
         @model.scopus_metrics = scopus_metrics
         @model.subtitle = subtitle
         @model.title = title
