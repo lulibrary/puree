@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### 2.3.0 2018-10-08
+### Added
+- POST for REST module.
+
 ## 2.2.0 2018-04-20
 ### Added
 - Count, random for resource extractors.

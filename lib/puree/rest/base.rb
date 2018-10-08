@@ -25,6 +25,14 @@ module Puree
         @url = config[:url]
       end
 
+      # @param params [Hash] Uses the same fields as in {Puree::REST::Base#all}, with additional resource-specific filtering
+      # @param accept [Symbol]
+      # @return [HTTP::Response]
+      def all_complex(params: {}, accept: :xml)
+        post_request_collection params: params,
+                                accept: accept
+      end
+
       # @param params [Hash]
       # @param accept [Symbol]
       # @return [HTTP::Response]
@@ -68,6 +76,15 @@ module Puree
         end
       end
 
+      def content_type_header(content_type)
+        case content_type
+        when :json
+          return { 'Content-Type' => 'application/json' }
+        when :xml
+          return { 'Content-Type' => 'application/xml' }
+        end
+      end
+
       def api_key_header(key)
         msg = 'API key incomplete in configuration'
         raise msg if !key
@@ -92,6 +109,13 @@ module Puree
 
       def meta(type)
         File.join "#{url_collection}-meta", type
+      end
+
+      # @return (see Puree::REST::Base#all_complex)
+      def post_request_collection(params: {}, accept: :xml)
+        @http_client = @http_client.headers(accept_header(accept))
+        @http_client = @http_client.headers(content_type_header(:json))
+        @http_client.post url_collection, json: params
       end
 
       # @return (see Puree::REST::Base#all)

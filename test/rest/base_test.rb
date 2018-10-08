@@ -7,11 +7,22 @@ class TestResourceBase < Minitest::Test
     assert_instance_of Puree::REST::Base, base
   end
 
-  # Private get_request_X methods (used by all resources) tested via Client
+  # Private request methods (used by all resources) tested via Client
   # public interface. Exemplar resource is Person.
+  #
+  def test_post_request_collection
+    params = {
+        size: 3,
+        employmentTypeUri: ['/dk/atira/pure/person/employmenttypes/academic'],
+        employmentStatus: 'ACTIVE'
+    }
+    response = client.persons.all_complex params: params
+    # puts response
+    assert_instance_of HTTP::Response, response
+  end
 
   def test_get_request_collection
-    response = client.persons.all
+    response = client.persons.all params: {size: 5}, accept: :json
     # puts response
     assert_instance_of HTTP::Response, response
   end
