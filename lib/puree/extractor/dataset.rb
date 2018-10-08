@@ -16,16 +16,18 @@ module Puree
 
       # Count of records available.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Fixnum]
-      def count
-        record_count :dataset
+      def count(params = {})
+        record_count :dataset, params
       end
 
       # Random record.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Puree::Model::Dataset, nil]
-      def random
-        super :dataset
+      def random(params = {})
+        super :dataset, params
       end
 
     end

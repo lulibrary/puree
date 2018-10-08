@@ -25,7 +25,7 @@ module Puree
         @url = config[:url]
       end
 
-      # @param params [Hash] Uses the same fields as in {Puree::REST::Base#all}, with additional resource-specific filtering
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @param accept [Symbol]
       # @return [HTTP::Response]
       def all_complex(params: {}, accept: :xml)
@@ -33,7 +33,7 @@ module Puree
                                 accept: accept
       end
 
-      # @param params [Hash]
+      # @param params [Hash] GET parameters for all records
       # @param accept [Symbol]
       # @return [HTTP::Response]
       def all(params: {}, accept: :xml)

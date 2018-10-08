@@ -16,18 +16,22 @@ module Puree
 
       # Count of records available.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Fixnum]
-      def count
-        record_count :research_output
+      def count(params = {})
+        record_count :research_output, params
       end
 
       # Random record. Includes the metadata from Puree::Model::ResearchOutput as a minimum.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Puree::Model::ResearchOutput or subclass, nil]
-      def random
+      def random(params = {})
         client = Puree::REST::Client.new @config
-        offset = rand(0..count-1)
-        response = client.research_outputs.all params: {size: 1, offset: offset}
+        offset = rand(0..count(params)-1)
+        params[:size] = 1
+        params[:offset] = offset
+        response = client.research_outputs.all_complex params: params
         research_outputs_hash = Puree::XMLExtractor::Collection.research_outputs response.to_s
         research_outputs_array = []
         research_outputs_hash.each do |k, v|

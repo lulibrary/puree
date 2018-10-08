@@ -13,6 +13,17 @@ class TestResourceCommon < Minitest::Test
     end
   end
 
+  # all_complex
+  resources.each do |resource|
+    test_name = "test_#{resource}_all_complex"
+    define_method(test_name) do
+      # puts test_name
+      response = resource_instance(resource).all_complex
+      # puts response
+      assert_instance_of HTTP::Response, response
+    end
+  end
+
   # find
   resources.each do |resource|
     uuid = random_singleton_uuid resource

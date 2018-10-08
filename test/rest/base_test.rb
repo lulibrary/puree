@@ -21,6 +21,16 @@ class TestResourceBase < Minitest::Test
     assert_instance_of HTTP::Response, response
   end
 
+  def test_collection_count
+    params = {
+      employmentTypeUri: ['/dk/atira/pure/person/employmenttypes/academic'],
+      employmentStatus: 'ACTIVE'
+    }
+    extractor = Puree::Extractor::Person.new config
+    count = extractor.count(params)
+    assert_instance_of Fixnum, count
+  end
+
   def test_get_request_collection
     response = client.persons.all params: {size: 5}, accept: :json
     # puts response
