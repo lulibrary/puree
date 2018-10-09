@@ -5,18 +5,18 @@ module Puree
     #
     class ResearchOutputScopusMetric < Puree::Model::Structure
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_reader :value
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_reader :year
 
-      # @param v [Fixnum]
+      # @param v [Integer]
       def value=(v)
         @value = v if v && !v.empty?
       end
 
-      # @param v [Fixnum]
+      # @param v [Integer]
       def year=(v)
         @year = v if v && !v.empty?
       end

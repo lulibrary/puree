@@ -5,7 +5,7 @@ module Puree
     #
     class Paper < Puree::Model::ResearchOutput
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :pages
 
       # @return [String, nil]

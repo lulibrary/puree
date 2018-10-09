@@ -28,7 +28,7 @@ class TestResourceBase < Minitest::Test
     }
     extractor = Puree::Extractor::Person.new config
     count = extractor.count(params)
-    assert_instance_of Fixnum, count
+    assert_instance_of Integer, count
   end
 
   def test_get_request_collection

@@ -14,7 +14,7 @@ module Puree
       # @return [String, nil]
       attr_accessor :doi
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :pages
 
       # @return [Puree::Model::PublisherHeader, nil]

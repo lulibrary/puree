@@ -13,7 +13,7 @@ module Puree
         setup_model :journal_article
       end
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       def issue
         xpath_result = xpath_query_for_single_value('/journalNumber')
         xpath_result ? xpath_result.to_i : nil
@@ -32,7 +32,7 @@ module Puree
         end
       end
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       def volume
         xpath_result = xpath_query_for_single_value('/volume')
         xpath_result ? xpath_result.to_i : nil

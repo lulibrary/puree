@@ -113,7 +113,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
     x = xml_extractor_from_id id
 
-    assert_instance_of Fixnum, x.scopus_citations_count
+    assert_instance_of Integer, x.scopus_citations_count
   end
 
   def test_scopus_id

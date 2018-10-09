@@ -11,7 +11,7 @@ module Puree
       # @return [String, nil]
       attr_reader :mime
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :size
 
       # @return [String, nil]

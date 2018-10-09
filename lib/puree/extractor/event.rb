@@ -17,7 +17,7 @@ module Puree
       # Count of records available.
       #
       # @param params [Hash] Combined GET and POST parameters for all records
-      # @return [Fixnum]
+      # @return [Integer]
       def count(params = {})
         record_count :event, params
       end
