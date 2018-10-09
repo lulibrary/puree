@@ -127,7 +127,7 @@ module Puree
       # @return (see Puree::REST::Base#all)
       def get_request_collection_subcollection(subcollection:, params: {}, accept: :xml)
         @http_client = @http_client.headers(accept_header(accept))
-        @http_client.get meta(url_collection_subcollection(subcollection)), params: params
+        @http_client.get url_collection_subcollection(subcollection), params: params
       end
 
       # @return (see Puree::REST::Base#all)

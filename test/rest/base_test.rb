@@ -18,6 +18,7 @@ class TestResourceBase < Minitest::Test
     }
     response = client.persons.all_complex params: params
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
@@ -34,6 +35,7 @@ class TestResourceBase < Minitest::Test
   def test_get_request_collection
     response = client.persons.all params: {size: 5}, accept: :json
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
@@ -41,18 +43,21 @@ class TestResourceBase < Minitest::Test
     uuid = random_singleton_uuid :person
     response = client.persons.find id: uuid
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
   def test_get_request_meta
     response = client.persons.renderings
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
   def test_get_request_collection_subcollection
     response = client.persons.active
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
@@ -60,6 +65,7 @@ class TestResourceBase < Minitest::Test
     uuid = random_singleton_uuid :person
     response = client.persons.projects id: uuid
     # puts response
+    assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
