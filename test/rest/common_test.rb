@@ -9,6 +9,7 @@ class TestResourceCommon < Minitest::Test
       # puts test_name
       response = resource_instance(resource).all
       # puts response
+      assert_equal response.code, 200
       assert_instance_of HTTP::Response, response
     end
   end
@@ -20,6 +21,7 @@ class TestResourceCommon < Minitest::Test
       # puts test_name
       response = resource_instance(resource).all_complex
       # puts response
+      assert_equal response.code, 200
       assert_instance_of HTTP::Response, response
     end
   end
@@ -34,6 +36,7 @@ class TestResourceCommon < Minitest::Test
       resource_instance = resource_instance(resource)
       response = resource_instance.find id: uuid
       # puts response
+      assert_equal response.code, 200
       assert_instance_of HTTP::Response, response
     end
   end
@@ -47,6 +50,7 @@ class TestResourceCommon < Minitest::Test
         resource_instance = resource_instance(resource)
         response = resource_instance.send meta_type
         # puts response
+        assert_equal response.code, 200
         assert_instance_of HTTP::Response, response
       end
     end
