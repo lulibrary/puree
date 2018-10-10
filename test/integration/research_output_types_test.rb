@@ -44,15 +44,11 @@ class TestResearchOutputTypes < Minitest::Test
       end
       assert model_total <= size
 
+      # Model placed in correct hash key
       typed_model_hash.each do |k, v|
         v.each do |model|
           assert_equal type[:text], model.type
         end
-      end
-
-      # Model placed in correct hash key
-      typed_model_hash[type_key].each do |model|
-        assert_equal type[:text], model.type
       end
     end
   end
