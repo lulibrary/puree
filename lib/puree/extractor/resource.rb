@@ -38,17 +38,20 @@ module Puree
         Object.const_get(resource_class).new xml
       end
 
-      def record_count(api_resource_type)
+      def record_count(api_resource_type, params = {})
         api_resource = make_api_resource api_resource_type
-        response = api_resource.all params: {size: 0}
+        params[:size] =  0
+        response = api_resource.all_complex params: params
         return unless response.code === 200
         Puree::XMLExtractor::Collection.count response.to_s
       end
 
-      def random(api_resource_type)
-        offset = rand(0..record_count(api_resource_type)-1)
+      def random(api_resource_type, params = {})
+        offset = rand(0..record_count(api_resource_type, params)-1)
         api_resource = make_api_resource api_resource_type
-        response = api_resource.all params: {size: 1, offset: offset}
+        params[:size] = 1
+        params[:offset] = offset
+        response = api_resource.all_complex params: params
         models = Puree::XMLExtractor::Collection.send "#{api_resource_type}s", response.to_s
         return nil if models.empty?
         models[0]

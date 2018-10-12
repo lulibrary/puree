@@ -16,16 +16,18 @@ module Puree
 
       # Count of records available.
       #
-      # @return [Fixnum]
-      def count
-        record_count :external_organisation
+      # @param params [Hash] Combined GET and POST parameters for all records
+      # @return [Integer]
+      def count(params = {})
+        record_count :external_organisation, params
       end
 
       # Random record.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Puree::Model::ExternalOrganisation, nil]
-      def random
-        super :external_organisation
+      def random(params = {})
+        super :external_organisation, params
       end
 
     end

@@ -157,6 +157,17 @@ client.persons.all params: {size: 5}, accept: :json
 ```
 
 ```ruby
+# Find three active academics
+params = {
+  size: 3,
+  employmentTypeUri: ['/dk/atira/pure/person/employmenttypes/academic'],
+  employmentStatus: 'ACTIVE'
+}
+client.persons.all_complex params: params
+#=> #<HTTP::Response:0x00c0ffee>
+```
+
+```ruby
 # Find research outputs for a person
 client.persons.research_outputs id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 #=> #<HTTP::Response:0x00c0ffee>

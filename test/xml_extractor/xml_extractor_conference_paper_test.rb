@@ -25,7 +25,7 @@ class TestXMLExtractorPaper < Minitest::Test
     assert_instance_of Puree::Model::EventHeader, x.event
     assert_equal true, x.event.data?
 
-    assert_instance_of Fixnum, x.pages
+    assert_instance_of Integer, x.pages
   end
 
   def test_page_range
