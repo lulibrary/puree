@@ -8,10 +8,10 @@ module Puree
       # @return [Puree::Model::JournalHeader, nil]
       attr_accessor :journal
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :issue
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :pages
 
       # @return [String, nil]
@@ -20,7 +20,7 @@ module Puree
       # @return [Boolean, nil]
       attr_accessor :peer_reviewed
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       attr_accessor :volume
 
     end

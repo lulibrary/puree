@@ -110,6 +110,8 @@ module Puree
         data
       end
 
+      # Records available for a resource
+      #
       def self.count(xml)
         doc = Nokogiri::XML xml
         doc.remove_namespaces!

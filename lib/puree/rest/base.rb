@@ -25,7 +25,15 @@ module Puree
         @url = config[:url]
       end
 
-      # @param params [Hash]
+      # @param params [Hash] Combined GET and POST parameters for all records
+      # @param accept [Symbol]
+      # @return [HTTP::Response]
+      def all_complex(params: {}, accept: :xml)
+        post_request_collection params: params,
+                                accept: accept
+      end
+
+      # @param params [Hash] GET parameters for all records
       # @param accept [Symbol]
       # @return [HTTP::Response]
       def all(params: {}, accept: :xml)
@@ -68,6 +76,15 @@ module Puree
         end
       end
 
+      def content_type_header(content_type)
+        case content_type
+        when :json
+          return { 'Content-Type' => 'application/json' }
+        when :xml
+          return { 'Content-Type' => 'application/xml' }
+        end
+      end
+
       def api_key_header(key)
         msg = 'API key incomplete in configuration'
         raise msg if !key
@@ -94,6 +111,13 @@ module Puree
         File.join "#{url_collection}-meta", type
       end
 
+      # @return (see Puree::REST::Base#all_complex)
+      def post_request_collection(params: {}, accept: :xml)
+        @http_client = @http_client.headers(accept_header(accept))
+        @http_client = @http_client.headers(content_type_header(:json))
+        @http_client.post url_collection, json: params
+      end
+
       # @return (see Puree::REST::Base#all)
       def get_request_collection(params: {}, accept: :xml)
         @http_client = @http_client.headers(accept_header(accept))
@@ -103,7 +127,7 @@ module Puree
       # @return (see Puree::REST::Base#all)
       def get_request_collection_subcollection(subcollection:, params: {}, accept: :xml)
         @http_client = @http_client.headers(accept_header(accept))
-        @http_client.get meta(url_collection_subcollection(subcollection)), params: params
+        @http_client.get url_collection_subcollection(subcollection), params: params
       end
 
       # @return (see Puree::REST::Base#all)

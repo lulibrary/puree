@@ -114,7 +114,7 @@ module Puree
         data.uniq { |d| d.stage }
       end
 
-      # @return [Fixnum, nil]
+      # @return [Integer, nil]
       def scopus_citations_count
         xpath_result = xpath_query_for_single_value '/totalScopusCitations'
         xpath_result ? xpath_result.to_i : nil

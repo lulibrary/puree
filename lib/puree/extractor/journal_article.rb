@@ -15,9 +15,10 @@ module Puree
 
       # Random record.
       #
+      # @param params [Hash] Combined GET and POST parameters for all records
       # @return [Puree::Model::JournalArticle, nil]
-      def random
-        record_count :journal_article
+      def random(params = {})
+        record_count :journal_article, params
       end
 
     end
