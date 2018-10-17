@@ -31,10 +31,17 @@ module Puree
         xpath_query_for_single_value '/category'
       end
 
-      # Digital Object Identifier
+      # Digital Object Identifier (first one, if many)
       # @return [String, nil]
       def doi
-        xpath_query_for_single_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
+        multiple_dois = dois
+        multiple_dois.empty? ? nil : multiple_dois.first
+      end
+
+      # Digital Object Identifiers
+      # @return [Array<String>]
+      def dois
+        xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
       end
 
       # @return [Array<Puree::Model::File>]
@@ -170,6 +177,7 @@ module Puree
         @model.category = category
         @model.description = description
         @model.doi = doi
+        @model.dois = dois
         @model.files = files
         @model.keywords = keywords
         @model.language = language
