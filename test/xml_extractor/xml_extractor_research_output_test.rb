@@ -88,6 +88,15 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.bibliographical_note
   end
 
+  def test_dois
+    # The spatial-temporal characteristics and health impacts of ambient fine particulate matter in China
+    id = 'a06ce5cd-a9e8-4e87-aa55-7a8616d1d69d'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Array, x.dois
+    refute_empty x.dois
+  end
+
   def test_keywords
     # The effect of humic substances on barite precipitation-dissolution behaviour in natural and synthetic lake waters
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
@@ -169,6 +178,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_nil x.description
 
     assert_nil x.doi
+
+    assert_empty x.dois
 
     assert_instance_of Array, x.files
     assert_empty x.files
