@@ -17,6 +17,9 @@ module Puree
       # @return [String, nil]
       attr_accessor :doi
 
+      # @return [Array<String>]
+      attr_accessor :dois
+
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]
       attr_accessor :external_organisations
 
