@@ -115,7 +115,6 @@ module Puree
       def post_request_collection(params: {}, accept: :xml)
         @http_client = @http_client.headers(accept_header(accept))
         @http_client = @http_client.headers(content_type_header(:json))
-        @http_client = @http_client.encoding Encoding::BINARY
         @http_client.post url_collection, json: params
       end
 

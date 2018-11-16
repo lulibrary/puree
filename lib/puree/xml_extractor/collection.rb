@@ -75,6 +75,15 @@ module Puree
       # @param xml [String]
       # @return [Hash{Symbol => Array<Puree::Model::ResearchOutput class/subclass>}]
       def self.research_outputs(xml)
+        # entities = {
+        #   'lt'    => '<',
+        #   'gt'    => '>',
+        #   'amp'   => '&',
+        #   'quot'  => '"',
+        #   '#13'  => "\r",
+        # }
+        # xml = entities.keys.inject(xml) { |string,key| string.gsub(/&#{key};/, entities[key]) }
+
         path_from_root = File.join 'result', '/*'
         doc = Nokogiri::XML xml
         doc.remove_namespaces!
