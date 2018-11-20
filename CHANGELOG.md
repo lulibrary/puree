@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### 2.4.1 2018-11-20
+### Fixed
+- Research output, dataset - missing < in doi. 
+
 ## 2.4.0 2018-10-17
 ### Added
 - Research output - dois.

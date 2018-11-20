@@ -24,7 +24,7 @@ module Puree
         api_resource = make_api_resource api_resource_type
         response = api_resource.find id: id
         return unless response.code === 200
-        xml_extractor = make_xml_extractor response.body, xml_extractor_resource_type
+        xml_extractor = make_xml_extractor response.to_s, xml_extractor_resource_type
         xml_extractor.model
       end
 

@@ -29,7 +29,8 @@ module Puree
       # Digital Object Identifier
       # @return [String, nil]
       def doi
-        xpath_query_for_single_value '/doi'
+        str = xpath_query_for_single_value '/doi'
+        Puree::XMLExtractor::Encoder.decode_doi(str) if str
       end
 
       # Supporting files

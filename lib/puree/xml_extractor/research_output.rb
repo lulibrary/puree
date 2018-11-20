@@ -17,7 +17,7 @@ module Puree
       include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml)
-        super
+        super Puree::XMLExtractor::Encoder.encode_doi(xml)
         setup_model :research_output
       end
 
@@ -35,13 +35,15 @@ module Puree
       # @return [String, nil]
       def doi
         multiple_dois = dois
-        multiple_dois.empty? ? nil : multiple_dois.first
+        multiple_dois.empty? ? nil : Puree::XMLExtractor::Encoder.decode_doi(multiple_dois.first)
       end
 
       # Digital Object Identifiers
       # @return [Array<String>]
       def dois
-        xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
+        arr = xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
+        arr.map! { |i| Puree::XMLExtractor::Encoder.decode_doi(i) }
+        arr
       end
 
       # @return [Array<Puree::Model::File>]

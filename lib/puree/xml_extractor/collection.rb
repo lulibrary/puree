@@ -11,7 +11,8 @@ module Puree
       # @param xml [String]
       # @return [Array<Puree::Model::Dataset>]
       def self.datasets(xml)
-        models :dataset, xml, '/dataSet'
+        encoded_xml = Puree::XMLExtractor::Encoder.encode_doi xml
+        models :dataset, encoded_xml, '/dataSet'
       end
 
       # Get models from any multi-record event XML response
@@ -75,17 +76,9 @@ module Puree
       # @param xml [String]
       # @return [Hash{Symbol => Array<Puree::Model::ResearchOutput class/subclass>}]
       def self.research_outputs(xml)
-        # entities = {
-        #   'lt'    => '<',
-        #   'gt'    => '>',
-        #   'amp'   => '&',
-        #   'quot'  => '"',
-        #   '#13'  => "\r",
-        # }
-        # xml = entities.keys.inject(xml) { |string,key| string.gsub(/&#{key};/, entities[key]) }
-
         path_from_root = File.join 'result', '/*'
-        doc = Nokogiri::XML xml
+        encoded_xml = Puree::XMLExtractor::Encoder.encode_doi xml
+        doc = Nokogiri::XML encoded_xml
         doc.remove_namespaces!
         xpath_result = doc.xpath path_from_root
         data = {
