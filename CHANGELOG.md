@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.0 2018-11-21
+- For Pure API 511 due to tiny change in Scoous ID for research output.
+- CDATA not present in XML for WS 59 would break v2.x.x parsing e.g. for DOIs, titles containing math symbols.
+
 ## 2.4.0 2018-10-17
 ### Added
 - Research output - dois.
