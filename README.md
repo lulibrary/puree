@@ -203,3 +203,18 @@ response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 Puree::XMLExtractor::Collection.projects response.to_s
 #=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```
+
+## Pure API Coverage
+Pur&#233;e | Pure API
+:---: | :---:
+< 2 | < 59
+2 |	59, 510
+3 |	511
+
+## Known limitations
+Pur&#233;e 2.3.0 introduced POST for the REST module. However, markup within the POST response of APIs 59 and 510 can 
+cause XML parsing issues. Pure API 511 introduced CDATA sections in the XML which addresses those issues. 
+
+Some data which may be affected:
+ - research output with a DOI containing <
+ - research output with a title containing mathematical symbols 
