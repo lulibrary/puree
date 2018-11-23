@@ -41,6 +41,7 @@ module Puree
         xpath_query_for_single_value '/name'
       end
 
+      # First parent
       # @return [Puree::Model::OrganisationalUnitHeader, nil]
       def parent
         multiple_parents = parents
@@ -75,6 +76,7 @@ module Puree
         @model.email_addresses = email_addresses
         @model.name = name
         @model.parent = parent
+        @model.parents = parents
         @model.phone_numbers = phone_numbers
         @model.type = type
         @model.urls = urls
