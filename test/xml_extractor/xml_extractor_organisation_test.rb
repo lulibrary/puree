@@ -35,6 +35,10 @@ class TestXMLExtractorOrganisation < Minitest::Test
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.parent
     assert_equal true, x.parent.data?
 
+    assert_instance_of Array, x.parents
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.parents.first
+    assert_equal true, x.parents.first.data?
+
     assert_instance_of Array, x.phone_numbers
     assert_instance_of String, x.phone_numbers.first
     refute_empty x.phone_numbers.first
@@ -59,6 +63,9 @@ class TestXMLExtractorOrganisation < Minitest::Test
     assert_nil x.name
 
     assert_nil x.parent
+
+    assert_instance_of Array, x.parents
+    assert_empty x.parents
 
     assert_instance_of Array, x.phone_numbers
     assert_empty x.phone_numbers

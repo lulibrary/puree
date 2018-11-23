@@ -6,8 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - For Pure API 511 due to change in source XML for Scopus ID in research output.
 
+### Added
+- Organisational unit - parents.
+
 ### Fixed
-- Organisational unit parent when there are multiple. 
+- Organisational unit - parent, for multiple parents. 
 
 ## 2.4.0 2018-10-17
 ### Added
