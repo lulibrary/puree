@@ -25,12 +25,20 @@ Or install it yourself as:
 ```ruby
 # For Extractor and REST modules.
 config = {
-  url:      'https://YOUR_HOST/ws/api/59',
+  url:      'https://YOUR_HOST/ws/api/VERSION',
   username: 'YOUR_USERNAME',
   password: 'YOUR_PASSWORD',
   api_key:  'YOUR_API_KEY'
 }
 ```
+
+Pur&#233;e is tested using known data within a Pure installation.
+ 
+Pur&#233;e version | Pure API version
+:---: | :---:
+< 2 | < 59
+< 2.5 |	59, 510
+2.5 |	511
 
 ## Extractor module
 ```ruby
@@ -203,20 +211,3 @@ response = client.persons.projects id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 Puree::XMLExtractor::Collection.projects response.to_s
 #=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```
-
-## Pure API compatibility
-Pur&#233;e is tested using known data within a Pure installation.
- 
-Pur&#233;e | Pure API
-:---: | :---:
-< 2 | < 59
-< 2.5 |	59, 510
-2.5 |	511
-
-## Known limitations
-Pur&#233;e 2.3 introduced POST for the REST module. However, markup within the POST response of Pure APIs 59 and 510 can 
-cause XML parsing issues. Pure API 511 addresses those issues. 
-
-Some data which may be affected:
- - research output with a DOI containing <
- - research output with a title containing mathematical symbols 
