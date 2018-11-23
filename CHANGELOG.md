@@ -2,8 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.0.0 2018-11-21
+## 2.5.0 2018-11-23
+### Changed
 - For Pure API 511 due to change in source XML for Scopus ID in research output.
+
+### Fixed
+- Organisational unit parent when there are multiple. 
 
 ## 2.4.0 2018-10-17
 ### Added

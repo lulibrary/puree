@@ -204,16 +204,18 @@ Puree::XMLExtractor::Collection.projects response.to_s
 #=> [#<Puree::Model::Project:0x00c0ffee>, ...]
 ```
 
-## Pure API Coverage
+## Pure API compatibility
+Testing uses known data within a Pure installation.
+ 
 Pur&#233;e | Pure API
 :---: | :---:
 < 2 | < 59
-2 |	59, 510
-3 |	511
+< 2.5 |	59, 510
+2.5 |	511
 
 ## Known limitations
-Pur&#233;e 2.3.0 introduced POST for the REST module. However, markup within the POST response of APIs 59 and 510 can 
-cause XML parsing issues. Pure API 511 introduced CDATA sections in the XML which addresses those issues. 
+Pur&#233;e 2.3 introduced POST for the REST module. However, markup within the POST response of APIs 59 and 510 can 
+cause XML parsing issues. Pure API 511 (and therefore Pur&#233;e 2.5) addresses those issues. 
 
 Some data which may be affected:
  - research output with a DOI containing <
