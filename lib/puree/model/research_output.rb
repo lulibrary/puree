@@ -14,10 +14,10 @@ module Puree
       # @return [String, nil]
       attr_accessor :description
 
-      # @return [String, nil]
+      # @return [Puree::Model::DOI, nil]
       attr_accessor :doi
 
-      # @return [Array<String>]
+      # @return [Array<Puree::Model::DOI>]
       attr_accessor :dois
 
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]

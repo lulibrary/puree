@@ -27,9 +27,10 @@ module Puree
       end
 
       # Digital Object Identifier
-      # @return [String, nil]
+      # @return [Puree::Model::DOI, nil]
       def doi
-        xpath_query_for_single_value '/doi'
+        xpath_result = xpath_query_for_single_value '/doi'
+        xpath_result.nil? ? nil : Puree::Model::DOI.new(xpath_result)
       end
 
       # Supporting files
