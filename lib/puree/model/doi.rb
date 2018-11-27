@@ -58,7 +58,12 @@ module Puree
       end
 
       def doi_from_url(str)
-        str.sub /^.*?doi\.org\//, ''
+        s = str.dup
+        # remove CrossRef format
+        s.sub! /^.*?doi\.org\//, ''
+        # remove DOI handbook format
+        s.sub! /^doi:/i, ''
+        s
       end
     end
 
