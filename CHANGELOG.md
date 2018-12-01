@@ -4,8 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.5.0 2018-12-01
 ### Added
-Research output, dataset - URL-friendly dois.
-REST timeouts.
+- Research output, dataset - URL-friendly dois.
+- REST timeouts.
 
 ### Changed
 - For Pure API 511 due to change in source XML for Scopus ID in research output.
