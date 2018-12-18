@@ -25,7 +25,7 @@ Or install it yourself as:
 ```ruby
 # For Extractor and REST modules.
 config = {
-  url:      'https://YOUR_HOST/ws/api/VERSION',
+  url:      'https://YOUR_HOST/ws/api/YOUR_API_VERSION',
   username: 'YOUR_USERNAME',
   password: 'YOUR_PASSWORD',
   api_key:  'YOUR_API_KEY'

@@ -6,11 +6,7 @@ module Puree
     #
     class Resource
 
-      # @param config [Hash]
-      # @option config [String] :url URL of the Pure host
-      # @option config [String] :username Username of the Pure host account
-      # @option config [String] :password Password of the Pure host account
-      # @option config [String] :api_key API key of the Pure host account
+      # (see Puree::REST::Base#initialize)
       def initialize(config)
         @config = config
       end
