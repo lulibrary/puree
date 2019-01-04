@@ -2,9 +2,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.5.0 2018-12-01
+## 2.5.0 2019-01-04
 ### Added
-- Research output, dataset - URL-friendly dois.
 - REST timeouts.
 
 ### Changed

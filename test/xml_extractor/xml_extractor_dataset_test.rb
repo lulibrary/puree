@@ -27,7 +27,7 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of String, x.description
     refute_empty x.description
 
-    assert_instance_of Puree::Model::DOI, x.doi
+    assert_instance_of String, x.doi
     refute_empty x.doi.to_s
 
     assert_instance_of Array, x.files

@@ -39,10 +39,9 @@ module Puree
       end
 
       # Digital Object Identifiers
-      # @return [Array<Puree::Model::DOI>]
+      # @return [Array<String>]
       def dois
-        xpath_result = xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
-        xpath_result.map { |i| Puree::Model::DOI.new i }
+        xpath_query_for_multi_value '/electronicVersions/electronicVersion[@type="wsElectronicVersionDoiAssociation"]/doi'
       end
 
       # @return [Array<Puree::Model::File>]

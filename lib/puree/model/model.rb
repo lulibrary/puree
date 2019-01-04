@@ -1,8 +1,6 @@
 require 'puree/model/helper/validation'
 require 'puree/model/structure'
 
-require 'puree/model/doi'
-
 require 'puree/model/resource'
 require 'puree/model/dataset'
 require 'puree/model/event'
