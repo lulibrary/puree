@@ -32,7 +32,7 @@ module Puree
       end
 
       # Digital Object Identifier (first one, if many)
-      # @return [String, nil]
+      # @return [Puree::Model::DOI, nil]
       def doi
         multiple_dois = dois
         multiple_dois.empty? ? nil : multiple_dois.first
@@ -129,11 +129,10 @@ module Puree
 
       # @return [String, nil]
       def scopus_id
-        xpath_result = xpath_query '/externalableInfo/secondarySources/secondarySource'
-        return if xpath_result.empty?
-        source = xpath_result.xpath('source')
-        if source && source.text.strip.downcase === 'scopus'
-          return xpath_result.xpath('sourceId').text.strip
+        external_identifiers.each do |i|
+          if i.type.downcase === 'scopus'
+            return i.id
+          end
         end
       end
 
@@ -201,6 +200,18 @@ module Puree
         @model.type = type
         @model.workflow = workflow
         @model
+      end
+
+      def external_identifiers
+        xpath_result = xpath_query '/info/additionalExternalIds/id'
+        data = []
+        xpath_result.each do |d|
+          identifier = Puree::Model::Identifier.new
+          identifier.id = d.text.strip
+          identifier.type = d.attr('idSource').strip
+          data << identifier
+        end
+        data.uniq { |d| d.id }
       end
 
     end

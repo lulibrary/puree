@@ -13,7 +13,11 @@ module Puree
       # @option config [String] :username Username of the Pure host account
       # @option config [String] :password Password of the Pure host account
       # @option config [String] :api_key API key of the Pure host account
+      # @option config [Float] :http_read_timeout Read timeout in seconds
+      # @option config [Float] :http_write_timeout Write timeout in seconds
+      # @option config [Float] :http_connection_timeout Connection timeout in seconds
       def initialize(config)
+        config = http_defaults.merge config
         @http_client = HTTP::Client.new
         if config[:username] || config[:password]
           options = {}
@@ -22,6 +26,9 @@ module Puree
           @http_client = @http_client.basic_auth options
         end
         @http_client = @http_client.headers(api_key_header(config[:api_key]))
+        @http_client = @http_client.timeout read: config[:http_read_timeout],
+                                            write: config[:http_write_timeout],
+                                            connection: config[:http_connection_timeout]
         @url = config[:url]
       end
 
@@ -66,6 +73,14 @@ module Puree
       end
 
       private
+
+      def http_defaults
+        {
+          http_read_timeout: 10,
+          http_write_timeout: 10,
+          http_connection_timeout: 10
+        }
+      end
 
       def accept_header(accept)
         case accept

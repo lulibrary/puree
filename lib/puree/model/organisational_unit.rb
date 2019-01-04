@@ -17,6 +17,9 @@ module Puree
       # @return [Puree::Model::OrganisationalUnitHeader, nil]
       attr_accessor :parent
 
+      # @return [Array<Puree::Model::OrganisationalUnitHeader>]
+      attr_accessor :parents
+
       # @return [Array<String>]
       attr_accessor :phone_numbers
 

@@ -13,7 +13,7 @@ module Puree
       attr_accessor :description
 
       # Digital Object Identifier.
-      # @return [String, nil]
+      # @return [Puree::Model::DOI, nil]
       attr_accessor :doi
 
       # Supporting files.
