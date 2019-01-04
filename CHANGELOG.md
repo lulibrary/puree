@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.5.0 2019-01-04
+### Added
+- REST timeouts.
+
+### Changed
+- For Pure API 511 due to change in source XML for Scopus ID in research output.
+
+### Added
+- Organisational unit - parents.
+
+### Fixed
+- Organisational unit - parent, for multiple parents. 
+
 ## 2.4.0 2018-10-17
 ### Added
 - Research output - dois.

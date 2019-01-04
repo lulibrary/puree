@@ -25,12 +25,20 @@ Or install it yourself as:
 ```ruby
 # For Extractor and REST modules.
 config = {
-  url:      'https://YOUR_HOST/ws/api/59',
+  url:      'https://YOUR_HOST/ws/api/YOUR_API_VERSION',
   username: 'YOUR_USERNAME',
   password: 'YOUR_PASSWORD',
   api_key:  'YOUR_API_KEY'
 }
 ```
+
+Pur&#233;e is tested using known data within a Pure installation.
+ 
+Pur&#233;e version | Pure API version
+:---: | :---:
+< 2 | < 59
+< 2.5 |	59, 510
+2.5 |	511, 512
 
 ## Extractor module
 ```ruby
