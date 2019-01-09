@@ -53,7 +53,7 @@ module Puree
           model.name = d.xpath('file/fileName').text.strip
           model.mime = d.xpath('file/mimeType').text.strip
           model.size = d.xpath('file/size').text.strip.to_i
-          model.url = d.xpath('file/URL').text.strip
+          model.url = d.xpath('file/fileURL').text.strip
           # document_license = d.xpath('licenseType')
           # if !document_license.empty?
           #   license = Puree::Model::CopyrightLicense.new

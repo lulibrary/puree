@@ -34,8 +34,16 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.doi.to_s
 
     assert_instance_of Array, x.files
-    assert_instance_of Puree::Model::File, x.files.first
-    assert_equal true, x.files.first.data?
+    f = x.files.first
+    assert_instance_of Puree::Model::File, f
+    assert f.data?
+    assert_instance_of String, f.name
+    refute_empty f.name
+    assert_instance_of String, f.mime
+    refute_empty f.mime
+    assert_instance_of Integer, f.size
+    assert_instance_of String, f.url
+    refute_empty f.url
 
     assert_instance_of String, x.language
     refute_empty x.language
