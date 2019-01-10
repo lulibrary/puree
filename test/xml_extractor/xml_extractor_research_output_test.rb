@@ -170,8 +170,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.projects
+
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert_equal true, x.projects.first.data?
+    assert x.projects.first.data?
   end
 
   def test_scopus_citations_count
@@ -195,8 +196,11 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.scopus_metrics
-    assert_instance_of Puree::Model::ResearchOutputScopusMetric, x.scopus_metrics.first
-    assert_equal true, x.scopus_metrics.first.data?
+    data = x.scopus_metrics.first
+    assert_instance_of Puree::Model::ResearchOutputScopusMetric, data
+    assert data.data?
+    assert_instance_of Integer, data.value
+    assert_instance_of Integer, data.year
   end
 
   def test_subtitle
