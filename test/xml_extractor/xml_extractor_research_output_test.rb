@@ -151,6 +151,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.dois
+    assert_instance_of String, x.dois.first
     refute_empty x.dois
   end
 
