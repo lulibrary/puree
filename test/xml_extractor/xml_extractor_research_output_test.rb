@@ -58,7 +58,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.organisational_units
     data = x.organisational_units.first
     assert_instance_of Puree::Model::OrganisationalUnitHeader, data
-    assert true, data.data?
+    assert data.data?
     assert_instance_of String, data.uuid
     refute_empty data.uuid
     assert_instance_of String, data.name
@@ -68,7 +68,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     data = x.owner
     assert_instance_of Puree::Model::OrganisationalUnitHeader, data
-    assert true, data.data?
+    assert data.data?
     assert_instance_of String, data.uuid
     refute_empty data.uuid
     assert_instance_of String, data.name
@@ -79,12 +79,12 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_internal
     data = x.persons_internal.first
     assert_instance_of Puree::Model::EndeavourPerson, data
-    assert true, data.data?
+    assert data.data?
     assert_instance_of String, data.uuid
     refute_empty data.uuid
     name = data.name
     assert_instance_of Puree::Model::PersonName, name
-    assert true, name.data?
+    assert name.data?
     assert_instance_of String, name.first
     refute_empty name.first
     assert_instance_of String, name.last
@@ -95,12 +95,12 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_external
     data = x.persons_external.first
     assert_instance_of Puree::Model::EndeavourPerson, data
-    assert true, data.data?
+    assert data.data?
     assert_instance_of String, data.uuid
     refute_empty data.uuid
     name = data.name
     assert_instance_of Puree::Model::PersonName, name
-    assert true, name.data?
+    assert name.data?
     assert_instance_of String, name.first
     refute_empty name.first
     assert_instance_of String, name.last
@@ -109,14 +109,25 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty data.role
 
     assert_instance_of Array, x.publication_statuses
-    assert_instance_of Puree::Model::PublicationStatus, x.publication_statuses.first
-    assert_equal true, x.publication_statuses.first.data?
+    data = x.publication_statuses.first
+    assert_instance_of Puree::Model::PublicationStatus, data
+    assert data.data?
+    assert_instance_of String, data.stage
+    refute_empty data.stage
+    assert_instance_of Time, data.date
 
     # persons_other, see Dataset test
 
     assert_instance_of Array, x.research_outputs
-    assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
-    assert_equal true, x.research_outputs.first.data?
+    data = x.research_outputs.first
+    assert_instance_of Puree::Model::RelatedContentHeader, data
+    assert data.data?
+    assert_instance_of String, data.uuid
+    refute_empty data.uuid
+    assert_instance_of String, data.title
+    refute_empty data.title
+    assert_instance_of String, data.type
+    refute_empty data.type
 
     assert_instance_of String, x.type
     refute_empty x.type

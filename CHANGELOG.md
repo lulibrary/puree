@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.5.1 2019-01-10
+### Fixed
+- Research output - file URL.
+
 ## 2.5.0 2019-01-04
 ### Added
 - REST timeouts.
