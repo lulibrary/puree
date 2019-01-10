@@ -322,6 +322,6 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = Puree::XMLExtractor::JournalArticle.new xml
     assert_instance_of Array, x.projects
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert_equal true, x.projects.first.data?
+    assert x.projects.first.data?
   end
 end
