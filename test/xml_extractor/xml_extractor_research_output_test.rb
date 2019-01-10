@@ -34,16 +34,16 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.doi.to_s
 
     assert_instance_of Array, x.files
-    f = x.files.first
-    assert_instance_of Puree::Model::File, f
-    assert f.data?
-    assert_instance_of String, f.name
-    refute_empty f.name
-    assert_instance_of String, f.mime
-    refute_empty f.mime
-    assert_instance_of Integer, f.size
-    assert_instance_of String, f.url
-    refute_empty f.url
+    data = x.files.first
+    assert_instance_of Puree::Model::File, data
+    assert data.data?
+    assert_instance_of String, data.name
+    refute_empty data.name
+    assert_instance_of String, data.mime
+    refute_empty data.mime
+    assert_instance_of Integer, data.size
+    assert_instance_of String, data.url
+    refute_empty data.url
 
     assert_instance_of String, x.language
     refute_empty x.language
@@ -56,19 +56,57 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.open_access_permission
 
     assert_instance_of Array, x.organisational_units
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
-    assert_equal true, x.organisational_units.first.data?
+    data = x.organisational_units.first
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, data
+    assert true, data.data?
+    assert_instance_of String, data.uuid
+    refute_empty data.uuid
+    assert_instance_of String, data.name
+    refute_empty data.name
+    assert_instance_of String, data.type
+    refute_empty data.type
 
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.owner
-    assert_equal true, x.owner.data?
+    data = x.owner
+    assert_instance_of Puree::Model::OrganisationalUnitHeader, data
+    assert true, data.data?
+    assert_instance_of String, data.uuid
+    refute_empty data.uuid
+    assert_instance_of String, data.name
+    refute_empty data.name
+    assert_instance_of String, data.type
+    refute_empty data.type
 
     assert_instance_of Array, x.persons_internal
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
-    assert_equal true, x.persons_internal.first.data?
+    data = x.persons_internal.first
+    assert_instance_of Puree::Model::EndeavourPerson, data
+    assert true, data.data?
+    assert_instance_of String, data.uuid
+    refute_empty data.uuid
+    name = data.name
+    assert_instance_of Puree::Model::PersonName, name
+    assert true, name.data?
+    assert_instance_of String, name.first
+    refute_empty name.first
+    assert_instance_of String, name.last
+    refute_empty name.last
+    assert_instance_of String, data.role
+    refute_empty data.role
 
     assert_instance_of Array, x.persons_external
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
-    assert_equal true, x.persons_external.first.data?
+    data = x.persons_external.first
+    assert_instance_of Puree::Model::EndeavourPerson, data
+    assert true, data.data?
+    assert_instance_of String, data.uuid
+    refute_empty data.uuid
+    name = data.name
+    assert_instance_of Puree::Model::PersonName, name
+    assert true, name.data?
+    assert_instance_of String, name.first
+    refute_empty name.first
+    assert_instance_of String, name.last
+    refute_empty name.last
+    assert_instance_of String, data.role
+    refute_empty data.role
 
     assert_instance_of Array, x.publication_statuses
     assert_instance_of Puree::Model::PublicationStatus, x.publication_statuses.first
