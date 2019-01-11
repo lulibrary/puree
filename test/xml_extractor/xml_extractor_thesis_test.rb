@@ -1,4 +1,5 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/name_header'
 
 class TestXMLExtractorThesis < Minitest::Test
 
@@ -24,25 +25,10 @@ class TestXMLExtractorThesis < Minitest::Test
 
     assert_instance_of Time, x.award_date
 
-    data = x.awarding_institution
-    assert_instance_of Puree::Model::ExternalOrganisationHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.name
-    refute_empty data.name
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_name_header x.awarding_institution
 
-    data = x.publisher
-    assert_instance_of Puree::Model::PublisherHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.name
-    refute_empty data.name
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_instance_of Puree::Model::PublisherHeader, x.publisher
+    assert_name_header x.publisher
 
     assert_instance_of String, x.type
     refute_empty x.type
@@ -54,15 +40,8 @@ class TestXMLExtractorThesis < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.sponsors
-    data = x.sponsors.first
-    assert_instance_of Puree::Model::ExternalOrganisationHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.name
-    refute_empty data.name
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_instance_of Puree::Model::ExternalOrganisationHeader, x.sponsors.first
+    assert_name_header x.sponsors.first
   end
 
   def test_qualification

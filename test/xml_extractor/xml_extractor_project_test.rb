@@ -1,4 +1,6 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/endeavour_person'
+require_relative '../common/name_header'
 
 class TestXMLExtractorProject < Minitest::Test
 
@@ -25,11 +27,13 @@ class TestXMLExtractorProject < Minitest::Test
 
     assert_instance_of Array, x.external_organisations
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.external_organisations.first
-    assert_equal true, x.external_organisations.first.data?
+    assert x.external_organisations.first.data?
+    assert_name_header x.external_organisations.first
 
     assert_instance_of Array, x.organisational_units
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
-    assert_equal true, x.organisational_units.first.data?
+    assert x.organisational_units.first.data?
+    assert_name_header x.organisational_units.first
 
     assert_instance_of String, x.status
     refute_empty x.status
@@ -42,12 +46,13 @@ class TestXMLExtractorProject < Minitest::Test
 
     assert_instance_of Array, x.persons_internal
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
-    assert_equal true, x.persons_internal.first.data?
+    assert x.persons_internal.first.data?
+    assert_endeavour_person x.persons_internal.first
 
     # persons_other, see Dataset test
 
     assert_instance_of Puree::Model::TemporalRange, x.temporal
-    assert_equal true, x.temporal.data?
+    assert x.temporal.data?
   end
 
   def test_description
@@ -66,7 +71,7 @@ class TestXMLExtractorProject < Minitest::Test
 
     assert_instance_of Array, x.identifiers
     assert_instance_of Puree::Model::Identifier, x.identifiers.first
-    assert_equal true, x.identifiers.first.data?
+    assert x.identifiers.first.data?
   end
 
   def test_url
@@ -85,7 +90,8 @@ class TestXMLExtractorProject < Minitest::Test
 
     assert_instance_of Array, x.persons_external
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
-    assert_equal true, x.persons_external.first.data?
+    assert x.persons_external.first.data?
+    assert_endeavour_person x.persons_external.first
   end
 
   def test_absence

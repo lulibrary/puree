@@ -1,4 +1,7 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/endeavour_person'
+require_relative '../common/name_header'
+require_relative '../common/related_content_header'
 
 # Tests Resource methods, via a JournalArticle
 # Unless otherwise stated, tests ResearchOutput methods via a JournalArticle
@@ -56,57 +59,15 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.open_access_permission
 
     assert_instance_of Array, x.organisational_units
-    data = x.organisational_units.first
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.name
-    refute_empty data.name
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_name_header x.organisational_units.first
 
-    data = x.owner
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.name
-    refute_empty data.name
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_name_header x.owner
 
     assert_instance_of Array, x.persons_internal
-    data = x.persons_internal.first
-    assert_instance_of Puree::Model::EndeavourPerson, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    name = data.name
-    assert_instance_of Puree::Model::PersonName, name
-    assert name.data?
-    assert_instance_of String, name.first
-    refute_empty name.first
-    assert_instance_of String, name.last
-    refute_empty name.last
-    assert_instance_of String, data.role
-    refute_empty data.role
+    assert_endeavour_person x.persons_internal.first
 
     assert_instance_of Array, x.persons_external
-    data = x.persons_external.first
-    assert_instance_of Puree::Model::EndeavourPerson, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    name = data.name
-    assert_instance_of Puree::Model::PersonName, name
-    assert name.data?
-    assert_instance_of String, name.first
-    refute_empty name.first
-    assert_instance_of String, name.last
-    refute_empty name.last
-    assert_instance_of String, data.role
-    refute_empty data.role
+    assert_endeavour_person x.persons_external.first
 
     assert_instance_of Array, x.publication_statuses
     data = x.publication_statuses.first
@@ -119,15 +80,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     # persons_other, see Dataset test
 
     assert_instance_of Array, x.research_outputs
-    data = x.research_outputs.first
-    assert_instance_of Puree::Model::RelatedContentHeader, data
-    assert data.data?
-    assert_instance_of String, data.uuid
-    refute_empty data.uuid
-    assert_instance_of String, data.title
-    refute_empty data.title
-    assert_instance_of String, data.type
-    refute_empty data.type
+    assert_related_content_header x.research_outputs.first
 
     assert_instance_of String, x.type
     refute_empty x.type
@@ -173,7 +126,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.projects
 
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert x.projects.first.data?
+    assert_related_content_header x.projects.first
   end
 
   def test_scopus_citations_count
@@ -322,6 +275,6 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = Puree::XMLExtractor::JournalArticle.new xml
     assert_instance_of Array, x.projects
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert x.projects.first.data?
+    assert_related_content_header x.projects.first
   end
 end
