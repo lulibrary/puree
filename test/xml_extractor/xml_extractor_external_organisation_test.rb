@@ -1,4 +1,5 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/name_header'
 
 class TestXMLExtractorExternalOrganisation < Minitest::Test
 
