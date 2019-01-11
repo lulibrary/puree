@@ -118,15 +118,29 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.keywords.first
   end
 
-  def test_projects
-    # Measurements of the Higgs boson production and decay rates and coupling strengths using pp collision data at s√=7s=7 and 8 TeV in the ATLAS experiment
-    id = '24ec62e9-a3cc-4402-9ec9-396067949031'
+  # def test_projects
+  #   # Measurements of the Higgs boson production and decay rates and coupling strengths using pp collision data at s√=7s=7 and 8 TeV in the ATLAS experiment
+  #   id = '24ec62e9-a3cc-4402-9ec9-396067949031'
+  #   x = xml_extractor_from_id id
+  #
+  #   assert_instance_of Array, x.projects
+  #
+  #   assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
+  #   assert_related_content_header x.projects.first
+  # end
+
+  def test_projects_2
+    # Plant diversity and root traits benefit physical properties key to soil function in grasslands
+    id = '458ad0e7-6950-4e30-9374-125fbf628548'
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.projects
 
+    # Lancaster Environment Centre Project
+    # Active on 2019-01-11
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
     assert_related_content_header x.projects.first
+    assert x.projects.first.uuid === 'a2bf957f-d54b-495a-97ac-cf360eeda67f'
   end
 
   def test_scopus_citations_count
