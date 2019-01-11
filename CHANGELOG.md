@@ -4,8 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.5.1 2019-01-10
 ### Fixed
-- Research output - file URL, scopus metric type.
+- Research output - file URL, scopus metric data types.
 - Conference paper - event title.
+- Organisational unit - address post code.
 
 ## 2.5.0 2019-01-04
 ### Added
