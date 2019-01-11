@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.5.1 2019-01-10
+## 2.5.1 2019-01-11
 ### Fixed
 - Research output - file URL, scopus metric data types.
 - Conference paper - event title.
