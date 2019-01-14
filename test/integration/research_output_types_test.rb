@@ -23,7 +23,7 @@ class TestResearchOutputTypes < Minitest::Test
     types.each do |type|
       params = {
         size: size,
-        typeUri: [type[:uri]]
+        typeUris: [type[:uri]]
       }
       response = client.research_outputs.all_complex params: params
       # puts response
