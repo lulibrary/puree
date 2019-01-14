@@ -1,4 +1,5 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/name_header'
 
 class TestXMLExtractorThesis < Minitest::Test
 
@@ -24,11 +25,10 @@ class TestXMLExtractorThesis < Minitest::Test
 
     assert_instance_of Time, x.award_date
 
-    assert_instance_of Puree::Model::ExternalOrganisationHeader, x.awarding_institution
-    assert_equal true,  x.awarding_institution.data?
+    assert_name_header x.awarding_institution
 
     assert_instance_of Puree::Model::PublisherHeader, x.publisher
-    assert_equal true, x.publisher.data?
+    assert_name_header x.publisher
 
     assert_instance_of String, x.type
     refute_empty x.type
@@ -41,7 +41,7 @@ class TestXMLExtractorThesis < Minitest::Test
 
     assert_instance_of Array, x.sponsors
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.sponsors.first
-    assert_equal true,  x.sponsors.first.data?
+    assert_name_header x.sponsors.first
   end
 
   def test_qualification

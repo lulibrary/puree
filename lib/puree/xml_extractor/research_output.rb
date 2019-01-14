@@ -53,7 +53,7 @@ module Puree
           model.name = d.xpath('file/fileName').text.strip
           model.mime = d.xpath('file/mimeType').text.strip
           model.size = d.xpath('file/size').text.strip.to_i
-          model.url = d.xpath('file/URL').text.strip
+          model.url = d.xpath('file/fileURL').text.strip
           # document_license = d.xpath('licenseType')
           # if !document_license.empty?
           #   license = Puree::Model::CopyrightLicense.new
@@ -142,8 +142,8 @@ module Puree
         data = []
         xpath_result.each do |i|
           s = Puree::Model::ResearchOutputScopusMetric.new
-          s.value = i.xpath('value').text.strip
-          s.year = i.xpath('year').text.strip
+          s.value = i.xpath('value').text.strip.to_i
+          s.year = i.xpath('year').text.strip.to_i
           data << s
         end
         data

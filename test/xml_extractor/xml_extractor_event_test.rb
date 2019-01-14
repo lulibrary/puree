@@ -26,7 +26,7 @@ class TestXMLEventJournal < Minitest::Test
     refute_empty x.city
 
     assert_instance_of Puree::Model::TemporalRange, x.date
-    assert_equal true, x.date.data?
+    assert x.date.data?
 
     assert_instance_of String, x.title
     refute_empty x.title

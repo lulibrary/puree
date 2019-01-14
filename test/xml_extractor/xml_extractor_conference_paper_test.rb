@@ -22,8 +22,15 @@ class TestXMLExtractorPaper < Minitest::Test
 
     asserts_resource x
 
-    assert_instance_of Puree::Model::EventHeader, x.event
-    assert_equal true, x.event.data?
+    event = x.event
+    assert_instance_of Puree::Model::EventHeader, event
+    assert event.data?
+
+    assert_instance_of String, event.title
+    refute_empty event.title
+
+    assert_instance_of String, event.uuid
+    refute_empty event.uuid
 
     assert_instance_of Integer, x.pages
   end
@@ -42,7 +49,7 @@ class TestXMLExtractorPaper < Minitest::Test
     id = 'db2193b7-5cc7-496d-9bd5-35192c6d7ece'
     x = xml_extractor_from_id id
 
-    assert_equal true, x.peer_reviewed
+    assert x.peer_reviewed
   end
 
   def test_absence
