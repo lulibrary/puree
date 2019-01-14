@@ -2,6 +2,7 @@ require 'test_xml_extractor_helper'
 require_relative '../common/endeavour_person'
 require_relative '../common/name_header'
 require_relative '../common/related_content_header'
+require_relative '../common/temporal_range'
 
 class TestXMLExtractorDataset < Minitest::Test
 
@@ -71,9 +72,7 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_endeavour_person x.persons_external.first
 
     assert_instance_of Puree::Model::TemporalRange, x.production
-    assert x.production.data?
-    assert_instance_of Time, x.production.start
-    assert_instance_of Time, x.production.end
+    assert_temporal_range x.production
 
     assert_instance_of Array, x.research_outputs
     assert_related_content_header x.research_outputs.first
@@ -86,9 +85,7 @@ class TestXMLExtractorDataset < Minitest::Test
     refute_empty x.spatial_places.first
 
     assert_instance_of Puree::Model::TemporalRange, x.temporal
-    assert x.temporal.data?
-    assert_instance_of Time, x.temporal.start
-    assert_instance_of Time, x.temporal.end
+    assert_temporal_range x.temporal
 
     assert_instance_of String, x.title
     refute_empty x.title

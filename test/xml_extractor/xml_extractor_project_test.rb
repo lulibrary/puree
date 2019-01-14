@@ -1,6 +1,7 @@
 require 'test_xml_extractor_helper'
 require_relative '../common/endeavour_person'
 require_relative '../common/name_header'
+require_relative '../common/temporal_range'
 
 class TestXMLExtractorProject < Minitest::Test
 
@@ -19,7 +20,11 @@ class TestXMLExtractorProject < Minitest::Test
 
   def test_core
     # The Channel Scheme - Preston
-    id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # FINISHED
+    # uuid changed to
+    id = '6acfd7ae-4012-4c82-bb71-2976dbbafbd6'
+    # pure_id = '236466684'
     x = xml_extractor_from_id id
 
     assert_instance_of String, x.acronym
@@ -52,12 +57,16 @@ class TestXMLExtractorProject < Minitest::Test
     # persons_other, see Dataset test
 
     assert_instance_of Puree::Model::TemporalRange, x.temporal
-    assert x.temporal.data?
+    assert_temporal_range x.temporal
   end
 
   def test_description
     # Designing an inclusive curriculum in higher education
-    id = '926f34e9-e461-406a-a2b8-3f831456ada0'
+    # id = '926f34e9-e461-406a-a2b8-3f831456ada0'
+    # FINISHED
+    # uuid changed to
+    id = '2bf4b724-7c3a-49c7-8a5a-4060a2fc975f'
+    # pure_id = '236382102'
     x = xml_extractor_from_id id
 
     assert_instance_of String, x.description
@@ -66,7 +75,11 @@ class TestXMLExtractorProject < Minitest::Test
 
   def test_identifiers
     # Blackburn Parenting and Intensive Family Support Project
-    id = '1b15fa94-39f0-4809-976a-a04b53592004'
+    # id = '1b15fa94-39f0-4809-976a-a04b53592004'
+    # FINISHED
+    # uuid changed to
+    id = 'fc3baafd-f147-4c07-9acc-c98b269fcc4c'
+    # pure_id = '236466374'
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.identifiers
@@ -76,7 +89,11 @@ class TestXMLExtractorProject < Minitest::Test
 
   def test_url
     # Designing an inclusive curriculum in higher education
-    id = '926f34e9-e461-406a-a2b8-3f831456ada0'
+    # id = '926f34e9-e461-406a-a2b8-3f831456ada0'
+    # FINISHED
+    # uuid changed to
+    id = '2bf4b724-7c3a-49c7-8a5a-4060a2fc975f'
+    # pure_id = '236382102'
     x = xml_extractor_from_id id
 
     assert_instance_of String, x.url
@@ -85,7 +102,11 @@ class TestXMLExtractorProject < Minitest::Test
 
   def test_persons_external
     # Children, flood and urban resilience
-    id = 'a4d07102-8bbb-4110-8969-580a8fd019c0'
+    # id = 'a4d07102-8bbb-4110-8969-580a8fd019c0'
+    # FINISHED
+    # uuid changed to
+    id = '31834af4-2b68-49c4-9caf-6875d1ba78eb'
+    # pure_id = '236476404'
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.persons_external
@@ -133,7 +154,11 @@ class TestXMLExtractorProject < Minitest::Test
 
   def test_model
     # The Channel Scheme - Preston
-    id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # FINISHED
+    # uuid changed to
+    id = '6acfd7ae-4012-4c82-bb71-2976dbbafbd6'
+    # pure_id = '236466684'
     x = xml_extractor_from_id id
 
     assert_instance_of Puree::Model::Project, x.model

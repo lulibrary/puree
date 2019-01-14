@@ -127,6 +127,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
   #
   #   assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
   #   assert_related_content_header x.projects.first
+  #   Project ATLAS: ATLAS listed as relation in Pure app but no longer available in API response
   # end
 
   def test_projects_2
@@ -138,6 +139,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     # Lancaster Environment Centre Project
     # Active on 2019-01-11
+    # pure_id = '236382106'
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
     assert_related_content_header x.projects.first
     assert x.projects.first.uuid === 'a2bf957f-d54b-495a-97ac-cf360eeda67f'
