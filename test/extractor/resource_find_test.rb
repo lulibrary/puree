@@ -76,7 +76,11 @@ class TestResourceFind < Minitest::Test
 
   def test_project
     # The Channel Scheme - Preston
-    id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # id = '2af1fb5c-ac04-40f3-9cb4-073fb92fcf96'
+    # FINISHED
+    # uuid changed to
+    id = '6acfd7ae-4012-4c82-bb71-2976dbbafbd6'
+    # pure_id = '236466684'
     extractor = Puree::Extractor::Project.new config
     model = extractor.find id
 

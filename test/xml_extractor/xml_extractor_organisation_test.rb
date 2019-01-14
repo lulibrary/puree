@@ -1,4 +1,6 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/name_header'
+require_relative '../common/address'
 
 class TestXMLExtractorOrganisation < Minitest::Test
 
@@ -23,7 +25,7 @@ class TestXMLExtractorOrganisation < Minitest::Test
     asserts_resource x
 
     assert_instance_of Puree::Model::Address, x.address
-    assert_equal true, x.address.data?
+    assert_address x.address
 
     assert_instance_of Array, x.email_addresses
     assert_instance_of String, x.email_addresses.first
@@ -33,11 +35,13 @@ class TestXMLExtractorOrganisation < Minitest::Test
     refute_empty x.name
 
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.parent
-    assert_equal true, x.parent.data?
+    assert x.parent.data?
+    assert_name_header x.parent
 
     assert_instance_of Array, x.parents
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.parents.first
-    assert_equal true, x.parents.first.data?
+    assert x.parents.first.data?
+    assert_name_header x.parents.first
 
     assert_instance_of Array, x.phone_numbers
     assert_instance_of String, x.phone_numbers.first

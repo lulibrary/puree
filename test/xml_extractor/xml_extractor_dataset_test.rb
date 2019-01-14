@@ -1,4 +1,8 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/endeavour_person'
+require_relative '../common/name_header'
+require_relative '../common/related_content_header'
+require_relative '../common/temporal_range'
 
 class TestXMLExtractorDataset < Minitest::Test
 
@@ -28,11 +32,25 @@ class TestXMLExtractorDataset < Minitest::Test
     refute_empty x.description
 
     assert_instance_of String, x.doi
-    refute_empty x.doi.to_s
+    refute_empty x.doi
 
     assert_instance_of Array, x.files
     assert_instance_of Puree::Model::File, x.files.first
-    assert_equal true, x.files.first.data?
+    assert x.files.first.data?
+
+    data = x.files.first
+    assert_instance_of Puree::Model::File, data
+    assert data.data?
+    assert_instance_of String, data.name
+    refute_empty data.name
+    # assert_instance_of String, data.mime
+    # refute_empty data.mime
+    # assert_instance_of Integer, data.size
+    assert_instance_of String, data.url
+    refute_empty data.url
+    assert_instance_of Puree::Model::CopyrightLicense, data.license
+    assert_instance_of String, data.license.name
+    refute_empty data.license.name
 
     assert_instance_of Array, x.keywords
     assert_instance_of String, x.keywords.first
@@ -40,35 +58,34 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of Array, x.organisational_units
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
-    assert_equal true, x.organisational_units.first.data?
+    assert_name_header x.organisational_units.first
 
     assert_instance_of Puree::Model::OrganisationalUnitHeader, x.owner
-    assert_equal true, x.owner.data?
+    assert_name_header x.owner
 
     assert_instance_of Array, x.persons_internal
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
-    assert_equal true, x.persons_internal.first.data?
+    assert_endeavour_person x.persons_internal.first
 
     assert_instance_of Array, x.persons_external
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
-    assert_equal true, x.persons_external.first.data?
+    assert_endeavour_person x.persons_external.first
 
     assert_instance_of Puree::Model::TemporalRange, x.production
-    assert_equal true, x.production.data?
+    assert_temporal_range x.production
 
     assert_instance_of Array, x.research_outputs
-    assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
-    assert_equal true, x.research_outputs.first.data?
+    assert_related_content_header x.research_outputs.first
 
     assert_instance_of Puree::Model::PublisherHeader, x.publisher
-    assert_equal true, x.publisher.data?
+    assert_name_header x.publisher
 
     assert_instance_of Array, x.spatial_places
     assert_instance_of String, x.spatial_places.first
     refute_empty x.spatial_places.first
 
     assert_instance_of Puree::Model::TemporalRange, x.temporal
-    assert_equal true, x.temporal.data?
+    assert_temporal_range x.temporal
 
     assert_instance_of String, x.title
     refute_empty x.title
@@ -83,8 +100,12 @@ class TestXMLExtractorDataset < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.persons_other
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_other.first
-    assert_equal true, x.persons_other.first.data?
+    data = x.persons_other.first
+    assert_instance_of Puree::Model::EndeavourPerson, data
+    assert data.data?
+    assert_instance_of String, data.role
+    refute_empty data.role
+    assert_person_name data.name
   end
 
   def test_spatial_point
@@ -93,7 +114,9 @@ class TestXMLExtractorDataset < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Puree::Model::SpatialPoint, x.spatial_point
-    assert_equal true, x.spatial_point.data?
+    assert x.spatial_point.data?
+    assert_instance_of Float, x.spatial_point.latitude
+    assert_instance_of Float, x.spatial_point.longitude
   end
 
   def test_absence

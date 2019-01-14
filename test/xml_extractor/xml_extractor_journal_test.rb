@@ -1,4 +1,5 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/name_header'
 
 class TestXMLExtractorJournal < Minitest::Test
 
@@ -26,7 +27,8 @@ class TestXMLExtractorJournal < Minitest::Test
     refute_empty x.issn
 
     assert_instance_of Puree::Model::PublisherHeader, x.publisher
-    assert_equal true, x.publisher.data?
+    assert x.publisher.data?
+    assert_name_header x.publisher
 
     assert_instance_of String, x.title
     refute_empty x.title
