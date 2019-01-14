@@ -1,4 +1,7 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/endeavour_person'
+require_relative '../common/name_header'
+require_relative '../common/related_content_header'
 
 # Tests Resource methods, via a JournalArticle
 # Unless otherwise stated, tests ResearchOutput methods via a JournalArticle
@@ -34,8 +37,16 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.doi.to_s
 
     assert_instance_of Array, x.files
-    assert_instance_of Puree::Model::File, x.files.first
-    assert_equal true, x.files.first.data?
+    data = x.files.first
+    assert_instance_of Puree::Model::File, data
+    assert data.data?
+    assert_instance_of String, data.name
+    refute_empty data.name
+    assert_instance_of String, data.mime
+    refute_empty data.mime
+    assert_instance_of Integer, data.size
+    assert_instance_of String, data.url
+    refute_empty data.url
 
     assert_instance_of String, x.language
     refute_empty x.language
@@ -48,29 +59,28 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.open_access_permission
 
     assert_instance_of Array, x.organisational_units
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.organisational_units.first
-    assert_equal true, x.organisational_units.first.data?
+    assert_name_header x.organisational_units.first
 
-    assert_instance_of Puree::Model::OrganisationalUnitHeader, x.owner
-    assert_equal true, x.owner.data?
+    assert_name_header x.owner
 
     assert_instance_of Array, x.persons_internal
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_internal.first
-    assert_equal true, x.persons_internal.first.data?
+    assert_endeavour_person x.persons_internal.first
 
     assert_instance_of Array, x.persons_external
-    assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
-    assert_equal true, x.persons_external.first.data?
+    assert_endeavour_person x.persons_external.first
 
     assert_instance_of Array, x.publication_statuses
-    assert_instance_of Puree::Model::PublicationStatus, x.publication_statuses.first
-    assert_equal true, x.publication_statuses.first.data?
+    data = x.publication_statuses.first
+    assert_instance_of Puree::Model::PublicationStatus, data
+    assert data.data?
+    assert_instance_of String, data.stage
+    refute_empty data.stage
+    assert_instance_of Time, data.date
 
     # persons_other, see Dataset test
 
     assert_instance_of Array, x.research_outputs
-    assert_instance_of Puree::Model::RelatedContentHeader, x.research_outputs.first
-    assert_equal true, x.research_outputs.first.data?
+    assert_related_content_header x.research_outputs.first
 
     assert_instance_of String, x.type
     refute_empty x.type
@@ -94,6 +104,7 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.dois
+    assert_instance_of String, x.dois.first
     refute_empty x.dois
   end
 
@@ -107,14 +118,31 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     refute_empty x.keywords.first
   end
 
-  def test_projects
-    # Measurements of the Higgs boson production and decay rates and coupling strengths using pp collision data at s√=7s=7 and 8 TeV in the ATLAS experiment
-    id = '24ec62e9-a3cc-4402-9ec9-396067949031'
+  # def test_projects
+  #   # Measurements of the Higgs boson production and decay rates and coupling strengths using pp collision data at s√=7s=7 and 8 TeV in the ATLAS experiment
+  #   id = '24ec62e9-a3cc-4402-9ec9-396067949031'
+  #   x = xml_extractor_from_id id
+  #
+  #   assert_instance_of Array, x.projects
+  #
+  #   assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
+  #   assert_related_content_header x.projects.first
+  #   Project ATLAS: ATLAS listed as relation in Pure app but no longer available in API response
+  # end
+
+  def test_projects_2
+    # Plant diversity and root traits benefit physical properties key to soil function in grasslands
+    id = '458ad0e7-6950-4e30-9374-125fbf628548'
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.projects
+
+    # Lancaster Environment Centre Project
+    # Active on 2019-01-11
+    # pure_id = '236382106'
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert_equal true, x.projects.first.data?
+    assert_related_content_header x.projects.first
+    assert x.projects.first.uuid === 'a2bf957f-d54b-495a-97ac-cf360eeda67f'
   end
 
   def test_scopus_citations_count
@@ -138,8 +166,11 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = xml_extractor_from_id id
 
     assert_instance_of Array, x.scopus_metrics
-    assert_instance_of Puree::Model::ResearchOutputScopusMetric, x.scopus_metrics.first
-    assert_equal true, x.scopus_metrics.first.data?
+    data = x.scopus_metrics.first
+    assert_instance_of Puree::Model::ResearchOutputScopusMetric, data
+    assert data.data?
+    assert_instance_of Integer, data.value
+    assert_instance_of Integer, data.year
   end
 
   def test_subtitle
@@ -260,6 +291,6 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     x = Puree::XMLExtractor::JournalArticle.new xml
     assert_instance_of Array, x.projects
     assert_instance_of Puree::Model::RelatedContentHeader, x.projects.first
-    assert_equal true, x.projects.first.data?
+    assert_related_content_header x.projects.first
   end
 end

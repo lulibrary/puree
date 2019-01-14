@@ -21,7 +21,7 @@ module Puree
           a.street = street unless street.empty?
           building = xpath_result.xpath('building').text.strip
           a.building = building unless building.empty?
-          postcode = xpath_result.xpath('postalCode').text.strip
+          postcode = xpath_result.xpath('postalcode').text.strip
           a.postcode = postcode unless building.empty?
           city = xpath_result.xpath('city').text.strip
           a.city = city unless city.empty?

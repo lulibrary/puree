@@ -1,4 +1,5 @@
 require 'test_xml_extractor_helper'
+require_relative '../common/title_header'
 
 class TestXMLExtractorJournalArticle < Minitest::Test
 
@@ -25,14 +26,14 @@ class TestXMLExtractorJournalArticle < Minitest::Test
     assert_instance_of Integer, x.issue
 
     assert_instance_of Puree::Model::JournalHeader, x.journal
-    assert_equal true, x.journal.data?
+    assert_title_header x.journal
 
     assert_instance_of String, x.page_range
     refute_empty x.page_range
 
     assert_instance_of Integer, x.pages
 
-    assert_includes [true, false], x.peer_reviewed
+    assert [true, false].include? x.peer_reviewed
 
     assert_instance_of Integer, x.volume
   end
