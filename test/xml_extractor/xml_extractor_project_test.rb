@@ -40,6 +40,10 @@ class TestXMLExtractorProject < Minitest::Test
     assert x.organisational_units.first.data?
     assert_name_header x.organisational_units.first
 
+    assert_instance_of Array, x.previous_uuids
+    refute_empty x.previous_uuids
+    assert_instance_of String, x.previous_uuids.first
+
     assert_instance_of String, x.status
     refute_empty x.status
 
@@ -140,6 +144,9 @@ class TestXMLExtractorProject < Minitest::Test
 
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
+
+    assert_instance_of Array, x.previous_uuids
+    assert_empty x.previous_uuids
 
     assert_nil x.status
 

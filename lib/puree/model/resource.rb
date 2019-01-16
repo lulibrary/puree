@@ -8,6 +8,9 @@ module Puree
       # @return [String, nil]
       attr_reader :uuid
 
+      # @return [Array<String>]
+      attr_reader :previous_uuids
+
       # @return [String, nil]
       attr_reader :created_by
 
@@ -23,6 +26,11 @@ module Puree
       # @param v [String]
       def uuid=(v)
         @uuid = v if v && !v.empty?
+      end
+
+      # @param v [String]
+      def previous_uuids=(v)
+        @previous_uuids = v
       end
 
       # @param v [String]

@@ -36,9 +36,9 @@ Pur&#233;e is tested using known data within a Pure installation.
  
 Pur&#233;e version | Pure API version
 :---: | :---:
-< 2 | < 59
-< 2.5 |	59, 510
-2.5 |	511, 512
+< 2.0 | < 59
+&gt;= 2.0, < 2.5 | 59, 510
+&gt;= 2.5 | 511, 512
 
 ## Extractor module
 ```ruby

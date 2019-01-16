@@ -42,6 +42,11 @@ module Puree
         xpath_query_for_single_value '/@uuid'
       end
 
+      # @return [Array<String>]
+      def previous_uuids
+        xpath_query_for_multi_value '/info/previousUuids/previousUuid'
+      end
+
       private
 
       def xpath_query(path)
@@ -58,6 +63,7 @@ module Puree
         @model.created_at = created_at
         @model.modified_by = modified_by
         @model.modified_at = modified_at
+        @model.previous_uuids = previous_uuids
       end
 
     end

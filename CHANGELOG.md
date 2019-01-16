@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.6.0 2019-01-14
+### Added
+- Resource subclasses - previous_uuids.
+
 ## 2.5.1 2019-01-11
 ### Fixed
 - Research output - file URL, scopus metric data types.
