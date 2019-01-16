@@ -38,7 +38,7 @@ Pur&#233;e version | Pure API version
 :---: | :---:
 < 2.0 | < 59
 &gt;= 2.0, < 2.5 | 59, 510
-&gt;= 2.5, < 513 | 511, 512
+&gt;= 2.5 | 511, 512
 
 ## Extractor module
 ```ruby
