@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.6.0 2019-01-14
+## 513 2019-01-14
 ### Changed
 - For Pure API 513.
     - Dataset, person, research output - keywords.
