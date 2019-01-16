@@ -69,6 +69,10 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_external
     assert_endeavour_person x.persons_external.first
 
+    assert_instance_of Array, x.previous_uuids
+    refute_empty x.previous_uuids
+    assert_instance_of String, x.previous_uuids.first
+
     assert_instance_of Array, x.publication_statuses
     data = x.publication_statuses.first
     assert_instance_of Puree::Model::PublicationStatus, data
@@ -238,6 +242,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
+
+    assert_instance_of Array, x.previous_uuids
+    assert_empty x.previous_uuids
 
     assert_instance_of Array, x.projects
     assert_empty x.projects
