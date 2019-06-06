@@ -6,6 +6,9 @@ module Puree
     class Resource
 
       # @return [String, nil]
+      attr_reader :id
+
+      # @return [String, nil]
       attr_reader :uuid
 
       # @return [Array<String>]
@@ -22,6 +25,11 @@ module Puree
 
       # @return [Time, nil]
       attr_reader :modified_at
+
+      # @param v [String]
+      def id=(v)
+        @id = v if v && !v.empty?
+      end
 
       # @param v [String]
       def uuid=(v)
