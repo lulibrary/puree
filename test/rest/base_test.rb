@@ -13,18 +13,17 @@ class TestResourceBase < Minitest::Test
   def test_post_request_collection
     params = {
         size: 3,
-        employmentTypeUri: ['/dk/atira/pure/person/employmenttypes/academic'],
+        employmentTypeUris: ['/dk/atira/pure/person/employmenttypes/academic'],
         employmentStatus: 'ACTIVE'
     }
     response = client.persons.all_complex params: params
-    # puts response
     assert_equal response.code, 200
     assert_instance_of HTTP::Response, response
   end
 
   def test_collection_count
     params = {
-      employmentTypeUri: ['/dk/atira/pure/person/employmenttypes/academic'],
+      employmentTypeUris: ['/dk/atira/pure/person/employmenttypes/academic'],
       employmentStatus: 'ACTIVE'
     }
     extractor = Puree::Extractor::Person.new config

@@ -38,6 +38,11 @@ module Puree
       end
 
       # @return [String, nil]
+      def id
+        xpath_query_for_single_value '/@pureId'
+      end
+
+      # @return [String, nil]
       def uuid
         xpath_query_for_single_value '/@uuid'
       end
@@ -58,6 +63,7 @@ module Puree
       # @return [Hash]
       def combine_metadata
         raise 'No model to populate' if !@model
+        @model.id = id
         @model.uuid = uuid
         @model.created_by = created_by
         @model.created_at = created_at

@@ -9,6 +9,8 @@ def asserts_resource(x)
 
   assert_instance_of String, x.modified_by
 
+  assert_instance_of String, x.id
+
   assert_instance_of String, x.uuid
 end
 
