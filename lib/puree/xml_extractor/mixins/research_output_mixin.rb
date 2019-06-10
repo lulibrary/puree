@@ -13,8 +13,8 @@ module Puree
         data_arr = []
         xpath_result.each { |i|
           related = Puree::Model::RelatedContentHeader.new
-          related.type = i.xpath('type').text.strip
-          related.title = i.xpath('name').text.strip
+          related.type = i.xpath('types/type').first.text.strip
+          related.title = i.xpath('names/name').first.text.strip
           related.uuid = i.attr('uuid').strip
           data_arr << related
         }

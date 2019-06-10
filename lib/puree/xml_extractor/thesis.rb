@@ -27,7 +27,7 @@ module Puree
 
       # @return [String, nil]
       def qualification
-        xpath_query_for_single_value '/qualification'
+        xpath_query_for_multi_value('/qualifications/qualification').first
       end
 
       # @return [Array<Puree::Model::ExternalOrganisationHeader>]

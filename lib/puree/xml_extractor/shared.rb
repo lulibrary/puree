@@ -10,8 +10,8 @@ module Puree
       def self.external_organisation_header(nokogiri_xml_element)
         h = Puree::Model::ExternalOrganisationHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
-        h.name = nokogiri_xml_element.xpath('name').text.strip
-        h.type = nokogiri_xml_element.xpath('type').text.strip
+        h.name = nokogiri_xml_element.xpath('names/name').first.text.strip
+        h.type = nokogiri_xml_element.xpath('types/type').first.text.strip
         h.data? ? h : nil
       end
 

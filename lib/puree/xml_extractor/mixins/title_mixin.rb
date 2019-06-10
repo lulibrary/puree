@@ -8,7 +8,7 @@ module Puree
 
       # @return [String, nil]
       def title
-        xpath_query_for_single_value '/title'
+        xpath_query_for_multi_value('/titles/title').first
       end
 
     end
