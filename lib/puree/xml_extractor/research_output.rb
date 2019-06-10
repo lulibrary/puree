@@ -28,7 +28,7 @@ module Puree
 
       # @return [String, nil]
       def category
-        xpath_query_for_single_value '/category/categories'
+        xpath_query_for_multi_value('/categories/category').first
       end
 
       # Digital Object Identifier (first one, if many)
@@ -73,7 +73,7 @@ module Puree
 
       # @return [String, nil]
       def language
-        xpath_query_for_single_value '/language'
+        xpath_query_for_multi_value('/languages/language').first
       end
 
       # @return [Array<String>, nil]
@@ -83,7 +83,7 @@ module Puree
 
       # @return [String, nil]
       def open_access_permission
-        xpath_query_for_single_value '/openAccessPermission'
+        xpath_query_for_multi_value('/openAccessPermissions/openAccessPermission').first
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -156,12 +156,12 @@ module Puree
 
       # @return [String, nil]
       def translated_subtitle
-        xpath_query_for_single_value '/translatedSubTitle'
+        xpath_query_for_multi_value('/translatedSubTitles/translatedSubTitle').first
       end
 
       # @return [String, nil]
       def translated_title
-        xpath_query_for_single_value '/translatedTitle'
+        xpath_query_for_multi_value('/translatedTitles/translatedTitle').first
       end
 
       private
