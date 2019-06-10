@@ -12,7 +12,7 @@ module Puree
         if !xpath_result.empty?
           header = Puree::Model::EventHeader.new
           header.uuid = xpath_result.xpath('@uuid').text.strip
-          header.title = xpath_result.xpath('name').text.strip
+          header.title = xpath_result.xpath('names/name').first.text.strip
           return header if header.data?
         end
         nil
