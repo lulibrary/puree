@@ -77,6 +77,9 @@ class TestXMLExtractorCollection < Minitest::Test
     journal_articles = data[:journal_articles]
     assert_instance_of Array, journal_articles
     assert_instance_of Puree::Model::JournalArticle, journal_articles.first if !journal_articles.empty?
+
+    puts journal_articles.first.inspect
+
     assert_equal 'Journal article', journal_articles.first.type if !journal_articles.empty?
 
     conference_papers = data[:conference_papers]
