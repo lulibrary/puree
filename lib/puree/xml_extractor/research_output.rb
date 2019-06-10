@@ -23,12 +23,12 @@ module Puree
 
       # @return [String, nil]
       def bibliographical_note
-        xpath_query_for_single_value('/bibliographicalNote')
+        xpath_query_for_multi_value('/bibliographicalNotes/bibliographicalNote').first
       end
 
       # @return [String, nil]
       def category
-        xpath_query_for_single_value '/category'
+        xpath_query_for_single_value '/category/categories'
       end
 
       # Digital Object Identifier (first one, if many)
