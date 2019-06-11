@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = 'a.albin-clark@lancaster.ac.uk'
   spec.summary       = %q{Metadata extraction from the Pure Research Information System.}
   spec.metadata = {
-    'source_code_uri' => 'https://github.com/lulibrary/puree',
-    "documentation_uri" => "https://www.rubydoc.info/gems/puree/2.7.0",
+    'source_code_uri' => "https://github.com/lulibrary/#{spec.name}",
+    "documentation_uri" => "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}",
   }
   spec.license       = 'MIT'
   spec.files         = `git ls-files -z`.split("\x0")
