@@ -50,7 +50,7 @@ module Puree
 
       # @return [String, nil]
       def status
-        xpath_query_for_multi_value('/statuses/status').first
+        xpath_query_for_single_value '/statuses/status'
       end
 
       # @return [Puree::Model::TemporalRange, nil]

@@ -23,12 +23,12 @@ module Puree
 
       # @return [String, nil]
       def bibliographical_note
-        xpath_query_for_multi_value('/bibliographicalNotes/bibliographicalNote').first
+        xpath_query_for_single_value '/bibliographicalNotes/bibliographicalNote'
       end
 
       # @return [String, nil]
       def category
-        xpath_query_for_multi_value('/categories/category').first
+        xpath_query_for_single_value '/categories/category'
       end
 
       # Digital Object Identifier (first one, if many)
@@ -73,7 +73,7 @@ module Puree
 
       # @return [String, nil]
       def language
-        xpath_query_for_multi_value('/languages/language').first
+        xpath_query_for_single_value '/languages/language'
       end
 
       # @return [Array<String>, nil]
@@ -83,7 +83,7 @@ module Puree
 
       # @return [String, nil]
       def open_access_permission
-        xpath_query_for_multi_value('/openAccessPermissions/openAccessPermission').first
+        xpath_query_for_single_value '/openAccessPermissions/openAccessPermission'
       end
 
       # @return [Array<Puree::Model::EndeavourPerson>]
@@ -156,12 +156,12 @@ module Puree
 
       # @return [String, nil]
       def translated_subtitle
-        xpath_query_for_multi_value('/translatedSubTitles/translatedSubTitle').first
+        xpath_query_for_single_value '/translatedSubTitles/translatedSubTitle'
       end
 
       # @return [String, nil]
       def translated_title
-        xpath_query_for_multi_value('/translatedTitles/translatedTitle').first
+        xpath_query_for_single_value '/translatedTitles/translatedTitle'
       end
 
       private

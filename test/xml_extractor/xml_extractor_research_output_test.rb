@@ -289,8 +289,12 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     '<contributionToJournal>
       <relatedProjects>
         <relatedProject uuid="fe8aebdf-a926-4e7b-adf1-082425e50330">
-          <name>The Language Bases of Reading Comprehension</name>
-	   	    <type uri="/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research">Research</type>
+          <names>
+            <name>The Language Bases of Reading Comprehension</name>
+          </names>
+          <types>
+            <type uri="/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research">Research</type>
+          </types>
 	 	    </relatedProject>
 	    </relatedProjects>
     </contributionToJournal>'
