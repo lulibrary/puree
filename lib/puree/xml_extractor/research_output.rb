@@ -107,7 +107,7 @@ module Puree
         data = []
         xpath_result.each do |i|
           s = Puree::Model::PublicationStatus.new
-          s.stage = i.xpath('publicationStatus').text.strip
+          s.stage = i.xpath('publicationStatuses/publicationStatus').text.strip
 
           ymd = {}
           ymd['year'] = i.xpath('publicationDate/year').text.strip
