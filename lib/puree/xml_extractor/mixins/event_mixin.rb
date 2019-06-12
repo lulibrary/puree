@@ -12,7 +12,8 @@ module Puree
         if !xpath_result.empty?
           header = Puree::Model::EventHeader.new
           header.uuid = xpath_result.xpath('@uuid').text.strip
-          header.title = xpath_result.xpath('names/name').first.text.strip
+          xpath_result_name = xpath_result.xpath('names/name')
+          header.title = xpath_result_name.first.text.strip unless xpath_result_name.empty?
           return header if header.data?
         end
         nil

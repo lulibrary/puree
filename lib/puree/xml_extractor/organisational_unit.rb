@@ -26,7 +26,7 @@ module Puree
           city = xpath_result.xpath('city').text.strip
           a.city = city unless city.empty?
           country = xpath_result.xpath('countries/country')
-          a.country = country.first.text.strip if country
+          a.country = country.first.text.strip unless country.empty?
           a
         end
       end

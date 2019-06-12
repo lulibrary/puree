@@ -86,8 +86,9 @@ module Puree
             other: []
         }
         xpath_result.each do |research_output|
-          type = research_output.xpath('types/type').first.text.strip
-          unless type.empty?
+          xpath_result_type = research_output.xpath('types/type')
+          type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
+          if type
             case type
               when 'Journal article'
                 extractor = Puree::XMLExtractor::JournalArticle.new research_output.to_s
