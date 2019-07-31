@@ -14,7 +14,7 @@ module Puree
 
       # @return [String, nil]
       def name
-        xpath_query_for_single_value '/name'
+        xpath_query_for_single_value '/names/name'
       end
 
       private

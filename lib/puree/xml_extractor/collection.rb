@@ -75,7 +75,7 @@ module Puree
       # @param xml [String]
       # @return [Hash{Symbol => Array<Puree::Model::ResearchOutput class/subclass>}]
       def self.research_outputs(xml)
-        path_from_root = File.join 'result', '/*'
+        path_from_root = File.join 'result/items', '/*'
         doc = Nokogiri::XML xml
         doc.remove_namespaces!
         xpath_result = doc.xpath path_from_root
@@ -86,8 +86,9 @@ module Puree
             other: []
         }
         xpath_result.each do |research_output|
-          type = research_output.xpath('type').text.strip
-          unless type.empty?
+          xpath_result_type = research_output.xpath('types/type')
+          type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
+          if type
             case type
               when 'Journal article'
                 extractor = Puree::XMLExtractor::JournalArticle.new research_output.to_s
@@ -127,7 +128,7 @@ module Puree
       def self.models(resource_type, xml, xpath_root)
         doc = Nokogiri::XML xml
         doc.remove_namespaces!
-        path_from_root = File.join 'result', xpath_root
+        path_from_root = File.join 'result/items', xpath_root
         xpath_result = doc.xpath path_from_root
         data = []
         xpath_result.each do |i|
