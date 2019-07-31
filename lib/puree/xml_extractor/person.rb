@@ -57,6 +57,21 @@ module Puree
         xpath_query_for_single_value '/orcid'
       end
 
+      # @return [Array<Model::PersonName>]
+      def other_names
+        xpath_result = xpath_query '/nameVariants/nameVariant/name'
+        data = []
+        xpath_result.each do |d|
+          first = xpath_result.xpath('firstName').text.strip
+          last = xpath_result.xpath('lastName').text.strip
+          model = Puree::Model::PersonName.new
+          model.first = first unless first.empty?
+          model.last = last unless last.empty?
+          data << model
+        end
+        data.uniq
+      end
+
       private
 
       def xpath_root
@@ -72,6 +87,7 @@ module Puree
         @model.keywords = keywords
         @model.name = name
         @model.orcid = orcid
+        @model.other_names = other_names
         @model
       end      
 

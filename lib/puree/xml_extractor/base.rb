@@ -14,8 +14,8 @@ module Puree
       #
       # @return [String, nil]
       def xpath_query_for_single_value(path)
-        xpath_result = xpath_query(path).text.strip
-        xpath_result.empty? ? nil : xpath_result
+        xpath_result = xpath_query(path)
+        xpath_result.empty? ? nil : xpath_result.first.text.strip
       end
 
       # XPath search for multiple values, at a given path.

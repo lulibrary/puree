@@ -51,6 +51,10 @@ class TestXMLExtractorPerson < Minitest::Test
 
     assert_instance_of String, x.orcid
     refute_empty x.orcid
+
+    assert_instance_of Array, x.other_names
+    assert_instance_of Puree::Model::PersonName, x.other_names.first
+    assert x.other_names.first.data?
   end
 
   # def test_scopus_id
@@ -80,6 +84,9 @@ class TestXMLExtractorPerson < Minitest::Test
     assert_nil x.name
 
     assert_nil x.orcid
+
+    assert_instance_of Array, x.other_names
+    assert_empty x.other_names
   end
 
   def test_model

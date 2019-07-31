@@ -8,7 +8,7 @@ module Puree
 
       # @return [String, nil]
       def workflow
-        xpath_query_for_single_value '/workflow'
+        xpath_query_for_single_value '/workflows/workflow'
       end
 
     end

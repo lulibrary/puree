@@ -46,8 +46,8 @@ module Puree
           # doc['createdDate'] = d.xpath('createdDate').text.strip
           # doc['visibleOnPortalDate'] = d.xpath('visibleOnPortalDate').text.strip
           # doc['limitedVisibility'] = d.xpath('limitedVisibility').text.strip
-          document_license = d.xpath('documentLicense')
-          if !document_license.empty?
+          document_license = d.xpath('documentLicenses/documentLicense').first
+          if document_license
             license = Puree::Model::CopyrightLicense.new
             license.name = document_license.text.strip
             # license.name = document_license.xpath('term/localizedString').text.strip
@@ -88,7 +88,7 @@ module Puree
       # @return [Array<String>]
       def spatial_places
         # Data from free-form text box
-        xpath_result = xpath_query '/geographicalCoverage'
+        xpath_result = xpath_query '/geographicalCoverages/geographicalCoverage'
         data = []
         xpath_result.each do |i|
           data << i.text.strip
