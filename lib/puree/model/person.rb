@@ -26,6 +26,8 @@ module Puree
       # @return [String, nil]
       attr_accessor :orcid
 
+      # @return [Array<Model::PersonName>]
+      attr_accessor :other_names
     end
   end
 end
