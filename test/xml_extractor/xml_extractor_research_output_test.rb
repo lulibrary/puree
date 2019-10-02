@@ -120,8 +120,6 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     id = 'ce76dbda-8b22-422b-9bb6-8143820171b8'
     x = xml_extractor_from_id id
 
-    puts x.keywords
-
     assert_instance_of Array, x.keywords
     assert_instance_of String, x.keywords.first
     refute_empty x.keywords.first
