@@ -86,6 +86,9 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.research_outputs
     assert_related_content_header x.research_outputs.first
 
+    assert_instance_of String, x.title
+    refute_empty x.title
+
     assert_instance_of String, x.type
     refute_empty x.type
 
@@ -261,6 +264,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_empty x.scopus_metrics
 
     assert_nil x.subtitle
+
+    assert_nil x.title
 
     assert_nil x.type
 
