@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.8.1 2019-10-02
+### Fixed
+- Research output - title.
+
 ## 2.8.0 2019-07-04
 ### Changed
 - For Pure API 514.

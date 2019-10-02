@@ -13,7 +13,6 @@ module Puree
       include Puree::XMLExtractor::ProjectMixin
       include Puree::XMLExtractor::ResearchOutputMixin
       include Puree::XMLExtractor::WorkflowMixin
-      include Puree::XMLExtractor::TitleMixin
       include Puree::XMLExtractor::TypeMixin
 
       def initialize(xml)
@@ -152,6 +151,11 @@ module Puree
       # @return [String, nil]
       def subtitle
         xpath_query_for_single_value '/subTitle'
+      end
+
+      # @return [String, nil]
+      def title
+        xpath_query_for_single_value '/title'
       end
 
       # @return [String, nil]
