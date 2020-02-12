@@ -19,7 +19,11 @@ class TestXMLExtractorPerson < Minitest::Test
 
   def test_core
     # Peter Diggle
-    id = '811d7fc3-047a-40d2-89e6-c85d14a97fb8'
+    # id = '811d7fc3-047a-40d2-89e6-c85d14a97fb8'
+
+    # Derek Gatherer
+    id = '0e65614d-0ed3-4b81-b4a1-22da4b301022'
+
     x = xml_extractor_from_id id
 
     asserts_resource x
@@ -91,7 +95,11 @@ class TestXMLExtractorPerson < Minitest::Test
 
   def test_model
     # Peter Diggle
-    id = '811d7fc3-047a-40d2-89e6-c85d14a97fb8'
+    # id = '811d7fc3-047a-40d2-89e6-c85d14a97fb8'
+
+    # Derek Gatherer
+    id = '0e65614d-0ed3-4b81-b4a1-22da4b301022'
+
     x = xml_extractor_from_id id
 
     assert_instance_of Puree::Model::Person, x.model
