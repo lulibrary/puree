@@ -25,8 +25,8 @@ module Puree
           a.postcode = postcode unless building.empty?
           city = xpath_result.xpath('city').text.strip
           a.city = city unless city.empty?
-          country = xpath_result.xpath('countries/country')
-          a.country = country.first.text.strip unless country.empty?
+          country = xpath_result.xpath('country/term/text')
+          a.country = country.text.strip unless country.empty?
           a
         end
       end
@@ -38,7 +38,7 @@ module Puree
 
       # @return [String, nil]
       def name
-        xpath_query_for_single_value '/names/name'
+        xpath_query_for_single_value '/name/text'
       end
 
       # First parent
