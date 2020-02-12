@@ -36,7 +36,7 @@ module Puree
 
       # @return [Array<String>]
       def keywords
-        keyword_group 'keywordContainers'
+        keyword_group 'userDefinedKeywordContainers'
       end
 
       # @return [Puree::Model::PersonName, nil]
