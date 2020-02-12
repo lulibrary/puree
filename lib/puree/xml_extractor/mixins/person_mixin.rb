@@ -32,7 +32,7 @@ module Puree
             name.first = i.xpath('name/firstName').text.strip
             name.last = i.xpath('name/lastName').text.strip
             person.name = name if name.data?
-            xpath_result_role = i.xpath('personRoles/personRole')
+            xpath_result_role = i.xpath('personRole/term/text')
             person.role = xpath_result_role.first.text.strip unless xpath_result_role.empty?
             arr << person if person.data?
           end

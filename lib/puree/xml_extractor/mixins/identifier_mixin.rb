@@ -12,8 +12,8 @@ module Puree
         data = []
         xpath_result.each do |d|
           identifier = Puree::Model::Identifier.new
-          identifier.id = d.text.strip
-          identifier.type = d.attr('type').strip
+          identifier.id = d.xpath('value').text.strip
+          identifier.type = d.xpath('type/term/text').text.strip
           data << identifier
         end
         data.uniq { |d| d.id }
