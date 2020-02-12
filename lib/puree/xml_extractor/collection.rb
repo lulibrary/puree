@@ -86,7 +86,7 @@ module Puree
             other: []
         }
         xpath_result.each do |research_output|
-          xpath_result_type = research_output.xpath('types/type')
+          xpath_result_type = research_output.xpath('type/term/text')
           type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
           if type
             case type
