@@ -10,9 +10,9 @@ module Puree
       def self.external_organisation_header(nokogiri_xml_element)
         h = Puree::Model::ExternalOrganisationHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
-        xpath_result_name = nokogiri_xml_element.xpath('names/name')
+        xpath_result_name = nokogiri_xml_element.xpath('name/text')
         h.name = xpath_result_name.first.text.strip unless xpath_result_name.empty?
-        xpath_result_type = nokogiri_xml_element.xpath('types/type')
+        xpath_result_type = nokogiri_xml_element.xpath('type/term/text')
         h.type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
         h.data? ? h : nil
       end
@@ -31,9 +31,9 @@ module Puree
       def self.organisation_header(nokogiri_xml_element)
         h = Puree::Model::OrganisationalUnitHeader.new
         h.uuid = nokogiri_xml_element.xpath('@uuid').text.strip
-        xpath_result_name = nokogiri_xml_element.xpath('names/name')
+        xpath_result_name = nokogiri_xml_element.xpath('name/text')
         h.name = xpath_result_name.first.text.strip unless xpath_result_name.empty?
-        xpath_result_type = nokogiri_xml_element.xpath('types/type')
+        xpath_result_type = nokogiri_xml_element.xpath('type/term/text')
         h.type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
         h.data? ? h : nil
       end
