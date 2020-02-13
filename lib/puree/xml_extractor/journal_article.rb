@@ -26,7 +26,7 @@ module Puree
           header = Puree::Model::JournalHeader.new
           header.title = xpath_result.xpath('title').text.strip
           journal = xpath_result.xpath('journal')
-          xpath_result_type = journal.xpath('types/type')
+          xpath_result_type = journal.xpath('type/term/text')
           header.type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
           header.uuid = journal.attr('uuid').text.strip
           header
