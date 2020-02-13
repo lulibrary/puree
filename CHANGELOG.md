@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.9.0 2020-02-13
+### Changed
+- For Pure API 515.
+
 ## 2.8.1 2019-10-02
 ### Fixed
 - Research output - title.
@@ -17,7 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.7.0 2019-06-06
 ### Changed
 - For Pure API 513.
-    - Dataset, person, research output - keywords.
+- Dataset, person, research output - keywords.
 
 ### Added
 - Resource subclasses - id.
