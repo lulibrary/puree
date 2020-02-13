@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.9.0 2020-02-13
 ### Changed
-- For Pure API 515.
+- For Pure API 515, 516.
 
 ## 2.8.1 2019-10-02
 ### Fixed
