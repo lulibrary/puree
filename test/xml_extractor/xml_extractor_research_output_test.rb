@@ -293,14 +293,17 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     xml =
     '<contributionToJournal>
       <relatedProjects>
-        <relatedProject uuid="fe8aebdf-a926-4e7b-adf1-082425e50330">
-          <names>
-            <name>The Language Bases of Reading Comprehension</name>
-          </names>
-          <types>
-            <type uri="/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research">Research</type>
-          </types>
-	 	    </relatedProject>
+        <relatedProject uuid="f74685fd-f1a9-4de9-b9d7-288f690755c6">
+          <link ref="content" href="https://pure.lancs.ac.uk/ws/api/515/projects/f74685fd-f1a9-4de9-b9d7-288f690755c6"/>
+          <name formatted="false">
+            <text locale="en_GB">The Language Bases of Reading Comprehension</text>
+          </name>
+          <type pureId="236382102" uri="/dk/atira/pure/upmproject/upmprojecttypes/upmproject/research">
+            <term formatted="false">
+              <text locale="en_GB">Research</text>
+            </term>
+          </type>
+        </relatedProject>
 	    </relatedProjects>
     </contributionToJournal>'
 

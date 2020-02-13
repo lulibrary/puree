@@ -8,7 +8,7 @@ module Puree
 
       # @return [String, nil]
       def type
-        xpath_query_for_single_value '/types/type'
+        xpath_query_for_single_value '/type/term/text'
       end
 
     end

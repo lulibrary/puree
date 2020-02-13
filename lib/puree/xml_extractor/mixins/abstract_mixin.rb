@@ -8,7 +8,7 @@ module Puree
 
       # @return [String, nil]
       def description
-        xpath_query_for_single_value '/abstracts/abstract'
+        xpath_query_for_single_value '/abstract/text'
       end
 
     end

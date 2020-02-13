@@ -29,7 +29,7 @@ module Puree
         xpath_result = xpath_query '/profilePhotos/profilePhoto'
         arr = []
         xpath_result.each do |i|
-          arr << i.attr('url').strip
+          arr << i.xpath('url').text.strip
         end
         arr.uniq
       end

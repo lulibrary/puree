@@ -11,9 +11,9 @@ module Puree
         xpath_result = xpath_query '/publisher'
         h = Puree::Model::PublisherHeader.new
         h.uuid = xpath_result.xpath('@uuid').text.strip
-        xpath_result_name = xpath_result.xpath('names/name')
+        xpath_result_name = xpath_result.xpath('name/text')
         h.name = xpath_result_name.first.text.strip unless xpath_result_name.empty?
-        xpath_result_type = xpath_result.xpath('types/type')
+        xpath_result_type = xpath_result.xpath('type/term/text')
         h.type = xpath_result_type.first.text.strip unless xpath_result_type.empty?
         h.data? ? h : nil
       end
