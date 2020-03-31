@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.9.1 2020-03-31
+### Fixed
+- Connection timeout keyword argument name for http library.
+
 ## 2.9.0 2020-02-14
 ### Changed
 - For Pure API 515, 516.

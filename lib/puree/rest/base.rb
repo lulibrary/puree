@@ -28,7 +28,7 @@ module Puree
         @http_client = @http_client.headers(api_key_header(config[:api_key]))
         @http_client = @http_client.timeout read: config[:http_read_timeout],
                                             write: config[:http_write_timeout],
-                                            connection: config[:http_connection_timeout]
+                                            connect: config[:http_connection_timeout]
         @url = config[:url]
       end
 
