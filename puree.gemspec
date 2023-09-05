@@ -19,9 +19,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '~> 2.1'
-
-  spec.add_runtime_dependency 'http', '~> 4.0'
+  spec.add_runtime_dependency 'http', '~> 5.1'
   spec.add_runtime_dependency 'nokogiri', '~> 1.6'
 
   spec.add_development_dependency 'minitest-reporters', '~> 1.1'
