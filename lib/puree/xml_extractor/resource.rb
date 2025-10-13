@@ -52,6 +52,11 @@ module Puree
         xpath_query_for_multi_value '/info/previousUuids/previousUuid'
       end
 
+      # @return [String, nil]
+      def portal_url
+        xpath_query_for_single_value('/info/portalUrl')
+      end      
+
       private
 
       def xpath_query(path)
@@ -70,6 +75,7 @@ module Puree
         @model.modified_by = modified_by
         @model.modified_at = modified_at
         @model.previous_uuids = previous_uuids
+        @model.portal_url = portal_url
       end
 
     end

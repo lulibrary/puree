@@ -26,6 +26,9 @@ module Puree
       # @return [Time, nil]
       attr_reader :modified_at
 
+      # @return [String, nil]
+      attr_reader :portal_url      
+
       # @param v [String]
       def id=(v)
         @id = v if v && !v.empty?
@@ -60,6 +63,11 @@ module Puree
       def modified_at=(v)
         @modified_at = v
       end
+
+      # @param v [String]
+      def portal_url=(v)
+        @portal_url = v
+      end      
 
     end
   end
