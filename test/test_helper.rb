@@ -10,8 +10,8 @@ require 'puree'
 def config
   {
       url:      ENV['PURE_URL'],
-      username: ENV['PURE_USERNAME'],
-      password: ENV['PURE_PASSWORD'],
+      #username: ENV['PURE_USERNAME'],
+      #password: ENV['PURE_PASSWORD'],
       api_key:  ENV['PURE_API_KEY']
   }
 end

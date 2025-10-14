@@ -34,24 +34,6 @@ class TestXMLExtractorDataset < Minitest::Test
     assert_instance_of String, x.doi
     refute_empty x.doi
 
-    assert_instance_of Array, x.files
-    assert_instance_of Puree::Model::File, x.files.first
-    assert x.files.first.data?
-
-    data = x.files.first
-    assert_instance_of Puree::Model::File, data
-    assert data.data?
-    assert_instance_of String, data.name
-    refute_empty data.name
-    # assert_instance_of String, data.mime
-    # refute_empty data.mime
-    # assert_instance_of Integer, data.size
-    assert_instance_of String, data.url
-    refute_empty data.url
-    assert_instance_of Puree::Model::CopyrightLicense, data.license
-    assert_instance_of String, data.license.name
-    refute_empty data.license.name
-
     assert_instance_of Array, x.keywords
     assert_instance_of String, x.keywords.first
     refute_empty x.keywords.first
@@ -69,7 +51,7 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of Array, x.persons_external
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
-    assert_endeavour_person x.persons_external.first
+    assert_endeavour_person x.persons_external.first    
 
     assert_instance_of Puree::Model::TemporalRange, x.production
     assert_temporal_range x.production
@@ -92,6 +74,14 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of String, x.workflow
     refute_empty x.workflow
+  end
+
+  def test_portal_url
+    # The 2014 Ebola virus disease outbreak in West Africa
+    id = 'b050f4b5-e272-4914-8cac-3bdc1e673c58'
+    x = xml_extractor_from_id id
+    
+    assert_instance_of String, x.portal_url
   end
 
   def test_persons_other
@@ -117,6 +107,30 @@ class TestXMLExtractorDataset < Minitest::Test
     assert x.spatial_point.data?
     assert_instance_of Float, x.spatial_point.latitude
     assert_instance_of Float, x.spatial_point.longitude
+  end
+
+  def test_files
+    # Influenza C in Lancaster, winter 2014-2015
+    id = 'a762a8a2-a9ed-4abb-ba91-a67752b1c54d'
+    x = xml_extractor_from_id id
+
+    assert_instance_of Array, x.files
+    assert_instance_of Puree::Model::File, x.files.first
+    assert x.files.first.data?
+
+    data = x.files.first
+    assert_instance_of Puree::Model::File, data
+    assert data.data?
+    assert_instance_of String, data.name
+    refute_empty data.name
+    # assert_instance_of String, data.mime
+    # refute_empty data.mime
+    # assert_instance_of Integer, data.size
+    assert_instance_of String, data.url
+    refute_empty data.url
+    assert_instance_of Puree::Model::CopyrightLicense, data.license
+    assert_instance_of String, data.license.name
+    refute_empty data.license.name    
   end
 
   def test_absence
@@ -148,6 +162,8 @@ class TestXMLExtractorDataset < Minitest::Test
 
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
+
+    # assert_nil x.portal_url
 
     assert_nil x.production
 

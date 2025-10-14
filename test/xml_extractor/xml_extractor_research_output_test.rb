@@ -69,6 +69,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
     assert_instance_of Array, x.persons_external
     assert_endeavour_person x.persons_external.first
 
+    assert_instance_of String, x.portal_url    
+
     assert_instance_of Array, x.previous_uuids
     refute_empty x.previous_uuids
     assert_instance_of String, x.previous_uuids.first
@@ -245,6 +247,8 @@ class TestXMLExtractorResearchOutput < Minitest::Test
 
     assert_instance_of Array, x.persons_other
     assert_empty x.persons_other
+
+    assert_nil x.portal_url    
 
     assert_instance_of Array, x.previous_uuids
     assert_empty x.previous_uuids

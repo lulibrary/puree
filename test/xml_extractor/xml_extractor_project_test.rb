@@ -27,9 +27,6 @@ class TestXMLExtractorProject < Minitest::Test
     # pure_id = '236466684'
     x = xml_extractor_from_id id
 
-    assert_instance_of String, x.acronym
-    refute_empty x.acronym
-
     assert_instance_of Array, x.external_organisations
     assert_instance_of Puree::Model::ExternalOrganisationHeader, x.external_organisations.first
     assert x.external_organisations.first.data?
@@ -117,6 +114,15 @@ class TestXMLExtractorProject < Minitest::Test
     assert_instance_of Puree::Model::EndeavourPerson, x.persons_external.first
     assert x.persons_external.first.data?
     assert_endeavour_person x.persons_external.first
+  end
+
+  def test_acronym
+    # Children, flood and urban resilience
+    id = '31834af4-2b68-49c4-9caf-6875d1ba78eb'
+    x = xml_extractor_from_id id
+
+    assert_instance_of String, x.acronym
+    refute_empty x.acronym
   end
 
   def test_absence

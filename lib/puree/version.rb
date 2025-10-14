@@ -1,5 +1,5 @@
 module Puree
   # Semantic version number
   #
-  VERSION = "2.9.2"
+  VERSION = "2.10.0"
 end

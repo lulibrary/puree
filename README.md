@@ -26,8 +26,6 @@ Or install it yourself as:
 # For Extractor and REST modules.
 config = {
   url:      'https://YOUR_HOST/ws/api/YOUR_API_VERSION',
-  username: 'YOUR_USERNAME',
-  password: 'YOUR_PASSWORD',
   api_key:  'YOUR_API_KEY'
 }
 ```
@@ -42,6 +40,7 @@ Pur&#233;e version | Pure API version
 2.7 | 513
 2.8 | 514
 2.9 | 515, 516, 517, 518, 519, 520, 521, 522, 523, 524
+2.10 | 524
 
 ## Extractor module
 ```ruby
